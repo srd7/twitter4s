@@ -5,16 +5,24 @@ import twitter4j.conf._
 import twitter4j.auth._
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterAPIs {
-	def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
-	  location match {
-	    case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
-	    case None => twitter4jObj.getAvailableTrends()
-	  }
-	}
-	
-	def getLocationTrends(woeid: Int): Trends = {
-	  null
-	}
+  
+  /* LocalTrendsMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
+    location match {
+      case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
+      case None => twitter4jObj.getAvailableTrends()
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getLocationTrends(woeid: Int): Trends = {
+    twitter4jObj.getLocationTrends(woeid)
+  }
 }
 
 object Twitter {
