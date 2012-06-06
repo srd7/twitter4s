@@ -10,19 +10,15 @@ import java.io.InputStream
 
 trait AccountMethods {
 
-  def verifyCredential: User
+  def verifyCredentials: User
   
   def getRateLimitStatus: RateLimitStatus
   
   def updateProfileColors(profileBackgroundColor: String, profileTextColor: String, profileLinkColor: String, profileSidebarFillColor: String, profileSidebarBorderColor: String): User
   
-  def updateProfileImage(image: File): User
+  def updateProfileImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None): User
   
-  def updateProfileImage(image: InputStream): User
-  
-  def updateProfileBackgroundImage(image: File, tile: Boolean): User
-  
-  def updateProfileBackgroundImage(image: InputStream, tile: Boolean): User
+  def updateProfileBackgroundImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None, tile: Boolean): User
   
   def updateProfile(name: String, url: String, location: String, description: String): User
   

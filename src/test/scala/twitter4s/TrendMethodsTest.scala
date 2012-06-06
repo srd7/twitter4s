@@ -5,14 +5,16 @@ import twitter4j._
 import json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
 import org.junit.runner.RunWith
+import twitter4s.Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class TrendMethodsTest extends Specification {
   val geoLocation = new GeoLocation(0, 0)
   
+  // Local Trends Methods
   "getAvailableTrends" should {
     "get trends without localtion parameter" in {
-      val locations = Twitter().getAvailableTrends()
+      val locations = twitter1.getAvailableTrends()
       
       DataObjectFactory.getRawJSON(locations) mustNotEqual(null)
       locations.get(0) must equalTo(DataObjectFactory.createLocation(DataObjectFactory.getRawJSON(locations.get(0))))
@@ -20,7 +22,7 @@ class TrendMethodsTest extends Specification {
     }
     
     "get trends with location parameter" in {
-      val locations = Twitter().getAvailableTrends(Some(geoLocation))
+      val locations = twitter1.getAvailableTrends(Some(geoLocation))
       
       DataObjectFactory.getRawJSON(locations) mustNotEqual(null)
       (locations.size() > 0) must beTrue
@@ -29,15 +31,20 @@ class TrendMethodsTest extends Specification {
   
   "getLocationTrends" should {
     "get locations trends" in {
-      val locations = Twitter().getAvailableTrends(Some(geoLocation))
+      val locations = twitter1.getAvailableTrends(Some(geoLocation))
       val woeid = locations.get(0).getWoeid()
-      val trends = Twitter().getLocationTrends(woeid)
+      val trends = twitter1.getLocationTrends(woeid)
       
       trends must equalTo(DataObjectFactory.createTrends(DataObjectFactory.getRawJSON(trends)))
       DataObjectFactory.getRawJSON(locations) mustEqual(null)
       DataObjectFactory.getRawJSON(trends) mustNotEqual(null)
       locations.get(0) mustEqual(trends.getLocation())
       (trends.getTrends().size > 0) must beTrue
+    }
+    
+    "throw exception if locations trends not exists" in {
+      twitter1.getLocationTrends(2345889/*woeid of Tokyo*/) must 
+      throwA[Exception]
     }
   }
 
