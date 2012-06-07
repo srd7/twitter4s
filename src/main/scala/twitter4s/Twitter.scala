@@ -69,9 +69,15 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterAPIs {
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getWeeklyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
-    // TODO implements
-    null
+    (date, excludeHashTags) match {
+      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
+      case (None, None) => twitter4jObj.getWeeklyTrends()
+      // case _ => //Exception?
+    }
   }
   
   /* LocalTrendsMethods */

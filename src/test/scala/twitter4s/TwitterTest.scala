@@ -15,9 +15,12 @@ class TwitterTest extends Specification {
 	    response.getAccessLevel() must equalTo(TwitterResponse.NONE)
 	  }
 	  
-	  // TODO READ-WRITEのアクセス権でTwitterにアプリケーション登録をする
+	  "application has read and write access level is READ_WRITE" in {
+	    val response = twitter1.verifyCredentials
+	    response.getAccessLevel() must equalTo(TwitterResponse.READ_WRITE)
+	  }
 	  
-	  "user has all access level is READ_WRITE_DIRECTMESSAGES" in {
+	  "application has all access level is READ_WRITE_DIRECTMESSAGES" in {
 	    val response = rwPrivateMessage.verifyCredentials
 	    response.getAccessLevel() must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
 	  }
