@@ -7,7 +7,59 @@ import java.util.Date
 import java.io.File
 import java.io.InputStream
 
-case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterAPIs {
+case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
+  /* TwitterBase method */
+  def getScreenName: String = {
+    // TODO implements
+    return null
+  }
+  
+  def getId: Long = {
+    // TODO imeplements
+    return 0
+  }
+  
+  def addRateLimitStatusListener(listener: RateLimitStatusListener) {
+    // TODO implements
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getAuthorization: Authorization = {
+    return twitter4jObj.getAuthorization()
+  }
+  
+  def getConfiguration: Configuration = {
+    // TODO implements
+    return null
+  }
+  
+  def shotdown {
+    // TODO implements
+  }
+  
+  /* OAuthSupport */
+  /**
+   * {@inheritDoc}
+   */
+  def setOAuthConsumer(consumerKey: String, consumerSecret: String) {
+    twitter4jObj.setOAuthConsumer(consumerKey, consumerSecret)
+  }
+  
+  def getOAuthRequestToken(callbackURL: Option[String], xAuthAccessType: Option[String]): RequestToken = {
+    // TODO implements
+    return null
+  }
+  
+  def getOAuthAccessToken(oauthVerifier: Option[String], requestToken: Option[RequestToken], screenName: Option[String], password: Option[String]): AccessToken = {
+    // TODO implements
+    return null
+  }
+  
+  def setOAuthAccessToken(accessToken: AccessToken) {
+    // TODO implements
+  }
   
   /* AccountMethods */
   /**
@@ -57,6 +109,68 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterAPIs {
     null
   }
   
+  /* LocalTrendsMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
+    location match {
+      case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
+      case None => twitter4jObj.getAvailableTrends()
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getLocationTrends(woeid: Int): Trends = {
+    twitter4jObj.getLocationTrends(woeid)
+  }
+  
+  /* SearchMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def search(query: Query): QueryResult = {
+    twitter4jObj.search(query)
+  }
+  
+  /* StatusMethods */
+  def showStatus(id: Long): Status = {
+    // TODO implements
+    return null
+  }
+
+  def updateStatus(status: Option[String] = None, latestStatus: Option[StatusUpdate] = None): Status = {
+    // TODO implements
+    return null
+  }
+
+  def destroyStatus(statusId: Long): Status = {
+    // TODO implements
+    return null
+  }
+
+  def retweetStatus(statusId: Long): Status = {
+    // TODO implements
+    return null
+  }
+  
+  def getRetweets(statusId: Long): Status = {
+    // TODO implements
+    return null
+  }
+  
+  def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[User] = {
+    // TODO implements
+    return null
+  }
+  
+  def getRetweetedByIDs(statusId: Long, paging: Option[Paging] = None): IDs = {
+    // TODO implements
+    return null
+  }
+  
   /* TrendMethods */
   /**
    * {@inheritDoc}
@@ -78,24 +192,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterAPIs {
       case (None, None) => twitter4jObj.getWeeklyTrends()
       // case _ => //Exception?
     }
-  }
-  
-  /* LocalTrendsMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
-    location match {
-      case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
-      case None => twitter4jObj.getAvailableTrends()
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getLocationTrends(woeid: Int): Trends = {
-    twitter4jObj.getLocationTrends(woeid)
   }
 }
 
