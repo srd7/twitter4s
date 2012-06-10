@@ -6,6 +6,7 @@ import twitter4j.auth._
 import java.util.Date
 import java.io.File
 import java.io.InputStream
+import twitter4j.api.HelpMethods.Language
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   /* TwitterBase method */
@@ -37,6 +38,25 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   
   def shotdown {
     // TODO implements
+  }
+  
+  /* HelpMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def test: Boolean = {
+    return twitter4jObj.test()
+  }
+	
+  def getAPIConfiguration: TwitterAPIConfiguration = {
+    return twitter4jObj.getAPIConfiguration()
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getLanguages: ResponseList[Language] = {
+    return twitter4jObj.getLanguages()
   }
   
   /* OAuthSupport */
