@@ -4,6 +4,7 @@ import twitter4s.api._
 
 trait TwitterAPIs extends AnyRef
 with AccountMethods
+with DirectMessageMethods
 with HelpMethods
 with LocalTrendsMethods
 with SearchMethods

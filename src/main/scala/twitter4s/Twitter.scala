@@ -129,6 +129,43 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
+  /* DirectMessageMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
+    paging match {
+      case Some(paging) => twitter4jObj.getDirectMessages(paging)
+      case None => twitter4jObj.getDirectMessages()
+    }
+  }
+
+  def getSentDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
+    // TODO implements
+    return null
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def sendDirectMessage(screenName: Option[String] = None, userId:Option[Long] = None, text: String): DirectMessage = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.sendDirectMessage(screenName, text)
+      case (None, Some(userId)) => twitter4jObj.sendDirectMessage(userId, text)
+      case _ => throw new TwitterException("illegal argument")
+    }
+  }
+
+  def destroyDirectMessage(id: Long): DirectMessage = {
+    // TODO implements
+    return null
+  }
+
+  def showDirectMessage(id: Long): DirectMessage = {
+    // TODO implements
+    return null
+  }
+  
   /* LocalTrendsMethods */
   /**
    * {@inheritDoc}

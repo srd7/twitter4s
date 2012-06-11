@@ -10,11 +10,30 @@ object Twitter4sTestHelper {
   prop.load(is)
   is.close()
   
+  class TestUserInfo(propName: String) {
+    val screenName = prop.getProperty(propName + ".user")
+    val password = prop.getProperty(propName + ".password")
+    val id = prop.getProperty(propName + ".id").toLong
+    val accessToken = prop.getProperty(propName + ".oauth.accessToken")
+    val accessTokenSecret = prop.getProperty(propName + ".oauth.accessTokenSecret")
+  }
+  
+  val id1 = new TestUserInfo("id1")
+  //val id2 = new TestUserInfo("id2")
+  val id3 = new TestUserInfo("id3")
+  
   /**
    * Get Twitter4S object from test.propreties with prefix id1
    */
   def twitter1 = {
     Twitter(conf = Some(new PropertyConfiguration(prop, "/id1")))
+  }
+  
+  /**
+   * Get Twitter4S object from test.propreties with prefix id3
+   */
+  def twitter3 = {
+    Twitter(conf = Some(new PropertyConfiguration(prop, "/id3")))
   }
   
   /**
