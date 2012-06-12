@@ -5,6 +5,7 @@ import org.specs2.mutable.Specification
 import twitter4s.Twitter4sTestHelper._
 import org.specs2.runner.JUnitRunner
 import twitter4j.json.DataObjectFactory
+import twitter4j.TwitterException
 
 @RunWith(classOf[JUnitRunner])
 class DirectMessageMethodsTest extends Specification {
@@ -26,8 +27,24 @@ class DirectMessageMethodsTest extends Specification {
     "get direct message list from user" in {
       val actualReturnList = twitter3.getDirectMessages()
       actualReturnList must not equalTo(null)
-      actualReturnList.get(0) must equalTo(DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturnList.get(0))))
-      actualReturnList.size() must be_>=(0)
+      actualReturnList(0) must equalTo(DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturnList(0))))
+      actualReturnList().size must be_>=(0)
+    }
+  }
+  
+  "showDirectMessages" should {
+    "throws exception not allowed application" in {
+      val actualReturnList = twitter3.getDirectMessages()
+      twitter1.showDirectMessage(actualReturnList(0).getId()) must
+      throwA[TwitterException].like {case te:TwitterException => te.getStatusCode must equalTo(403)}
+    }
+    
+    "show direct messages allowed application" in {
+      val actualReturnList = twitter3.getDirectMessages()
+      val actualReturn = twitter3.showDirectMessage(actualReturnList(0).getId())
+      DataObjectFactory.getRawJSON(actualReturn) must not equalTo(null)
+      actualReturn must equalTo(DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturn)))
+      actualReturn.getId() must equalTo(actualReturnList(0).getId())
     }
   }
 }
