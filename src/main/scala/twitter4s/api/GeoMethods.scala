@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import twitter4j.GeoQuery
-import twitter4j.ResponseList
+import twitter4s.ResponseList
 import twitter4j.Place
 import twitter4j.GeoLocation
 import twitter4j.SimilarPlaces

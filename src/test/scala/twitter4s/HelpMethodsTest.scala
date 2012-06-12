@@ -17,9 +17,9 @@ class HelpMethodsTest extends Specification {
     "get Language settings from twitter" in {
       val languages = twitter1.getLanguages
       
-      languages.size() must be_>(5)
+      languages().size must be_>(5)
       
-      val language = languages.get(0)
+      val language = languages(0)
       
       language.getCode() must not equalTo(null)
       language.getName() must not equalTo(null)

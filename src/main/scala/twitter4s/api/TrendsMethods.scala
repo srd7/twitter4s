@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import java.util.Date
-import twitter4j.ResponseList
+import twitter4s.ResponseList
 import twitter4j.Trends
 
 /**

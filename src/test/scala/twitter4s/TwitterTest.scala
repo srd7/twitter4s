@@ -12,7 +12,7 @@ class TwitterTest extends Specification {
 	"getAccessLevel" should {
 	  "unauthenticated access level is None" in {
 	    val response = unauthenticated.getDailyTrends()
-	    response.getAccessLevel() must equalTo(TwitterResponse.NONE)
+	    response.accessLevel must equalTo(TwitterResponse.NONE)
 	  }
 	  
 	  "application has read and write access level is READ_WRITE" in {

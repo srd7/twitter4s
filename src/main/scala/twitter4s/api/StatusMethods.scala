@@ -2,7 +2,7 @@ package twitter4s.api
 
 import twitter4j.Status
 import twitter4j.StatusUpdate
-import twitter4j.ResponseList
+import twitter4s.ResponseList
 import twitter4j.User
 import twitter4j.Paging
 import twitter4j.IDs

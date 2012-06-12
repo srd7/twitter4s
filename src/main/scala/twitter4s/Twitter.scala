@@ -1,12 +1,29 @@
 package twitter4s
 
-import twitter4j._
-import twitter4j.conf._
-import twitter4j.auth._
-import java.util.Date
 import java.io.File
 import java.io.InputStream
+import java.util.Date
 import twitter4j.api.HelpMethods.Language
+import twitter4j.auth._
+import twitter4j.conf._
+import twitter4j.TwitterException
+import twitter4j.TwitterAPIConfiguration
+import twitter4j.IDs
+import twitter4j.AccountTotals
+import twitter4j.StatusUpdate
+import twitter4j.Trends
+import twitter4j.GeoLocation
+import twitter4j.Paging
+import twitter4j.DirectMessage
+import twitter4j.TwitterFactory
+import twitter4j.QueryResult
+import twitter4j.AccountSettings
+import twitter4j.RateLimitStatus
+import twitter4j.RateLimitStatusListener
+import twitter4j.Location
+import twitter4j.Query
+import twitter4j.User
+import twitter4j.Status
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   /* TwitterBase method */
@@ -28,7 +45,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getAuthorization: Authorization = {
-    return twitter4jObj.getAuthorization()
+    twitter4jObj.getAuthorization()
   }
   
   def getConfiguration: Configuration = {
@@ -56,7 +73,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getLanguages: ResponseList[Language] = {
-    return twitter4jObj.getLanguages()
+    ResponseList(twitter4jObj.getLanguages())
   }
   
   /* OAuthSupport */
@@ -134,13 +151,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
-    paging match {
+    ResponseList(paging match {
       case Some(paging) => twitter4jObj.getDirectMessages(paging)
       case None => twitter4jObj.getDirectMessages()
-    }
+    })
   }
 
-  def getSentDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
+  def getSentDirectMessages(paging: Option[Paging] = None): twitter4s.ResponseList[DirectMessage] = {
     // TODO implements
     return null
   }
@@ -161,9 +178,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     return null
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def showDirectMessage(id: Long): DirectMessage = {
-    // TODO implements
-    return null
+    twitter4jObj.showDirectMessage(id)
   }
   
   /* LocalTrendsMethods */
@@ -171,10 +190,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
-    location match {
+    ResponseList(location match {
       case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
       case None => twitter4jObj.getAvailableTrends()
-    }
+    })
   }
 
   /**
@@ -233,22 +252,22 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getDailyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
-    (date, excludeHashTags) match {
+    ResponseList((date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getDailyTrends()
       //case _ => //Exception?
-    }
+    })
   }
   
   /**
    * {@inheritDoc}
    */
   def getWeeklyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
-    (date, excludeHashTags) match {
+    ResponseList((date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getWeeklyTrends()
       // case _ => //Exception?
-    }
+    })
   }
 }
 

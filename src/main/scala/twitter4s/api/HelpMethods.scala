@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import twitter4j.TwitterAPIConfiguration
-import twitter4j.ResponseList
+import twitter4s.ResponseList
 import twitter4j.api.HelpMethods.Language
 
 /**

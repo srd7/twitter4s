@@ -3,7 +3,7 @@ package twitter4s.api
 import twitter4j.User
 import twitter4j.Relationship
 import twitter4j.IDs
-import twitter4j.ResponseList
+import twitter4s.ResponseList
 import twitter4j.Friendship
 
 trait FriendshipMethods {
