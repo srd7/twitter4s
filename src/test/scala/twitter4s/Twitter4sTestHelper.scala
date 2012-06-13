@@ -19,7 +19,7 @@ object Twitter4sTestHelper {
   }
   
   val id1 = new TestUserInfo("id1")
-  //val id2 = new TestUserInfo("id2")
+  val id2 = new TestUserInfo("id2")
   val id3 = new TestUserInfo("id3")
   
   /**
@@ -30,7 +30,15 @@ object Twitter4sTestHelper {
   }
   
   /**
+   * Get Twitter4S object from test.properties with prefix id2
+   */
+  def twitter2 = {
+    Twitter(conf = Some(new PropertyConfiguration(prop, "/id2")))
+  }
+  
+  /**
    * Get Twitter4S object from test.propreties with prefix id3
+   * TODO protected user
    */
   def twitter3 = {
     Twitter(conf = Some(new PropertyConfiguration(prop, "/id3")))
