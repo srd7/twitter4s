@@ -5,6 +5,7 @@ import twitter4s.ResponseList
 import twitter4j.DirectMessage
 
 trait DirectMessageMethods {
+  // TODO コメント
 	def getDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage]
 	
 	def getSentDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage]
