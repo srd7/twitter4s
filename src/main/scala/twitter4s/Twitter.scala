@@ -26,6 +26,10 @@ import twitter4j.User
 import twitter4j.Status
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
+  // TODO PagableResponseListやUserListのラッピング
+  // TODO 他のリターンオブジェクトとFactoryのラッピング
+  // TODO 名前付き引数でセットするAPIで全てセットされた場合の挙動をAPIのドキュメントを確認して決める
+  
   /* TwitterBase method */
   def getScreenName: String = {
     // TODO implements
@@ -33,7 +37,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   def getId: Long = {
-    // TODO imeplements
+    // TODO implements
     return 0
   }
   
@@ -185,6 +189,48 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.showDirectMessage(id)
   }
   
+  /* FavoriteMethods */
+  /**
+   * {@inhritDoc}
+   */
+  def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[Paging] = None): ResponseList[Status] = {
+    ResponseList((id, page, paging) match {
+      case (None, None, None) => twitter4jObj.getFavorites()
+      case (None, Some(page), None) => twitter4jObj.getFavorites(page)
+      case (Some(id), None, None) => twitter4jObj.getFavorites(id)
+      case (Some(id), Some(page), None) => twitter4jObj.getFavorites(id, page)
+      case (None, None, Some(paging)) => twitter4jObj.getFavorites(paging)
+      case (Some(id), None, Some(paging)) => twitter4jObj.getFavorites(id, paging)
+    })
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def createFavorite(id: Long): Status = {
+    twitter4jObj.createFavorite(id)
+  }
+  
+  def destroyFavorite(id: Long): Status = {
+    // TODO implements
+    null
+  }
+  
+  /* LegalResources */
+  /**
+   * {@inheritDoc}
+   */
+  def getTermsOfService: String = {
+    twitter4jObj.getTermsOfService()
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getPrivacyPolicy: String = {
+    twitter4jObj.getPrivacyPolicy()
+  }
+  
   /* LocalTrendsMethods */
   /**
    * {@inheritDoc}
@@ -245,6 +291,52 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def getRetweetedByIDs(statusId: Long, paging: Option[Paging] = None): IDs = {
     // TODO implements
     return null
+  }
+  
+  /* TimelineMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getHomeTimeline(paging: Option[Paging] = None): ResponseList[Status] = {
+    ResponseList(paging match {
+      case Some(paging) => twitter4jObj.getHomeTimeline(paging)
+      case None => twitter4jObj.getHomeTimeline()
+    })
+  }
+  
+  def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+  
+  def getMentions(paging: Option[Paging] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+
+  def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+  
+  def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+
+  def getRetweetedOfMe(paging: Option[Paging] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+
+  def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+
+  def getRetweetedByUser(pagind: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
+    // TODO implements
+    null
   }
   
   /* TrendMethods */
