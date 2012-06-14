@@ -3,6 +3,7 @@ package twitter4s
 import java.io.File
 import java.io.InputStream
 import java.util.Date
+import implicits.Twitter4SImplicits._
 import twitter4j.api.HelpMethods.Language
 import twitter4j.auth._
 import twitter4j.conf._
@@ -24,6 +25,7 @@ import twitter4j.Location
 import twitter4j.Query
 import twitter4j.User
 import twitter4j.Status
+import twitter4j.RelatedResults
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   // TODO PagableResponseListやUserListのラッピング
@@ -66,18 +68,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def test: Boolean = {
-    return twitter4jObj.test()
+    twitter4jObj.test()
   }
 	
   def getAPIConfiguration: TwitterAPIConfiguration = {
-    return twitter4jObj.getAPIConfiguration()
+    twitter4jObj.getAPIConfiguration()
   }
 
   /**
    * {@inheritDoc}
    */
   def getLanguages: ResponseList[Language] = {
-    ResponseList(twitter4jObj.getLanguages())
+    twitter4jObj.getLanguages()
   }
   
   /* OAuthSupport */
@@ -155,10 +157,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
-    ResponseList(paging match {
+    paging match {
       case Some(paging) => twitter4jObj.getDirectMessages(paging)
       case None => twitter4jObj.getDirectMessages()
-    })
+    }
   }
 
   def getSentDirectMessages(paging: Option[Paging] = None): twitter4s.ResponseList[DirectMessage] = {
@@ -194,14 +196,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inhritDoc}
    */
   def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[Paging] = None): ResponseList[Status] = {
-    ResponseList((id, page, paging) match {
+    (id, page, paging) match {
       case (None, None, None) => twitter4jObj.getFavorites()
       case (None, Some(page), None) => twitter4jObj.getFavorites(page)
       case (Some(id), None, None) => twitter4jObj.getFavorites(id)
       case (Some(id), Some(page), None) => twitter4jObj.getFavorites(id, page)
       case (None, None, Some(paging)) => twitter4jObj.getFavorites(paging)
       case (Some(id), None, Some(paging)) => twitter4jObj.getFavorites(id, paging)
-    })
+    }
   }
   
   /**
@@ -236,10 +238,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
-    ResponseList(location match {
+    location match {
       case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
       case None => twitter4jObj.getAvailableTrends()
-    })
+    }
   }
 
   /**
@@ -247,6 +249,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    */
   def getLocationTrends(woeid: Int): Trends = {
     twitter4jObj.getLocationTrends(woeid)
+  }
+  
+  /* NewTwitterMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getRelatedResults(statusId: Long): RelatedResults = {
+    twitter4jObj.getRelatedResults(statusId)
   }
   
   /* SearchMethods */
@@ -298,10 +308,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getHomeTimeline(paging: Option[Paging] = None): ResponseList[Status] = {
-    ResponseList(paging match {
+    paging match {
       case Some(paging) => twitter4jObj.getHomeTimeline(paging)
       case None => twitter4jObj.getHomeTimeline()
-    })
+    }
   }
   
   def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[Status] = {
@@ -344,22 +354,22 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getDailyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
-    ResponseList((date, excludeHashTags) match {
+    (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getDailyTrends()
       //case _ => //Exception?
-    })
+    }
   }
   
   /**
    * {@inheritDoc}
    */
   def getWeeklyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
-    ResponseList((date, excludeHashTags) match {
+    (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getWeeklyTrends()
       // case _ => //Exception?
-    })
+    }
   }
 }
 
