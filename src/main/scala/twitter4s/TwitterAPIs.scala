@@ -9,6 +9,7 @@ with FavoriteMethods
 with HelpMethods
 with LegalResources
 with LocalTrendsMethods
+with NewTwitterMethods
 with SearchMethods
 with StatusMethods
 with TimelineMethods
