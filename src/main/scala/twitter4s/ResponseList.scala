@@ -11,22 +11,22 @@ case class ResponseList[T](twt4jResponseList: twitter4j.ResponseList[T]) {
   /**
    * scala converted list
    */
-  val listAsScala = twt4jResponseList.asScala
+  def listAsScala = twt4jResponseList.asScala
   
   /**
    * rate limit status
    */
-  val rateLimitStatus = twt4jResponseList.getRateLimitStatus()
+  def rateLimitStatus = twt4jResponseList.getRateLimitStatus()
   
   /**
    * feature specific rate limit status
    */
-  val featureSpecificRateLimitStatus = twt4jResponseList.getFeatureSpecificRateLimitStatus()
+  def featureSpecificRateLimitStatus = twt4jResponseList.getFeatureSpecificRateLimitStatus()
   
   /**
    * access level
    */
-  val accessLevel = twt4jResponseList.getAccessLevel()
+  def accessLevel = twt4jResponseList.getAccessLevel()
   
   /**
    * Get scala converted list method.
