@@ -8,7 +8,6 @@ import twitter4j.Status
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait FavoriteMethods {
-  // TODO コメント
   /**
    * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format.
    * <br/>This method calls one of below twitter4j api methods
