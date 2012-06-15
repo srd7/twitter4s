@@ -21,5 +21,4 @@ trait TwitterBase extends AnyRef with OAuthSupport {
   def getConfiguration: Configuration
   
   def shotdown: Unit
-  // TODO create trait HttpResponseListener
 }
