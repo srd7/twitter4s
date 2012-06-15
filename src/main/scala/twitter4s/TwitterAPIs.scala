@@ -10,6 +10,7 @@ with HelpMethods
 with LegalResources
 with LocalTrendsMethods
 with NewTwitterMethods
+with NotificationMethods
 with SearchMethods
 with StatusMethods
 with TimelineMethods
