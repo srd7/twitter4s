@@ -259,6 +259,23 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getRelatedResults(statusId)
   }
   
+  /* NotificationMethods */
+  def enableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.enableNotification(screenName)
+      case (None, Some(userId)) => twitter4jObj.enableNotification(userId)
+      // case _ => exception? 
+    }
+  }
+
+  def disableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.disableNotification(screenName)
+      case (None, Some(userId)) => twitter4jObj.disableNotification(userId)
+      // case _ => exceptioin?
+    }
+  }
+  
   /* SearchMethods */
   /**
    * {@inheritDoc}
