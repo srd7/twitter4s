@@ -5,21 +5,26 @@ import twitter4s.Twitter4sTestHelper._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import twitter4j.TwitterException
+import twitter4j.Status
 
 @RunWith(classOf[JUnitRunner])
 class FavoriteMethodsTest extends Specification {
+  
+  private def testStatus(target: Status) = {
+    rawJSON(target) must not equalTo(null)
+    target must equalTo(DataObjectFactory.createStatus(rawJSON(target)))
+  }
+  
   "createFavorite" should {
     "mark a tweet as favorite" in {
       // get anyone's tweet from timeline
       // and test getHomeTimeline API method
       val anyonesStatus = twitter1.getHomeTimeline()(0)
-      DataObjectFactory.getRawJSON(anyonesStatus) must not equalTo(null)
-      anyonesStatus must equalTo(DataObjectFactory.createStatus(DataObjectFactory.getRawJSON(anyonesStatus)))
+      testStatus(anyonesStatus)
       
       // mark favorite and destroy
       val status = twitter2.createFavorite(anyonesStatus.getId())
-      DataObjectFactory.getRawJSON(status) must not equalTo(null)
-      status must equalTo(DataObjectFactory.createStatus(DataObjectFactory.getRawJSON(status)))
+      testStatus(status)
       twitter2.getFavorites()().size must be_>(0)
       try {
         twitter2.destroyFavorite(anyonesStatus.getId())

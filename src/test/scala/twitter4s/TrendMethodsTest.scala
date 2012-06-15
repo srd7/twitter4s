@@ -16,15 +16,15 @@ class TrendMethodsTest extends Specification {
     "get trends without localtion parameter" in {
       val locations = twitter1.getAvailableTrends()
       
-      DataObjectFactory.getRawJSON(locations.twt4jResponseList) mustNotEqual(null)
-      locations(0) must equalTo(DataObjectFactory.createLocation(DataObjectFactory.getRawJSON(locations(0))))
+      rawJSON(locations.twt4jResponseList) mustNotEqual(null)
+      locations(0) must equalTo(DataObjectFactory.createLocation(rawJSON(locations(0))))
       (locations().size > 0) must beTrue
     }
     
     "get trends with location parameter" in {
       val locations = twitter1.getAvailableTrends(Some(geoLocation))
       
-      DataObjectFactory.getRawJSON(locations.twt4jResponseList) mustNotEqual(null)
+      rawJSON(locations.twt4jResponseList) mustNotEqual(null)
       (locations().size > 0) must beTrue
     }
   }
@@ -35,9 +35,9 @@ class TrendMethodsTest extends Specification {
       val woeid = locations(0).getWoeid()
       val trends = twitter1.getLocationTrends(woeid)
       
-      trends must equalTo(DataObjectFactory.createTrends(DataObjectFactory.getRawJSON(trends)))
-      DataObjectFactory.getRawJSON(locations) mustEqual(null)
-      DataObjectFactory.getRawJSON(trends) mustNotEqual(null)
+      trends must equalTo(DataObjectFactory.createTrends(rawJSON(trends)))
+      rawJSON(locations) mustEqual(null)
+      rawJSON(trends) mustNotEqual(null)
       locations(0) mustEqual(trends.getLocation())
       (trends.getTrends().size > 0) must beTrue
     }

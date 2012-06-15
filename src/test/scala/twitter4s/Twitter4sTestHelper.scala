@@ -2,6 +2,7 @@ package twitter4s
 import java.util.Properties
 import twitter4j.conf.PropertyConfiguration
 import twitter4j.conf.ConfigurationBuilder
+import twitter4j.json.DataObjectFactory
 
 object Twitter4sTestHelper {
   val prop = new Properties()
@@ -58,5 +59,10 @@ object Twitter4sTestHelper {
   def unauthenticated = {
     Twitter(conf = Some(new ConfigurationBuilder().setJSONStoreEnabled(true).build()))
   }
+  
+  /**
+   * Get raw JSON string from Twitter4J object
+   */
+  def rawJSON(target: Any) = DataObjectFactory.getRawJSON(target)
 
 }

@@ -57,7 +57,7 @@ class SearchAPITest extends Specification {
       val tweets = unauthenticated.search(query).getTweets()
       
       tweets.size() must be_>=(1)
-      tweets.get(0) must equalTo(DataObjectFactory.createTweet(DataObjectFactory.getRawJSON(tweets.get(0))))
+      tweets.get(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets.get(0))))
       tweets.get(0).getText() must not equalTo(null)
       tweets.get(0).getCreatedAt() must not equalTo(null)
       tweets.get(0).getFromUser() must not equalTo(null)

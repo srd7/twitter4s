@@ -15,8 +15,8 @@ class DirectMessageMethodsTest extends Specification {
       val actualReturn = twitter1.sendDirectMessage(userId = Some(id3.id), text = expectedReturn)
       
       actualReturn.getId() must be_>=(0L)
-      DataObjectFactory.getRawJSON(actualReturn) must not equalTo(null)
-      DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturn)) must equalTo(actualReturn)
+      rawJSON(actualReturn) must not equalTo(null)
+      DataObjectFactory.createDirectMessage(rawJSON(actualReturn)) must equalTo(actualReturn)
       actualReturn.getText() must equalTo(expectedReturn)
       actualReturn.getSender().getScreenName() must equalTo(id1.screenName)
       actualReturn.getRecipient().getScreenName() must equalTo(id3.screenName)
@@ -27,7 +27,7 @@ class DirectMessageMethodsTest extends Specification {
     "get direct message list from user" in {
       val actualReturnList = twitter3.getDirectMessages()
       actualReturnList must not equalTo(null)
-      actualReturnList(0) must equalTo(DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturnList(0))))
+      actualReturnList(0) must equalTo(DataObjectFactory.createDirectMessage(rawJSON(actualReturnList(0))))
       actualReturnList().size must be_>=(0)
     }
   }
@@ -42,8 +42,8 @@ class DirectMessageMethodsTest extends Specification {
     "show direct messages allowed application" in {
       val actualReturnList = twitter3.getDirectMessages()
       val actualReturn = twitter3.showDirectMessage(actualReturnList(0).getId())
-      DataObjectFactory.getRawJSON(actualReturn) must not equalTo(null)
-      actualReturn must equalTo(DataObjectFactory.createDirectMessage(DataObjectFactory.getRawJSON(actualReturn)))
+      rawJSON(actualReturn) must not equalTo(null)
+      actualReturn must equalTo(DataObjectFactory.createDirectMessage(rawJSON(actualReturn)))
       actualReturn.getId() must equalTo(actualReturnList(0).getId())
     }
   }
