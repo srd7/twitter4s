@@ -4,6 +4,7 @@ import twitter4s.ResponseList
 import twitter4j.SavedSearch
 
 trait SavedSearchedMethods {
+  // TODO コメント
 	def getSavedSearches: ResponseList[SavedSearch]
 	
 	def showSavedSearch(id: Int): SavedSearch

@@ -26,6 +26,7 @@ import twitter4j.Query
 import twitter4j.User
 import twitter4j.Status
 import twitter4j.RelatedResults
+import twitter4j.SavedSearch
 
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   // TODO PagableResponseListやUserListのラッピング
@@ -274,6 +275,30 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       case (None, Some(userId)) => twitter4jObj.disableNotification(userId)
       // case _ => exceptioin?
     }
+  }
+  
+  /* SavedSearchedMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getSavedSearches: ResponseList[SavedSearch] = {
+    twitter4jObj.getSavedSearches()
+  }
+
+  def showSavedSearch(id: Int): SavedSearch = {
+    // TODO implements
+    null
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def createSavedSearch(query: String): SavedSearch = {
+    twitter4jObj.createSavedSearch(query)
+  }
+
+  def destroySavedSearch(id: Int): SavedSearch = {
+    twitter4jObj.destroySavedSearch(id)
   }
   
   /* SearchMethods */

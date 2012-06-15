@@ -11,6 +11,7 @@ with LegalResources
 with LocalTrendsMethods
 with NewTwitterMethods
 with NotificationMethods
+with SavedSearchedMethods
 with SearchMethods
 with StatusMethods
 with TimelineMethods
