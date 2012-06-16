@@ -28,18 +28,21 @@ import twitter4j.Status
 import twitter4j.RelatedResults
 import twitter4j.SavedSearch
 
+/**
+ * @author Shinsuke Abe - mao.instantlife at gmail.com
+ */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   // TODO PagableResponseListやUserListのラッピング
   // TODO 他のリターンオブジェクトとFactoryのラッピング
   // TODO 名前付き引数でセットするAPIで全てセットされた場合の挙動をAPIのドキュメントを確認して決める
   
   /* TwitterBase method */
-  def getScreenName: String = {
+  def screenName: String = {
     // TODO implements
     return null
   }
   
-  def getId: Long = {
+  def id: Long = {
     // TODO implements
     return 0
   }
@@ -51,11 +54,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getAuthorization: Authorization = {
+  def authorization: Authorization = {
     twitter4jObj.getAuthorization()
   }
   
-  def getConfiguration: Configuration = {
+  def configuration: Configuration = {
     // TODO implements
     return null
   }
@@ -415,27 +418,55 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
 }
 
+/**
+ * @author Shinsuke Abe - mao.instantlife at gmail.com
+ */
 object Twitter {
+  /**
+   * Create Twitter4S object from twitter4j factory.
+   * 
+   * @param conf (optional) Configuration object for create factory. This parameter is used high priority.
+   * @param configTreePath (optional) configuration strings for create factory.
+   * @param accessToken (optional) AccessToken object for create twitter4j object. This parameter is used high priority.
+   * @param auth (optional) Authorization object for create twitter4j object.
+   * @return twitter4s.Twitter
+   * @since Twitter4S 1.0.0
+   */
   def apply(conf: Option[Configuration] = None, configTreePath: Option[String] = None, accessToken: Option[AccessToken] = None, auth: Option[Authorization] = None) = {
     val factory4j = getTwitterFactory4j(conf, configTreePath)
     new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
   }
   
+  /**
+   * Create TwitterFactory object from configurations.
+   * 
+   * @param conf (optional) Configuration object. This parameter is used high priority.
+   * @param configTreePath (optional) configuration strings.
+   * @return twitter4j.TwitterFactory
+   * @since Twitter4S 1.0.0
+   */
   private def getTwitterFactory4j(conf: Option[Configuration], configTreePath: Option[String]) = {
     (conf, configTreePath) match {
       case (None, None) => new TwitterFactory()
-      case (Some(config), None) => new TwitterFactory(config)
-      case (None, Some(confTree)) => new TwitterFactory(confTree)
-      //case _ => // Exception?
+      case (Some(conf), _) => new TwitterFactory(conf)
+      case (None, Some(configTreePath)) => new TwitterFactory(configTreePath)
     }
   }
   
+  /**
+   * Create Twitter4J object from factory.
+   * 
+   * @param factory4j (required) TwitterFactory is created by configuration.
+   * @param accessToken (optional) AccessToken object. This parameter is used high priority.
+   * @param auth (optinal) Authorization object.
+   * @return twitter4j.Twitter
+   * @since Twitter4S 1.0.0
+   */
   private def getTwitter4jInstance(factory4j: TwitterFactory, accessToken: Option[AccessToken], auth: Option[Authorization]) = {
     (accessToken, auth) match {
       case (None, None) => factory4j.getInstance()
-      case (Some(token), None) => factory4j.getInstance(token)
-      case (None, Some(authInfo)) => factory4j.getInstance(authInfo)
-      //case _ => // Exception?
+      case (Some(accessToken), _) => factory4j.getInstance(accessToken)
+      case (None, Some(auth)) => factory4j.getInstance(auth)
     }
   }
 }

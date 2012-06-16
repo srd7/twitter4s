@@ -10,15 +10,15 @@ import twitter4j.auth.RequestToken
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait TwitterBase extends AnyRef with OAuthSupport {
-  def getScreenName: String
+  def screenName: String
   
-  def getId: Long
+  def id: Long
   
   def addRateLimitStatusListener(listener: RateLimitStatusListener): Unit
   
-  def getAuthorization: Authorization
+  def authorization: Authorization
   
-  def getConfiguration: Configuration
+  def configuration: Configuration
   
   def shotdown: Unit
 }

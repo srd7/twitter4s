@@ -13,7 +13,7 @@ class AuthorizationTest extends Specification {
   "getAuthorization" should {
     "get anoymous instance is NullAuthorization" in {
       val twitter = Twitter()
-      val auth = twitter.getAuthorization
+      val auth = twitter.authorization
       auth must beAnInstanceOf[NullAuthorization]
     }
     
@@ -26,7 +26,7 @@ class AuthorizationTest extends Specification {
       twitter.setOAuthConsumer(consumerKey, consumerSecret) must
       throwA[IllegalStateException]
       
-      val auth = twitter.getAuthorization
+      val auth = twitter.authorization
       auth must beAnInstanceOf[OAuthAuthorization]
     }
   }
