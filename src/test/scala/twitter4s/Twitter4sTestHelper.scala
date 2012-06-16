@@ -64,5 +64,20 @@ object Twitter4sTestHelper {
    * Get raw JSON string from Twitter4J object
    */
   def rawJSON(target: Any) = DataObjectFactory.getRawJSON(target)
+  
+  /**
+   * Get id1 blocking user screen name
+   */
+  def blockingScreenName = prop.getProperty("id1.block.user")
+  
+  /**
+   * Get id1 blocking user id
+   */
+  def blockingUserId = prop.getProperty("id1.block.id").toLong
+  
+  /**
+   * Get id1 blocking users list size
+   */
+  def blockingUsersSize = prop.getProperty("id1.block.length").toInt
 
 }
