@@ -74,7 +74,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def test: Boolean = {
     twitter4jObj.test()
   }
-	
+
+  /**
+   * {@inheritDoc}
+   */
   def getAPIConfiguration: TwitterAPIConfiguration = {
     twitter4jObj.getAPIConfiguration()
   }
@@ -264,6 +267,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   /* NotificationMethods */
+  /**
+   * {@inheritDoc}
+   */
   def enableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.enableNotification(screenName)
@@ -272,6 +278,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def disableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.disableNotification(screenName)
@@ -300,6 +309,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.createSavedSearch(query)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def destroySavedSearch(id: Int): SavedSearch = {
     twitter4jObj.destroySavedSearch(id)
   }
