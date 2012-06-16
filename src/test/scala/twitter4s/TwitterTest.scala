@@ -31,4 +31,10 @@ class TwitterTest extends Specification {
       twitter1.screenName must equalTo(id1.screenName)
     }
   }
+  
+  "id" should {
+    "get authorized user's id" in {
+      twitter1.id must equalTo(id1.id)
+    }
+  }
 }
