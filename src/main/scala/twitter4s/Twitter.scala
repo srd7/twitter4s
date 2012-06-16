@@ -37,14 +37,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   // TODO 名前付き引数でセットするAPIで全てセットされた場合の挙動をAPIのドキュメントを確認して決める
   
   /* TwitterBase method */
+  /**
+   * {@inheritDoc}
+   */
   def screenName: String = {
-    // TODO implements
-    return null
+    twitter4jObj.getScreenName()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def id: Long = {
-    // TODO implements
-    return 0
+    twitter4jObj.getId()
   }
   
   def addRateLimitStatusListener(listener: RateLimitStatusListener) {
@@ -63,8 +67,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     return null
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def shotdown {
-    // TODO implements
+    twitter4jObj.shutdown()
   }
   
   /* HelpMethods */
@@ -157,6 +164,57 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def updateAccountSettings(trendLocationWoeid: Int, sleepTimeEnabled: Boolean, startSleepTime: String, endSleepTime: String, timeZone: String, lang: String): AccountSettings = {
     // TODO implements
     null
+  }
+  
+  /* BlockMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def createBlock(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.createBlock(screenName)
+      case (None, Some(userId)) => twitter4jObj.createBlock(userId)
+      // case _ => // Exception?
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def destroyBlock(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.destroyBlock(screenName)
+      case (None, Some(userId)) => twitter4jObj.destroyBlock(userId)
+      // case _ => // Exception?
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def existsBlock(screenName: Option[String] = None, userId: Option[Long] = None): Boolean = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.existsBlock(screenName)
+      case (None, Some(userId)) => twitter4jObj.existsBlock(userId)
+      // case _ => // Exception?
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getBlockingUsers(page: Option[Int] = None): ResponseList[User] = {
+    page match {
+      case Some(page) => twitter4jObj.getBlockingUsers(page)
+      case None => twitter4jObj.getBlockingUsers()
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getBlockingUsersIDs: IDs = {
+    twitter4jObj.getBlockingUsersIDs()
   }
   
   /* DirectMessageMethods */
