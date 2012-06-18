@@ -7,6 +7,7 @@ with AccountMethods
 with BlockMethods
 with DirectMessageMethods
 with FavoriteMethods
+with GeoMethods
 with HelpMethods
 with LegalResources
 with LocalTrendsMethods
@@ -14,6 +15,7 @@ with NewTwitterMethods
 with NotificationMethods
 with SavedSearchedMethods
 with SearchMethods
+with SpamReportingMethods
 with StatusMethods
 with TimelineMethods
 with TrendsMethods

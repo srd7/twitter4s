@@ -27,6 +27,9 @@ import twitter4j.User
 import twitter4j.Status
 import twitter4j.RelatedResults
 import twitter4j.SavedSearch
+import twitter4j.Place
+import twitter4j.GeoQuery
+import twitter4j.SimilarPlaces
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -62,9 +65,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getAuthorization()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def configuration: Configuration = {
-    // TODO implements
-    return null
+    twitter4jObj.getConfiguration()
   }
   
   /**
@@ -283,6 +288,40 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
+  /* GeoMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def searchPlaces(query: GeoQuery): ResponseList[Place] = {
+    twitter4jObj.searchPlaces(query)
+  }
+
+  /**
+   * {@inhritDoc}
+   */
+  def getSimilarPlaces(location: GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces = {
+    twitter4jObj.getSimilarPlaces(location, name, containedWithin, streetAddress)
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def reverseGeoCode(query: GeoQuery): ResponseList[Place] = {
+    twitter4jObj.reverseGeoCode(query)
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getGeoDetails(id: String): Place = {
+    twitter4jObj.getGeoDetails(id)
+  }
+  
+  def createPlace(name: String, containedWithin: String, token: String, location: GeoLocation, streetAddress: String): Place = {
+    // TODO implements
+    null
+  }
+  
   /* LegalResources */
   /**
    * {@inheritDoc}
@@ -382,15 +421,33 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.search(query)
   }
   
+  /* SpamReportingMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def reportSpam(userId: Option[Long] = None, screenName: Option[String] = None): User = {
+    (userId, screenName) match {
+      case (Some(userId), None) => twitter4jObj.reportSpam(userId)
+      case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
+      // case _ => // Exception?
+    } 
+  }
+  
   /* StatusMethods */
   def showStatus(id: Long): Status = {
     // TODO implements
     return null
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def updateStatus(status: Option[String] = None, latestStatus: Option[StatusUpdate] = None): Status = {
-    // TODO implements
-    return null
+    (status, latestStatus) match {
+      case (Some(status), None) => twitter4jObj.updateStatus(status)
+      case (None, Some(latestStatus)) => twitter4jObj.updateStatus(latestStatus)
+      // case _ => // Exception?
+    }
   }
 
   def destroyStatus(statusId: Long): Status = {
@@ -429,9 +486,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
   
+  /**
+   * {@inheritedDoc}
+   */
   def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+    (screenName, userId, paging) match {
+      case (None, None, None) => twitter4jObj.getUserTimeline()
+      case (Some(screenName), None, None) => twitter4jObj.getUserTimeline(screenName)
+      case (None, Some(userId), None) => twitter4jObj.getUserTimeline(userId)
+      case (Some(screenName), None, Some(paging)) => twitter4jObj.getUserTimeline(screenName, paging)
+      case (None, Some(userId), Some(paging)) => twitter4jObj.getUserTimeline(userId, paging)
+      case (None, None, Some(paging)) => twitter4jObj.getUserTimeline(paging)
+    }
   }
   
   def getMentions(paging: Option[Paging] = None): ResponseList[Status] = {
