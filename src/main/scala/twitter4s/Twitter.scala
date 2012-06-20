@@ -568,6 +568,7 @@ object Twitter {
    * @return twitter4s.Twitter
    * @since Twitter4S 1.0.0
    */
+  // TODO 引数リストのカリー化
   def apply(conf: Option[Configuration] = None, configTreePath: Option[String] = None, accessToken: Option[AccessToken] = None, auth: Option[Authorization] = None) = {
     val factory4j = getTwitterFactory4j(conf, configTreePath)
     new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
