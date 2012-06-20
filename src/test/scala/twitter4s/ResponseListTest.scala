@@ -8,17 +8,10 @@ import scala.collection.mutable.Buffer
 import twitter4j.Trends
 import twitter4j.RateLimitStatus
 import twitter4j.TwitterResponse
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class ResponseListTest extends Specification {
-
-  "apply" should {
-    "get twitter4j object list as scala" in {
-      val responseList = twitter1.getDailyTrends()
-      responseList() must beAnInstanceOf[Buffer[Trends]]
-      responseList().size must be_>(0)
-    }
-  }
   
   "apply with index parameter" should {
     "get twitter4j object in list" in {

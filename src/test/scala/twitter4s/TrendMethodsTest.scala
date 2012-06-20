@@ -6,6 +6,7 @@ import json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
 import org.junit.runner.RunWith
 import twitter4s.Twitter4sTestHelper._
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class TrendMethodsTest extends Specification {
@@ -18,14 +19,14 @@ class TrendMethodsTest extends Specification {
       
       rawJSON(locations.twt4jResponseList) mustNotEqual(null)
       locations(0) must equalTo(DataObjectFactory.createLocation(rawJSON(locations(0))))
-      (locations().size > 0) must beTrue
+      (locations.size > 0) must beTrue
     }
     
     "get trends with location parameter" in {
       val locations = twitter1.getAvailableTrends(Some(geoLocation))
       
       rawJSON(locations.twt4jResponseList) mustNotEqual(null)
-      (locations().size > 0) must beTrue
+      (locations.size > 0) must beTrue
     }
   }
   

@@ -6,6 +6,7 @@ import twitter4s.Twitter4sTestHelper._
 import org.specs2.runner.JUnitRunner
 import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class DirectMessageMethodsTest extends Specification {
@@ -28,7 +29,7 @@ class DirectMessageMethodsTest extends Specification {
       val actualReturnList = twitter3.getDirectMessages()
       actualReturnList must not equalTo(null)
       actualReturnList(0) must equalTo(DataObjectFactory.createDirectMessage(rawJSON(actualReturnList(0))))
-      actualReturnList().size must be_>=(0)
+      actualReturnList.size must be_>=(0)
     }
   }
   

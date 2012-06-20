@@ -6,12 +6,13 @@ import twitter4s.Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4s.implicits.Twitter4SImplicits._
 import twitter4j.Status
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class NewTwitterMethodsTest extends Specification {
   
   private def testTweetList(target: ResponseList[Status]) = {
-    if (target().size > 0) target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
+    if (target.size > 0) target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
     true
   }
   

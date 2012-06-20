@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import twitter4j.Query
 import twitter4j.json.DataObjectFactory
 import twitter4j.GeoLocation
+import twitter4s.implicits.Twitter4SImplicits._
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -21,7 +22,7 @@ class SearchAPITest extends Specification {
   
   private def trendListAssert(trendList: ResponseList[Trends], expectSize: Int) = {
     var trendAt: Date = null
-    forall(trendList()) { (singleTrends: Trends) =>
+    forall(trendList) { (singleTrends: Trends) =>
       singleTrends.getTrends().size must be_>(expectSize - 10)
       if (trendAt != null) trendAt.before(singleTrends.getTrendAt()) must beTrue
       trendAt = singleTrends.getTrendAt()

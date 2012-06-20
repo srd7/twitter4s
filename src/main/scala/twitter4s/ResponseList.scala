@@ -29,11 +29,6 @@ case class ResponseList[T](twt4jResponseList: twitter4j.ResponseList[T]) {
   def accessLevel = twt4jResponseList.getAccessLevel()
   
   /**
-   * Get scala converted list method.
-   */
-  def apply():Buffer[T] = listAsScala
-  
-  /**
    * Get object in scala converted list method.
    */
   def apply(idx: Int):T = listAsScala(idx)

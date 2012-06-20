@@ -5,6 +5,7 @@ import org.specs2.runner.JUnitRunner
 import twitter4s.Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class SavedSearchesMethodsTest extends Specification {
@@ -19,7 +20,7 @@ class SavedSearchesMethodsTest extends Specification {
   "createSavedSearch" should {
     "add seach string to saved searches list" in {
       // clear saved search list for test
-      twitter3.getSavedSearches().foreach(search => twitter3.destroySavedSearch(search.getId()))
+      twitter3.getSavedSearches.foreach(search => twitter3.destroySavedSearch(search.getId()))
       
       val queryStr = "my search"
       

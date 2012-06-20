@@ -10,6 +10,7 @@ import twitter4j.Place
 import twitter4j.TwitterException
 import twitter4j.StatusUpdate
 import java.util.Date
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class GeoMethodsTest extends Specification {
@@ -17,14 +18,14 @@ class GeoMethodsTest extends Specification {
   private def testPlaces(target: ResponseList[Place]) = {
     rawJSON(target.twt4jResponseList) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createPlace(rawJSON(target(0))))
-    target().size must be_>(0)
+    target.size must be_>(0)
   }
   
   "reverseGeoCode" should {
     "get no places if location is (0,0)" in {
       val query = new GeoQuery(new GeoLocation(0, 0))
       val places = twitter1.reverseGeoCode(query)
-      places().size must equalTo(0)
+      places.size must equalTo(0)
     }
     
     "get place list if location is exists" in {

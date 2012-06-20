@@ -4,6 +4,7 @@ import org.specs2.mutable.Specification
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import twitter4s.Twitter4sTestHelper._
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class HelpMethodsTest extends Specification {
@@ -17,7 +18,7 @@ class HelpMethodsTest extends Specification {
     "get Language settings from twitter" in {
       val languages = twitter1.getLanguages
       
-      languages().size must be_>(5)
+      languages.size must be_>(5)
       
       val language = languages(0)
       

@@ -6,13 +6,14 @@ import twitter4s.Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4j.Paging
 import twitter4j.Status
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class TimelineMethodsTest extends Specification {
   "getHomeTimeline" should {
     "get authenticated user's home timeline" in {
       val statuses = twitter1.getHomeTimeline()
-      statuses().size must be_>(0)
+      statuses.size must be_>(0)
       twitter1.configuration.isJSONStoreEnabled must beTrue
       rawJSON(statuses.twt4jResponseList) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
@@ -23,12 +24,12 @@ class TimelineMethodsTest extends Specification {
     def testStatuses(target: ResponseList[Status]) = {
       rawJSON(target.twt4jResponseList) must not equalTo(null)
       target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
-      target().size must be_>(0)
+      target.size must be_>(0)
     }
     
     "get user timeline no parameters" in {
       val statuses = twitter1.getUserTimeline()
-      statuses().size must be_>(0)
+      statuses.size must be_>(0)
     }
     
     "get spcified user screen name timeline unauthenticated" in {
@@ -66,7 +67,7 @@ class TimelineMethodsTest extends Specification {
     "get users timeline with deffer page setting but same tweet count" in {
       val statuses1 = twitter1.getUserTimeline(paging = Some(new Paging(1).count(30)))
       val statuses2 = twitter1.getUserTimeline(paging = Some(new Paging(2).count(15)))
-      statuses1(statuses1().size - 1) must equalTo(statuses2(statuses2().size - 1))
+      statuses1(statuses1.size - 1) must equalTo(statuses2(statuses2.size - 1))
     }
   }
 }

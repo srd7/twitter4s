@@ -6,6 +6,7 @@ import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import twitter4j.TwitterException
 import twitter4j.Status
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class FavoriteMethodsTest extends Specification {
@@ -25,7 +26,7 @@ class FavoriteMethodsTest extends Specification {
       // mark favorite and destroy
       val status = twitter2.createFavorite(anyonesStatus.getId())
       testStatus(status)
-      twitter2.getFavorites()().size must be_>(0)
+      twitter2.getFavorites().size must be_>(0)
       try {
         twitter2.destroyFavorite(anyonesStatus.getId())
       } catch {
