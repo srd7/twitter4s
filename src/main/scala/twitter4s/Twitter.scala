@@ -30,6 +30,8 @@ import twitter4j.SavedSearch
 import twitter4j.Place
 import twitter4j.GeoQuery
 import twitter4j.SimilarPlaces
+import twitter4j.ProfileImage
+import twitter4j.Category
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -382,7 +384,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.disableNotification(screenName)
       case (None, Some(userId)) => twitter4jObj.disableNotification(userId)
-      // case _ => exceptioin?
+      // case _ => TODO exceptioin?
     }
   }
   
@@ -429,7 +431,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (userId, screenName) match {
       case (Some(userId), None) => twitter4jObj.reportSpam(userId)
       case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
-      // case _ => // Exception?
+      // case _ => // TODO Exception?
     } 
   }
   
@@ -446,7 +448,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (status, latestStatus) match {
       case (Some(status), None) => twitter4jObj.updateStatus(status)
       case (None, Some(latestStatus)) => twitter4jObj.updateStatus(latestStatus)
-      // case _ => // Exception?
+      // case _ => // TODO Exception?
     }
   }
 
@@ -500,9 +502,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getMentions(paging: Option[Paging] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+    paging match {
+      case None => twitter4jObj.getMentions()
+      case Some(paging) => twitter4jObj.getMentions(paging)
+    }
   }
 
   def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[Status] = {
@@ -538,7 +545,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getDailyTrends()
-      //case _ => //Exception?
+      //case _ => // TODO Exception?
     }
   }
   
@@ -549,8 +556,63 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getWeeklyTrends()
-      // case _ => //Exception?
+      // case _ => // TODO Exception?
     }
+  }
+  
+  /* UserMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def showUser(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.showUser(screenName)
+      case (None, Some(userId)) => twitter4jObj.showUser(userId)
+      // case _ => // TODO exception?
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[User] = {
+    (screenNames, ids) match {
+      case (Some(screenNames), None) => twitter4jObj.lookupUsers(screenNames)
+      case (None, Some(ids)) => twitter4jObj.lookupUsers(ids)
+      // case _ => // TODO exception?
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def searchUsers(query: String, page: Int): ResponseList[User] = {
+    twitter4jObj.searchUsers(query, page)
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getSuggestedUserCategories: ResponseList[Category] = {
+    twitter4jObj.getSuggestedUserCategories()
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getUserSuggestions(categorySlug: String): ResponseList[User] = {
+    twitter4jObj.getUserSuggestions(categorySlug)
+  }
+
+  def getMemberSuggestions(categorySlug: String): ResponseList[User] = {
+    twitter4jObj.getMemberSuggestions(categorySlug)
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage = {
+    twitter4jObj.getProfileImage(screenName, size)
   }
 }
 

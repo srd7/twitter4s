@@ -79,5 +79,14 @@ object Twitter4sTestHelper {
    * Get id1 blocking users list size
    */
   def blockingUsersSize = prop.getProperty("id1.block.length").toInt
+  
+  /**
+   * Get numberId screenName
+   */
+  def numberId = prop.getProperty("numberid.user")
 
+  /**
+   * Get numberId id
+   */
+  def numberIdId = prop.getProperty("numberid.id").toLong
 }

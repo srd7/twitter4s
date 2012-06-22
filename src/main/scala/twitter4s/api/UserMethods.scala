@@ -11,7 +11,7 @@ trait UserMethods {
 	
 	def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[User]
 	
-	def searchUsers(query: Query, page: Int): ResponseList[User]
+	def searchUsers(query: String, page: Int): ResponseList[User]
 	
 	def getSuggestedUserCategories: ResponseList[Category]
 	
