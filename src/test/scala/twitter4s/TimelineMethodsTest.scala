@@ -10,6 +10,13 @@ import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class TimelineMethodsTest extends Specification {
+  
+  def testStatuses(target: ResponseList[Status]) = {
+    rawJSON(target.twt4jResponseList) must not equalTo(null)
+    target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
+    target.size must be_>(0)
+  }
+  
   "getHomeTimeline" should {
     "get authenticated user's home timeline" in {
       val statuses = twitter1.getHomeTimeline()
@@ -21,11 +28,7 @@ class TimelineMethodsTest extends Specification {
   }
   
   "getUserTimeline" should {
-    def testStatuses(target: ResponseList[Status]) = {
-      rawJSON(target.twt4jResponseList) must not equalTo(null)
-      target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
-      target.size must be_>(0)
-    }
+
     
     "get user timeline no parameters" in {
       val statuses = twitter1.getUserTimeline()
@@ -68,6 +71,28 @@ class TimelineMethodsTest extends Specification {
       val statuses1 = twitter1.getUserTimeline(paging = Some(new Paging(1).count(30)))
       val statuses2 = twitter1.getUserTimeline(paging = Some(new Paging(2).count(15)))
       statuses1(statuses1.size - 1) must equalTo(statuses2(statuses2.size - 1))
+    }
+  }
+  
+  "getMentions" should {
+    "get specified user's mention list without parameter" in {
+      val statuses = twitter1.getMentions()
+      testStatuses(statuses)
+    }
+    
+    "get specified user's mention list with page parameter" in {
+      val statuses = twitter1.getMentions(Some(new Paging(1)))
+      testStatuses(statuses)
+    }
+    
+    "get specified user's mention list with page and sinceId parameter" in {
+      val statuses = twitter1.getMentions(Some(new Paging(1, 1L)))
+      testStatuses(statuses)
+    }
+    
+    "get specified user's mention list with sinceId parameter" in {
+      val statuses = twitter1.getMentions(Some(new Paging(1L)))
+      testStatuses(statuses)
     }
   }
 }
