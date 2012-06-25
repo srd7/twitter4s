@@ -32,6 +32,8 @@ import twitter4j.GeoQuery
 import twitter4j.SimilarPlaces
 import twitter4j.ProfileImage
 import twitter4j.Category
+import twitter4j.Relationship
+import twitter4j.Friendship
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -286,6 +288,69 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   def destroyFavorite(id: Long): Status = {
+    // TODO implements
+    null
+  }
+  
+  /* FriendshipMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def createFriendship(screenName: Option[String] = None, userId: Option[Long] = None, follow: Option[Boolean] = None): User = {
+    (screenName, userId, follow) match {
+      case (Some(screenName), None, None) => twitter4jObj.createFriendship(screenName)
+      case (Some(screenName), None, Some(follow)) => twitter4jObj.createFriendship(screenName, follow)
+      case (None, Some(userId), None) => twitter4jObj.createFriendship(userId)
+      case (None, Some(userId), Some(follow)) => twitter4jObj.createFriendship(userId, follow)
+      // case _ => // TODO exception?
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.destroyFriendship(screenName)
+      case (None, Some(userId)) => twitter4jObj.destroyFriendship(userId)
+      // case _ => // TODO exception?
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def existsFriendship(userA: String, userB: String): Boolean = {
+    twitter4jObj.existsFriendship(userA, userB)
+  }
+
+  def showFriendship(sourceScreenName: Option[String] = None, targetScreenName: Option[String] = None, sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship = {
+    (sourceScreenName, targetScreenName, sourceId, targetId) match {
+      case (Some(sourceScreenName), Some(targetScreenName), None, None) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
+    }
+  }
+
+  def getIncomingFriendships(cursor: Long): IDs = {
+    // TODO implements
+    null
+  }
+
+  def getOutgoingFriendships(cursor: Long): IDs = {
+    // TODO implements
+    null
+  }
+
+  def lookupFriendships(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[Friendship] = {
+    // TODO implements
+    null
+  }
+
+  def updateFriendship(enableDeviceNotification: Boolean, retweets: Boolean, screenName: Option[String] = None, userId: Option[Long] = None): Relationship = {
+    // TODO implements
+    null
+  }
+
+  def getNoRetweetIds: IDs = {
     // TODO implements
     null
   }
@@ -604,6 +669,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getUserSuggestions(categorySlug)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getMemberSuggestions(categorySlug: String): ResponseList[User] = {
     twitter4jObj.getMemberSuggestions(categorySlug)
   }

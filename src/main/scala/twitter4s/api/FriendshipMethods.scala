@@ -11,7 +11,7 @@ trait FriendshipMethods {
 	
 	def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): User
 	
-	def existsFriendship(userA: User, userB: User): Boolean
+	def existsFriendship(userA: String, userB: String): Boolean
 	
 	def showFriendship(sourceScreenName: Option[String] = None, targetScreenName: Option[String] = None, sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship
 	

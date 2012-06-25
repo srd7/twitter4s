@@ -89,4 +89,6 @@ object Twitter4sTestHelper {
    * Get numberId id
    */
   def numberIdId = prop.getProperty("numberid.id").toLong
+  
+  def followsOneWay = prop.getProperty("followsOneWay")
 }
