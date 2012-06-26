@@ -22,6 +22,8 @@ object Twitter4sTestHelper {
   val id1 = new TestUserInfo("id1")
   val id2 = new TestUserInfo("id2")
   val id3 = new TestUserInfo("id3")
+  val bestFriend1 = new TestUserInfo("bestFriend1")
+  val bestFriend2 = new TestUserInfo("bestFriend2")
   
   /**
    * Get Twitter4S object from test.propreties with prefix id1
@@ -91,4 +93,5 @@ object Twitter4sTestHelper {
   def numberIdId = prop.getProperty("numberid.id").toLong
   
   def followsOneWay = prop.getProperty("followsOneWay")
+  
 }

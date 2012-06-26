@@ -42,6 +42,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   // TODO PagableResponseListやUserListのラッピング
   // TODO 他のリターンオブジェクトとFactoryのラッピング
   // TODO 名前付き引数でセットするAPIで全てセットされた場合の挙動をAPIのドキュメントを確認して決める
+  // TODO IDとスクリーン名を指定する場合はID優先になるようにパターンマッチを修正する
   
   /* TwitterBase method */
   /**
@@ -324,35 +325,58 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.existsFriendship(userA, userB)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def showFriendship(sourceScreenName: Option[String] = None, targetScreenName: Option[String] = None, sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship = {
     (sourceScreenName, targetScreenName, sourceId, targetId) match {
       case (Some(sourceScreenName), Some(targetScreenName), None, None) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
+      case (None, None, Some(sourceId), Some(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
+      // case _ => // TODO exception?
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getIncomingFriendships(cursor: Long): IDs = {
-    // TODO implements
-    null
+    twitter4jObj.getIncomingFriendships(cursor)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getOutgoingFriendships(cursor: Long): IDs = {
-    // TODO implements
-    null
+    twitter4jObj.getOutgoingFriendships(cursor)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def lookupFriendships(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[Friendship] = {
-    // TODO implements
-    null
+    (screenNames, ids) match {
+      case (Some(screenNames), None) => twitter4jObj.lookupFriendships(screenNames)
+      case (None, Some(ids)) => twitter4jObj.lookupFriendships(ids)
+      // case _ => // TODO exception?
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def updateFriendship(enableDeviceNotification: Boolean, retweets: Boolean, screenName: Option[String] = None, userId: Option[Long] = None): Relationship = {
-    // TODO implements
-    null
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
+      case (None, Some(userId)) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
+      // case _ => // TODO exception?
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getNoRetweetIds: IDs = {
-    // TODO implements
-    null
+    twitter4jObj.getNoRetweetIds()
   }
   
   /* GeoMethods */

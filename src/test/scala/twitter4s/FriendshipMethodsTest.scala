@@ -48,12 +48,84 @@ class FriendshipMethodsTest extends Specification {
     }
   }
   
-// This test be fail. I'm researching reason.
-//  "showFriendship" should {
-//    "get friendship status between user" in {
-//      val rel = twitter1.showFriendship(sourceScreenName = Some(id1.screenName), targetScreenName = Some(followsOneWay))
-//      rawJSON(rel) must not equalTo(null)
-//      rel must equalTo(DataObjectFactory.createRelationship(rawJSON(rel)))
-//    }
-//  }
+  "showFriendship" should {
+    "get friendship status between user one way follow" in {
+      val rel = twitter1.showFriendship(sourceScreenName = Some(id1.screenName), targetScreenName = Some(followsOneWay))
+      rawJSON(rel) must not equalTo(null)
+      rel must equalTo(DataObjectFactory.createRelationship(rawJSON(rel)))
+      rel.isSourceFollowedByTarget() must beTrue
+      rel.isSourceFollowingTarget() must beFalse
+      rel.isTargetFollowingSource() must beTrue
+      rel.isTargetFollowedBySource() must beFalse
+      
+      val rel2 = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
+      rawJSON(rel) must equalTo(null)
+    }
+    
+    "get friendship status between user best friends" in {
+      val rel = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
+      rawJSON(rel) must not equalTo(null)
+      rel must equalTo(DataObjectFactory.createRelationship(rawJSON(rel)))
+      rel.isSourceFollowedByTarget() must beTrue
+      rel.isSourceFollowingTarget() must beTrue
+      rel.isTargetFollowedBySource() must beTrue
+      rel.isTargetFollowingSource() must beTrue
+    }
+  }
+  
+  "lookupFriendships" should {
+    "get friendship status list with specified users by screen name" in {
+      val friendshipList = twitter1.lookupFriendships(Some(Array("barakobama", id2.screenName, id3.screenName)))
+      friendshipList.size must equalTo(3)
+      friendshipList(0).getScreenName() must equalTo("barakobama")
+      friendshipList(0).isFollowedBy() must beFalse
+      friendshipList(0).isFollowing() must beFalse
+      friendshipList(2).getScreenName() must equalTo(id3.screenName)
+      friendshipList(2).isFollowedBy() must beTrue
+      friendshipList(2).isFollowing() must beTrue
+    }
+    
+    "get friendship status list with specified users by id" in {
+      val friendshipList = twitter1.lookupFriendships(ids = Some(Array(id2.id, id3.id)))
+      friendshipList.size must equalTo(2)
+    }
+  }
+  
+  "updateFriendship" should {
+    "update friendship to specified user by screen name" in {
+      val relationship = twitter1.updateFriendship(true, true, Some(id3.screenName))
+      relationship.getTargetUserScreenName() must equalTo(id3.screenName)
+    }
+    
+    "update friendship to specified user by id" in {
+      val relationship = twitter1.updateFriendship(true, true, userId = Some(id3.id))
+      relationship.getTargetUserScreenName() must equalTo(id3.screenName)
+    }
+  }
+  
+  "getIncomingFriendships" should {
+    "get incoming friendship" in {
+      val ids = twitter3.getIncomingFriendships(-1)
+      rawJSON(ids) must not equalTo(null)
+      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
+      ids.getIDs().length must be_>=(0)
+    }
+  }
+  
+  "getOutcomingFriendships" should {
+    "get outcoming friendship" in {
+      val ids = twitter2.getOutgoingFriendships(-1)
+      rawJSON(ids) must not equalTo(null)
+      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
+      ids.getIDs().length must be_>=(0)
+    }
+  }
+  
+  "getNoRetweetIDs" should {
+    "get not retweet users id" in {
+      val ids = twitter2.getNoRetweetIds
+      rawJSON(ids) must not equalTo(null)
+      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
+    }
+  }
 }
