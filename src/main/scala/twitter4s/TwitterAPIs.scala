@@ -7,6 +7,7 @@ with AccountMethods
 with BlockMethods
 with DirectMessageMethods
 with FavoriteMethods
+with FriendsFollowersMethods
 with FriendshipMethods
 with GeoMethods
 with HelpMethods

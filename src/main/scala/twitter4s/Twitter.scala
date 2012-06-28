@@ -184,7 +184,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.createBlock(screenName)
       case (None, Some(userId)) => twitter4jObj.createBlock(userId)
-      // case _ => // Exception?
+      // case _ => // TODO Exception?
     }
   }
   
@@ -195,7 +195,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.destroyBlock(screenName)
       case (None, Some(userId)) => twitter4jObj.destroyBlock(userId)
-      // case _ => // Exception?
+      // case _ => // TODO Exception?
     }
   }
   
@@ -206,7 +206,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.existsBlock(screenName)
       case (None, Some(userId)) => twitter4jObj.existsBlock(userId)
-      // case _ => // Exception?
+      // case _ => // TODO Exception?
     }
   }
   
@@ -250,7 +250,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.sendDirectMessage(screenName, text)
       case (None, Some(userId)) => twitter4jObj.sendDirectMessage(userId, text)
-      case _ => throw new TwitterException("illegal argument")
+      // case _ => throw new TwitterException("illegal argument") // TODO exception?
     }
   }
 
@@ -291,6 +291,31 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def destroyFavorite(id: Long): Status = {
     // TODO implements
     null
+  }
+  
+  /* FriednsFollowersMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getFriendsIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs = {
+    (userId, screenName) match {
+      case (None, None) => twitter4jObj.getFriendsIDs(cursor)
+      case (Some(userId), None) => twitter4jObj.getFriendsIDs(userId, cursor)
+      case (None, Some(screenName)) => twitter4jObj.getFriendsIDs(screenName, cursor)
+      // case _ => // TODO exception?
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getFollowersIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs = {
+    (userId, screenName) match {
+      case (None, Some(screenName)) => twitter4jObj.getFollowersIDs(screenName, cursor)
+      case (Some(userId), None) => twitter4jObj.getFollowersIDs(userId, cursor)
+      case (None, None) => twitter4jObj.getFollowersIDs(cursor)
+      // case _ => // TODO exception?
+    }
   }
   
   /* FriendshipMethods */
