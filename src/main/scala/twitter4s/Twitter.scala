@@ -141,9 +141,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
+  /**
+   * {@inherited}
+   */
   def updateProfileColors(profileBackgroundColor: String, profileTextColor: String, profileLinkColor: String, profileSidebarFillColor: String, profileSidebarBorderColor: String): User = {
-    // TODO implements
-    null
+    twitter4jObj.updateProfileColors(profileBackgroundColor, profileTextColor, profileLinkColor, profileSidebarFillColor, profileSidebarBorderColor)
   }
   
   def updateProfileImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None): User = {
@@ -156,19 +158,25 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def updateProfile(name: String, url: String, location: String, description: String): User = {
-    // TODO implements
-    null
+    twitter4jObj.updateProfile(name, url, location, description)
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getAccountTotals: AccountTotals = {
-    // TODO implements
-    null
+    twitter4jObj.getAccountTotals()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getAccountSettings: AccountSettings = {
-    // TODO implements
-    null
+    twitter4jObj.getAccountSettings()
   }
   
   def updateAccountSettings(trendLocationWoeid: Int, sleepTimeEnabled: Boolean, startSleepTime: String, endSleepTime: String, timeZone: String, lang: String): AccountSettings = {
