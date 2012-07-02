@@ -148,9 +148,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.updateProfileColors(profileBackgroundColor, profileTextColor, profileLinkColor, profileSidebarFillColor, profileSidebarBorderColor)
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def updateProfileImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None): User = {
-    // TODO implements
-    null
+    (imageFile, imageStream) match {
+      case (None, Some(imageStream)) => twitter4jObj.updateProfileImage(imageStream)
+      case (Some(imageFile), None) => twitter4jObj.updateProfileImage(imageFile)
+    }
   }
   
   def updateProfileBackgroundImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None, tile: Boolean): User = {
@@ -179,9 +184,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getAccountSettings()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def updateAccountSettings(trendLocationWoeid: Int, sleepTimeEnabled: Boolean, startSleepTime: String, endSleepTime: String, timeZone: String, lang: String): AccountSettings = {
-    // TODO implements
-    null
+    twitter4jObj.updateAccountSettings(trendLocationWoeid, sleepTimeEnabled, startSleepTime, endSleepTime, timeZone, lang)
   }
   
   /* BlockMethods */

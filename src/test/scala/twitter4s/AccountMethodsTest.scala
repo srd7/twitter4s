@@ -1,11 +1,15 @@
 package twitter4s
+import java.io.File
+import java.io.FileInputStream
+import java.util.Date
+
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
+
 import twitter4j.json.DataObjectFactory
-import java.util.Date
 import twitter4j.User
+import twitter4s.Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class AccountMethodsTest extends Specification {
@@ -88,10 +92,51 @@ class AccountMethodsTest extends Specification {
     }
   }
   
-//  "getAccountSettings" should {
-//    "get authorized user's account settings" in {
-//      val settings = twitter1.getAccountSettings
-//      settings.isSleepTimeEnabled must beTrue // is default false?
+  "getAccountSettings" should {
+    "get authorized user's account settings" in {
+      val settings = twitter1.getAccountSettings
+      settings.isSleepTimeEnabled must beTrue // this setting's default is false
+      settings.isGeoEnabled() must beFalse // this setting's default is false
+      settings.getLanguage() must equalTo("ja")
+      settings.getTimeZone().getName() must equalTo("Osaka")
+      settings.isAlwaysUseHttps() must beTrue
+      settings.isDiscoverableByEmail() must beTrue
+      settings.getTrendLocations().length must be_>(0)
+    }
+  }
+  
+  "updateAccountSettings" should {
+    "change authorized user's account settings" in {
+      val intermSetting = twitter3.updateAccountSettings(1, true, "23", "08", "Helsinki", "it")
+      rawJSON(intermSetting) must not equalTo(null)
+      intermSetting.getSleepStartTime() must equalTo("23")
+      intermSetting.getSleepEndTime() must equalTo("8")
+      intermSetting.isGeoEnabled() must beFalse // is default
+      intermSetting.getLanguage() must equalTo("it")
+      intermSetting.isAlwaysUseHttps() must beTrue
+      intermSetting.isDiscoverableByEmail() must beTrue // is default
+      intermSetting.getTimeZone().getName() must equalTo("Helsinki")
+      intermSetting.getTrendLocations().length must be_>(0)
+    }
+  }
+
+// image file size over limit?
+//  "updateProfileImage" should {
+//    "change profile image" in {
+//      val user = twitter2.updateProfileImage(imageStream = Some(new FileInputStream(getRandomlyChosenFile)))
+//      rawJSON(user) must not equalTo(null)
 //    }
+//  }
+//  
+//  val imageFiles = Array(
+//      "src/test/resources/t4j-reverse.jpeg",
+//      "src/test/resources/t4j-reverse.png",
+//      "src/test/resources/t4j-reverse.gif",
+//      "src/test/resources/t4j.jpeg",
+//      "src/test/resources/t4j.png",
+//      "src/test/resources/t4j.gif")
+//  
+//  def getRandomlyChosenFile = {
+//    new File(imageFiles((System.currentTimeMillis() % 6).toInt))
 //  }
 }
