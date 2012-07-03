@@ -41,7 +41,7 @@ import twitter4j.Friendship
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
   // TODO PagableResponseListやUserListのラッピング
   // TODO 他のリターンオブジェクトとFactoryのラッピング
-  // TODO 名前付き引数でセットするAPIで全てセットされた場合の挙動をAPIのドキュメントを確認して決める
+  // TODO Twitter4Jでカバーしていないパターンに関してはTwitterExceptionをスローする
   // TODO IDとスクリーン名を指定する場合はID優先になるようにパターンマッチを修正する
   
   /* TwitterBase method */
@@ -570,9 +570,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   /* StatusMethods */
+  /**
+   * {@inheritDoc}
+   */
   def showStatus(id: Long): Status = {
-    // TODO implements
-    return null
+    twitter4jObj.showStatus(id)
   }
 
   /**
@@ -586,9 +588,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def destroyStatus(statusId: Long): Status = {
-    // TODO implements
-    return null
+    twitter4jObj.destroyStatus(statusId)
   }
 
   def retweetStatus(statusId: Long): Status = {
