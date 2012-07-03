@@ -119,24 +119,32 @@ class AccountMethodsTest extends Specification {
       intermSetting.getTrendLocations().length must be_>(0)
     }
   }
-
-// image file size over limit?
-//  "updateProfileImage" should {
-//    "change profile image" in {
-//      val user = twitter2.updateProfileImage(imageStream = Some(new FileInputStream(getRandomlyChosenFile)))
-//      rawJSON(user) must not equalTo(null)
-//    }
-//  }
-//  
-//  val imageFiles = Array(
-//      "src/test/resources/t4j-reverse.jpeg",
-//      "src/test/resources/t4j-reverse.png",
-//      "src/test/resources/t4j-reverse.gif",
-//      "src/test/resources/t4j.jpeg",
-//      "src/test/resources/t4j.png",
-//      "src/test/resources/t4j.gif")
-//  
-//  def getRandomlyChosenFile = {
-//    new File(imageFiles((System.currentTimeMillis() % 6).toInt))
-//  }
+  
+  "updateProfileImage" should {
+    "change profile image" in {
+      val user = twitter2.updateProfileImage(imageStream = Some(new FileInputStream(getRandomlyChosenFile)))
+      rawJSON(user) must not equalTo(null)
+    }
+  }
+  
+  "updateProfileBackgroundImage" should {
+    "change background image in authorized user page" in {
+      val user = twitter2.updateProfileBackgroundImage(imageFile = Some(getRandomlyChosenFile), tile = (5 < System.currentTimeMillis() % 5))
+      rawJSON(user) must not equalTo(null)
+      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+    }
+  }
+  
+  val imageFiles = Array(
+      "src/test/resources/t4j-reverse.jpeg",
+      "src/test/resources/t4j-reverse.png",
+      "src/test/resources/t4j-reverse.gif",
+      "src/test/resources/t4j.jpeg",
+      "src/test/resources/t4j.png",
+      "src/test/resources/t4j.gif"
+      )
+  
+  def getRandomlyChosenFile = {
+    new File(imageFiles((System.currentTimeMillis() % 6).toInt))
+  }
 }

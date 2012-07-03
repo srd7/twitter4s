@@ -158,9 +158,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def updateProfileBackgroundImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None, tile: Boolean): User = {
-    // TODO implements
-    null
+    (imageFile, imageStream) match {
+      case(None, Some(imageStream)) => twitter4jObj.updateProfileBackgroundImage(imageStream, tile)
+      case(Some(imageFile), None) => twitter4jObj.updateProfileBackgroundImage(imageFile, tile)
+    }
   }
   
   /**
