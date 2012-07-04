@@ -15,9 +15,9 @@ trait TimelineMethods {
 	
 	def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[Status]
 	
-	def getRetweetedOfMe(paging: Option[Paging] = None): ResponseList[Status]
+	def getRetweetsOfMe(paging: Option[Paging] = None): ResponseList[Status]
 	
 	def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status]
 	
-	def getRetweetedByUser(pagind: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status]
+	def getRetweetedByUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status]
 }

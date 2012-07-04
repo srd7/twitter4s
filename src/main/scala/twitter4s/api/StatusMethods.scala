@@ -16,7 +16,7 @@ trait StatusMethods {
 	
 	def retweetStatus(statusId: Long): Status
 	
-	def getRetweets(statusId: Long): Status
+	def getRetweets(statusId: Long): ResponseList[Status]
 	
 	def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[User]
 	

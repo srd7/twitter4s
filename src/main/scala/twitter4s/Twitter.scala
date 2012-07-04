@@ -600,19 +600,31 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     return null
   }
   
-  def getRetweets(statusId: Long): Status = {
-    // TODO implements
-    return null
+  /**
+   * {@inheritDoc}
+   */
+  def getRetweets(statusId: Long): ResponseList[Status] = {
+    twitter4jObj.getRetweets(statusId)
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[User] = {
-    // TODO implements
-    return null
+    paging match {
+      case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
+      case None => twitter4jObj.getRetweetedBy(statusId)
+    }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getRetweetedByIDs(statusId: Long, paging: Option[Paging] = None): IDs = {
-    // TODO implements
-    return null
+    paging match {
+      case Some(paging) => twitter4jObj.getRetweetedByIDs(statusId, paging)
+      case None => twitter4jObj.getRetweetedByIDs(statusId)
+    }
   }
   
   /* TimelineMethods */
@@ -650,29 +662,56 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+    paging match {
+      case Some(paging) => twitter4jObj.getRetweetedByMe(paging)
+      case None => twitter4jObj.getRetweetedByMe()
+    }
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+    paging match {
+      case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
+      case None => twitter4jObj.getRetweetedToMe()
+    }
   }
 
-  def getRetweetedOfMe(paging: Option[Paging] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+  /**
+   * {@inheritDoc}
+   */
+  def getRetweetsOfMe(paging: Option[Paging] = None): ResponseList[Status] = {
+    paging match {
+      case Some(paging) => twitter4jObj.getRetweetsOfMe(paging)
+      case None => twitter4jObj.getRetweetsOfMe()
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.getRetweetedToUser(screenName, paging)
+      case (None, Some(userId)) => twitter4jObj.getRetweetedToUser(userId, paging)
+      // case _ => // TODO exception?
+    }
   }
 
-  def getRetweetedByUser(pagind: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
-    // TODO implements
-    null
+  /**
+   * {@inheritDoc}
+   */
+  def getRetweetedByUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.getRetweetedByUser(screenName, paging)
+      case (None, Some(userId)) => twitter4jObj.getRetweetedByUser(userId, paging)
+      // case _ => // TODO Exception?
+    }
   }
   
   /* TrendMethods */
