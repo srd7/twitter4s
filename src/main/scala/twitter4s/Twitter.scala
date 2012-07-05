@@ -34,6 +34,8 @@ import twitter4j.ProfileImage
 import twitter4j.Category
 import twitter4j.Relationship
 import twitter4j.Friendship
+import twitter4j.UserList
+import twitter4j.PagableResponseList
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -471,6 +473,62 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    */
   def getPrivacyPolicy: String = {
     twitter4jObj.getPrivacyPolicy()
+  }
+  
+  /* ListMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def createUserList(listName: String, isPublicList: Boolean, description: String): UserList = {
+    twitter4jObj.createUserList(listName, isPublicList, description)
+  }
+
+  def updateUserList(listId: Int, newListName: String, isPulibcList: Boolean, newDescription: String): UserList = {
+    // TODO implements
+    null
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getUserLists(cursor: Long, listOwnerScreenName: Option[String] = None, listOwnerUserId: Option[Long] = None): PagableResponseList[UserList] = {
+    (listOwnerScreenName, listOwnerUserId) match {
+      case (Some(listOwnerScreenName), None) => twitter4jObj.getUserLists(listOwnerScreenName, cursor)
+      case (None, Some(listOwnerUserId)) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
+      // case _ => // TODO exception? 
+    }
+  }
+
+  def showUserList(listId: Int): UserList = {
+    // TODO implements
+    null
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def destroyUserList(listId: Int): UserList = {
+    twitter4jObj.destroyUserList(listId)
+  }
+
+  def getUserListStatuses(listId: Int, paging: Paging): ResponseList[Status] = {
+    // TODO implements
+    null
+  }
+
+  def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean]): PagableResponseList[UserList] = {
+    // TODO implements
+    null
+  }
+
+  def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[UserList] = {
+    // TDOO implements
+    null
+  }
+
+  def getAllUserLists(screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[UserList] = {
+    // TODO implements
+    null
   }
   
   /* LocalTrendsMethods */
