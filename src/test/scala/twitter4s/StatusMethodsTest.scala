@@ -44,7 +44,7 @@ class StatusMethodsTest extends Specification {
   }
   
   def testRetweetResponseList(statuses: ResponseList[Status]) = {
-    rawJSON(statuses.twt4jResponseList) must not equalTo(null)
+    rawJSON(statuses.tw4jObj) must not equalTo(null)
     statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     forall(statuses) {(status:Status) => status.getText must startWith("RT ")}
   }
@@ -100,13 +100,13 @@ class StatusMethodsTest extends Specification {
   "getRetweetsOfMe" should {
     "get retweet from authorized user's tweet without page" in {
       val statuses = twitter1.getRetweetsOfMe()
-      rawJSON(statuses.twt4jResponseList) must not equalTo(null)
+      rawJSON(statuses.tw4jObj) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     }
     
     "get retweet from authorized user's tweet with page" in {
       val statuses = twitter1.getRetweetsOfMe(Some(new Paging(1)))
-      rawJSON(statuses.twt4jResponseList) must not equalTo(null)
+      rawJSON(statuses.tw4jObj) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     }
   }

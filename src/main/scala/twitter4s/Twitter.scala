@@ -3,39 +3,41 @@ package twitter4s
 import java.io.File
 import java.io.InputStream
 import java.util.Date
-import implicits.Twitter4SImplicits._
+
 import twitter4j.api.HelpMethods.Language
-import twitter4j.auth._
-import twitter4j.conf._
-import twitter4j.TwitterException
-import twitter4j.TwitterAPIConfiguration
-import twitter4j.IDs
-import twitter4j.AccountTotals
-import twitter4j.StatusUpdate
-import twitter4j.Trends
-import twitter4j.GeoLocation
-import twitter4j.Paging
-import twitter4j.DirectMessage
-import twitter4j.TwitterFactory
-import twitter4j.QueryResult
+import twitter4j.auth.AccessToken
+import twitter4j.auth.Authorization
+import twitter4j.auth.RequestToken
+import twitter4j.conf.Configuration
 import twitter4j.AccountSettings
+import twitter4j.AccountTotals
+import twitter4j.Category
+import twitter4j.DirectMessage
+import twitter4j.Friendship
+import twitter4j.GeoLocation
+import twitter4j.GeoQuery
+import twitter4j.IDs
+import twitter4j.Location
+import twitter4j.Paging
+import twitter4j.Place
+import twitter4j.ProfileImage
+import twitter4j.Query
+import twitter4j.QueryResult
 import twitter4j.RateLimitStatus
 import twitter4j.RateLimitStatusListener
-import twitter4j.Location
-import twitter4j.Query
-import twitter4j.User
-import twitter4j.Status
 import twitter4j.RelatedResults
-import twitter4j.SavedSearch
-import twitter4j.Place
-import twitter4j.GeoQuery
-import twitter4j.SimilarPlaces
-import twitter4j.ProfileImage
-import twitter4j.Category
 import twitter4j.Relationship
-import twitter4j.Friendship
+import twitter4j.SavedSearch
+import twitter4j.SimilarPlaces
+import twitter4j.Status
+import twitter4j.StatusUpdate
+import twitter4j.Trends
+import twitter4j.TwitterAPIConfiguration
+import twitter4j.TwitterFactory
+import twitter4j.User
 import twitter4j.UserList
-import twitter4j.PagableResponseList
+import twitter4s.implicits.Twitter4SImplicits.pagableResponseListWrapperJ2S
+import twitter4s.implicits.Twitter4SImplicits.responseListWrapperJ2S
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -260,7 +262,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
 
-  def getSentDirectMessages(paging: Option[Paging] = None): twitter4s.ResponseList[DirectMessage] = {
+  def getSentDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage] = {
     // TODO implements
     return null
   }

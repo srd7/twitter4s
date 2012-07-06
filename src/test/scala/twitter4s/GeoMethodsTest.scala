@@ -16,7 +16,7 @@ import twitter4s.implicits.Twitter4SImplicits._
 class GeoMethodsTest extends Specification {
   
   private def testPlaces(target: ResponseList[Place]) = {
-    rawJSON(target.twt4jResponseList) must not equalTo(null)
+    rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createPlace(rawJSON(target(0))))
     target.size must be_>(0)
   }

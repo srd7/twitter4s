@@ -1,35 +1,17 @@
 package twitter4s
-
-import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable.Buffer
+import twitter4j.RateLimitStatus
 
-/**
- * @author Shinsuke Abe - mao.instantlife at gmail.com
- */
-case class ResponseList[T](twt4jResponseList: twitter4j.ResponseList[T]) {
+trait ResponseList[T] {
+  def listAsScala:Buffer[T]
   
-  /**
-   * scala converted list
-   */
-  def listAsScala = twt4jResponseList.asScala
+  def rateLimitStatus:RateLimitStatus
   
-  /**
-   * rate limit status
-   */
-  def rateLimitStatus = twt4jResponseList.getRateLimitStatus()
+  def featureSpecificRateLimitStatus:RateLimitStatus
   
-  /**
-   * feature specific rate limit status
-   */
-  def featureSpecificRateLimitStatus = twt4jResponseList.getFeatureSpecificRateLimitStatus()
+  def accessLevel:Int
   
-  /**
-   * access level
-   */
-  def accessLevel = twt4jResponseList.getAccessLevel()
+  def apply(idx: Int):T
   
-  /**
-   * Get object in scala converted list method.
-   */
-  def apply(idx: Int):T = listAsScala(idx)
+  def tw4jObj:Any
 }

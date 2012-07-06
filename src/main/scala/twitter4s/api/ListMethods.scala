@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import twitter4j.UserList
-import twitter4j.PagableResponseList
+import twitter4s.PagableResponseList
 import twitter4j.Paging
 import twitter4s.ResponseList
 import twitter4j.Status

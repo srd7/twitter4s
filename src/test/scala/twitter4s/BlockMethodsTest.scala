@@ -11,7 +11,7 @@ import twitter4s.implicits.Twitter4SImplicits._
 class BlockMethodsTest extends Specification {
   
   private def testBlockingUsers(target: ResponseList[User]) = {
-    rawJSON(target.twt4jResponseList) must not equalTo(null)
+    rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createUser(rawJSON(target(0))))
     target.size must equalTo(blockingUsersSize)
     target(0).getId() must equalTo(blockingUserId)

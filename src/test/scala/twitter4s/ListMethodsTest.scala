@@ -5,12 +5,13 @@ import org.specs2.runner.JUnitRunner
 import twitter4s.Twitter4sTestHelper._
 import scala.collection.JavaConverters.asScalaBufferConverter
 import twitter4j.UserList
+import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class ListMethodsTest extends Specification {
 
   def makePrecondition = {
-    val userLists = twitter2.getUserLists(-1L, listOwnerScreenName = Some(id2.screenName)).asScala
+    val userLists = twitter2.getUserLists(-1L, listOwnerScreenName = Some(id2.screenName))
     userLists.foreach(alist => twitter2.destroyUserList(alist.getId))
     twitter2.createUserList("testpoint1", false, "description1")
   }

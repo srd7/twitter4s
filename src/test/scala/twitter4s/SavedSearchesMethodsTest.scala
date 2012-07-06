@@ -13,7 +13,7 @@ class SavedSearchesMethodsTest extends Specification {
   "getSavedSearches" should {
     "get saved search list" in {
       val list = twitter3.getSavedSearches
-      rawJSON(list.twt4jResponseList) must not equalTo(null)
+      rawJSON(list.tw4jObj) must not equalTo(null)
     }
   }
   
@@ -32,7 +32,7 @@ class SavedSearchesMethodsTest extends Specification {
       
       // check added seach
       val list = twitter3.getSavedSearches
-      rawJSON(list.twt4jResponseList) must not equalTo(null)
+      rawJSON(list.tw4jObj) must not equalTo(null)
       list(0) must equalTo(DataObjectFactory.createSavedSearch(rawJSON(list(0))))
       
       // check destroy added search

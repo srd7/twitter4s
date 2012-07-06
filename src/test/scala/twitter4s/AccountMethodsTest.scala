@@ -111,7 +111,7 @@ class AccountMethodsTest extends Specification {
       rawJSON(intermSetting) must not equalTo(null)
       intermSetting.getSleepStartTime() must equalTo("23")
       intermSetting.getSleepEndTime() must equalTo("8")
-      intermSetting.isGeoEnabled() must beFalse // is default
+      intermSetting.isGeoEnabled() must beTrue // is default false
       intermSetting.getLanguage() must equalTo("it")
       intermSetting.isAlwaysUseHttps() must beTrue
       intermSetting.isDiscoverableByEmail() must beTrue // is default

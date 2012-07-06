@@ -12,7 +12,7 @@ import twitter4s.implicits.Twitter4SImplicits._
 class TimelineMethodsTest extends Specification {
   
   def testStatuses(target: ResponseList[Status]) = {
-    rawJSON(target.twt4jResponseList) must not equalTo(null)
+    rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
     target.size must be_>(0)
   }
@@ -22,7 +22,7 @@ class TimelineMethodsTest extends Specification {
       val statuses = twitter1.getHomeTimeline()
       statuses.size must be_>(0)
       twitter1.configuration.isJSONStoreEnabled must beTrue
-      rawJSON(statuses.twt4jResponseList) must not equalTo(null)
+      rawJSON(statuses.tw4jObj) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     }
   }

@@ -2,10 +2,12 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
-import twitter4s.implicits.Twitter4SImplicits._
 import twitter4j.ProfileImage
+import twitter4s.Twitter4sTestHelper._
+import twitter4s.implicits.Twitter4SImplicits._
+import twitter4s.internal.json.ResponseListImpl
+import twitter4j.User
 
 @RunWith(classOf[JUnitRunner])
 class UserMethodsTest extends Specification {
@@ -80,7 +82,7 @@ class UserMethodsTest extends Specification {
       users.exists(_.getId() == id2.id) must beTrue
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-      rawJSON(users.twt4jResponseList) must not equalTo(null)
+      rawJSON(users.tw4jObj) must not equalTo(null)
     }
   }
   
@@ -91,7 +93,7 @@ class UserMethodsTest extends Specification {
       users.featureSpecificRateLimitStatus must not equalTo(null)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-      rawJSON(users.twt4jResponseList) must not equalTo(null)
+      rawJSON(users.tw4jObj) must not equalTo(null)
     }
   }
   
@@ -99,7 +101,7 @@ class UserMethodsTest extends Specification {
     "get suggest category list" in {
       val categories = twitter1.getSuggestedUserCategories
       categories.size must be_>(0)
-      rawJSON(categories.twt4jResponseList) must not equalTo(null)
+      rawJSON(categories.tw4jObj) must not equalTo(null)
       categories(0) must equalTo(DataObjectFactory.createCategory(rawJSON(categories(0))))
     }
   }
@@ -110,7 +112,7 @@ class UserMethodsTest extends Specification {
       val users = twitter1.getUserSuggestions(categories(0).getSlug())
       users.size must be_>=(0)
       users(0).getStatus() must equalTo(null)
-      rawJSON(users.twt4jResponseList) must not equalTo(null)
+      rawJSON(users.tw4jObj) must not equalTo(null)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
     }
@@ -122,7 +124,7 @@ class UserMethodsTest extends Specification {
       val users = twitter1.getMemberSuggestions(categories(0).getSlug())
       users.size must be_>=(0)
       users(0).getStatus() must not equalTo(null)
-      rawJSON(users.twt4jResponseList) must not equalTo(null)
+      rawJSON(users.tw4jObj) must not equalTo(null)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
     }
