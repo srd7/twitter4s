@@ -501,9 +501,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def showUserList(listId: Int): UserList = {
-    // TODO implements
-    null
+    twitter4jObj.showUserList(listId)
   }
 
   /**
@@ -513,9 +515,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.destroyUserList(listId)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getUserListStatuses(listId: Int, paging: Paging): ResponseList[Status] = {
-    // TODO implements
-    null
+    twitter4jObj.getUserListStatuses(listId, paging)
   }
 
   def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean]): PagableResponseList[UserList] = {
