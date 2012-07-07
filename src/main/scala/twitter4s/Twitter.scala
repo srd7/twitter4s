@@ -477,6 +477,34 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getPrivacyPolicy()
   }
   
+  /* ListMemberMethods */
+  def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[User] = {
+    // TODO implements
+    null
+  }
+  
+  def addUserListMember(listId: Int, userId: Long): UserList = {
+    // TODO implements
+    null
+  }
+  
+  def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[Long]] = None): UserList = {
+    // TODO implements
+    null
+  }
+
+  def deleteUserListMember(listId: Int, userId: Long): UserList = {
+    // TODO implements
+    null
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def showUserListMembership(listId: Int, userId: Long): User = {
+    twitter4jObj.showUserListMembership(listId, userId)
+  }
+  
   /* ListMethods */
   /**
    * {@inheritDoc}
@@ -485,9 +513,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.createUserList(listName, isPublicList, description)
   }
 
-  def updateUserList(listId: Int, newListName: String, isPulibcList: Boolean, newDescription: String): UserList = {
-    // TODO implements
-    null
+  /**
+   * {@inheritDoc}
+   */
+  def updateUserList(listId: Int, newListName: String, isPublicList: Boolean, newDescription: String): UserList = {
+    twitter4jObj.updateUserList(listId, newListName, isPublicList, newDescription)
   }
 
   /**
@@ -532,9 +562,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getAllUserLists(screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[UserList] = {
-    // TODO implements
-    null
+    (screenName, userId) match {
+      case (Some(screenName), None) => twitter4jObj.getAllUserLists(screenName)
+      case (None, Some(userId)) => twitter4jObj.getAllUserLists(userId)
+    }
   }
   
   /* LocalTrendsMethods */

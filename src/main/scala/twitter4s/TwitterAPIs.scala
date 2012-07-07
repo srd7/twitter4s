@@ -12,6 +12,7 @@ with FriendshipMethods
 with GeoMethods
 with HelpMethods
 with LegalResources
+with ListMembersMethods
 with ListMethods
 with LocalTrendsMethods
 with NewTwitterMethods

@@ -8,6 +8,7 @@ import twitter4j.UserList
 import twitter4s.implicits.Twitter4SImplicits._
 import twitter4j.json.DataObjectFactory
 import twitter4j.Paging
+import twitter4j.TwitterException
 
 @RunWith(classOf[JUnitRunner])
 class ListMethodsTest extends Specification {
@@ -20,6 +21,7 @@ class ListMethodsTest extends Specification {
   
   "getUserList" should {
     "get list specified by user id" in {
+      // Note: is not destroyUserList API reflected immediatly ?
       val userList = makePrecondition
       rawJSON(userList) must not equalTo(null) 
       userList must equalTo(DataObjectFactory.createUserList(rawJSON(userList)))
@@ -43,6 +45,43 @@ class ListMethodsTest extends Specification {
       val userLists = twitter1.getUserLists(-1L, listOwnerUserId = Some(id1.id))
       val statuses = twitter1.getUserListStatuses(userLists(0).getId, new Paging())
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
+      rawJSON(statuses.tw4jObj) must not equalTo(null)
+      statuses must not equalTo(null)
+    }
+  }
+  
+  "getAllUserLists" should {
+    "get user's list specified by user id" in {
+      val lists = twitter1.getAllUserLists(userId = Some(id1.id))
+      lists.size must be_>(0)
+    }
+    
+    "get user's list specified by screen name" in {
+      val lists = twitter1.getAllUserLists(screenName = Some(id1.screenName))
+      lists.size must be_>(0)
+    }
+  }
+  
+  "updateUserList" should {
+    "update user list setting specified by id" in {
+      val userList = makePrecondition
+      val targetList = twitter2.updateUserList(userList.getId(), "testpoint2", true, "description2")
+      rawJSON(targetList) must not equalTo(null)
+      targetList must equalTo(DataObjectFactory.createUserList(rawJSON(targetList)))
+      
+      val updatedList = twitter2.showUserList(userList.getId())
+      updatedList must equalTo(DataObjectFactory.createUserList(rawJSON(updatedList)))
+      updatedList.isPublic() must beTrue
+      updatedList.getName() must equalTo("testpoint2")
+      updatedList.getDescription() must equalTo("description2")
+    }
+  }
+  
+  "showUserListMembership" should {
+    "throw TwitterException execute to no member list" in {
+      val userList = makePrecondition
+      twitter2.showUserListMembership(userList.getId, id1.id) must
+      throwA[TwitterException].like {case te:TwitterException => te.getStatusCode must equalTo(404)}
     }
   }
 }

@@ -9,7 +9,7 @@ import twitter4j.Status
 trait ListMethods {
 	def createUserList(listName: String, isPublicList: Boolean, description: String): UserList
 	
-	def updateUserList(listId: Int, newListName: String, isPulibcList: Boolean, newDescription: String): UserList
+	def updateUserList(listId: Int, newListName: String, isPublicList: Boolean, newDescription: String): UserList
 	
 	def getUserLists(cursor: Long, listOwnerScreenName: Option[String] = None, listOwnerUserId: Option[Long] = None): PagableResponseList[UserList]
 	

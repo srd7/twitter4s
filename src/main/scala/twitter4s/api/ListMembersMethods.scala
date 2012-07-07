@@ -1,8 +1,8 @@
 package twitter4s.api
 
-import twitter4j.PagableResponseList
 import twitter4j.User
 import twitter4j.UserList
+import twitter4s.PagableResponseList
 
 trait ListMembersMethods {
 	def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[User]
