@@ -9,7 +9,7 @@ import org.specs2.runner.JUnitRunner
 
 import twitter4j.json.DataObjectFactory
 import twitter4j.User
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class AccountMethodsTest extends Specification {

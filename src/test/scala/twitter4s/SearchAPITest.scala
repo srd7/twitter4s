@@ -1,18 +1,18 @@
 package twitter4s
 
+import twitter4s._
 import scala.collection.JavaConverters.asScalaBufferConverter
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import twitter4j.Trends
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import java.util.Date
 import twitter4j.Trend
 import java.text.SimpleDateFormat
 import twitter4j.Query
 import twitter4j.json.DataObjectFactory
 import twitter4j.GeoLocation
-import twitter4s.implicits.Twitter4SImplicits._
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

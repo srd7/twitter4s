@@ -1,10 +1,11 @@
 package twitter4s
 
-import org.specs2.mutable.Specification
+import twitter4s._
 import org.junit.runner.RunWith
+import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
+import Twitter4sTestHelper._
 import twitter4j.auth.NullAuthorization
-import twitter4s.Twitter4sTestHelper._
 import twitter4j.auth.OAuthAuthorization
 
 @RunWith(classOf[JUnitRunner])

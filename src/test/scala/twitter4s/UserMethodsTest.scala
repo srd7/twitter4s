@@ -1,12 +1,13 @@
 package twitter4s
+
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import twitter4j.json.DataObjectFactory
 import twitter4j.ProfileImage
-import twitter4s.Twitter4sTestHelper._
-import twitter4s.implicits.Twitter4SImplicits._
-import twitter4s.internal.json.ResponseListImpl
+import Twitter4sTestHelper._
+import internal.json.ResponseListImpl
 import twitter4j.User
 
 @RunWith(classOf[JUnitRunner])

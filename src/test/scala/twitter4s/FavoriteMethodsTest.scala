@@ -1,12 +1,12 @@
 package twitter4s
+import twitter4s._
 import org.specs2.mutable.Specification
 import twitter4j.json.DataObjectFactory
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import twitter4j.TwitterException
 import twitter4j.Status
-import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class FavoriteMethodsTest extends Specification {

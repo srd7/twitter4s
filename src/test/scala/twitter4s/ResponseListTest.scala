@@ -1,14 +1,13 @@
 package twitter4s
 
 import org.specs2.mutable.Specification
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import scala.collection.mutable.Buffer
 import twitter4j.Trends
 import twitter4j.RateLimitStatus
 import twitter4j.TwitterResponse
-import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class ResponseListTest extends Specification {

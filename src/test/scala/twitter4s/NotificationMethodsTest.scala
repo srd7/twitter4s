@@ -2,7 +2,7 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import twitter4j.TwitterException
 import twitter4j.json.DataObjectFactory
 import twitter4j.User

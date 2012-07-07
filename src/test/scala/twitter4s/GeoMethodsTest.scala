@@ -1,8 +1,9 @@
 package twitter4s
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import twitter4j.GeoQuery
 import twitter4j.GeoLocation
 import twitter4j.json.DataObjectFactory
@@ -10,7 +11,6 @@ import twitter4j.Place
 import twitter4j.TwitterException
 import twitter4j.StatusUpdate
 import java.util.Date
-import twitter4s.implicits.Twitter4SImplicits._
 
 @RunWith(classOf[JUnitRunner])
 class GeoMethodsTest extends Specification {

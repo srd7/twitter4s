@@ -1,11 +1,11 @@
 package twitter4s
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import scala.collection.JavaConverters.asScalaBufferConverter
 import twitter4j.UserList
-import twitter4s.implicits.Twitter4SImplicits._
 import twitter4j.json.DataObjectFactory
 import twitter4j.Paging
 import twitter4j.TwitterException

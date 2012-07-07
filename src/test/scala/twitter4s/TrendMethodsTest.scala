@@ -1,13 +1,13 @@
 package twitter4s
 
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable._
 import org.specs2.runner.JUnitRunner
 
 import twitter4j.json.DataObjectFactory
 import twitter4j._
-import twitter4s.Twitter4sTestHelper._
-import twitter4s.implicits.Twitter4SImplicits._
+import Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class TrendMethodsTest extends Specification {

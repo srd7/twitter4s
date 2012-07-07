@@ -1,12 +1,12 @@
 package twitter4s
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.Twitter4sTestHelper._
+import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import java.util.Date
 import twitter4j.StatusUpdate
-import twitter4s.implicits.Twitter4SImplicits._
 import twitter4j.Status
 import twitter4j.Paging
 
