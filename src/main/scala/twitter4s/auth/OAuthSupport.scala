@@ -17,6 +17,8 @@ trait OAuthSupport {
    */
   def setOAuthConsumer(consumerKey: String, consumerSecret: String): Unit
   
+  def setOAuthConsumer(consumerKey: ConsumerKey): Unit
+  
   def getOAuthRequestToken(callbackURL: Option[String], xAuthAccessType: Option[String]): RequestToken
   
   def getOAuthAccessToken(oauthVerifier: Option[String], requestToken: Option[RequestToken], screenName: Option[String], password: Option[String]): AccessToken

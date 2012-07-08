@@ -1,11 +1,14 @@
 package twitter4s
 
-import org.specs2.mutable.Specification
 import org.junit.runner.RunWith
+import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4j.TwitterResponse
-import twitter4j.conf.ConfigurationBuilder
+import twitter4j.auth.AccessToken
 import Twitter4sTestHelper._
+import auth.ConsumerKey
+import twitter4j.TwitterResponse
+import twitter4s._
+import twitter4j.json.DataObjectFactory
 
 @RunWith(classOf[JUnitRunner])
 class TwitterTest extends Specification {
@@ -35,6 +38,39 @@ class TwitterTest extends Specification {
   "id" should {
     "get authorized user's id" in {
       twitter1.id must equalTo(id1.id)
+    }
+  }
+  
+  "Twitter object" should {
+    val consumerKey = new ConsumerKey(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
+    val accessToken = new AccessToken(prop.getProperty("id1.oauth.accessToken"), prop.getProperty("id1.oauth.accessTokenSecret"))
+    
+    def testTwitterObjectAuthorize(target: Twitter) = {
+      val user = target.verifyCredentials
+      rawJSON(user) must not equalTo(null)
+      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+    }
+    
+    "create object with consumerKey and consumerSecret" in {
+      val twitterObj = Twitter(consumerKey, accessToken)
+      // execute authorized api.
+      testTwitterObjectAuthorize(twitterObj)
+    }
+    
+    "create object without settings and after set oauth information" in {
+      val twitterObj = Twitter()
+      twitterObj.setOAuthConsumer(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
+      twitterObj.setOAuthAccessToken(accessToken)
+      // execute authorized api.
+      testTwitterObjectAuthorize(twitterObj)
+    }
+    
+    "create object without settings and after set oauth information used by ConsumerKey class" in {
+      val twitterObj = Twitter()
+      twitterObj.setOAuthConsumer(consumerKey)
+      twitterObj.setOAuthAccessToken(accessToken)
+      // execute authorized api.
+      testTwitterObjectAuthorize(twitterObj)
     }
   }
 }

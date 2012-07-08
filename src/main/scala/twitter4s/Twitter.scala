@@ -4,7 +4,6 @@ import twitter4s._
 import java.io.File
 import java.io.InputStream
 import java.util.Date
-
 import twitter4j.api.HelpMethods.Language
 import twitter4j.auth.AccessToken
 import twitter4j.auth.Authorization
@@ -37,6 +36,7 @@ import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
 import twitter4j.User
 import twitter4j.UserList
+import auth.ConsumerKey
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -117,6 +117,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.setOAuthConsumer(consumerKey, consumerSecret)
   }
   
+  /**
+   * {@ineritDoc}
+   */
+  def setOAuthConsumer(consumerKey: ConsumerKey) {
+    twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
+  }
+  
   def getOAuthRequestToken(callbackURL: Option[String], xAuthAccessType: Option[String]): RequestToken = {
     // TODO implements
     return null
@@ -127,8 +134,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     return null
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def setOAuthAccessToken(accessToken: AccessToken) {
-    // TODO implements
+    twitter4jObj.setOAuthAccessToken(accessToken)
   }
   
   /* AccountMethods */
@@ -963,6 +973,16 @@ object Twitter {
   def apply(conf: Option[Configuration] = None, configTreePath: Option[String] = None, accessToken: Option[AccessToken] = None, auth: Option[Authorization] = None) = {
     val factory4j = getTwitterFactory4j(conf, configTreePath)
     new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
+  }
+  
+  def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
+    val twitter4jObj = getTwitter4jInstance(
+        getTwitterFactory4j(None, None),
+        None,
+        None)
+    twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
+    twitter4jObj.setOAuthAccessToken(accessToken)
+    new Twitter(twitter4jObj)
   }
   
   /**
