@@ -1,6 +1,6 @@
 package twitter4s
 
-import twitter4s.api._
+import api._
 
 trait TwitterAPIs extends AnyRef
 with AccountMethods

@@ -482,19 +482,29 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def addUserListMember(listId: Int, userId: Long): UserList = {
-    // TODO implements
-    null
+    twitter4jObj.addUserListMember(listId, userId)
   }
   
-  def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[Long]] = None): UserList = {
-    // TODO implements
-    null
+  /**
+   * {@inheritDoc}
+   */
+  def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[String]] = None): UserList = {
+    (userIds, screenNames) match {
+      case (Some(userIds), None) => twitter4jObj.addUserListMembers(listId, userIds)
+      case (None, Some(screenNames)) => twitter4jObj.addUserListMembers(listId, screenNames)
+      // case _ => // TODO exception?
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def deleteUserListMember(listId: Int, userId: Long): UserList = {
-    // TODO implements
-    null
+    twitter4jObj.deleteUserListMember(listId, userId)
   }
   
   /**

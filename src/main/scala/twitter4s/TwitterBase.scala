@@ -2,7 +2,7 @@ package twitter4s
 import twitter4j.RateLimitStatusListener
 import twitter4j.auth.Authorization
 import twitter4j.conf.Configuration
-import twitter4s.auth.OAuthSupport
+import auth.OAuthSupport
 import twitter4j.auth.AccessToken
 import twitter4j.auth.RequestToken
 

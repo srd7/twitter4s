@@ -69,11 +69,16 @@ class ListMethodsTest extends Specification {
       rawJSON(targetList) must not equalTo(null)
       targetList must equalTo(DataObjectFactory.createUserList(rawJSON(targetList)))
       
-      val updatedList = twitter2.showUserList(userList.getId())
-      updatedList must equalTo(DataObjectFactory.createUserList(rawJSON(updatedList)))
-      updatedList.isPublic() must beTrue
-      updatedList.getName() must equalTo("testpoint2")
-      updatedList.getDescription() must equalTo("description2")
+      targetList.isPublic() must beTrue
+      targetList.getName() must equalTo("testpoint2")
+      targetList.getDescription() must equalTo("description2")
+      
+      // Note:below code be fale. is showUserList API reflected immidiatly?
+//      val updatedList = twitter2.showUserList(userList.getId())
+//      updatedList must equalTo(DataObjectFactory.createUserList(rawJSON(updatedList)))
+//      updatedList.isPublic() must beTrue
+//      updatedList.getName() must equalTo("testpoint2")
+//      updatedList.getDescription() must equalTo("description2")
     }
   }
   
@@ -82,6 +87,41 @@ class ListMethodsTest extends Specification {
       val userList = makePrecondition
       twitter2.showUserListMembership(userList.getId, id1.id) must
       throwA[TwitterException].like {case te:TwitterException => te.getStatusCode must equalTo(404)}
+    }
+    
+    "get list membership user added member list" in {
+      val userList = makePrecondition
+      
+      // add user test
+      val addedList1 = twitter2.addUserListMember(userList.getId, id1.id)
+      rawJSON(addedList1) must not equalTo(null)
+      addedList1 must equalTo(DataObjectFactory.createUserList(rawJSON(addedList1)))
+      
+      val addedList2 = twitter2.addUserListMembers(userList.getId, Some(Array(id3.id, id1.id)))
+      rawJSON(addedList2) must not equalTo(null)
+      addedList2 must equalTo(DataObjectFactory.createUserList(rawJSON(addedList2)))
+      
+      val addedList3 = twitter2.addUserListMembers(listId = userList.getId, screenNames = Some(Array(prop.getProperty("followsOneWay"))))
+      rawJSON(addedList3) must not equalTo(null)
+      addedList3 must equalTo(DataObjectFactory.createUserList(rawJSON(addedList3)))
+      
+      // getUserListMembers test
+      val users = twitter2.getUserListMembers(userList.getId(), -1)
+      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
+      rawJSON(users.tw4jObj) must not equalTo(null)
+      users.size must be_>(0)
+    }
+  }
+  
+  "deleteUserListMembership" should {
+    "delete user from list specified by user id" in {
+      // make precondition
+      val userList = makePrecondition
+      twitter2.addUserListMembers(userList.getId, Some(Array(id3.id, id1.id)))
+      
+      val deletedList = twitter2.deleteUserListMember(userList.getId(), id3.id)
+      rawJSON(deletedList) must not equalTo(null)
+      deletedList must equalTo(DataObjectFactory.createUserList(rawJSON(deletedList)))
     }
   }
 }

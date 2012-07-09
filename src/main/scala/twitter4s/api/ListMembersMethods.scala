@@ -9,7 +9,7 @@ trait ListMembersMethods {
 	
 	def addUserListMember(listId: Int, userId: Long): UserList
 	
-	def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[Long]] = None): UserList
+	def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[String]] = None): UserList
 	
 	def deleteUserListMember(listId: Int, userId: Long): UserList
 	
