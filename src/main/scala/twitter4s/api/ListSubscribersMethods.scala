@@ -5,7 +5,7 @@ import twitter4j.User
 import twitter4j.UserList
 
 trait ListSubscribersMethods {
-	def getListSubscribers(listId: Int, cursor: Long): PagableResponseList[User]
+	def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[User]
 	
 	def createUserListSubscription(listId: Int): UserList
 	

@@ -477,9 +477,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   /* ListMemberMethods */
+  /**
+   * {@inheritDoc}
+   */
   def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[User] = {
-    // TODO implements
-    null
+    twitter4jObj.getUserListMembers(listId, cursor)
   }
   
   /**
@@ -561,14 +563,24 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getUserListStatuses(listId, paging)
   }
 
-  def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean]): PagableResponseList[UserList] = {
-    // TODO implements
-    null
+  /**
+   * {@inheritDoc}
+   */
+  def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean] = None): PagableResponseList[UserList] = {
+    (listMemberId, listMemberScreenName, filterToOwnedLists) match {
+      case (Some(listMemberId), None, None) => twitter4jObj.getUserListMemberships(listMemberId, cursor)
+      case (None, Some(listMemberScreenName), None) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor)
+      case (Some(listMemberId), None, Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberId, cursor, filterToOwnedLists)
+      case (None, Some(listMemberScreenName), Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor, filterToOwnedLists)
+      case (None, None, None) => twitter4jObj.getUserListMemberships(cursor)
+    }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[UserList] = {
-    // TDOO implements
-    null
+    twitter4jObj.getUserListSubscriptions(listMemberScreenName, cursor)
   }
 
   /**
@@ -579,6 +591,29 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       case (Some(screenName), None) => twitter4jObj.getAllUserLists(screenName)
       case (None, Some(userId)) => twitter4jObj.getAllUserLists(userId)
     }
+  }
+  
+  /* ListSubscribersMethods */
+  /**
+   * {@inheritDoc}
+   */
+  def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[User] = {
+    twitter4jObj.getUserListSubscribers(listId, cursor)
+  }
+
+  def createUserListSubscription(listId: Int): UserList = {
+    // TODO implement
+    null
+  }
+
+  def destroyUserListSubscription(listId: Int): UserList = {
+    // TODO implement
+    null
+  }
+
+  def showUserListSubscription(listId: Int, userId: Long): User = {
+    // TODO implement
+    null
   }
   
   /* LocalTrendsMethods */

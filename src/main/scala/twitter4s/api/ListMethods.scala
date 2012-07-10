@@ -19,7 +19,7 @@ trait ListMethods {
 	
 	def getUserListStatuses(listId: Int, paging: Paging): ResponseList[Status]
 	
-	def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean]): PagableResponseList[UserList]
+	def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean] = None): PagableResponseList[UserList]
 	
 	def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[UserList]
 	

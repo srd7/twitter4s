@@ -1,21 +1,23 @@
 package twitter4s
 import twitter4s._
+import scala.collection.JavaConverters.asScalaBufferConverter
+
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
+
 import Twitter4sTestHelper._
-import scala.collection.JavaConverters.asScalaBufferConverter
-import twitter4j.UserList
 import twitter4j.json.DataObjectFactory
 import twitter4j.Paging
 import twitter4j.TwitterException
+import twitter4j.UserList
 
 @RunWith(classOf[JUnitRunner])
 class ListMethodsTest extends Specification {
 
   def makePrecondition = {
     val userLists = twitter2.getUserLists(-1L, listOwnerScreenName = Some(id2.screenName))
-    userLists.foreach(alist => twitter2.destroyUserList(alist.getId))
+    userLists.foreach(alist => try {twitter2.destroyUserList(alist.getId)} catch {case e:Exception =>})
     twitter2.createUserList("testpoint1", false, "description1")
   }
   
@@ -72,25 +74,15 @@ class ListMethodsTest extends Specification {
       targetList.isPublic() must beTrue
       targetList.getName() must equalTo("testpoint2")
       targetList.getDescription() must equalTo("description2")
-      
-      // Note:below code be fale. is showUserList API reflected immidiatly?
-//      val updatedList = twitter2.showUserList(userList.getId())
-//      updatedList must equalTo(DataObjectFactory.createUserList(rawJSON(updatedList)))
-//      updatedList.isPublic() must beTrue
-//      updatedList.getName() must equalTo("testpoint2")
-//      updatedList.getDescription() must equalTo("description2")
     }
   }
   
-  "showUserListMembership" should {
-    "throw TwitterException execute to no member list" in {
+  "ListMembersMethods API" should {
+    "get list membership user added member list" in {
+      // test no member list
       val userList = makePrecondition
       twitter2.showUserListMembership(userList.getId, id1.id) must
       throwA[TwitterException].like {case te:TwitterException => te.getStatusCode must equalTo(404)}
-    }
-    
-    "get list membership user added member list" in {
-      val userList = makePrecondition
       
       // add user test
       val addedList1 = twitter2.addUserListMember(userList.getId, id1.id)
@@ -107,21 +99,41 @@ class ListMethodsTest extends Specification {
       
       // getUserListMembers test
       val users = twitter2.getUserListMembers(userList.getId(), -1)
-      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       rawJSON(users.tw4jObj) must not equalTo(null)
+      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       users.size must be_>(0)
-    }
-  }
-  
-  "deleteUserListMembership" should {
-    "delete user from list specified by user id" in {
-      // make precondition
-      val userList = makePrecondition
-      twitter2.addUserListMembers(userList.getId, Some(Array(id3.id, id1.id)))
       
+      // showUserListMembership test
+      val user = twitter2.showUserListMembership(userList.getId(), id3.id)
+      rawJSON(user) must not equalTo(null)
+      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+      user.getId must equalTo(id3.id)
+      
+      // deleteUserListMember test
       val deletedList = twitter2.deleteUserListMember(userList.getId(), id3.id)
       rawJSON(deletedList) must not equalTo(null)
       deletedList must equalTo(DataObjectFactory.createUserList(rawJSON(deletedList)))
+      
+      // getUserListMemberships test
+      val userLists = twitter2.getUserListMemberships(-1, listMemberScreenName = Some(id1.screenName))
+      rawJSON(userLists.tw4jObj) must not equalTo(null)
+      userLists(0) must equalTo(DataObjectFactory.createUserList(rawJSON(userLists(0))))
+      
+      // getUserListSubscriptions test
+      val sbScripUserLists = twitter2.getUserListSubscriptions(-1, id1.screenName)
+      rawJSON(sbScripUserLists.tw4jObj) must not equalTo(null)
+      if(sbScripUserLists.size > 0)
+        sbScripUserLists(0) must equalTo(DataObjectFactory.createUserList(rawJSON(sbScripUserLists(0))))
+      sbScripUserLists must not equalTo(null)
+    }
+  }
+  
+  "ListSubscribersMethods APIs" should {
+    "get list subscribers" in {
+      val userList = makePrecondition
+      val users = twitter2.getUserListSubscribers(userList.getId, -1)
+      rawJSON(users.tw4jObj) must not equalTo(null)
+      users.size must equalTo(0)
     }
   }
 }
