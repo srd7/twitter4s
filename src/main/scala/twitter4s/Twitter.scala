@@ -601,19 +601,25 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getUserListSubscribers(listId, cursor)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def createUserListSubscription(listId: Int): UserList = {
-    // TODO implement
-    null
+    twitter4jObj.createUserListSubscription(listId)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def destroyUserListSubscription(listId: Int): UserList = {
-    // TODO implement
-    null
+    twitter4jObj.destroyUserListSubscription(listId)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def showUserListSubscription(listId: Int, userId: Long): User = {
-    // TODO implement
-    null
+    twitter4jObj.showUserListSubscription(listId, userId)
   }
   
   /* LocalTrendsMethods */

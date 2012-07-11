@@ -17,7 +17,7 @@ class ListMethodsTest extends Specification {
 
   def makePrecondition = {
     val userLists = twitter2.getUserLists(-1L, listOwnerScreenName = Some(id2.screenName))
-    userLists.foreach(alist => try {twitter2.destroyUserList(alist.getId)} catch {case e:Exception =>})
+    userLists.foreach(alist => try {twitter2.destroyUserList(alist.getId)} catch {case e:TwitterException =>})
     twitter2.createUserList("testpoint1", false, "description1")
   }
   
@@ -67,6 +67,7 @@ class ListMethodsTest extends Specification {
   "updateUserList" should {
     "update user list setting specified by id" in {
       val userList = makePrecondition
+      Thread.sleep(2000)
       val targetList = twitter2.updateUserList(userList.getId(), "testpoint2", true, "description2")
       rawJSON(targetList) must not equalTo(null)
       targetList must equalTo(DataObjectFactory.createUserList(rawJSON(targetList)))
@@ -81,6 +82,7 @@ class ListMethodsTest extends Specification {
     "get list membership user added member list" in {
       // test no member list
       val userList = makePrecondition
+      Thread.sleep(2000)
       twitter2.showUserListMembership(userList.getId, id1.id) must
       throwA[TwitterException].like {case te:TwitterException => te.getStatusCode must equalTo(404)}
       
@@ -131,9 +133,19 @@ class ListMethodsTest extends Specification {
   "ListSubscribersMethods APIs" should {
     "get list subscribers" in {
       val userList = makePrecondition
+      Thread.sleep(2000)
       val users = twitter2.getUserListSubscribers(userList.getId, -1)
       rawJSON(users.tw4jObj) must not equalTo(null)
       users.size must equalTo(0)
+      
+      twitter1.createUserListSubscription(userList.getId) must
+      throwA[TwitterException].like { case te: TwitterException => te.getStatusCode() must equalTo(404)}
+      
+      twitter1.destroyUserListSubscription(userList.getId) must
+      throwA[TwitterException].like { case te: TwitterException => te.getStatusCode() must equalTo(404)}
+      
+      twitter2.showUserListSubscription(userList.getId(), id3.id) must
+      throwA[TwitterException].like { case te: TwitterException => te.getStatusCode() must equalTo(404)}
     }
   }
 }
