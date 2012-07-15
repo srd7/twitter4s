@@ -5,10 +5,16 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import twitter4j.auth.AccessToken
 import Twitter4sTestHelper._
+<<<<<<< HEAD
 import auth.ConsumerKey
 import twitter4j.TwitterResponse
 import twitter4s._
 import twitter4j.json.DataObjectFactory
+=======
+import twitter4j.json.DataObjectFactory
+import twitter4j.RateLimitStatusListener
+import twitter4j.RateLimitStatusEvent
+>>>>>>> d77853a40ff5933ef649c86cc8c185bf6811992d
 
 @RunWith(classOf[JUnitRunner])
 class TwitterTest extends Specification {
@@ -41,6 +47,7 @@ class TwitterTest extends Specification {
     }
   }
   
+<<<<<<< HEAD
   "Twitter object" should {
     val consumerKey = new ConsumerKey(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
     val accessToken = new AccessToken(prop.getProperty("id1.oauth.accessToken"), prop.getProperty("id1.oauth.accessTokenSecret"))
@@ -73,4 +80,49 @@ class TwitterTest extends Specification {
       testTwitterObjectAuthorize(twitterObj)
     }
   }
+=======
+  "getRateLimitStatus" should {
+    "get rate limit status" in {
+      val rateLimitStatus = twitter1.getRateLimitStatus
+      rawJSON(rateLimitStatus) must not equalTo(null)
+      rateLimitStatus must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus)))
+      rateLimitStatus.getHourlyLimit() must be_>(10)
+      rateLimitStatus.getRemainingHits() must be_>(10)
+    }
+    
+    "get comparable rate limit status" in {
+      twitter1.getMentions()
+      val previousStatus = twitter1.getRateLimitStatus
+      
+      twitter1.getMentions()
+      val afterStatus = twitter1.getRateLimitStatus
+      
+      previousStatus.getRemainingHits() must be_>(afterStatus.getRemainingHits())
+      previousStatus.getHourlyLimit() must equalTo(afterStatus.getHourlyLimit())
+    }
+  }
+  
+  // check API spec
+//  var accountLimitStatusAcquired:Boolean = false
+//  var ipLimitStatusAcquired:Boolean = false
+//  
+//  "addRateLimitStatusListener" should {
+//    "add listener works using APIs" in {
+//      twitter1.addRateLimitStatusListener(new RateLimitStatusListener() {
+//        def onRateLimitStatus(event: RateLimitStatusEvent) {
+//          accountLimitStatusAcquired = event.isAccountRateLimitStatus()
+//          ipLimitStatusAcquired = event.isIPRateLimitStatus()
+//        }
+//        
+//        def onRateLimitReached(event: RateLimitStatusEvent) {
+//        }
+//      })
+//      
+//      twitter1.getMentions()
+//      
+//      accountLimitStatusAcquired must beTrue
+//      ipLimitStatusAcquired must beFalse
+//    }
+//  }
+>>>>>>> d77853a40ff5933ef649c86cc8c185bf6811992d
 }

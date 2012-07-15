@@ -63,7 +63,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   def addRateLimitStatusListener(listener: RateLimitStatusListener) {
-    // TODO implements
+    twitter4jObj.addRateLimitStatusListener(listener)
   }
   
   /**
@@ -149,9 +149,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.verifyCredentials()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getRateLimitStatus: RateLimitStatus = {
-    // TODO implements
-    null
+    twitter4jObj.getRateLimitStatus()
   }
   
   /**
