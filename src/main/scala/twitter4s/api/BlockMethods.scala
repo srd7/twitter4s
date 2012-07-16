@@ -4,16 +4,22 @@ import twitter4j.User
 import twitter4s.ResponseList
 import twitter4j.IDs
 
+/**
+ * @author Shinsuke Abe - mao.instantlife at gmail.com
+ */
 trait BlockMethods {
   /**
    * Blocks the user specified in the ID parameter as the authenticating user. Returns the blocked user in the requested format when successful.
    * <br/>This method calls twitter4j.Twitter.createBlock(screenName) or createBlock(userId)
    * <br/>createBlock calls http://api.twitter.com/1/blocks/create/[id].json
+   * <br/>Note1: You must set parameter screenName or userId at least.
+   * <br/>Note2: Parameter userId is taken priority over screenName.
    *
    * @param screenName (optional) the screen_name of the user to block
    * @param userId (optional) the ID of the user to block
    * @return the blocked user
    * @throws TwitterException when Twitter service or network is unavailable
+   * @throws IllegalArgumentException when the both of parameters are not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">POST blocks/create | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
@@ -23,11 +29,14 @@ trait BlockMethods {
    * Un-blocks the user specified in the ID parameter as the authenticating user. Returns the un-blocked user in the requested format when successful.
    * <br/>This method calls twitter4j.Twitter.destroyBlock(screenName) or destroyBlock(userId)
    * <br/>destroyBlock calls http://api.twitter.com/1/blocks/destroy/[id].json
+   * <br/>Note1: You must set parameter screenName or userId at least.
+   * <br/>Note2: Parameter userId is taken priority over screenName.
    *
    * @param screen_name (optional) the screen_name of the user to block
    * @param userId (optional) the ID of the user to block
    * @return the unblocked user
    * @throws TwitterException when Twitter service or network is unavailable
+   * @throws IllegalArgumentException when both of parameters are not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">POST blocks/destroy | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
@@ -37,11 +46,14 @@ trait BlockMethods {
    * Returns if the authenticating user is blocking a target user. Will return the blocked user's object if a block exists, and error with a HTTP 404 response code otherwise.
    * <br/>This method calls twitter4j.Twitter.existsBlock(screenName) or existsBlock(userId)
    * <br/>existsBlock calls http://api.twitter.com/1/blocks/exists/[id].json
+   * <br/>Note1: You must set parameter screenName or userId at least.
+   * <br/>Note2: Parameter userId is taken priority over screenName.
    *
    * @param screenName (optional) The screen_name of the potentially blocked user.
    * @param userId (optional) The ID of the potentially blocked user.
    * @return if the authenticating user is blocking a target user
    * @throws TwitterException when Twitter service or network is unavailable
+   * @throws IllegalArgumentException when both of parameters are not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">GET blocks/exists | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
