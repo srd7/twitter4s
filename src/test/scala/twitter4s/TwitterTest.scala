@@ -1,20 +1,19 @@
 package twitter4s
 
+import Twitter
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
-import org.specs2.runner.JUnitRunner
-import twitter4j.auth.AccessToken
-import Twitter4sTestHelper._
-<<<<<<< HEAD
+import Twitter4sTestHelper.id1
+import Twitter4sTestHelper.prop
+import Twitter4sTestHelper.rawJSON
+import Twitter4sTestHelper.rwPrivateMessage
+import Twitter4sTestHelper.twitter1
+import Twitter4sTestHelper.unauthenticated
 import auth.ConsumerKey
+import twitter4j.auth.AccessToken
+import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterResponse
-import twitter4s._
-import twitter4j.json.DataObjectFactory
-=======
-import twitter4j.json.DataObjectFactory
-import twitter4j.RateLimitStatusListener
-import twitter4j.RateLimitStatusEvent
->>>>>>> d77853a40ff5933ef649c86cc8c185bf6811992d
+import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TwitterTest extends Specification {
@@ -47,7 +46,6 @@ class TwitterTest extends Specification {
     }
   }
   
-<<<<<<< HEAD
   "Twitter object" should {
     val consumerKey = new ConsumerKey(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
     val accessToken = new AccessToken(prop.getProperty("id1.oauth.accessToken"), prop.getProperty("id1.oauth.accessTokenSecret"))
@@ -80,7 +78,7 @@ class TwitterTest extends Specification {
       testTwitterObjectAuthorize(twitterObj)
     }
   }
-=======
+
   "getRateLimitStatus" should {
     "get rate limit status" in {
       val rateLimitStatus = twitter1.getRateLimitStatus
@@ -124,5 +122,4 @@ class TwitterTest extends Specification {
 //      ipLimitStatusAcquired must beFalse
 //    }
 //  }
->>>>>>> d77853a40ff5933ef649c86cc8c185bf6811992d
 }
