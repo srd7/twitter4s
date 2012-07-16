@@ -977,6 +977,9 @@ object Twitter {
     new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
   }
   
+  /**
+   * 
+   */
   def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
     val twitter4jObj = getTwitter4jInstance(
         getTwitterFactory4j(None, None),

@@ -1,6 +1,5 @@
 package twitter4s
 
-import Twitter
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper.id1
