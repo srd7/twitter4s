@@ -10,7 +10,8 @@ import twitter4j.api.HelpMethods.Language
 trait HelpMethods {
   /**
    * Returns the string "ok" in the requested format with a 200 OK HTTP status code.
-   * <br/>This method calls twitter4j.Twitter.test
+   * <br/>This method calls twitter4j.Twitter.test.
+   * <br/>test calls https://api.twitter.com/1/help/test.json 
    * 
    * @return true if the API is working
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
@@ -22,7 +23,8 @@ trait HelpMethods {
   /**
    * Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutons, and t.co URL lengths.</br>
    * It is recommended applications request this endpoint when they are loaded, but no more than once a day.
-   * <br/>This method call twitter4j.Twitter.getAPIConfiguration
+   * <br/>This method calls twitter4j.Twitter.getAPIConfiguration
+   * <br/>getAPIConfiguration calls https://api.twitter.com/1/help/configuration.json
    * 
    * @return configuration
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
@@ -34,6 +36,7 @@ trait HelpMethods {
   /**
    * Returns the list of languages supported by Twitter along with their ISO 639-1 code. The ISO 639-1 code is the two letter value to use if you include lang with any of your requests.
    * <br/>This method calls twitter4j.Twitter.getLanguages
+   * <br/>getLoanguages calls https://api.twitter.com/1/help/languages.json
    * 
    * @return list of languages supported by Twitter
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
