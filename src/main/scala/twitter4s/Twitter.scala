@@ -42,9 +42,9 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
-  // TODO PagableResponseListやUserListのラッピング
+  // TODO UserListのラッピング
   // TODO 他のリターンオブジェクトとFactoryのラッピング
-  // TODO Twitter4Jでカバーしていないパターンに関してはTwitterExceptionをスローする
+  // TODO Twitter4Jでカバーしていないパターンに関してはIllegalArgumentExceptionをスローする
   // TODO IDとスクリーン名を指定する場合はID優先になるようにパターンマッチを修正する
   
   /* TwitterBase method */
