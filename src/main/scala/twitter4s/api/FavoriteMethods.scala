@@ -10,8 +10,8 @@ import twitter4j.Status
 trait FavoriteMethods {
   /**
    * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format.
-   * <br/>This method calls twitter4j.Twitter.getFavorites by one of below parameters combinations.
-   * <br/> 
+   * <br />This method calls twitter4j.Twitter.getFavorites by one of below parameters combinations.
+   * <br /> 
    * <ul>
    * <li>getFavorites()</li>
    * <li>getFavorites(page)</li>
@@ -20,7 +20,7 @@ trait FavoriteMethods {
    * <li>getFavorites(paging)</li>
    * <li>getFavorites(id, paging)</li>
    * </ul>
-   * <br/>getFavorites method calls http://api.twitter.com/1/favorites.json
+   * <br />getFavorites method calls http://api.twitter.com/1/favorites.json
    * 
    * @param id (optional) the ID or screen name of the user for whom to request a list of favorite statuses
    * @param page (optional) the number of page
@@ -35,8 +35,8 @@ trait FavoriteMethods {
 
   /**
    * Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.
-   * <br/>This method calls twitter4j.Twitter.createFavorite
-   * <br/>createFavorite calls http://api.twitter.com/1/favorites/create/[id].json
+   * <br />This method calls twitter4j.Twitter.createFavorite
+   * <br />createFavorite calls http://api.twitter.com/1/favorites/create/[id].json
    *
    * @param id the ID of the status to favorite
    * @return Status
@@ -48,8 +48,8 @@ trait FavoriteMethods {
 
   /**
    * Un-favorites the status specified in the ID parameter as the authenticating user. Returns the un-favorited status in the requested format when successful.
-   * <br/>This method calls twitter4j.Twitter.destroyFavorite
-   * <br/>This method calls http://api.twitter.com/1/favorites/destroy/[id].json
+   * <br />This method calls twitter4j.Twitter.destroyFavorite
+   * <br />This method calls http://api.twitter.com/1/favorites/destroy/[id].json
    *
    * @param id the ID of the status to un-favorite
    * @return Status

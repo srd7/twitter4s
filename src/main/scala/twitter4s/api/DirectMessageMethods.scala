@@ -10,8 +10,8 @@ import twitter4j.DirectMessage
 trait DirectMessageMethods {
   /**
    * Returns a list of the direct messages sent to the authenticating user.
-   * <br/>This method calls twitter4j.Twitter.getDirectMessages
-   * <br/>getDirectMessages calls http://api.twitter.com/1/direct_messages
+   * <br />This method calls twitter4j.Twitter.getDirectMessages
+   * <br />getDirectMessages calls http://api.twitter.com/1/direct_messages
    *
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return List
@@ -22,8 +22,8 @@ trait DirectMessageMethods {
 
   /**
    * Returns a list of the direct messages sent by the authenticating user.
-   * <br/>This method calls twitter4j.Twitter.getSentDirectMessages
-   * <br/>getSentDirectMessages calls http://api.twitter.com/1/direct_messages/sent
+   * <br />This method calls twitter4j.Twitter.getSentDirectMessages
+   * <br />getSentDirectMessages calls http://api.twitter.com/1/direct_messages/sent
    *
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return List
@@ -36,10 +36,10 @@ trait DirectMessageMethods {
   /**
    * Sends a new direct message to the specified user from the authenticating user. Requires both the user and text parameters below.
    * The text will be trimmed if the length of the text is exceeding 140 characters.
-   * <br/>This method calls twitter4j.Twitter.sendDirectMessage
-   * <br/>sendDirectMessage calls http://api.twitter.com/1/direct_messages/new
-   * <br/>Note1: You must set parameter screenName or userId at least.
-   * <br/>Note2: Parameter userId is taken priority over screenName.
+   * <br />This method calls twitter4j.Twitter.sendDirectMessage
+   * <br />sendDirectMessage calls http://api.twitter.com/1/direct_messages/new
+   * <br />Note1: You must set parameter screenName or userId at least.
+   * <br />Note2: Parameter userId is taken priority over screenName.
    *
    * @param screenName (optional) the screen name of the user to whom send the direct message
    * @param userId (optional) the screen name of the user to whom send the direct message
@@ -54,8 +54,8 @@ trait DirectMessageMethods {
 
   /**
    * Destroys the direct message specified in the required ID parameter. The authenticating user must be the recipient of the specified direct message.
-   * <br/>This method calls twitter4j.Twitter.destroyDirectMessage.
-   * <br/>destroyDirectMessage calls http://api.twitter.com/1/direct_messages/destroy
+   * <br />This method calls twitter4j.Twitter.destroyDirectMessage.
+   * <br />destroyDirectMessage calls http://api.twitter.com/1/direct_messages/destroy
    *
    * @param id the ID of the direct message to destroy
    * @return the deleted direct message
@@ -67,9 +67,9 @@ trait DirectMessageMethods {
 
   /**
    * Returns a single direct message, specified by an id parameter.
-   * <br/>This method has not been finalized and the interface is subject to change in incompatible ways.
-   * <br/>This method calls twitter4j.Twitter.showDirectMessage.
-   * <br/>showDirectMessage calls http://api.twitter.com/1/direct_messages/show/:id.json
+   * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
+   * <br />This method calls twitter4j.Twitter.showDirectMessage.
+   * <br />showDirectMessage calls http://api.twitter.com/1/direct_messages/show/:id.json
    *
    * @param id message id
    * @return DirectMessage

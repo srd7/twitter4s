@@ -15,8 +15,8 @@ trait AccountMethods {
 
   /**
    * Returns an HTTP 200 OK response code and a representation of the requesting user if authentication was successful; returns a 401 status code and an error message if not. Use this method to test if supplied user credentials are valid.
-   * <br/>This method calls twitter4j.Twitter.verifyCredentials.
-   * <br/>verifyCredentials calls http://api.twitter.com/1/account/verify_credentials.json
+   * <br />This method calls twitter4j.Twitter.verifyCredentials.
+   * <br />verifyCredentials calls http://api.twitter.com/1/account/verify_credentials.json
    * 
    * @return user
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable, or if supplied credential is wrong (TwitterException.getStatusCode() == 401)
@@ -27,8 +27,8 @@ trait AccountMethods {
   
   /**
    * Returns the remaining number of API requests available to the requesting user before the API limit is reached for the current hour. Calls to rate_limit_status do not count against the rate limit. If authentication credentials are provided, the rate limit status for the authenticating user is returned. Otherwise, the rate limit status for the requester's IP address is returned.<br/>
-   * <br/>This method calls twitter4j.Twitter.getRateLimitStatus.
-   * <br/>getRateLimitStatus calls http://api.twitter.com/1/account/rate_limit_status.json
+   * <br />This method calls twitter4j.Twitter.getRateLimitStatus.
+   * <br />getRateLimitStatus calls http://api.twitter.com/1/account/rate_limit_status.json
    * 
    * @return the rate limit status
    * @throws TwitterException when Twitter service or network is unavailable
@@ -39,8 +39,8 @@ trait AccountMethods {
   
   /**
    * Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com. Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).<br/>
-   * <br/>This method calls twitter4j.Twitter.updateProfileColors.
-   * <br/>updateProfileColors calls http://api.twitter.com/1/account/update_profile_colors.json
+   * <br />This method calls twitter4j.Twitter.updateProfileColors.
+   * <br />updateProfileColors calls http://api.twitter.com/1/account/update_profile_colors.json
    * 
    * @param profileBackgroundColor optional, can be null
    * @param profileTextColor optional, can be null
@@ -61,10 +61,10 @@ trait AccountMethods {
   
   /**
    * Updates the authenticating user's profile image.<br/>
-   * <br/>This method calls twitter4j.Twitter.updateProfileImage.
-   * <br/>updateProfileImage calls http://api.twitter.com/1/account/update_profile_image.json
-   * <br/>Note: You must set parameter imageFile or imageStream at least.
-   * <br/>Profile image must be a valid GIF, JPG, or PNG image of less than 700 kilobytes in size. Images with width larger than 500 pixels will be scaled down.
+   * <br />This method calls twitter4j.Twitter.updateProfileImage.
+   * <br />updateProfileImage calls http://api.twitter.com/1/account/update_profile_image.json
+   * <br />Note: You must set parameter imageFile or imageStream at least.
+   * <br />Profile image must be a valid GIF, JPG, or PNG image of less than 700 kilobytes in size. Images with width larger than 500 pixels will be scaled down.
    *
    * @param imageFile (optional) Profile image as File object.
    * @param imageStream (optional) Profile image as Stream object.
@@ -82,10 +82,10 @@ trait AccountMethods {
   
   /**
    * Updates the authenticating user's profile background image.<br/>
-   * <br/>This method calls twitter4.Twitter.updateProfileBackgroundImage.
-   * <br/>updateProfileBackgroundImage method calls http://api.twitter.com/1/account/update_profile_background_image.json
-   * <br/>Note: You must set prameter imageFile or imageStream at least.
-   * <br/>Background image must be a valid GIF, JPG, or PNG image of less than 800 kilobytes in size. Images with width larger than 2048 pixels will be forceably scaled down.
+   * <br />This method calls twitter4.Twitter.updateProfileBackgroundImage.
+   * <br />updateProfileBackgroundImage method calls http://api.twitter.com/1/account/update_profile_background_image.json
+   * <br />Note: You must set prameter imageFile or imageStream at least.
+   * <br />Background image must be a valid GIF, JPG, or PNG image of less than 800 kilobytes in size. Images with width larger than 2048 pixels will be forceably scaled down.
    *
    * @param imageFile (optional) Background image as File object.
    * @param imageStream (optional) Background image as Stream object.
@@ -105,8 +105,8 @@ trait AccountMethods {
   
   /**
    * Sets values that users are able to set under the "Account" tab of their settings page. Only the parameters specified(non-null) will be updated.<br/>
-   * <br/>This method calls twitter4j.Twitter.updateProfile.
-   * <br/>updateProfile calls http://api.twitter.com/1/account/update_profile.json
+   * <br />This method calls twitter4j.Twitter.updateProfile.
+   * <br />updateProfile calls http://api.twitter.com/1/account/update_profile.json
    *
    * @param name Optional. Maximum of 20 characters.
    * @param url Optional. Maximum of 100 characters. Will be prepended with "http://" if not present.
@@ -125,9 +125,9 @@ trait AccountMethods {
   
   /**
    * Returns the current count of friends, followers, updates (statuses) and favorites of the authenticating user.
-   * <br/>This method has not been finalized and the interface is subject to change in incompatible ways.
-   * <br/>This method calls twitter4j.Twitter.getAccountTotals.
-   * <br/>getAccountTotals calls http://api.twitter.com/1/account/totals.json
+   * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
+   * <br />This method calls twitter4j.Twitter.getAccountTotals.
+   * <br />getAccountTotals calls http://api.twitter.com/1/account/totals.json
    *
    * @return the current count of friends, followers, updates (statuses) and favorites of the authenticating user
    * @throws TwitterException when Twitter service or network is unavailable
@@ -138,9 +138,9 @@ trait AccountMethods {
   
   /**
    * Returns the current trend, geo, language, timezone and sleep time information for the authenticating user.
-   * <br/>This method has not been finalized and the interface is subject to change in incompatible ways.
-   * <br/>This method calls twitter4j.Twitter.getAccountSettings.
-   * <br/>getAccountSettings calls http://api.twitter.com/1/account/settings.json
+   * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
+   * <br />This method calls twitter4j.Twitter.getAccountSettings.
+   * <br />getAccountSettings calls http://api.twitter.com/1/account/settings.json
    *
    * @return the current trend, geo and sleep time information for the authenticating user.
    * @throws TwitterException when Twitter service or network is unavailable
@@ -151,9 +151,9 @@ trait AccountMethods {
   
   /**
    * Updates the current trend, geo, language, timezone and sleep time information for the authenticating user.
-   * <br/>This method has not been finalized and the interface is subject to change in incompatible ways.
-   * <br/>This method calls twitter4j.Twitter.updateAccountSettings.
-   * <br/>updateAccountSettings calls http://api.twitter.com/1/account/settings.json
+   * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
+   * <br />This method calls twitter4j.Twitter.updateAccountSettings.
+   * <br />updateAccountSettings calls http://api.twitter.com/1/account/settings.json
    *
    * @param trendLocationWoeid Optional. The Yahoo! Where On Earth ID to use as the user's default trend location.
    * @param sleepTimeEnabled Optional. Whether sleep time is enabled for the user

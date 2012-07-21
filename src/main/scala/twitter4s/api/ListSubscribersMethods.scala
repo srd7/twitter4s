@@ -10,8 +10,8 @@ import twitter4j.UserList
 trait ListSubscribersMethods {
   /**
    * Returns the subscribers of the specified list.
-   * <br/>This method calls twitter4j.Twitter.getUserListSubscribers.
-   * <br/>getUserListSubscribers calls http://api.twitter.com/1/lists/subscribers.json
+   * <br />This method calls twitter4j.Twitter.getUserListSubscribers.
+   * <br />getUserListSubscribers calls http://api.twitter.com/1/lists/subscribers.json
    *
    * @param listId The id of the list
    * @param cursor Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response    body's next_cursor and previous_cursor attributes to page back and forth in the list.
@@ -24,8 +24,8 @@ trait ListSubscribersMethods {
 
   /**
    * Make the authenticated user follow the specified list.
-   * <br/>This method calls twitter4j.Twitter.createUserListSubscription.
-   * <br/>createUserListSubscribers calls http://api.twitter.com/1/list/subscribers/create.json
+   * <br />This method calls twitter4j.Twitter.createUserListSubscription.
+   * <br />createUserListSubscribers calls http://api.twitter.com/1/list/subscribers/create.json
    *
    * @param listId The id of the list.
    * @return the updated list
@@ -37,8 +37,8 @@ trait ListSubscribersMethods {
 
   /**
    * Unsubscribes the authenticated user form the specified list.
-   * <br/>This method calls twitter4j.Twitter.destroyUserListSubscription.
-   * <br/>destroyUserListSubscription calls http://api.twitter.com/1/subscribers/destroy.json
+   * <br />This method calls twitter4j.Twitter.destroyUserListSubscription.
+   * <br />destroyUserListSubscription calls http://api.twitter.com/1/subscribers/destroy.json
    *
    * @param listId The id of the list.
    * @return the updated list
@@ -50,8 +50,8 @@ trait ListSubscribersMethods {
 
   /**
    * Check if the specified user is a subscriber of the specified list.
-   * <br/>This method calls twitter4j.Twitter.showUserListSubscriptions.
-   * <br/>showUserListSubscriptions calls http://api.twitter.com/1/lists/subscribers/show.json
+   * <br />This method calls twitter4j.Twitter.showUserListSubscriptions.
+   * <br />showUserListSubscriptions calls http://api.twitter.com/1/lists/subscribers/show.json
    *
    * @param listId The id of the list.
    * @param userId The id of the user who you want to know is a member or not of the specified list.

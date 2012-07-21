@@ -10,8 +10,8 @@ import twitter4s.PagableResponseList
 trait ListMembersMethods {
   /**
    * Returns the members of the specified list.
-   * <br/>This method calls twitter4j.Twitter.getUserListMembers.
-   * <br/>getUserListMembers calls http://api.twitter.com/1/lists/members.json
+   * <br />This method calls twitter4j.Twitter.getUserListMembers.
+   * <br />getUserListMembers calls http://api.twitter.com/1/lists/members.json
    *
    * @param listId The id of the list
    * @param cursor Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
@@ -24,8 +24,8 @@ trait ListMembersMethods {
 
   /**
    * Adds a member to a list. The authenticated user must own the list to be able to add members to it. Lists are limited to having 500 members.
-   * <br/>This method calls twitter4j.Twitter.addUserListMember
-   * <br/>This method calls http://api.twitter.com/1/lists/members/create.json
+   * <br />This method calls twitter4j.Twitter.addUserListMember
+   * <br />This method calls http://api.twitter.com/1/lists/members/create.json
    *
    * @param listId The id of the list.
    * @param userId The id of the user to add as a member of the list.
@@ -38,10 +38,10 @@ trait ListMembersMethods {
 
   /**
    * Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it. Lists are limited to having 500 members, and you are limited to adding up to 100 members to a list at a time with this method.
-   * <br/>This method calls twitter4j.Twitter.addUserListMembers.
-   * <br/>addUserListMembers calls http://api.twitter.com/1/lists/members/create_all.json
-   * <br/>Note1: You must set userIds or screenNames at least.
-   * <br/>Note2: Parameter userIds is taken priority over screenNames.
+   * <br />This method calls twitter4j.Twitter.addUserListMembers.
+   * <br />addUserListMembers calls http://api.twitter.com/1/lists/members/create_all.json
+   * <br />Note1: You must set userIds or screenNames at least.
+   * <br />Note2: Parameter userIds is taken priority over screenNames.
    *
    * @param listId (required) The id of the list.
    * @param userIds (optional) The array of ids of the user to add as member of the list. up to 100 are allowed in a single request.
@@ -55,8 +55,8 @@ trait ListMembersMethods {
 
   /**
    * Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.
-   * <br/>This method calls twitter4j.Twitter.deleteUserListMember.
-   * <br/>deleteUserListMember calls http://api.twitter.com/1/lists/members/destroy.json
+   * <br />This method calls twitter4j.Twitter.deleteUserListMember.
+   * <br />deleteUserListMember calls http://api.twitter.com/1/lists/members/destroy.json
    *
    * @param listId The id of the list.
    * @param userId The screen name of the member you wish to remove from the list.
@@ -69,8 +69,8 @@ trait ListMembersMethods {
 
   /**
    * Check if a user is a member of the specified list.
-   * <br/>This method calls twitter4j.Twitter.showUserListMembership.
-   * <br/>showUserListMembership calls http://api.twitter.com/1/lists/members/show.json
+   * <br />This method calls twitter4j.Twitter.showUserListMembership.
+   * <br />showUserListMembership calls http://api.twitter.com/1/lists/members/show.json
    *
    * @param listId The id of the list.
    * @param userId The id of the user who you want to know is a member or not of the specified list.

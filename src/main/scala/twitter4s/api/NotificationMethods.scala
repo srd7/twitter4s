@@ -5,10 +5,10 @@ import twitter4j.User
 trait NotificationMethods {
   /**
    * Enables notifications for updates from the specified user to the authenticating user. Returns the specified user when successful.
-   * <br/>This method calls twitter4j.Twitter.enableNotification.
-   * <br/>enableNotification calls http://api.twitter.com/1/notifications/follow.json
-   * <br/>Note1: You must set screenName or userId at least.
-   * <br/>Note2: Parameter userId is taken priority over screenName.
+   * <br />This method calls twitter4j.Twitter.enableNotification.
+   * <br />enableNotification calls http://api.twitter.com/1/notifications/follow.json
+   * <br />Note1: You must set screenName or userId at least.
+   * <br />Note2: Parameter userId is taken priority over screenName.
    *
    * @param screenName (optional) Specifies the screen name of the user to follow with device updates.
    * @param userId (optional) Specifies the ID of the user to follow with device updates.
@@ -22,10 +22,10 @@ trait NotificationMethods {
 
   /**
    * Disables notifications for updates from the specified user to the authenticating user. Returns the specified user when successful.
-   * <br/>This method calls twitter4j.Twitter.disableNotification
-   * <br/>disableNotification calls http://api.twitter.com/1/notifications/leave.json
-   * <br/>Note1: You must set screenName or userId at least.
-   * <br/>Note2: Parameter userId is taken priority over screenName.
+   * <br />This method calls twitter4j.Twitter.disableNotification
+   * <br />disableNotification calls http://api.twitter.com/1/notifications/leave.json
+   * <br />Note1: You must set screenName or userId at least.
+   * <br />Note2: Parameter userId is taken priority over screenName.
    *
    * @param screenName (optional) Specifies the screen name of the user to disable device notifications.
    * @param userId (optional) Specifies the ID of the user to disable device notifications.

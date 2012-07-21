@@ -8,10 +8,10 @@ import twitter4j.User
 trait SpamReportingMethods {
   /**
    * The user specified in the id is blocked by the authenticated user and reported as a spammer.
-   * <br/>This method calls twitter4j.Twitter.reportSpam.
-   * <br/>reportSpam calls http://api.twitter.com/1/report_spam.json
-   * <br/>Note1: You must set userId or screenName at least.
-   * <br/>Note2: Parameter userId is taken priority over screenName.
+   * <br />This method calls twitter4j.Twitter.reportSpam.
+   * <br />reportSpam calls http://api.twitter.com/1/report_spam.json
+   * <br />Note1: You must set userId or screenName at least.
+   * <br />Note2: Parameter userId is taken priority over screenName.
    *
    * @param userId (optional) The ID of the user you want to report as a spammer.
    * @param screenName (optional) The screen name of the user you want to report as a spammer.

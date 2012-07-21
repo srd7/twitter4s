@@ -12,10 +12,10 @@ import twitter4j.SimilarPlaces
 trait GeoMethods {
   /**
    * Search for places that can be attached to a statuses/update. Given a latitude and a longitude pair, an IP address, or a name, this request will return a list of all the valid places that can be used as the place_id when updating a status.
-   * <br/>Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location with a call to statuses/update.
-   * <br/>This is the recommended method to use find places that can be attached to statuses/update. Unlike geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated. This approach is also preferred for interactive place matching with the user.
-   * <br/>This method calls twitter4j.Twitter.searchPlaces
-   * <br/>searchPlaces calls http://api.twitter.com/1/geo/search.json
+   * <br />Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location with a call to statuses/update.
+   * <br />This is the recommended method to use find places that can be attached to statuses/update. Unlike geo/reverse_geocode which provides raw data access, this endpoint can potentially re-order places with regards to the user who is authenticated. This approach is also preferred for interactive place matching with the user.
+   * <br />This method calls twitter4j.Twitter.searchPlaces
+   * <br />searchPlaces calls http://api.twitter.com/1/geo/search.json
    *
    * @param query search query
    * @return places (cities and neighborhoods) that can be attached to a statuses/update
@@ -27,10 +27,10 @@ trait GeoMethods {
   
   /**
    * Locates places near the given coordinates which are similar in name.
-   * <br/>Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to post/geo/place to create a new one.
-   * <br/>The token contained in the response is the token needed to be able to create a new place.
-   * <br/>This method calls twitter4j.Twitter.getSimilarPlaces
-   * <br/>getSimilarPlaces calls http://api.twitter.com/1/geo/similar_places.json
+   * <br />Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to post/geo/place to create a new one.
+   * <br />The token contained in the response is the token needed to be able to create a new place.
+   * <br />This method calls twitter4j.Twitter.getSimilarPlaces
+   * <br />getSimilarPlaces calls http://api.twitter.com/1/geo/similar_places.json
    *
    * @param location The latitude and longitude to search around.
    * @param name The name a place is known as.
@@ -43,11 +43,11 @@ trait GeoMethods {
   def getSimilarPlaces(location: GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces
   
   /**
-   * Search for places (cities and neighborhoods) that can be attached to a statuses/update. Given a latitude and a longitude, return a list of all the valid places that can be used as a place_id when updating a status. Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location up with a call to statuses/update.<br/>
-   * There are multiple granularities of places that can be returned -- "neighborhoods", "cities", etc. At this time, only United States data is available through this method.<br/>
+   * Search for places (cities and neighborhoods) that can be attached to a statuses/update. Given a latitude and a longitude, return a list of all the valid places that can be used as a place_id when updating a status. Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location up with a call to statuses/update.<br />
+   * There are multiple granularities of places that can be returned -- "neighborhoods", "cities", etc. At this time, only United States data is available through this method.<br />
    * This API call is meant to be an informative call and will deliver generalized results about geography.
-   * <br/>This method calls twitter4j.Twitter.reverseGeoCode
-   * <br/>reverseGeoCode calls http://api.twitter.com/1/geo/reverse_geocode.json
+   * <br />This method calls twitter4j.Twitter.reverseGeoCode
+   * <br />reverseGeoCode calls http://api.twitter.com/1/geo/reverse_geocode.json
    *
    * @param query search query
    * @return places (cities and neighborhoods) that can be attached to a statuses/update
@@ -59,8 +59,8 @@ trait GeoMethods {
   
   /**
    * Find out more details of a place that was returned from the {@link twitter4j.api.GeoMethods#reverseGeoCode(twitter4j.GeoQuery)} method.
-   * <br/>This method calls twitter4j.Twitter.getGeoDetails(id)
-   * <br/>getGeoDetails calls http://api.twitter.com/1/geo/id/:id.json
+   * <br />This method calls twitter4j.Twitter.getGeoDetails(id)
+   * <br />getGeoDetails calls http://api.twitter.com/1/geo/id/:id.json
    *
    * @param id The ID of the location to query about.
    * @return details of the specified place
@@ -72,8 +72,8 @@ trait GeoMethods {
   
   /**
    * Creates a new place at the given latitude and longitude.
-   * <br/>This method calls twitter4j.Twitter.createPlace.
-   * <br/>createPlace calls http://api.twitter.com/1/geo/place.json
+   * <br />This method calls twitter4j.Twitter.createPlace.
+   * <br />createPlace calls http://api.twitter.com/1/geo/place.json
    *
    * @param name The name a place is known as.
    * @param containedWithin The place_id within which the new place can be found. Try and be as close as possible with the containing place. For example, for a room in a building, set the contained_within as the building place_id.

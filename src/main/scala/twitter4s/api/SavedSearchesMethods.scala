@@ -9,8 +9,8 @@ import twitter4j.SavedSearch
 trait SavedSearchesMethods {
   /**
    * Returns the authenticated user's saved search queries.
-   * <br/>This method calls twitter4j.Twitter.getSavedSearches.
-   * <br/>getSavedSearchs calls http://api.twitter.com/1/saved_searches.json
+   * <br />This method calls twitter4j.Twitter.getSavedSearches.
+   * <br />getSavedSearchs calls http://api.twitter.com/1/saved_searches.json
    *
    * @return Returns an array of numeric user ids the authenticating user is blocking.
    * @throws TwitterException when Twitter service or network is unavailable
@@ -21,8 +21,8 @@ trait SavedSearchesMethods {
 
   /**
    * Retrieve the data for a saved search owned by the authenticating user specified by the given id.
-   * <br/>This method calls twitter4j.Twitter.showSavedSearches.
-   * <br/>showSavedSearches calls http://api.twitter.com/1/saved_searches/show/:id.json
+   * <br />This method calls twitter4j.Twitter.showSavedSearches.
+   * <br />showSavedSearches calls http://api.twitter.com/1/saved_searches/show/:id.json
    *
    * @param id The id of the saved search to be retrieved.
    * @return the data for a saved search
@@ -34,8 +34,8 @@ trait SavedSearchesMethods {
 
   /**
    * Creates a saved search for the authenticated user.
-   * <br/>This method calls twitter4j.Twitter.createSavedSearches.
-   * <br/>createSavedSearches calls http://api.twitter.com/1/saved_searches/saved_searches/create.json
+   * <br />This method calls twitter4j.Twitter.createSavedSearches.
+   * <br />createSavedSearches calls http://api.twitter.com/1/saved_searches/saved_searches/create.json
    *
    * @param query the query string
    * @return the data for a created saved search
@@ -47,8 +47,8 @@ trait SavedSearchesMethods {
 
   /**
    * Destroys a saved search for the authenticated user. The search specified by id must be owned by the authenticating user.
-   * <br/>This method calls twitter4j.Twitter.destroySavedSearches.
-   * <br/>destroySavedSearches calls http://api.twitter.com/1/saved_searches/destroy/id.json
+   * <br />This method calls twitter4j.Twitter.destroySavedSearches.
+   * <br />destroySavedSearches calls http://api.twitter.com/1/saved_searches/destroy/id.json
    *
    * @param id The id of the saved search to be deleted.
    * @return the data for a destroyed saved search

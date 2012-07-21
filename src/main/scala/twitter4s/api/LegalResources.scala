@@ -6,8 +6,8 @@ package twitter4s.api
 trait LegalResources {
   /**
    * Returns Twitter's' Terms of Service.
-   * <br/>This method calls twitter4j.Twitter.getTermsOfService.
-   * <br/>getTermsOfService calls http://api.twitter.com/1/legal/tos.json
+   * <br />This method calls twitter4j.Twitter.getTermsOfService.
+   * <br />getTermsOfService calls http://api.twitter.com/1/legal/tos.json
    *
    * @return Terms of Service
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
@@ -18,8 +18,8 @@ trait LegalResources {
 
   /**
    * Returns Twitter's Privacy Policy.
-   * <br/>This method calls twitter4j.Twitter.getPrivacyPolicy.
-   * <br/>getPrivacyPolicy calls http://api.twitter.com/1/legal/privacy.json
+   * <br />This method calls twitter4j.Twitter.getPrivacyPolicy.
+   * <br />getPrivacyPolicy calls http://api.twitter.com/1/legal/privacy.json
    *
    * @return privacy policy
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable

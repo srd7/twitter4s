@@ -13,8 +13,8 @@ import twitter4j.IDs
 trait StatusMethods {
   /**
    * Returns a single status, specified by the id parameter below. The status's author will be returned inline.
-   * <br/>This method calls twitter4j.Twitter.showStatus.
-   * <br/>showStatus calls http://api.twitter.com/1/statuses/show
+   * <br />This method calls twitter4j.Twitter.showStatus.
+   * <br />showStatus calls http://api.twitter.com/1/statuses/show
    *
    * @param id the numerical ID of the status you're trying to retrieve
    * @return a single status
@@ -26,9 +26,9 @@ trait StatusMethods {
 
   /**
    * Updates the authenticating user's status. A status update with text identical to the authenticating user's text identical to the authenticating user's current status will be ignored to prevent duplicates.
-   * <br/>This method calls twitter4j.Twitter.updateStatus.
-   * <br/>updateStatus calls http://api.twitter.com/1/statuses/update
-   * <br/>Note: You must set either status or latestStatus.
+   * <br />This method calls twitter4j.Twitter.updateStatus.
+   * <br />updateStatus calls http://api.twitter.com/1/statuses/update
+   * <br />Note: You must set either status or latestStatus.
    *
    * @param status (optional) the text of your status update
    * @param latestStatus (optional) the latest status to be updated.
@@ -41,10 +41,10 @@ trait StatusMethods {
   def updateStatus(status: Option[String] = None, latestStatus: Option[StatusUpdate] = None): Status
 
   /**
-   * Destroys the status specified by the required ID parameter.<br/>
+   * Destroys the status specified by the required ID parameter.<br />
    * Usage note: The authenticating user must be the author of the specified status.
-   * <br/>This method calls twitter4j.Twitter.destroyStatus.
-   * <br/>destroyStatus calls http://api.twitter.com/1/statuses/destroy
+   * <br />This method calls twitter4j.Twitter.destroyStatus.
+   * <br />destroyStatus calls http://api.twitter.com/1/statuses/destroy
    *
    * @param statusId The ID of the status to destroy.
    * @return the deleted status
@@ -56,8 +56,8 @@ trait StatusMethods {
 
   /**
    * Retweets a tweet. Returns the original tweet with retweet details embedded.
-   * <br/>This method calls twitter4j.Twitter.retweetStatus.
-   * <br/>retweetStatus calls http://api.twitter.com/1/statuses/retweet
+   * <br />This method calls twitter4j.Twitter.retweetStatus.
+   * <br />retweetStatus calls http://api.twitter.com/1/statuses/retweet
    *
    * @param statusId The ID of the status to retweet.
    * @return the retweeted status
@@ -69,8 +69,8 @@ trait StatusMethods {
 
   /**
    * Returns up to 100 of the first retweets of a given tweet.
-   * <br/>This method calls twitter4j.Twitter.getRetweets.
-   * <br/>getRetweets calls http://api.twitter.com/1/statuses/retweets
+   * <br />This method calls twitter4j.Twitter.getRetweets.
+   * <br />getRetweets calls http://api.twitter.com/1/statuses/retweets
    *
    * @param statusId The numerical ID of the tweet you want the retweets of.
    * @return the retweets of a given tweet
@@ -82,8 +82,8 @@ trait StatusMethods {
 
   /**
    * Show user objects of up to 100 members who retweeted the status.
-   * <br/>This method calls twitter4j.Twitter.getRetweetedBy.
-   * <br/>getRetweetedBy calls http://api.twitter.com/1/statuses/:id/retweeted_by
+   * <br />This method calls twitter4j.Twitter.getRetweetedBy.
+   * <br />getRetweetedBy calls http://api.twitter.com/1/statuses/:id/retweeted_by
    *
    * @param statusId The ID of the status you want to get retweeters of
    * @param paging (optional) controls pagination. Supports count and page parameters.
@@ -96,8 +96,8 @@ trait StatusMethods {
 
   /**
    * Show user ids of up to 100 users who retweeted the status represented by id
-   * <br/>This method calls twitter4j.Twitter.getRetweetedByIDs.
-   * <br/>getRetweetedByIDs calls http://api.twitter.com/1/statuses/:id/retweeted_by/ids.format
+   * <br />This method calls twitter4j.Twitter.getRetweetedByIDs.
+   * <br />getRetweetedByIDs calls http://api.twitter.com/1/statuses/:id/retweeted_by/ids.format
    * 
    * @param statusId The ID of the status you want to get retweeters of
    * @param paging (optional) controls pagination. Supports count and page parameters.
