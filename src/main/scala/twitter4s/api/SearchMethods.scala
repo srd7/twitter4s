@@ -9,7 +9,7 @@ import twitter4j.QueryResult
 trait SearchMethods {
   /**
    * Returns tweets that match a specified query.
-   * <br/>This method calls twitter4j.Twitter.search method.
+   * <br/>This method calls twitter4j.Twitter.search.
    * <br/>twitter4j.Twitter.search method calls http://search.twitter.com/search.json
    * 
    * @param query - the search condition
