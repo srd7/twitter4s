@@ -11,7 +11,7 @@ import twitter4j.Trends
 trait LocalTrendsMethods {
   /**
    * Returns the locations that Twitter has trending topic information for.The response is an array of &quot;locations&quot; that encode the location's WOEID (a <a href="http://developer.yahoo.com/geo/geoplanet/">Yahoo! Where On Earth ID</a>) and some other human-readable information such as a canonical name and country the location belongs in.
-   * <br/>This method calls twitter4j.Twitter.getAvailableTrends() or getAvailableTrends(location).
+   * <br/>This method calls twitter4j.Twitter.getAvailableTrends.
    * <br/>getAvailableTrends method calls http://api.twitter.com/1/trends/available.json
    * 
    * @param location (optional) the available trend locations will be sorted by distance to the lat and long passed in. The sort is nearest to furthest.
