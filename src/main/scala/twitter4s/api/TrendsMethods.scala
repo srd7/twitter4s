@@ -10,8 +10,8 @@ import twitter4j.Trends
 trait TrendsMethods {
   /**
    * Returns the top 20 trending topics for each hour in a given day.
-   * <br/> This method calls twitter4j.Twitter.getDailyTrends() or getDailyTrends(date, excludeHashTags).
-   * <br/> getDailyTrends method calls http://search.twitter.com/trends/daily.json
+   * <br /> This method calls twitter4j.Twitter.getDailyTrends.
+   * <br /> getDailyTrends method calls http://search.twitter.com/trends/daily.json
    * 
    * @param date (optional) Permits specifying a start date for the report.
    * @param excludeHashTags (optional) Setting this to true will remove all hashtags from the trends list.
@@ -24,8 +24,8 @@ trait TrendsMethods {
   
   /**
    * Returns the top 30 trending topics for each day in a given week.
-   * <br/>This method calls twitter4j.Twitter.getWeeklyTrends() or getWeeklyTrends(date, excludeHashTags).
-   * <br/>getWeeklyTrends method calls http://search.twitter.com/trends/weekly.json
+   * <br />This method calls twitter4j.Twitter.getWeeklyTrends.
+   * <br />getWeeklyTrends method calls http://search.twitter.com/trends/weekly.json
    * 
    * @param date (optional) Permits specifying a start date for the report.
    * @param excludeHashTags (optional) Setting this to true will remove all hashtags from the trends list.
