@@ -17,7 +17,7 @@ with ListMethods
 with LocalTrendsMethods
 with NewTwitterMethods
 with NotificationMethods
-with SavedSearchedMethods
+with SavedSearchesMethods
 with SearchMethods
 with SpamReportingMethods
 with StatusMethods
