@@ -13,6 +13,19 @@ import Twitter4sTestHelper._
 class TrendMethodsTest extends Specification {
   val geoLocation = new GeoLocation(0, 0)
   
+  // Available trend at location from twitter1
+  // Location trend of woeid from twitter1
+
+  // twitter1.from(Avalable trend at location)
+  // new TrendHelper(Available).trend.at(location).from(Twitter)
+  // new TrendHelper(Location).trend.of(woeid).from(Twitter)
+  
+  // from((Available, Option(GeoLocation)), Twitter) => ResponseList[Location]
+  // from: (Location, woeid) => Trends
+
+  // new TrendHelper(Available)
+  // new Trend(Location)
+  
   // Local Trends Methods
   "getAvailableTrends" should {
     "get trends without localtion parameter" in {
@@ -24,7 +37,7 @@ class TrendMethodsTest extends Specification {
     }
     
     "get trends with location parameter" in {
-      val locations = twitter1.getAvailableTrends(Some(geoLocation))
+      val locations = twitter1.getAvailableTrends(geoLocation)
       
       rawJSON(locations.tw4jObj) mustNotEqual(null)
       (locations.size > 0) must beTrue
@@ -33,7 +46,7 @@ class TrendMethodsTest extends Specification {
   
   "getLocationTrends" should {
     "get locations trends" in {
-      val locations = twitter1.getAvailableTrends(Some(geoLocation))
+      val locations = twitter1.getAvailableTrends(geoLocation)
       val woeid = locations(0).getWoeid()
       val trends = twitter1.getLocationTrends(woeid)
       

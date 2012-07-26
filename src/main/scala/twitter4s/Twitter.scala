@@ -638,9 +638,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getAvailableTrends(location: Option[GeoLocation] = None): ResponseList[Location] = {
-    location match {
-      case Some(locationData) => twitter4jObj.getAvailableTrends(locationData)
+  def getAvailableTrends(location: GeoLocation = null): ResponseList[Location] = {
+    Option(location) match {
+      case Some(location) => twitter4jObj.getAvailableTrends(location)
       case None => twitter4jObj.getAvailableTrends()
     }
   }
