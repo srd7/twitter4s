@@ -41,7 +41,6 @@ object Twitter4sTestHelper {
   
   /**
    * Get Twitter4S object from test.propreties with prefix id3
-   * TODO protected user
    */
   def twitter3 = {
     Twitter(conf = Some(new PropertyConfiguration(prop, "/id3")))
