@@ -10,8 +10,20 @@ import java.util.Date
 trait Trends extends TwitterResponse {
   type Tw4jResponse = twitter4j.Trends
   
+  /**
+   * Array of Trend object from twitter api response.
+   * 
+   * @return array of trend
+   * @since Twitter4S 1.0.0
+   */
   def trends: Array[Trend]
 
+  /**
+   * Location object from twitter api response.
+   * 
+   * @return location object.
+   * @since Twitter4S 1.0.0
+   */
   def location: Location
 
   def asOf: Date

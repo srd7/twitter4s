@@ -37,5 +37,5 @@ case class ResponseListImpl[T](twt4jResponseList: twitter4j.ResponseList[T]) ext
   /**
    * Get Twitter4J Object
    */
-  def tw4jObj:Any = twt4jResponseList
+  def tw4jObj = twt4jResponseList
 }

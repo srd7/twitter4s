@@ -25,6 +25,6 @@ extends twitter4s.PagableResponseList[T] {
   
   def apply(idx: Int) = listAsScala(idx)
   
-  def tw4jObj: Any = twt4jPagableResponseList
+  def tw4jObj = twt4jPagableResponseList
 
 }
