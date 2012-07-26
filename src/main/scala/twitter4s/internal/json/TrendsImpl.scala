@@ -9,19 +9,19 @@ import java.util.Date
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class TrendsImpl(twt4jTrends: twitter4j.Trends) extends Trends {
-  def trends: Array[Trend] = twt4jTrends.getTrends()
+  def trends = twt4jTrends.getTrends()
 
-  def location: Location = twt4jTrends.getLocation()
+  def location = twt4jTrends.getLocation()
 
-  def asOf: Date = twt4jTrends.getAsOf()
+  def asOf = twt4jTrends.getAsOf()
 
-  def trendAt: Date = twt4jTrends.getTrendAt()
+  def trendAt = twt4jTrends.getTrendAt()
 
-  def rateLimitStatus: RateLimitStatus = twt4jTrends.getRateLimitStatus()
+  def rateLimitStatus = twt4jTrends.getRateLimitStatus()
 
-  def accessLevel: Int = twt4jTrends.getAccessLevel()
+  def accessLevel = twt4jTrends.getAccessLevel()
 
-  def tw4jObj: Any = twt4jTrends
+  def tw4jObj = twt4jTrends
 
-  def apply(idx: Int): Trend = trends(idx)
+  def apply(idx: Int) = trends(idx)
 }

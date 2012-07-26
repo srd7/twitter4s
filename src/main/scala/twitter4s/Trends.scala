@@ -7,12 +7,8 @@ import java.util.Date
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait Trends {
-  def rateLimitStatus:RateLimitStatus
-
-  def accessLevel: Int
-
-  def tw4jObj:Any
+trait Trends extends TwitterResponse {
+  type Tw4jResponse = twitter4j.Trends
   
   def trends: Array[Trend]
 
