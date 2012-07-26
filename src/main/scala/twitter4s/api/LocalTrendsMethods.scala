@@ -3,7 +3,7 @@ package twitter4s.api
 import twitter4s.ResponseList
 import twitter4j.Location
 import twitter4j.GeoLocation
-import twitter4j.Trends
+import twitter4s.Trends
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

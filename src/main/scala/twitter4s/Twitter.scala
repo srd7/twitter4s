@@ -31,7 +31,6 @@ import twitter4j.SavedSearch
 import twitter4j.SimilarPlaces
 import twitter4j.Status
 import twitter4j.StatusUpdate
-import twitter4j.Trends
 import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
 import twitter4j.User
@@ -879,7 +878,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getDailyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
+  def getDailyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[twitter4j.Trends] = { // TODO ラップオブジェクト対応
     (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getDailyTrends()
@@ -890,7 +889,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getWeeklyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[Trends] = {
+  def getWeeklyTrends(date: Option[Date] = None, excludeHashTags: Option[Boolean] = None): ResponseList[twitter4j.Trends] = { // TODO ラップオブジェクト対応
     (date, excludeHashTags) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getWeeklyTrends()

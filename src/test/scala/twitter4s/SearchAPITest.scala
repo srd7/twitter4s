@@ -20,9 +20,10 @@ import twitter4j.GeoLocation
 @RunWith(classOf[JUnitRunner])
 class SearchAPITest extends Specification {
   
-  private def trendListAssert(trendList: ResponseList[Trends], expectSize: Int) = {
+  // TODO ラップオブジェクト対応(Trends)
+  private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
     var trendAt: Date = null
-    forall(trendList) { (singleTrends: Trends) =>
+    forall(trendList) { (singleTrends: twitter4j.Trends) =>
       singleTrends.getTrends().size must be_>(expectSize - 10)
       if (trendAt != null) trendAt.before(singleTrends.getTrendAt()) must beTrue
       trendAt = singleTrends.getTrendAt()
