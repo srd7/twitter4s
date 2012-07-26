@@ -8,8 +8,6 @@ import java.util.Date
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait Trends extends TwitterResponse {
-  type Tw4jResponse = twitter4j.Trends
-  
   /**
    * Array of Trend object from twitter api response.
    * 

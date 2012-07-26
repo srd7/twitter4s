@@ -6,7 +6,8 @@ import scala.collection.JavaConverters._
 
 case class PagableResponseListImpl[T <: twitter4j.TwitterResponse](twt4jPagableResponseList: twitter4j.PagableResponseList[T])
 extends twitter4s.PagableResponseList[T] {
-
+  type Tw4jResponse = twitter4j.PagableResponseList[T]
+  
   def hasPrevious = twt4jPagableResponseList.hasPrevious()
 
   def previousCursor = twt4jPagableResponseList.getPreviousCursor()

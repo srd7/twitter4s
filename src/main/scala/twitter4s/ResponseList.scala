@@ -3,8 +3,12 @@ import scala.collection.mutable.Buffer
 import twitter4j.RateLimitStatus
 
 trait ResponseList[T] extends TwitterResponse {
-  type Tw4jResponse = twitter4j.ResponseList[T]
-  
+  /**
+   * get converted scala list from twitter4j.ResponseList
+   * 
+   * @return converted list
+   * @since Twitter4S 1.0.0
+   */
   def listAsScala:Buffer[T]
   
   def featureSpecificRateLimitStatus:RateLimitStatus

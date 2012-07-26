@@ -9,6 +9,8 @@ import java.util.Date
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class TrendsImpl(twt4jTrends: twitter4j.Trends) extends Trends {
+  type Tw4jResponse = twitter4j.Trends
+  
   def trends = twt4jTrends.getTrends()
 
   def location = twt4jTrends.getLocation()

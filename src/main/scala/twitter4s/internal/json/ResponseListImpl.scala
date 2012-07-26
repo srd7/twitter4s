@@ -9,6 +9,8 @@ import twitter4s.ResponseList
  */
 case class ResponseListImpl[T](twt4jResponseList: twitter4j.ResponseList[T]) extends ResponseList[T] {
   
+  type Tw4jResponse = twitter4j.ResponseList[T]
+  
   /**
    * scala converted list
    */
