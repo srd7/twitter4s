@@ -87,7 +87,7 @@ class GeoMethodsTest extends Specification {
       statusWithGeo.getUser().isGeoEnabled() must beTrue
       statusWithGeo.getGeoLocation().getLatitude() must equalTo(latitude)
       statusWithGeo.getGeoLocation().getLongitude() must equalTo(longitude)
-      twitter1.verifyCredentials.isGeoEnabled() must beFalse
+      twitter1.verifyCredentials.isGeoEnabled must beFalse
     }
   }
 }

@@ -1,5 +1,5 @@
 package twitter4s
-
+import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper.id1
@@ -11,7 +11,6 @@ import Twitter4sTestHelper.unauthenticated
 import auth.ConsumerKey
 import twitter4j.auth.AccessToken
 import twitter4j.json.DataObjectFactory
-import twitter4j.TwitterResponse
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
@@ -19,17 +18,17 @@ class TwitterTest extends Specification {
   "getAccessLevel" should {
     "unauthenticated access level is None" in {
       val response = unauthenticated.getDailyTrends()
-      response.accessLevel must equalTo(TwitterResponse.NONE)
+      response.accessLevel must equalTo(twitter4j.TwitterResponse.NONE)
     }
   
     "application has read and write access level is READ_WRITE" in {
       val response = twitter1.verifyCredentials
-      response.getAccessLevel() must equalTo(TwitterResponse.READ_WRITE)
+      response.accessLevel must equalTo(twitter4j.TwitterResponse.READ_WRITE)
     }
   
     "application has all access level is READ_WRITE_DIRECTMESSAGES" in {
       val response = rwPrivateMessage.verifyCredentials
-      response.getAccessLevel() must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      response.accessLevel must equalTo(twitter4j.TwitterResponse.READ_WRITE_DIRECTMESSAGES)
     }
   }
   
@@ -51,8 +50,8 @@ class TwitterTest extends Specification {
     
     def testTwitterObjectAuthorize(target: Twitter) = {
       val user = target.verifyCredentials
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "create object with consumerKey and consumerSecret" in {
@@ -81,10 +80,10 @@ class TwitterTest extends Specification {
   "getRateLimitStatus" should {
     "get rate limit status" in {
       val rateLimitStatus = twitter1.getRateLimitStatus
-      rawJSON(rateLimitStatus) must not equalTo(null)
-      rateLimitStatus must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus)))
-      rateLimitStatus.getHourlyLimit() must be_>(10)
-      rateLimitStatus.getRemainingHits() must be_>(10)
+      rawJSON(rateLimitStatus.tw4jObj) must not equalTo(null)
+      rateLimitStatus.tw4jObj must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus.tw4jObj)))
+      rateLimitStatus.hourlyLimit must be_>(10)
+      rateLimitStatus.remainingHits must be_>(10)
     }
     
     "get comparable rate limit status" in {
@@ -94,8 +93,8 @@ class TwitterTest extends Specification {
       twitter1.getMentions()
       val afterStatus = twitter1.getRateLimitStatus
       
-      previousStatus.getRemainingHits() must be_>(afterStatus.getRemainingHits())
-      previousStatus.getHourlyLimit() must equalTo(afterStatus.getHourlyLimit())
+      previousStatus.remainingHits must be_>(afterStatus.remainingHits)
+      previousStatus.hourlyLimit must equalTo(afterStatus.hourlyLimit)
     }
   }
   

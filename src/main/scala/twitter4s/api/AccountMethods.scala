@@ -1,9 +1,9 @@
 package twitter4s.api
 
-import twitter4j.User
-import twitter4j.RateLimitStatus
-import twitter4j.AccountTotals
-import twitter4j.AccountSettings
+import twitter4s.User
+import twitter4s.RateLimitStatus
+import twitter4s.AccountTotals
+import twitter4s.AccountSettings
 
 import java.io.File
 import java.io.InputStream
@@ -53,11 +53,11 @@ trait AccountMethods {
    * @since Twitter4S 1.0.0
    */
   def updateProfileColors(
-      profileBackgroundColor: String,
-      profileTextColor: String,
-      profileLinkColor: String,
-      profileSidebarFillColor: String,
-      profileSidebarBorderColor: String): User
+      profileBackgroundColor: String = null,
+      profileTextColor: String = null,
+      profileLinkColor: String = null,
+      profileSidebarFillColor: String = null,
+      profileSidebarBorderColor: String = null): User
   
   /**
    * Updates the authenticating user's profile image.<br/>
@@ -72,13 +72,13 @@ trait AccountMethods {
    * @throws TwitterException when Twitter service or network is unavailable,
    * or when the specified file is not found (FileNotFoundException will be nested),
    * or when the specified file object in not representing a file (IOException will be nested).
-   * @throws IllegalArgumentException when the both of parameters are not set.
+   * @throws IllegalArgumentException when the both of parameters are set or not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_image">POST account/update_profile_image | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def updateProfileImage(
-      imageFile: Option[File] = None,
-      imageStream: Option[InputStream] = None): User
+      imageFile: File = null,
+      imageStream: InputStream = null): User
   
   /**
    * Updates the authenticating user's profile background image.<br/>
@@ -94,13 +94,13 @@ trait AccountMethods {
    * @throws TwitterException when Twitter service or network is unavailable,
    * or when the specified file is not found (FileNotFoundException will be nested),
    * or when the specified file object in not representing a file (IOException will be nested)
-   * @throws IllegalArgumentException when the both of imageFile and imageStream parameters are not set.
+   * @throws IllegalArgumentException when the both of imageFile and imageStream parameters are set or not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_background_image">POST account/update_profile_background_image | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def updateProfileBackgroundImage(
-      imageFile: Option[File] = None,
-      imageStream: Option[InputStream] = None,
+      imageFile: File = null,
+      imageStream: InputStream = null,
       tile: Boolean): User
   
   /**
@@ -118,10 +118,10 @@ trait AccountMethods {
    * @since Twitter4S 1.0.0
    */
   def updateProfile(
-      name: String,
-      url: String,
-      location: String,
-      description: String): User
+      name: String = null,
+      url: String = null,
+      location: String = null,
+      description: String = null): User
   
   /**
    * Returns the current count of friends, followers, updates (statuses) and favorites of the authenticating user.
@@ -167,10 +167,10 @@ trait AccountMethods {
    * @since Twitter4S 1.0.0
    */
   def updateAccountSettings(
-      trendLocationWoeid: Int,
-      sleepTimeEnabled: Boolean,
-      startSleepTime: String,
-      endSleepTime: String,
-      timeZone: String,
-      lang: String): AccountSettings
+      trendLocationWoeid: java.lang.Integer = null,
+      sleepTimeEnabled: java.lang.Boolean = null,
+      startSleepTime: String = null,
+      endSleepTime: String = null,
+      timeZone: String = null,
+      lang: String = null): AccountSettings
 }

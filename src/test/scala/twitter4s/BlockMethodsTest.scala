@@ -10,7 +10,7 @@ import twitter4j.User
 @RunWith(classOf[JUnitRunner])
 class BlockMethodsTest extends Specification {
   
-  private def testBlockingUsers(target: ResponseList[User]) = {
+  private def testBlockingUsers(target: ResponseList[twitter4j.User]) = {
     rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createUser(rawJSON(target(0))))
     target.size must equalTo(blockingUsersSize)

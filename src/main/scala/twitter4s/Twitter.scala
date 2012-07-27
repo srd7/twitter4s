@@ -9,8 +9,6 @@ import twitter4j.auth.AccessToken
 import twitter4j.auth.Authorization
 import twitter4j.auth.RequestToken
 import twitter4j.conf.Configuration
-import twitter4j.AccountSettings
-import twitter4j.AccountTotals
 import twitter4j.Category
 import twitter4j.DirectMessage
 import twitter4j.Friendship
@@ -23,7 +21,6 @@ import twitter4j.Place
 import twitter4j.ProfileImage
 import twitter4j.Query
 import twitter4j.QueryResult
-import twitter4j.RateLimitStatus
 import twitter4j.RateLimitStatusListener
 import twitter4j.RelatedResults
 import twitter4j.Relationship
@@ -33,7 +30,6 @@ import twitter4j.Status
 import twitter4j.StatusUpdate
 import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
-import twitter4j.User
 import twitter4j.UserList
 import auth.ConsumerKey
 
@@ -158,34 +154,50 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inherited}
    */
-  def updateProfileColors(profileBackgroundColor: String, profileTextColor: String, profileLinkColor: String, profileSidebarFillColor: String, profileSidebarBorderColor: String): User = {
+  def updateProfileColors(
+      profileBackgroundColor: String = null,
+      profileTextColor: String = null,
+      profileLinkColor: String = null,
+      profileSidebarFillColor: String = null,
+      profileSidebarBorderColor: String = null): User = {
     twitter4jObj.updateProfileColors(profileBackgroundColor, profileTextColor, profileLinkColor, profileSidebarFillColor, profileSidebarBorderColor)
   }
   
   /**
    * {@inheritDoc}
    */
-  def updateProfileImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None): User = {
-    (imageFile, imageStream) match {
+  def updateProfileImage(
+      imageFile: File = null,
+      imageStream: InputStream = null): User = {
+    (Option(imageFile), Option(imageStream)) match {
       case (None, Some(imageStream)) => twitter4jObj.updateProfileImage(imageStream)
       case (Some(imageFile), None) => twitter4jObj.updateProfileImage(imageFile)
+      case _ => throw new IllegalArgumentException("Parameter can set either imageFile or imageStream.")
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def updateProfileBackgroundImage(imageFile: Option[File] = None, imageStream: Option[InputStream] = None, tile: Boolean): User = {
-    (imageFile, imageStream) match {
+  def updateProfileBackgroundImage(
+      imageFile: File = null,
+      imageStream: InputStream = null,
+      tile: Boolean): User = {
+    (Option(imageFile), Option(imageStream)) match {
       case(None, Some(imageStream)) => twitter4jObj.updateProfileBackgroundImage(imageStream, tile)
       case(Some(imageFile), None) => twitter4jObj.updateProfileBackgroundImage(imageFile, tile)
+      case _ => throw new IllegalArgumentException("Parameter can set either imageFile or imageStream.")
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def updateProfile(name: String, url: String, location: String, description: String): User = {
+  def updateProfile(
+      name: String = null,
+      url: String = null,
+      location: String = null,
+      description: String = null): User = {
     twitter4jObj.updateProfile(name, url, location, description)
   }
   
@@ -206,7 +218,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def updateAccountSettings(trendLocationWoeid: Int, sleepTimeEnabled: Boolean, startSleepTime: String, endSleepTime: String, timeZone: String, lang: String): AccountSettings = {
+  def updateAccountSettings(
+      trendLocationWoeid: java.lang.Integer = null,
+      sleepTimeEnabled: java.lang.Boolean = null,
+      startSleepTime: String = null,
+      endSleepTime: String = null,
+      timeZone: String = null,
+      lang: String = null): AccountSettings = {
     twitter4jObj.updateAccountSettings(trendLocationWoeid, sleepTimeEnabled, startSleepTime, endSleepTime, timeZone, lang)
   }
   
@@ -214,7 +232,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createBlock(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def createBlock(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.createBlock(screenName)
       case (None, Some(userId)) => twitter4jObj.createBlock(userId)
@@ -225,7 +243,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def destroyBlock(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def destroyBlock(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.destroyBlock(screenName)
       case (None, Some(userId)) => twitter4jObj.destroyBlock(userId)
@@ -247,7 +265,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getBlockingUsers(page: Option[Int] = None): ResponseList[User] = {
+  def getBlockingUsers(page: Option[Int] = None): ResponseList[twitter4j.User] = {
     page match {
       case Some(page) => twitter4jObj.getBlockingUsers(page)
       case None => twitter4jObj.getBlockingUsers()
@@ -356,7 +374,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createFriendship(screenName: Option[String] = None, userId: Option[Long] = None, follow: Option[Boolean] = None): User = {
+  def createFriendship(screenName: Option[String] = None, userId: Option[Long] = None, follow: Option[Boolean] = None): twitter4j.User = {
     (screenName, userId, follow) match {
       case (Some(screenName), None, None) => twitter4jObj.createFriendship(screenName)
       case (Some(screenName), None, Some(follow)) => twitter4jObj.createFriendship(screenName, follow)
@@ -369,7 +387,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.destroyFriendship(screenName)
       case (None, Some(userId)) => twitter4jObj.destroyFriendship(userId)
@@ -491,7 +509,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[User] = {
+  def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[twitter4j.User] = {
     twitter4jObj.getUserListMembers(listId, cursor)
   }
   
@@ -523,7 +541,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUserListMembership(listId: Int, userId: Long): User = {
+  def showUserListMembership(listId: Int, userId: Long): twitter4j.User = {
     twitter4jObj.showUserListMembership(listId, userId)
   }
   
@@ -608,7 +626,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[User] = {
+  def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[twitter4j.User] = {
     twitter4jObj.getUserListSubscribers(listId, cursor)
   }
 
@@ -629,7 +647,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUserListSubscription(listId: Int, userId: Long): User = {
+  def showUserListSubscription(listId: Int, userId: Long): twitter4j.User = {
     twitter4jObj.showUserListSubscription(listId, userId)
   }
   
@@ -663,7 +681,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def enableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def enableNotification(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.enableNotification(screenName)
       case (None, Some(userId)) => twitter4jObj.enableNotification(userId)
@@ -674,7 +692,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def disableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def disableNotification(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.disableNotification(screenName)
       case (None, Some(userId)) => twitter4jObj.disableNotification(userId)
@@ -721,7 +739,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def reportSpam(userId: Option[Long] = None, screenName: Option[String] = None): User = {
+  def reportSpam(userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.User = {
     (userId, screenName) match {
       case (Some(userId), None) => twitter4jObj.reportSpam(userId)
       case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
@@ -770,7 +788,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[User] = {
+  def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[twitter4j.User] = {
     paging match {
       case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
       case None => twitter4jObj.getRetweetedBy(statusId)
@@ -901,7 +919,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUser(screenName: Option[String] = None, userId: Option[Long] = None): User = {
+  def showUser(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.showUser(screenName)
       case (None, Some(userId)) => twitter4jObj.showUser(userId)
@@ -912,7 +930,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[User] = {
+  def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[twitter4j.User] = {
     (screenNames, ids) match {
       case (Some(screenNames), None) => twitter4jObj.lookupUsers(screenNames)
       case (None, Some(ids)) => twitter4jObj.lookupUsers(ids)
@@ -923,7 +941,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def searchUsers(query: String, page: Int): ResponseList[User] = {
+  def searchUsers(query: String, page: Int): ResponseList[twitter4j.User] = {
     twitter4jObj.searchUsers(query, page)
   }
   
@@ -937,14 +955,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserSuggestions(categorySlug: String): ResponseList[User] = {
+  def getUserSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
     twitter4jObj.getUserSuggestions(categorySlug)
   }
 
   /**
    * {@inheritDoc}
    */
-  def getMemberSuggestions(categorySlug: String): ResponseList[User] = {
+  def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
     twitter4jObj.getMemberSuggestions(categorySlug)
   }
 

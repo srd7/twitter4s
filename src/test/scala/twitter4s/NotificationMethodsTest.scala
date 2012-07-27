@@ -10,7 +10,7 @@ import twitter4j.User
 @RunWith(classOf[JUnitRunner])
 class NotificationMethodsTest extends Specification {
   
-  private def testUser(target: User) = {
+  private def testUser(target: twitter4j.User) = {
     rawJSON(target) must not equalTo(null)
     DataObjectFactory.createUser(rawJSON(target)) must equalTo(target)
   }

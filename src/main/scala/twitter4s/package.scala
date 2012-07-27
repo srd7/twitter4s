@@ -1,6 +1,18 @@
 package twitter4s
 
 object twitter4s {
+  // AccountTotals
+  implicit def AccountTotalsWrapperJ2S(tw4jAccountTotals: twitter4j.AccountTotals) = internal.json.AccountTotalsImpl(tw4jAccountTotals)
+  
+  // AccountSettings
+  implicit def AccountSettingsWrapperJ2S(twt4jAccountSettings: twitter4j.AccountSettings) = internal.json.AccountSettingsImpl(twt4jAccountSettings)
+  
+  // RateLimitStatus
+  implicit def RateLimitStatusWrapperJ2S(tw4jRateLimitStatus: twitter4j.RateLimitStatus) = internal.json.RateLimitStatusImpl(tw4jRateLimitStatus)
+  
+  // User
+  implicit def UserWrapperJ2S(tw4jUser: twitter4j.User) = internal.json.UserImpl(tw4jUser)
+  
   // Trends
   implicit def trendsWrapperS2Array(tw4sTrends: Trends) = tw4sTrends.trends
   implicit def trendsWrapperJ2S(tw4jTrends: twitter4j.Trends) = internal.json.TrendsImpl(tw4jTrends)
