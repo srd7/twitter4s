@@ -25,7 +25,7 @@ class StatusMethodsTest extends Specification {
   "updateStatus" should {
     "update status by status string" in {
       val statusString = new Date().toString + "test http://t.co/VEDROet #twitter4stest"
-      val status = twitter2.updateStatus(status = Some(statusString))
+      val status = twitter2.updateStatus(status = statusString)
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
       
@@ -36,9 +36,21 @@ class StatusMethodsTest extends Specification {
     }
     
     "update status by StatusUpdate object" in {
-      val status = twitter2.updateStatus(latestStatus = Some(new StatusUpdate("@" + id1.screenName + " " + new Date().toString())))
+      val status = twitter2.updateStatus(latestStatus = new StatusUpdate("@" + id1.screenName + " " + new Date().toString()))
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
+    }
+    
+    "throw IllegalArgumentException both of parameter not set" in {
+      twitter2.updateStatus() must throwA[IllegalArgumentException]
+    }
+    
+    "throw IllegalArgumentException both of parameter set" in {
+      val statusString = new Date().toString + "test http://t.co/VEDROet #twitter4stest"
+      twitter2.updateStatus(
+          status = statusString,
+          latestStatus = new StatusUpdate("@" + id1.screenName + " " + new Date().toString())) must
+      throwA[IllegalArgumentException]
     }
   }
   

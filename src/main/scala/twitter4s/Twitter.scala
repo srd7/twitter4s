@@ -758,11 +758,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def updateStatus(status: Option[String] = None, latestStatus: Option[StatusUpdate] = None): Status = {
-    (status, latestStatus) match {
+  def updateStatus(status: String = null, latestStatus: StatusUpdate = null): Status = {
+    (Option(status), Option(latestStatus)) match {
       case (Some(status), None) => twitter4jObj.updateStatus(status)
       case (None, Some(latestStatus)) => twitter4jObj.updateStatus(latestStatus)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter must set either status or latestStatus.")
     }
   }
 

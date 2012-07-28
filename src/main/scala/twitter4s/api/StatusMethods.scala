@@ -38,7 +38,7 @@ trait StatusMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/update">POST statuses/update | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def updateStatus(status: Option[String] = None, latestStatus: Option[StatusUpdate] = None): Status
+  def updateStatus(status: String = null, latestStatus: StatusUpdate = null): Status
 
   /**
    * Destroys the status specified by the required ID parameter.<br />

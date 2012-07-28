@@ -69,7 +69,7 @@ class GeoMethodsTest extends Specification {
     "update user status with place information" in {
       val sanFrancisco = "5a110d312052166f"
       val latestStatus = new StatusUpdate(new Date() + " status with place")
-      val status = twitter3.updateStatus(latestStatus = Some(latestStatus.placeId(sanFrancisco)))
+      val status = twitter3.updateStatus(latestStatus = latestStatus.placeId(sanFrancisco))
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
       status.place.getId() must equalTo(sanFrancisco)
@@ -81,7 +81,7 @@ class GeoMethodsTest extends Specification {
       val longitude = -34.5678d
       val latestStatus = new StatusUpdate(new Date() + " status with geo")
       
-      val statusWithGeo = twitter3.updateStatus(latestStatus = Some(latestStatus.location(new GeoLocation(latitude, longitude))))
+      val statusWithGeo = twitter3.updateStatus(latestStatus = latestStatus.location(new GeoLocation(latitude, longitude)))
       rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
       statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
       statusWithGeo.user.isGeoEnabled must beTrue
