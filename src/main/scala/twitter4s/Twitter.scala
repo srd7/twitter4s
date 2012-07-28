@@ -934,8 +934,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     (Option(screenNames), Option(ids)) match {
       case (_, Some(ids)) => twitter4jObj.lookupUsers(ids)
       case (Some(screenNames), None) => twitter4jObj.lookupUsers(screenNames)
-      case (None, None) => throw new IllegalArgumentException("Parameter screenNames or ids must be set at least.")
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter screenNames or ids must be set at least.")
     }
   }
 
