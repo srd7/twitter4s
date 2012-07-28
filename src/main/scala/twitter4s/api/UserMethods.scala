@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.User
+import twitter4s.User
 import twitter4s.ResponseList
 import twitter4j.Query
 import twitter4j.Category
@@ -25,7 +25,7 @@ trait UserMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/show">GET users/show | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def showUser(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def showUser(screenName: String = null, userId: java.lang.Long = null): User
 
   /**
    * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two. The author's most recent status (if the authenticating user has permission) will be returned inline.
@@ -42,7 +42,7 @@ trait UserMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">GET users/lookup | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[User]
+  def lookupUsers(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[twitter4j.User]
 
   /**
    * Run a search for users similar to the Find People button on Twitter.com; the same results returned by people search on Twitter.com will be returned by using this API.<br />
@@ -57,7 +57,7 @@ trait UserMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/search">GET users/search | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def searchUsers(query: String, page: Int): ResponseList[User]
+  def searchUsers(query: String, page: Int): ResponseList[twitter4j.User]
 
   /**
    * Access to Twitter's suggested user list. This returns the list of suggested user categories. The category can be used in the users/suggestions/category endpoint to get the users in that category.
@@ -83,7 +83,7 @@ trait UserMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/suggestions/slug">GET users/suggestions/slug | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserSuggestions(categorySlug: String): ResponseList[User]
+  def getUserSuggestions(categorySlug: String): ResponseList[twitter4j.User]
 
   /**
    * Access the users in a given category of the Twitter suggested user list and return their most recent status if they are not a protected user.
@@ -97,7 +97,7 @@ trait UserMethods {
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
-  def getMemberSuggestions(categorySlug: String): ResponseList[User]
+  def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User]
 
   /**
    * Access the profile image in various sizes for the user with the indicated screen_name. If no size is provided the normal image is returned. This resource does not return JSON or XML, but instead returns a 302 redirect to the actual image resource.

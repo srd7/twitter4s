@@ -919,21 +919,22 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUser(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
-    (screenName, userId) match {
+  def showUser(screenName: String = null, userId: java.lang.Long = null): User = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.showUser(userId)
       case (Some(screenName), None) => twitter4jObj.showUser(screenName)
-      case (None, Some(userId)) => twitter4jObj.showUser(userId)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def lookupUsers(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[twitter4j.User] = {
-    (screenNames, ids) match {
+  def lookupUsers(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[twitter4j.User] = {
+    (Option(screenNames), Option(ids)) match {
+      case (_, Some(ids)) => twitter4jObj.lookupUsers(ids)
       case (Some(screenNames), None) => twitter4jObj.lookupUsers(screenNames)
-      case (None, Some(ids)) => twitter4jObj.lookupUsers(ids)
+      case (None, None) => throw new IllegalArgumentException("Parameter screenNames or ids must be set at least.")
       // case _ => // TODO exception?
     }
   }

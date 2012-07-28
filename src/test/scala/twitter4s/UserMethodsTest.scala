@@ -8,82 +8,105 @@ import twitter4j.json.DataObjectFactory
 import twitter4j.ProfileImage
 import Twitter4sTestHelper._
 import internal.json.ResponseListImpl
-import twitter4j.User
 
 @RunWith(classOf[JUnitRunner])
 class UserMethodsTest extends Specification {
 
   "showUser" should {
     "get specified user profile with screenName" in {
-      val user = twitter1.showUser(Some(id1.screenName))
-      user.getScreenName must equalTo(id1.screenName)
-      user.getLocation must not equalTo(null)
-      user.getDescription() must not equalTo(null)
-      user.getProfileImageURL() must not equalTo(null)
-      user.getURL() must not equalTo(null)
-      user.isProtected() must beFalse
+      val user = twitter1.showUser(id1.screenName)
+      user.screenName must equalTo(id1.screenName)
+      user.location must not equalTo(null)
+      user.description must not equalTo(null)
+      user.profileImageURL must not equalTo(null)
+      user.url must not equalTo(null)
+      user.isProtected must beFalse
       
-      user.getFavouritesCount() must be_>=(0)
-      user.getFollowersCount() must be_>=(0)
-      user.getFriendsCount() must be_>=(0)
+      user.favouritesCount must be_>=(0)
+      user.followersCount must be_>=(0)
+      user.friendsCount must be_>=(0)
       
-      user.getCreatedAt() must not equalTo(null)
-      user.getTimeZone() must not equalTo(null)
-      user.getProfileBackgroundImageUrl() must not equalTo(null)
+      user.createdAt must not equalTo(null)
+      user.timeZone must not equalTo(null)
+      user.profileBackgroundImageUrl must not equalTo(null)
       
-      user.getStatusesCount() must be_>=(0)
-      user.getProfileBackgroundColor() must not equalTo(null)
-      user.getProfileTextColor() must not equalTo(null)
-      user.getProfileLinkColor() must not equalTo(null)
-      user.getProfileSidebarBorderColor() must not equalTo(null)
-      user.getProfileSidebarFillColor() must not equalTo(null)
+      user.statusesCount must be_>=(0)
+      user.profileBackgroundColor must not equalTo(null)
+      user.profileTextColor must not equalTo(null)
+      user.profileLinkColor must not equalTo(null)
+      user.profileSidebarBorderColor must not equalTo(null)
+      user.profileSidebarFillColor must not equalTo(null)
       
-      if (user.getStatus() != null) {
-        user.getStatus().getCreatedAt() must not equalTo(null)
-        user.getStatus().getText() must not equalTo(null)
-        user.getStatus().getSource() must not equalTo(null)
-        user.getStatus().isFavorited() must beFalse
-        user.getStatus().getInReplyToUserId() must equalTo(-1)
-        user.getStatus().getInReplyToStatusId() must equalTo(-1)
-        user.getStatus().getInReplyToScreenName() must equalTo(null)
+      if (user.status != null) {
+        user.status.getCreatedAt() must not equalTo(null)
+        user.status.getText() must not equalTo(null)
+        user.status.getSource() must not equalTo(null)
+        user.status.isFavorited() must beFalse
+        user.status.getInReplyToUserId() must equalTo(-1)
+        user.status.getInReplyToStatusId() must equalTo(-1)
+        user.status.getInReplyToScreenName() must equalTo(null)
       }
-      user.getListedCount() must be_>=(0)
-      user.isFollowRequestSent() must beFalse
+      user.listedCount must be_>=(0)
+      user.isFollowRequestSent must beFalse
     }
     
     "get specified user with no status" in {
-      val user = twitter1.showUser(Some("tigertest"))
-      rawJSON(user) must not equalTo(null)
+      val user = twitter1.showUser("tigertest")
+      rawJSON(user.tw4jObj) must not equalTo(null)
       
-      val nextUser = twitter1.showUser(Some(numberId))
-      nextUser.getId() must equalTo(numberIdId)
-      rawJSON(user) must equalTo(null)
-      rawJSON(nextUser) must not equalTo(null)
-      nextUser must equalTo(DataObjectFactory.createUser(rawJSON(nextUser)))
+      val nextUser = twitter1.showUser(numberId)
+      nextUser.id must equalTo(numberIdId)
+      rawJSON(user.tw4jObj) must equalTo(null)
+      rawJSON(nextUser.tw4jObj) must not equalTo(null)
+      nextUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(nextUser.tw4jObj)))
       
-      val thirdUser = twitter1.showUser(userId = Some(numberIdId))
-      thirdUser.getId() must equalTo(numberIdId)
-      rawJSON(thirdUser) must not equalTo(null)
-      thirdUser must equalTo(DataObjectFactory.createUser(rawJSON(thirdUser)))
+      val thirdUser = twitter1.showUser(userId = numberIdId)
+      thirdUser.id must equalTo(numberIdId)
+      rawJSON(thirdUser.tw4jObj) must not equalTo(null)
+      thirdUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(thirdUser.tw4jObj)))
+    }
+    
+    "throw IllegalArgumentException are not set both parameters" in {
+      twitter1.showUser() must throwA[IllegalArgumentException]
+    }
+    
+    "is taken priority parameter userId" in {
+      val user = twitter1.showUser(screenName = "tigertest", userId = id1.id)
+      user.id must equalTo(id1.id)
+      user.screenName must not equalTo("tigertest")
     }
   }
   
   "lookupUsers" should {
     "get lookup user list specified screen names" in {
-      val users = twitter1.lookupUsers(Some(Array(id1.screenName, id2.screenName)))
+      val users = twitter1.lookupUsers(Array(id1.screenName, id2.screenName))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
     }
     
     "get lookup user list specified user ids" in {
-      val users = twitter1.lookupUsers(ids = Some(Array(id1.id, id2.id)))
+      val users = twitter1.lookupUsers(ids = Array(id1.id, id2.id))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       rawJSON(users.tw4jObj) must not equalTo(null)
+    }
+    
+    "throw IllegalArgumentException are not set both parameter" in {
+      twitter1.lookupUsers() must throwA[IllegalArgumentException]
+    }
+    
+    "is taken priority parameter ids" in {
+      val users = twitter1.lookupUsers(
+          screenNames = Array(id2.screenName, id3.screenName),
+          ids = Array(id1.id, id2.id))
+      users.size must equalTo(2)
+      users.exists(_.getId() == id1.id) must beTrue
+      users.exists(_.getId() == id2.id) must beTrue
+      users.exists(_.getId() == id3.id) must beFalse
     }
   }
   

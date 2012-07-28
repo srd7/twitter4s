@@ -79,9 +79,9 @@ trait User extends TwitterResponse {
 
   def isShowAllInlineMedia: Boolean
 
-  def friendCount: Int
+  def friendsCount: Int
 
-  def createAt: Date
+  def createdAt: Date
 
   def favouritesCount: Int
 

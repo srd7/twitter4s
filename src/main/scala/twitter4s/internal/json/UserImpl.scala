@@ -48,9 +48,9 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
 
   def isShowAllInlineMedia = twt4jUser.isShowAllInlineMedia()
 
-  def friendCount = twt4jUser.getFriendsCount()
+  def friendsCount = twt4jUser.getFriendsCount()
 
-  def createAt = twt4jUser.getCreatedAt()
+  def createdAt = twt4jUser.getCreatedAt()
 
   def favouritesCount = twt4jUser.getFavouritesCount()
 
