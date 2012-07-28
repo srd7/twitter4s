@@ -70,10 +70,10 @@ class GeoMethodsTest extends Specification {
       val sanFrancisco = "5a110d312052166f"
       val latestStatus = new StatusUpdate(new Date() + " status with place")
       val status = twitter3.updateStatus(latestStatus = Some(latestStatus.placeId(sanFrancisco)))
-      rawJSON(status) must not equalTo(null)
-      status must equalTo(DataObjectFactory.createStatus(rawJSON(status)))
-      status.getPlace().getId() must equalTo(sanFrancisco)
-      status.getContributors() must equalTo(null)
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
+      status.place.getId() must equalTo(sanFrancisco)
+      status.contributors must equalTo(null)
     }
     
     "update user status with geo information" in {
@@ -82,11 +82,11 @@ class GeoMethodsTest extends Specification {
       val latestStatus = new StatusUpdate(new Date() + " status with geo")
       
       val statusWithGeo = twitter3.updateStatus(latestStatus = Some(latestStatus.location(new GeoLocation(latitude, longitude))))
-      rawJSON(statusWithGeo) must not equalTo(null)
-      statusWithGeo must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo)))
-      statusWithGeo.getUser().isGeoEnabled() must beTrue
-      statusWithGeo.getGeoLocation().getLatitude() must equalTo(latitude)
-      statusWithGeo.getGeoLocation().getLongitude() must equalTo(longitude)
+      rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
+      statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
+      statusWithGeo.user.isGeoEnabled must beTrue
+      statusWithGeo.geoLocation.getLatitude() must equalTo(latitude)
+      statusWithGeo.geoLocation.getLongitude() must equalTo(longitude)
       twitter1.verifyCredentials.isGeoEnabled must beFalse
     }
   }

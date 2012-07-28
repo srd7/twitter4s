@@ -5,12 +5,11 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
-import twitter4j.Status
 
 @RunWith(classOf[JUnitRunner])
 class NewTwitterMethodsTest extends Specification {
   
-  private def testTweetList(target: ResponseList[Status]) = {
+  private def testTweetList(target: ResponseList[twitter4j.Status]) = {
     if (target.size > 0) target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
     true
   }

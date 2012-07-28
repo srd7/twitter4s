@@ -6,12 +6,11 @@ import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4j.Paging
-import twitter4j.Status
 
 @RunWith(classOf[JUnitRunner])
 class TimelineMethodsTest extends Specification {
   
-  def testStatuses(target: ResponseList[Status]) = {
+  def testStatuses(target: ResponseList[twitter4j.Status]) = {
     rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createStatus(rawJSON(target(0))))
     target.size must be_>(0)

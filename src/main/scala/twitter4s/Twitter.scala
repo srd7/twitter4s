@@ -26,7 +26,6 @@ import twitter4j.RelatedResults
 import twitter4j.Relationship
 import twitter4j.SavedSearch
 import twitter4j.SimilarPlaces
-import twitter4j.Status
 import twitter4j.StatusUpdate
 import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
@@ -41,6 +40,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   // TODO 他のリターンオブジェクトとFactoryのラッピング
   // TODO Twitter4Jでカバーしていないパターンに関してはIllegalArgumentExceptionをスローする
   // TODO IDとスクリーン名を指定する場合はID優先になるようにパターンマッチを修正する
+  // TODO ReponseListとPagableResponseListの型パラメータの設定
   
   /* TwitterBase method */
   /**
@@ -322,7 +322,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inhritDoc}
    */
-  def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[Paging] = None): ResponseList[Status] = {
+  def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     (id, page, paging) match {
       case (None, None, None) => twitter4jObj.getFavorites()
       case (None, Some(page), None) => twitter4jObj.getFavorites(page)
@@ -336,11 +336,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createFavorite(id: Long): Status = {
+  def createFavorite(id: Long): twitter4j.Status = {
     twitter4jObj.createFavorite(id)
   }
   
-  def destroyFavorite(id: Long): Status = {
+  def destroyFavorite(id: Long): twitter4j.Status = {
     // TODO implements
     null
   }
@@ -588,7 +588,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserListStatuses(listId: Int, paging: Paging): ResponseList[Status] = {
+  def getUserListStatuses(listId: Int, paging: Paging): ResponseList[twitter4j.Status] = {
     twitter4jObj.getUserListStatuses(listId, paging)
   }
 
@@ -781,7 +781,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweets(statusId: Long): ResponseList[Status] = {
+  def getRetweets(statusId: Long): ResponseList[twitter4j.Status] = {
     twitter4jObj.getRetweets(statusId)
   }
   
@@ -809,7 +809,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getHomeTimeline(paging: Option[Paging] = None): ResponseList[Status] = {
+  def getHomeTimeline(paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     paging match {
       case Some(paging) => twitter4jObj.getHomeTimeline(paging)
       case None => twitter4jObj.getHomeTimeline()
@@ -819,7 +819,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritedDoc}
    */
-  def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[Status] = {
+  def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     (screenName, userId, paging) match {
       case (None, None, None) => twitter4jObj.getUserTimeline()
       case (Some(screenName), None, None) => twitter4jObj.getUserTimeline(screenName)
@@ -833,7 +833,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getMentions(paging: Option[Paging] = None): ResponseList[Status] = {
+  def getMentions(paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     paging match {
       case None => twitter4jObj.getMentions()
       case Some(paging) => twitter4jObj.getMentions(paging)
@@ -843,7 +843,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[Status] = {
+  def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     paging match {
       case Some(paging) => twitter4jObj.getRetweetedByMe(paging)
       case None => twitter4jObj.getRetweetedByMe()
@@ -853,7 +853,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[Status] = {
+  def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     paging match {
       case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
       case None => twitter4jObj.getRetweetedToMe()
@@ -863,7 +863,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetsOfMe(paging: Option[Paging] = None): ResponseList[Status] = {
+  def getRetweetsOfMe(paging: Option[Paging] = None): ResponseList[twitter4j.Status] = {
     paging match {
       case Some(paging) => twitter4jObj.getRetweetsOfMe(paging)
       case None => twitter4jObj.getRetweetsOfMe()
@@ -873,7 +873,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
+  def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[twitter4j.Status] = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.getRetweetedToUser(screenName, paging)
       case (None, Some(userId)) => twitter4jObj.getRetweetedToUser(userId, paging)
@@ -884,7 +884,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedByUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status] = {
+  def getRetweetedByUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[twitter4j.Status] = {
     (screenName, userId) match {
       case (Some(screenName), None) => twitter4jObj.getRetweetedByUser(screenName, paging)
       case (None, Some(userId)) => twitter4jObj.getRetweetedByUser(userId, paging)

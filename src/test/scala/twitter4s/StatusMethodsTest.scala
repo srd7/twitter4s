@@ -7,7 +7,6 @@ import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import java.util.Date
 import twitter4j.StatusUpdate
-import twitter4j.Status
 import twitter4j.Paging
 
 @RunWith(classOf[JUnitRunner])
@@ -16,10 +15,10 @@ class StatusMethodsTest extends Specification {
   "showStatus" should {
     "get status specified by tweet id" in {
       val status = twitter2.showStatus(1000)
-      rawJSON(status) must not equalTo(null)
-      status must equalTo(DataObjectFactory.createStatus(rawJSON(status)))
-      status.getUser().getId() must equalTo(52)
-      status.getRateLimitStatus() must not equalTo(null)
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
+      status.user.id must equalTo(52)
+      status.rateLimitStatus must not equalTo(null)
     }
   }
   
@@ -27,26 +26,26 @@ class StatusMethodsTest extends Specification {
     "update status by status string" in {
       val statusString = new Date().toString + "test http://t.co/VEDROet #twitter4stest"
       val status = twitter2.updateStatus(status = Some(statusString))
-      rawJSON(status) must not equalTo(null)
-      status must equalTo(DataObjectFactory.createStatus(rawJSON(status)))
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
       
       // destory test
-      val destroyedStatus = twitter2.destroyStatus(status.getId())
-      rawJSON(destroyedStatus) must not equalTo(null)
-      destroyedStatus must equalTo(DataObjectFactory.createStatus(rawJSON(destroyedStatus)))
+      val destroyedStatus = twitter2.destroyStatus(status.id)
+      rawJSON(destroyedStatus.tw4jObj) must not equalTo(null)
+      destroyedStatus.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(destroyedStatus.tw4jObj)))
     }
     
     "update status by StatusUpdate object" in {
       val status = twitter2.updateStatus(latestStatus = Some(new StatusUpdate("@" + id1.screenName + " " + new Date().toString())))
-      rawJSON(status) must not equalTo(null)
-      status must equalTo(DataObjectFactory.createStatus(rawJSON(status)))
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
     }
   }
   
-  def testRetweetResponseList(statuses: ResponseList[Status]) = {
+  def testRetweetResponseList(statuses: ResponseList[twitter4j.Status]) = {
     rawJSON(statuses.tw4jObj) must not equalTo(null)
     statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
-    forall(statuses) {(status:Status) => status.getText must startWith("RT ")}
+    forall(statuses) {(status:twitter4j.Status) => status.getText must startWith("RT ")}
   }
   
   "getRetweetedByMe" should {
