@@ -2,6 +2,9 @@ package twitter4s.internal.json
 
 import twitter4s.IDs
 
+/**
+ * @author Shinsuke Abe - mao.instantlife at gmail.com
+ */
 case class IDsImpl(twt4jIDs: twitter4j.IDs) extends IDs {
   type Tw4jResponse = twitter4j.IDs
 
