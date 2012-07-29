@@ -1,6 +1,5 @@
 package twitter4s
 import scala.collection.mutable.Buffer
-import twitter4j.RateLimitStatus
 
 trait ResponseList[T] extends TwitterResponse {
   /**

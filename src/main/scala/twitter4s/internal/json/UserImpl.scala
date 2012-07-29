@@ -1,6 +1,5 @@
 package twitter4s.internal.json
 import twitter4s._
-import twitter4j.Status
 import java.net.URL
 import java.util.Date
 
@@ -32,7 +31,7 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
 
   def followersCount = twt4jUser.getFollowersCount()
 
-  def status = twt4jUser.getStatus()
+  def status = StatusImpl(twt4jUser.getStatus())
 
   def profileBackgroundColor = twt4jUser.getProfileBackgroundColor()
 
@@ -78,7 +77,7 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
 
   def isFollowRequestSent = twt4jUser.isFollowRequestSent()
   
-  def rateLimitStatus = twt4jUser.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jUser.getRateLimitStatus())
   
   def accessLevel = twt4jUser.getAccessLevel()
   

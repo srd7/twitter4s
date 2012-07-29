@@ -1,6 +1,5 @@
 package twitter4s
 import twitter4j.Trend
-import twitter4j.RateLimitStatus
 import twitter4j.Location
 import java.util.Date
 

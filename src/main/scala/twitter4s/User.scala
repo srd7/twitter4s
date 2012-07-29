@@ -1,6 +1,5 @@
 package twitter4s
 
-import twitter4j.Status
 import java.net.URL
 import java.util.Date
 

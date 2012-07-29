@@ -22,7 +22,7 @@ case class AccountSettingsImpl(twt4jAccountSettings: twitter4j.AccountSettings) 
 
   def isAlwaysUseHttps = twt4jAccountSettings.isAlwaysUseHttps()
   
-  def rateLimitStatus = twt4jAccountSettings.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jAccountSettings.getRateLimitStatus())
   
   def accessLevel = twt4jAccountSettings.getAccessLevel()
   

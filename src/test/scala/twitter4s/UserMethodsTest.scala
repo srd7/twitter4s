@@ -38,13 +38,13 @@ class UserMethodsTest extends Specification {
       user.profileSidebarFillColor must not equalTo(null)
       
       if (user.status != null) {
-        user.status.getCreatedAt() must not equalTo(null)
-        user.status.getText() must not equalTo(null)
-        user.status.getSource() must not equalTo(null)
-        user.status.isFavorited() must beFalse
-        user.status.getInReplyToUserId() must equalTo(-1)
-        user.status.getInReplyToStatusId() must equalTo(-1)
-        user.status.getInReplyToScreenName() must equalTo(null)
+        user.status.createdAt must not equalTo(null)
+        user.status.text must not equalTo(null)
+        user.status.source must not equalTo(null)
+        user.status.isFavorited must beFalse
+        user.status.inReplyToUserId must equalTo(-1)
+        user.status.inReplyToStatusId must equalTo(-1)
+        user.status.inReplyToScreenName must equalTo(null)
       }
       user.listedCount must be_>=(0)
       user.isFollowRequestSent must beFalse

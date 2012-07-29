@@ -1,5 +1,4 @@
 package twitter4s
-import twitter4j.RateLimitStatus
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

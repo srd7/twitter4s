@@ -15,11 +15,11 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   def isFavorited = twt4jStatus.isFavorited()
 
-  def user = UserImpl(twt4jStatus.getUser()) // TODO 暗黙の型変換の仕様確認
+  def user = UserImpl(twt4jStatus.getUser())
 
   def isRetweet = twt4jStatus.isRetweet()
 
-  def retweetedStatus = StatusImpl(twt4jStatus.getRetweetedStatus()) // // TODO 暗黙の型変換の仕様確認
+  def retweetedStatus = StatusImpl(twt4jStatus.getRetweetedStatus())
 
   def contributors = twt4jStatus.getContributors()
 
@@ -49,7 +49,7 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   def geoLocation = twt4jStatus.getGeoLocation()
 
-  def rateLimitStatus = twt4jStatus.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jStatus.getRateLimitStatus())
 
   def accessLevel = twt4jStatus.getAccessLevel()
 

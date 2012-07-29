@@ -19,7 +19,7 @@ case class TrendsImpl(twt4jTrends: twitter4j.Trends) extends Trends {
 
   def trendAt = twt4jTrends.getTrendAt()
 
-  def rateLimitStatus = twt4jTrends.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jTrends.getRateLimitStatus())
 
   def accessLevel = twt4jTrends.getAccessLevel()
 

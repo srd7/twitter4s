@@ -1,7 +1,6 @@
 package twitter4s.internal.json
 
 import twitter4s.IDs
-import twitter4j.RateLimitStatus
 
 case class IDsImpl(twt4jIDs: twitter4j.IDs) extends IDs {
   type Tw4jResponse = twitter4j.IDs
@@ -16,7 +15,7 @@ case class IDsImpl(twt4jIDs: twitter4j.IDs) extends IDs {
 
   def nextCursor = twt4jIDs.getNextCursor()
   
-  def rateLimitStatus = twt4jIDs.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jIDs.getRateLimitStatus())
   
   def accessLevel = twt4jIDs.getAccessLevel()
   

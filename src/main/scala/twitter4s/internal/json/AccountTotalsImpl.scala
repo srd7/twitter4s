@@ -12,7 +12,7 @@ case class AccountTotalsImpl(twt4jAccountTotals: twitter4j.AccountTotals) extend
   
   def friends = twt4jAccountTotals.getFriends()
   
-  def rateLimitStatus = twt4jAccountTotals.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jAccountTotals.getRateLimitStatus())
   
   def accessLevel = twt4jAccountTotals.getAccessLevel()
   

@@ -18,9 +18,9 @@ extends twitter4s.PagableResponseList[T] {
 
   def listAsScala = twt4jPagableResponseList asScala
 
-  def rateLimitStatus = twt4jPagableResponseList.getRateLimitStatus()
+  def rateLimitStatus = RateLimitStatusImpl(twt4jPagableResponseList.getRateLimitStatus())
 
-  def featureSpecificRateLimitStatus = twt4jPagableResponseList.getFeatureSpecificRateLimitStatus()
+  def featureSpecificRateLimitStatus = RateLimitStatusImpl(twt4jPagableResponseList.getFeatureSpecificRateLimitStatus())
 
   def accessLevel = twt4jPagableResponseList.getAccessLevel()
   
