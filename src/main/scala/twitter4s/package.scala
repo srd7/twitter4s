@@ -16,6 +16,10 @@ object twitter4s {
   // Status
   implicit def StatusWrapperJ2S(tw4jStatus: twitter4j.Status) = internal.json.StatusImpl(tw4jStatus)
   
+  // IDs
+  implicit def idsWrapperS2Array(tw4sIDs: IDs) = tw4sIDs.ids
+  implicit def idsWrapperJ2S(tw4jIDs: twitter4j.IDs) = internal.json.IDsImpl(tw4jIDs)
+  
   // Trends
   implicit def trendsWrapperS2Array(tw4sTrends: Trends) = tw4sTrends.trends
   implicit def trendsWrapperJ2S(tw4jTrends: twitter4j.Trends) = internal.json.TrendsImpl(tw4jTrends)

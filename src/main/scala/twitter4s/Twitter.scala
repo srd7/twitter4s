@@ -14,7 +14,6 @@ import twitter4j.DirectMessage
 import twitter4j.Friendship
 import twitter4j.GeoLocation
 import twitter4j.GeoQuery
-import twitter4j.IDs
 import twitter4j.Location
 import twitter4j.Paging
 import twitter4j.Place
@@ -275,7 +274,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getBlockingUsersIDs: IDs = {
+  def getBlockingUsersIDs: twitter4j.IDs = {
     twitter4jObj.getBlockingUsersIDs()
   }
   
@@ -349,7 +348,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getFriendsIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs = {
+  def getFriendsIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.IDs = {
     (userId, screenName) match {
       case (None, None) => twitter4jObj.getFriendsIDs(cursor)
       case (Some(userId), None) => twitter4jObj.getFriendsIDs(userId, cursor)
@@ -361,7 +360,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getFollowersIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs = {
+  def getFollowersIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.IDs = {
     (userId, screenName) match {
       case (None, Some(screenName)) => twitter4jObj.getFollowersIDs(screenName, cursor)
       case (Some(userId), None) => twitter4jObj.getFollowersIDs(userId, cursor)
@@ -416,14 +415,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getIncomingFriendships(cursor: Long): IDs = {
+  def getIncomingFriendships(cursor: Long): twitter4j.IDs = {
     twitter4jObj.getIncomingFriendships(cursor)
   }
 
   /**
    * {@inheritDoc}
    */
-  def getOutgoingFriendships(cursor: Long): IDs = {
+  def getOutgoingFriendships(cursor: Long): twitter4j.IDs = {
     twitter4jObj.getOutgoingFriendships(cursor)
   }
 
@@ -452,7 +451,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getNoRetweetIds: IDs = {
+  def getNoRetweetIds: twitter4j.IDs = {
     twitter4jObj.getNoRetweetIds()
   }
   
@@ -773,9 +772,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.destroyStatus(statusId)
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def retweetStatus(statusId: Long): Status = {
-    // TODO implements
-    return null
+    twitter4jObj.retweetStatus(statusId)
   }
   
   /**

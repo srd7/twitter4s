@@ -5,7 +5,7 @@ import twitter4j.StatusUpdate
 import twitter4s.ResponseList
 import twitter4j.User
 import twitter4j.Paging
-import twitter4j.IDs
+import twitter4s.IDs
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

@@ -150,17 +150,17 @@ class StatusMethodsTest extends Specification {
   "getRetweetedByIDs" should {
     "get ids list retweeted specified tweet with page 1 per 100" in {
       val ids = twitter1.getRetweetedByIDs(47621163517624320L, Some(new Paging(1, 100)))
-      ids.getIDs.length must be_>(50)
+      ids.length must be_>(50)
     }
     
     "get ids list retweeted specidied tweet with page 2 per 100" in {
       val ids = twitter1.getRetweetedByIDs(47621163517624320L, Some(new Paging(2, 100)))
-      ids.getIDs.length must be_>(10)
+      ids.length must be_>(10)
     }
     
     "get ids list retweeted specified tweet without page" in {
       val ids = twitter1.getRetweetedByIDs(47621163517624320L)
-      ids.getIDs.length must be_>(50)
+      ids.length must be_>(50)
     }
   }
 }
