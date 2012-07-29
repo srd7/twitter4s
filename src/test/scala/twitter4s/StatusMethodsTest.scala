@@ -6,7 +6,6 @@ import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import java.util.Date
-import twitter4j.StatusUpdate
 
 @RunWith(classOf[JUnitRunner])
 class StatusMethodsTest extends Specification {
@@ -35,7 +34,7 @@ class StatusMethodsTest extends Specification {
     }
     
     "update status by StatusUpdate object" in {
-      val status = twitter2.updateStatus(latestStatus = new StatusUpdate("@" + id1.screenName + " " + new Date().toString()))
+      val status = twitter2.updateStatus(latestStatus = StatusUpdate("@" + id1.screenName + " " + new Date().toString()))
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
     }
@@ -48,7 +47,7 @@ class StatusMethodsTest extends Specification {
       val statusString = new Date().toString + "test http://t.co/VEDROet #twitter4stest"
       twitter2.updateStatus(
           status = statusString,
-          latestStatus = new StatusUpdate("@" + id1.screenName + " " + new Date().toString())) must
+          latestStatus = StatusUpdate("@" + id1.screenName + " " + new Date().toString())) must
       throwA[IllegalArgumentException]
     }
   }
