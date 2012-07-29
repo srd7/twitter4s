@@ -92,7 +92,7 @@ trait StatusMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/:id/retweeted_by">GET statuses/:id/retweeted_by | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[twitter4j.User]
+  def getRetweetedBy(statusId: Long, paging: Paging = null): ResponseList[twitter4j.User]
 
   /**
    * Show user ids of up to 100 users who retweeted the status represented by id
@@ -106,5 +106,5 @@ trait StatusMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/:id/retweeted_by/ids">GET statuses/:id/retweeted_by/ids | Twitter Developers</a>
    * @since Twitter4J 1.0.0
    */
-  def getRetweetedByIDs(statusId: Long, paging: Option[Paging] = None): IDs
+  def getRetweetedByIDs(statusId: Long, paging: Paging = null): IDs
 }

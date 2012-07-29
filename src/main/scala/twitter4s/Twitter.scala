@@ -789,8 +789,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedBy(statusId: Long, paging: Option[Paging] = None): ResponseList[twitter4j.User] = {
-    paging match {
+  def getRetweetedBy(statusId: Long, paging: Paging = null): ResponseList[twitter4j.User] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
       case None => twitter4jObj.getRetweetedBy(statusId)
     }
@@ -799,8 +799,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedByIDs(statusId: Long, paging: Option[Paging] = None): IDs = {
-    paging match {
+  def getRetweetedByIDs(statusId: Long, paging: Paging = null): IDs = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getRetweetedByIDs(statusId, paging)
       case None => twitter4jObj.getRetweetedByIDs(statusId)
     }
