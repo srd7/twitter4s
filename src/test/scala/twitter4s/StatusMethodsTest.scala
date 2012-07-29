@@ -7,7 +7,6 @@ import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import java.util.Date
 import twitter4j.StatusUpdate
-import twitter4j.Paging
 
 @RunWith(classOf[JUnitRunner])
 class StatusMethodsTest extends Specification {
@@ -67,19 +66,19 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet by authorized user with page" in {
-      val statuses = twitter1.getRetweetedByMe(Some(new Paging(1)))
+      val statuses = twitter1.getRetweetedByMe(Some(Paging(1)))
       testRetweetResponseList(statuses)
     }
   }
   
   "getRetweetedByUser" should {
     "get retweet to user specified by id with page" in {
-      val statuses = twitter1.getRetweetedByUser(new Paging(1), userId = Some(id1.id))
+      val statuses = twitter1.getRetweetedByUser(Paging(1), userId = Some(id1.id))
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name with page" in {
-      val statuses = twitter1.getRetweetedByUser(new Paging(1), screenName = Some(id1.screenName))
+      val statuses = twitter1.getRetweetedByUser(Paging(1), screenName = Some(id1.screenName))
       testRetweetResponseList(statuses)
     }
   }
@@ -91,19 +90,19 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet to authorized user with page" in {
-      val statuses = twitter1.getRetweetedToMe(Some(new Paging(1)))
+      val statuses = twitter1.getRetweetedToMe(Some(Paging(1)))
       testRetweetResponseList(statuses)
     }
   }
   
   "getRtweetedToUser" should {
     "get retweet to user specified by id" in {
-      val statuses = twitter1.getRetweetedToUser(new Paging(1), userId = Some(id1.id))
+      val statuses = twitter1.getRetweetedToUser(Paging(1), userId = Some(id1.id))
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name" in { 
-      val statuses = twitter1.getRetweetedToUser(new Paging(1), screenName = Some(id1.screenName))
+      val statuses = twitter1.getRetweetedToUser(Paging(1), screenName = Some(id1.screenName))
       testRetweetResponseList(statuses)
     }
   }
@@ -116,7 +115,7 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet from authorized user's tweet with page" in {
-      val statuses = twitter1.getRetweetsOfMe(Some(new Paging(1)))
+      val statuses = twitter1.getRetweetsOfMe(Some(Paging(1)))
       rawJSON(statuses.tw4jObj) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     }
@@ -132,12 +131,12 @@ class StatusMethodsTest extends Specification {
   
   "getRetweetedBy" should {
     "get users list retweeted specified tweet with page 1 per 100" in {
-      val users = unauthenticated.getRetweetedBy(47621163517624320L, new Paging(1, 100))
+      val users = unauthenticated.getRetweetedBy(47621163517624320L, Paging(page = 1, count = 100))
       users.size must be_>(50)
     }
     
     "get users list retweeted specified tweet with page 2 per 100" in {
-      val users = unauthenticated.getRetweetedBy(47621163517624320L, new Paging(2, 100))
+      val users = unauthenticated.getRetweetedBy(47621163517624320L, Paging(page = 2, count = 100))
       users.size must be_>(10)
     }
     
@@ -149,12 +148,12 @@ class StatusMethodsTest extends Specification {
   
   "getRetweetedByIDs" should {
     "get ids list retweeted specified tweet with page 1 per 100" in {
-      val ids = twitter1.getRetweetedByIDs(47621163517624320L, new Paging(1, 100))
+      val ids = twitter1.getRetweetedByIDs(47621163517624320L, Paging(page = 1, count = 100))
       ids.length must be_>(50)
     }
     
     "get ids list retweeted specidied tweet with page 2 per 100" in {
-      val ids = twitter1.getRetweetedByIDs(47621163517624320L, new Paging(2, 100))
+      val ids = twitter1.getRetweetedByIDs(47621163517624320L, Paging(page = 2, count = 100))
       ids.length must be_>(10)
     }
     
