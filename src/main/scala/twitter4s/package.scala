@@ -10,6 +10,9 @@ object twitter4s {
   // RateLimitStatus
   implicit def RateLimitStatusWrapperJ2S(tw4jRateLimitStatus: twitter4j.RateLimitStatus) = internal.json.RateLimitStatusImpl(tw4jRateLimitStatus)
   
+  // Relationship
+  implicit def RelationshipWrapperJ2S(tw4jRelationship: twitter4j.Relationship) = internal.json.RelationshipImpl(tw4jRelationship)
+  
   // User
   implicit def UserWrapperJ2S(tw4jUser: twitter4j.User) = internal.json.UserImpl(tw4jUser)
   

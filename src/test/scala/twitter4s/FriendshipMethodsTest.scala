@@ -13,63 +13,73 @@ class FriendshipMethodsTest extends Specification {
   "destroyFriendship" should {
     "destroy specified user's friendship" in {
       if(!twitter1.existsFriendship(id1.screenName, id2.screenName))
-        twitter1.createFriendship(userId = Some(id1.id), follow = Some(true))
-      val user = twitter2.destroyFriendship(Some(id1.screenName))
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+        twitter1.createFriendship(userId = id1.id, follow = true)
+      val user = twitter2.destroyFriendship(id1.screenName)
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "destroy specified user was destroyed" in {
-      val user = twitter2.destroyFriendship(userId = Some(id1.id))
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+      val user = twitter2.destroyFriendship(userId = id1.id)
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       
       // Test code in Twitter4J, check TwitterException(status code = 403).
       // Checking ratelimitstatus?
+    }
+    
+    "throw exception with no target user specific information" in {
+      twitter2.destroyFriendship() must
+      throwA[IllegalArgumentException]
     }
   }
   
   "createFriendship" should {
     "create specified user's friendship" in {
-      val user = twitter2.createFriendship(screenName = Some(id1.screenName), follow = Some(true))
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
-      user.getScreenName() must equalTo(id1.screenName)
+      val user = twitter2.createFriendship(screenName = id1.screenName, follow = true)
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+      user.screenName must equalTo(id1.screenName)
     }
     
     "throw exception create friendship with myself" in {
-      twitter2.createFriendship(userId = Some(id2.id)) must
+      twitter2.createFriendship(userId = id2.id) must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(403)}
     }
     
     "throw exception create friendship with not-exists usre" in {
-      twitter2.createFriendship(Some("dosentexists--")) must
+      twitter2.createFriendship("dosentexists--") must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(404)}
+    }
+    
+    "throw exception with no target user specific information" in {
+      twitter2.createFriendship() must
+      throwA[IllegalArgumentException]
     }
   }
   
   "showFriendship" should {
     "get friendship status between user one way follow" in {
       val rel = twitter1.showFriendship(sourceScreenName = Some(id1.screenName), targetScreenName = Some(followsOneWay))
-      rawJSON(rel) must not equalTo(null)
-      rel must equalTo(DataObjectFactory.createRelationship(rawJSON(rel)))
-      rel.isSourceFollowedByTarget() must beTrue
-      rel.isSourceFollowingTarget() must beFalse
-      rel.isTargetFollowingSource() must beTrue
-      rel.isTargetFollowedBySource() must beFalse
+      rawJSON(rel.tw4jObj) must not equalTo(null)
+      rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
+      rel.isSourceFollowedByTarget must beTrue
+      rel.isSourceFollowingTarget must beFalse
+      rel.isTargetFollowingSource must beTrue
+      rel.isTargetFollowedBySource must beFalse
       
       val rel2 = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
-      rawJSON(rel) must equalTo(null)
+      rawJSON(rel.tw4jObj) must equalTo(null)
     }
     
     "get friendship status between user best friends" in {
       val rel = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
-      rawJSON(rel) must not equalTo(null)
-      rel must equalTo(DataObjectFactory.createRelationship(rawJSON(rel)))
-      rel.isSourceFollowedByTarget() must beTrue
-      rel.isSourceFollowingTarget() must beTrue
-      rel.isTargetFollowedBySource() must beTrue
-      rel.isTargetFollowingSource() must beTrue
+      rawJSON(rel.tw4jObj) must not equalTo(null)
+      rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
+      rel.isSourceFollowedByTarget must beTrue
+      rel.isSourceFollowingTarget must beTrue
+      rel.isTargetFollowedBySource must beTrue
+      rel.isTargetFollowingSource must beTrue
     }
   }
   
@@ -94,38 +104,38 @@ class FriendshipMethodsTest extends Specification {
   "updateFriendship" should {
     "update friendship to specified user by screen name" in {
       val relationship = twitter1.updateFriendship(true, true, Some(id3.screenName))
-      relationship.getTargetUserScreenName() must equalTo(id3.screenName)
+      relationship.targetUserScreenName must equalTo(id3.screenName)
     }
     
     "update friendship to specified user by id" in {
       val relationship = twitter1.updateFriendship(true, true, userId = Some(id3.id))
-      relationship.getTargetUserScreenName() must equalTo(id3.screenName)
+      relationship.targetUserScreenName must equalTo(id3.screenName)
     }
   }
   
   "getIncomingFriendships" should {
     "get incoming friendship" in {
       val ids = twitter3.getIncomingFriendships(-1)
-      rawJSON(ids) must not equalTo(null)
-      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
-      ids.getIDs().length must be_>=(0)
+      rawJSON(ids.tw4jObj) must not equalTo(null)
+      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
+      ids.length must be_>=(0)
     }
   }
   
   "getOutcomingFriendships" should {
     "get outcoming friendship" in {
       val ids = twitter2.getOutgoingFriendships(-1)
-      rawJSON(ids) must not equalTo(null)
-      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
-      ids.getIDs().length must be_>=(0)
+      rawJSON(ids.tw4jObj) must not equalTo(null)
+      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
+      ids.length must be_>=(0)
     }
   }
   
   "getNoRetweetIDs" should {
     "get not retweet users id" in {
       val ids = twitter2.getNoRetweetIds
-      rawJSON(ids) must not equalTo(null)
-      ids must equalTo(DataObjectFactory.createIDs(rawJSON(ids)))
+      rawJSON(ids.tw4jObj) must not equalTo(null)
+      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
     }
   }
 }

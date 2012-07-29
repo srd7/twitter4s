@@ -1,8 +1,8 @@
 package twitter4s.api
 
-import twitter4j.User
-import twitter4j.Relationship
-import twitter4j.IDs
+import twitter4s.User
+import twitter4s.Relationship
+import twitter4s.IDs
 import twitter4s.ResponseList
 import twitter4j.Friendship
 
@@ -27,7 +27,10 @@ trait FriendshipMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">POST friendships/create | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def createFriendship(screenName: Option[String] = None, userId: Option[Long] = None, follow: Option[Boolean] = None): User
+  def createFriendship(
+      screenName: String = null,
+      userId: java.lang.Long = null,
+      follow: java.lang.Boolean = null): User
 
   /**
    * Allows the authenticating users to unfollow the user specified in the ID parameter.<br />
@@ -45,7 +48,7 @@ trait FriendshipMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">POST friendships/destroy | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def destroyFriendship(screenName: String = null, userId: java.lang.Long = null): User
 
   /**
    * Tests for the existence of friendship between two users. Will return true if user_a follows user_b, otherwise will return false.

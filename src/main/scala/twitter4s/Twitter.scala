@@ -21,7 +21,6 @@ import twitter4j.Query
 import twitter4j.QueryResult
 import twitter4j.RateLimitStatusListener
 import twitter4j.RelatedResults
-import twitter4j.Relationship
 import twitter4j.SavedSearch
 import twitter4j.SimilarPlaces
 import twitter4j.TwitterAPIConfiguration
@@ -371,24 +370,27 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createFriendship(screenName: Option[String] = None, userId: Option[Long] = None, follow: Option[Boolean] = None): twitter4j.User = {
-    (screenName, userId, follow) match {
+  def createFriendship(
+      screenName: String = null,
+      userId: java.lang.Long = null,
+      follow: java.lang.Boolean = null): User = {
+    (Option(screenName), Option(userId), Option(follow)) match {
+      case (_, Some(userId), None) => twitter4jObj.createFriendship(userId)
+      case (_, Some(userId), Some(follow)) => twitter4jObj.createFriendship(userId, follow)
       case (Some(screenName), None, None) => twitter4jObj.createFriendship(screenName)
       case (Some(screenName), None, Some(follow)) => twitter4jObj.createFriendship(screenName, follow)
-      case (None, Some(userId), None) => twitter4jObj.createFriendship(userId)
-      case (None, Some(userId), Some(follow)) => twitter4jObj.createFriendship(userId, follow)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter must set screenName or userId at least.")
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def destroyFriendship(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
-    (screenName, userId) match {
+  def destroyFriendship(screenName: String = null, userId: java.lang.Long = null): User = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.destroyFriendship(userId)
       case (Some(screenName), None) => twitter4jObj.destroyFriendship(screenName)
-      case (None, Some(userId)) => twitter4jObj.destroyFriendship(userId)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter must set screenName or userId at least.")
     }
   }
 
@@ -402,7 +404,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showFriendship(sourceScreenName: Option[String] = None, targetScreenName: Option[String] = None, sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship = {
+  def showFriendship(
+      sourceScreenName: Option[String] = None,
+      targetScreenName: Option[String] = None,
+      sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship = {
     (sourceScreenName, targetScreenName, sourceId, targetId) match {
       case (Some(sourceScreenName), Some(targetScreenName), None, None) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
       case (None, None, Some(sourceId), Some(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
@@ -413,14 +418,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getIncomingFriendships(cursor: Long): twitter4j.IDs = {
+  def getIncomingFriendships(cursor: Long): IDs = {
     twitter4jObj.getIncomingFriendships(cursor)
   }
 
   /**
    * {@inheritDoc}
    */
-  def getOutgoingFriendships(cursor: Long): twitter4j.IDs = {
+  def getOutgoingFriendships(cursor: Long): IDs = {
     twitter4jObj.getOutgoingFriendships(cursor)
   }
 
@@ -449,7 +454,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getNoRetweetIds: twitter4j.IDs = {
+  def getNoRetweetIds: IDs = {
     twitter4jObj.getNoRetweetIds()
   }
   
