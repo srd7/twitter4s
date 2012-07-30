@@ -82,10 +82,10 @@ trait FriendshipMethods {
    * @since Twitter4S 1.0.0
    */
   def showFriendship(
-      sourceScreenName: Option[String] = None,
-      targetScreenName: Option[String] = None,
-      sourceId: Option[Long] = None,
-      targetId: Option[Long] = None): Relationship
+      sourceScreenName: String = null,
+      targetScreenName: String = null,
+      sourceId: java.lang.Long = null,
+      targetId: java.lang.Long = null): Relationship
 
   /**
    * Returns an array of numeric IDs for every user who has a pending request to follow the authenticating user.
@@ -129,7 +129,7 @@ trait FriendshipMethods {
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
-  def lookupFriendships(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[Friendship]
+  def lookupFriendships(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[Friendship]
 
   /**
    * Allows you to enable or disable retweets and device notifications from the specified user.
@@ -152,8 +152,8 @@ trait FriendshipMethods {
   def updateFriendship(
       enableDeviceNotification: Boolean,
       retweets: Boolean,
-      screenName: Option[String] = None,
-      userId: Option[Long] = None): Relationship
+      screenName: String = null,
+      userId: java.lang.Long = null): Relationship
 
   /**
    * Returns the list of user_ids for which the authenticating user has said they do not want to receive retweets from when successful.

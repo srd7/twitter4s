@@ -60,7 +60,7 @@ class FriendshipMethodsTest extends Specification {
   
   "showFriendship" should {
     "get friendship status between user one way follow" in {
-      val rel = twitter1.showFriendship(sourceScreenName = Some(id1.screenName), targetScreenName = Some(followsOneWay))
+      val rel = twitter1.showFriendship(sourceScreenName = id1.screenName, targetScreenName = followsOneWay)
       rawJSON(rel.tw4jObj) must not equalTo(null)
       rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
       rel.isSourceFollowedByTarget must beTrue
@@ -68,12 +68,12 @@ class FriendshipMethodsTest extends Specification {
       rel.isTargetFollowingSource must beTrue
       rel.isTargetFollowedBySource must beFalse
       
-      val rel2 = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
+      val rel2 = twitter1.showFriendship(sourceId = bestFriend1.id, targetId = bestFriend2.id)
       rawJSON(rel.tw4jObj) must equalTo(null)
     }
     
     "get friendship status between user best friends" in {
-      val rel = twitter1.showFriendship(sourceId = Some(bestFriend1.id), targetId = Some(bestFriend2.id))
+      val rel = twitter1.showFriendship(sourceId = bestFriend1.id, targetId = bestFriend2.id)
       rawJSON(rel.tw4jObj) must not equalTo(null)
       rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
       rel.isSourceFollowedByTarget must beTrue
@@ -81,11 +81,26 @@ class FriendshipMethodsTest extends Specification {
       rel.isTargetFollowedBySource must beTrue
       rel.isTargetFollowingSource must beTrue
     }
+    
+    "throw exception with no source user specific information" in {
+      twitter1.showFriendship(targetId = bestFriend2.id) must
+      throwA[IllegalArgumentException]
+    }
+    
+    "throw exception with no target user specific information" in {
+      twitter1.showFriendship(sourceId = bestFriend1.id) must
+      throwA[IllegalArgumentException]
+    }
+    
+    "throw exception with no parameter" in {
+      twitter1.showFriendship() must
+      throwA[IllegalArgumentException]
+    }
   }
   
   "lookupFriendships" should {
     "get friendship status list with specified users by screen name" in {
-      val friendshipList = twitter1.lookupFriendships(Some(Array("barakobama", id2.screenName, id3.screenName)))
+      val friendshipList = twitter1.lookupFriendships(Array("barakobama", id2.screenName, id3.screenName))
       friendshipList.size must equalTo(3)
       friendshipList(0).getScreenName() must equalTo("barakobama")
       friendshipList(0).isFollowedBy() must beFalse
@@ -96,20 +111,30 @@ class FriendshipMethodsTest extends Specification {
     }
     
     "get friendship status list with specified users by id" in {
-      val friendshipList = twitter1.lookupFriendships(ids = Some(Array(id2.id, id3.id)))
+      val friendshipList = twitter1.lookupFriendships(ids = Array(id2.id, id3.id))
       friendshipList.size must equalTo(2)
+    }
+    
+    "throw exception without parameters" in {
+      twitter1.lookupFriendships() must
+      throwA[IllegalArgumentException]
     }
   }
   
   "updateFriendship" should {
     "update friendship to specified user by screen name" in {
-      val relationship = twitter1.updateFriendship(true, true, Some(id3.screenName))
+      val relationship = twitter1.updateFriendship(true, true, id3.screenName)
       relationship.targetUserScreenName must equalTo(id3.screenName)
     }
     
     "update friendship to specified user by id" in {
-      val relationship = twitter1.updateFriendship(true, true, userId = Some(id3.id))
+      val relationship = twitter1.updateFriendship(true, true, userId = id3.id)
       relationship.targetUserScreenName must equalTo(id3.screenName)
+    }
+    
+    "throw exception both of screen name and id are not set" in {
+      twitter1.updateFriendship(true, true) must
+      throwA[IllegalArgumentException]
     }
   }
   

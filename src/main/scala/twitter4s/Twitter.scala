@@ -405,13 +405,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def showFriendship(
-      sourceScreenName: Option[String] = None,
-      targetScreenName: Option[String] = None,
-      sourceId: Option[Long] = None, targetId: Option[Long] = None): Relationship = {
-    (sourceScreenName, targetScreenName, sourceId, targetId) match {
+      sourceScreenName: String = null,
+      targetScreenName: String = null,
+      sourceId: java.lang.Long = null,
+      targetId: java.lang.Long = null): Relationship = {
+    (Option(sourceScreenName), Option(targetScreenName), Option(sourceId), Option(targetId)) match {
+      case (_, _, Some(sourceId), Some(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
       case (Some(sourceScreenName), Some(targetScreenName), None, None) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
-      case (None, None, Some(sourceId), Some(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter combination can not create. See API method comment.")
     }
   }
 
@@ -432,22 +433,26 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def lookupFriendships(screenNames: Option[Array[String]] = None, ids: Option[Array[Long]] = None): ResponseList[Friendship] = {
-    (screenNames, ids) match {
+  def lookupFriendships(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[Friendship] = {
+    (Option(screenNames), Option(ids)) match {
+      case (_, Some(ids)) => twitter4jObj.lookupFriendships(ids)
       case (Some(screenNames), None) => twitter4jObj.lookupFriendships(screenNames)
-      case (None, Some(ids)) => twitter4jObj.lookupFriendships(ids)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter must be set screenNames or ids at least.")
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def updateFriendship(enableDeviceNotification: Boolean, retweets: Boolean, screenName: Option[String] = None, userId: Option[Long] = None): Relationship = {
-    (screenName, userId) match {
+  def updateFriendship(
+      enableDeviceNotification: Boolean,
+      retweets: Boolean,
+      screenName: String = null,
+      userId: java.lang.Long = null): Relationship = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
       case (Some(screenName), None) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
-      case (None, Some(userId)) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter must be set screenName or id userId at least.")
     }
   }
 
