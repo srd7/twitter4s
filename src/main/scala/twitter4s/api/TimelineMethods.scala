@@ -20,7 +20,7 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">GET statuses/home_timeline | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getHomeTimeline(paging: Option[Paging] = None): ResponseList[Status]
+  def getHomeTimeline(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent statuses posted from the authenticating user. It's also possible to request another user's timeline via the id parameter.<br />
@@ -37,7 +37,10 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/user_timeline">GET statuses/user_timeline | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[Paging] = None): ResponseList[Status]
+  def getUserTimeline(
+      screenName: String = null,
+      userId: java.lang.Long = null,
+      paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent mentions (status containing @username) for the authenticating user.
@@ -50,7 +53,7 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">GET statuses/mentions | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getMentions(paging: Option[Paging] = None): ResponseList[Status]
+  def getMentions(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent retweets posted by the authenticating user.

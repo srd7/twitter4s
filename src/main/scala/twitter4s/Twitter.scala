@@ -827,8 +827,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getHomeTimeline(paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    paging match {
+  def getHomeTimeline(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getHomeTimeline(paging)
       case None => twitter4jObj.getHomeTimeline()
     }
@@ -837,13 +837,16 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritedDoc}
    */
-  def getUserTimeline(screenName: Option[String] = None, userId: Option[Long] = None, paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    (screenName, userId, paging) match {
+  def getUserTimeline(
+      screenName: String = null,
+      userId: java.lang.Long = null,
+      paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    (Option(screenName), Option(userId), Option(paging)) match {
       case (None, None, None) => twitter4jObj.getUserTimeline()
+      case (_, Some(userId), None) => twitter4jObj.getUserTimeline(userId)
       case (Some(screenName), None, None) => twitter4jObj.getUserTimeline(screenName)
-      case (None, Some(userId), None) => twitter4jObj.getUserTimeline(userId)
+      case (_, Some(userId), Some(paging)) => twitter4jObj.getUserTimeline(userId, paging)
       case (Some(screenName), None, Some(paging)) => twitter4jObj.getUserTimeline(screenName, paging)
-      case (None, Some(userId), Some(paging)) => twitter4jObj.getUserTimeline(userId, paging)
       case (None, None, Some(paging)) => twitter4jObj.getUserTimeline(paging)
     }
   }
@@ -851,8 +854,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getMentions(paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    paging match {
+  def getMentions(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    Option(paging) match {
       case None => twitter4jObj.getMentions()
       case Some(paging) => twitter4jObj.getMentions(paging)
     }

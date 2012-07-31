@@ -17,6 +17,7 @@ object Paging {
     (Option(page), Option(count), Option(sinceId), Option(maxId)) match {
       case (None, None, None, None) => new twitter4j.Paging()
       case (Some(page), None, None, None) => new twitter4j.Paging(page)
+      case (None, None, Some(sinceId), None) => new twitter4j.Paging(sinceId)
       case (Some(page), Some(count), None, None) => new twitter4j.Paging(page, count)
       case (Some(page), None, Some(sinceId), None) => new twitter4j.Paging(page, sinceId)
       case (Some(page), Some(count), Some(sinceId), None) => new twitter4j.Paging(page, count, sinceId)
