@@ -25,7 +25,6 @@ import twitter4j.SavedSearch
 import twitter4j.SimilarPlaces
 import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
-import twitter4j.UserList
 import auth.ConsumerKey
 
 /**
@@ -530,11 +529,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[String]] = None): UserList = {
-    (userIds, screenNames) match {
+  def addUserListMembers(
+      listId: Int,
+      userIds: Array[Long] = null,
+      screenNames: Array[String] = null): UserList = {
+    (Option(userIds), Option(screenNames)) match {
+      case (_, Some(screenNames)) => twitter4jObj.addUserListMembers(listId, screenNames)
       case (Some(userIds), None) => twitter4jObj.addUserListMembers(listId, userIds)
-      case (None, Some(screenNames)) => twitter4jObj.addUserListMembers(listId, screenNames)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter userIds and screenNames must be set at least.")
     }
   }
 
@@ -548,7 +550,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUserListMembership(listId: Int, userId: Long): twitter4j.User = {
+  def showUserListMembership(listId: Int, userId: Long): User = {
     twitter4jObj.showUserListMembership(listId, userId)
   }
   
@@ -570,11 +572,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserLists(cursor: Long, listOwnerScreenName: Option[String] = None, listOwnerUserId: Option[Long] = None): PagableResponseList[UserList] = {
-    (listOwnerScreenName, listOwnerUserId) match {
+  def getUserLists(cursor: Long,
+      listOwnerScreenName: String = null,
+      listOwnerUserId: java.lang.Long = null): PagableResponseList[twitter4j.UserList] = {
+    (Option(listOwnerScreenName), Option(listOwnerUserId)) match {
+      case (_, Some(listOwnerUserId)) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
       case (Some(listOwnerScreenName), None) => twitter4jObj.getUserLists(listOwnerScreenName, cursor)
-      case (None, Some(listOwnerUserId)) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
-      // case _ => // TODO exception? 
+      case _ => throw new IllegalArgumentException("Parameter listOwnerScreenName or listOwnerUserId must be set at least.")
     }
   }
 
@@ -602,11 +606,15 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserListMemberships(cursor: Long, listMemberId: Option[Long] = None, listMemberScreenName: Option[String] = None, filterToOwnedLists: Option[Boolean] = None): PagableResponseList[UserList] = {
-    (listMemberId, listMemberScreenName, filterToOwnedLists) match {
-      case (Some(listMemberId), None, None) => twitter4jObj.getUserListMemberships(listMemberId, cursor)
+  def getUserListMemberships(
+      cursor: Long,
+      listMemberId: java.lang.Long = null,
+      listMemberScreenName: String = null,
+      filterToOwnedLists: java.lang.Boolean = null): PagableResponseList[twitter4j.UserList] = {
+    (Option(listMemberId), Option(listMemberScreenName), Option(filterToOwnedLists)) match {
+      case (Some(listMemberId), _, None) => twitter4jObj.getUserListMemberships(listMemberId, cursor)
       case (None, Some(listMemberScreenName), None) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor)
-      case (Some(listMemberId), None, Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberId, cursor, filterToOwnedLists)
+      case (Some(listMemberId), _, Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberId, cursor, filterToOwnedLists)
       case (None, Some(listMemberScreenName), Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor, filterToOwnedLists)
       case (None, None, None) => twitter4jObj.getUserListMemberships(cursor)
     }
@@ -615,17 +623,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[UserList] = {
+  def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[twitter4j.UserList] = {
     twitter4jObj.getUserListSubscriptions(listMemberScreenName, cursor)
   }
 
   /**
    * {@inheritDoc}
    */
-  def getAllUserLists(screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[UserList] = {
-    (screenName, userId) match {
+  def getAllUserLists(screenName: String = null, userId: java.lang.Long = null): ResponseList[twitter4j.UserList] = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.getAllUserLists(userId)
       case (Some(screenName), None) => twitter4jObj.getAllUserLists(screenName)
-      case (None, Some(userId)) => twitter4jObj.getAllUserLists(userId)
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
     }
   }
   

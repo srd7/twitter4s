@@ -1,7 +1,7 @@
 package twitter4s.api
 
-import twitter4j.User
-import twitter4j.UserList
+import twitter4s.User
+import twitter4s.UserList
 import twitter4s.PagableResponseList
 
 /**
@@ -20,7 +20,7 @@ trait ListMembersMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/lists/members">GET lists/members | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[User]
+  def getUserListMembers(listId: Int, cursor: Long): PagableResponseList[twitter4j.User]
 
   /**
    * Adds a member to a list. The authenticated user must own the list to be able to add members to it. Lists are limited to having 500 members.
@@ -51,7 +51,10 @@ trait ListMembersMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">POST lists/members/create_all | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def addUserListMembers(listId: Int, userIds: Option[Array[Long]] = None, screenNames: Option[Array[String]] = None): UserList
+  def addUserListMembers(
+      listId: Int,
+      userIds: Array[Long] = null,
+      screenNames: Array[String] = null): UserList
 
   /**
    * Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.

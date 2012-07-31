@@ -16,6 +16,9 @@ object twitter4s {
   // User
   implicit def UserWrapperJ2S(tw4jUser: twitter4j.User) = internal.json.UserImpl(tw4jUser)
   
+  // UserList
+  implicit def UserListWrapperJ2S(tw4jUserList: twitter4j.UserList) = internal.json.UserListImpl(tw4jUserList)
+  
   // Status
   implicit def StatusWrapperJ2S(tw4jStatus: twitter4j.Status) = internal.json.StatusImpl(tw4jStatus)
   

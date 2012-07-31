@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.UserList
+import twitter4s.UserList
 import twitter4s.PagableResponseList
 import twitter4j.Paging
 import twitter4s.ResponseList
@@ -57,7 +57,10 @@ trait ListMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/lists">GET lists | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserLists(cursor: Long, listOwnerScreenName: Option[String] = None, listOwnerUserId: Option[Long] = None): PagableResponseList[UserList]
+  def getUserLists(
+      cursor: Long,
+      listOwnerScreenName: String = null,
+      listOwnerUserId: java.lang.Long = null): PagableResponseList[twitter4j.UserList]
 
   /**
    * Show the specified list. Private lists will only be shown if the authenticated user owns the specified list.
@@ -117,9 +120,9 @@ trait ListMethods {
    */
   def getUserListMemberships(
       cursor: Long,
-      listMemberId: Option[Long] = None,
-      listMemberScreenName: Option[String] = None,
-      filterToOwnedLists: Option[Boolean] = None): PagableResponseList[UserList]
+      listMemberId: java.lang.Long = null,
+      listMemberScreenName: String = null,
+      filterToOwnedLists: java.lang.Boolean = null): PagableResponseList[twitter4j.UserList]
 
   /**
    * List the lists the specified user follows.
@@ -133,7 +136,7 @@ trait ListMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscriptions">GET lists/subscriptions | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[UserList]
+  def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[twitter4j.UserList]
 
   /**
    * Returns all lists the authenticating or specified user subscribes to, including their own.
@@ -150,5 +153,5 @@ trait ListMethods {
    * @throws IllegalArgumentException when both of screenName and userId are not set.
    * @since Twitter4S 1.0.0
    */
-  def getAllUserLists(screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[UserList]
+  def getAllUserLists(screenName: String = null, userId: java.lang.Long = null): ResponseList[twitter4j.UserList]
 }
