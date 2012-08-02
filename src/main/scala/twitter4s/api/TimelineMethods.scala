@@ -66,7 +66,7 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_by_me">GET statuses/retweeted_by_me | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getRetweetedByMe(paging: Option[Paging] = None): ResponseList[Status]
+  def getRetweetedByMe(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent retweets posted by the authenticating user's friends.
@@ -79,7 +79,7 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">GET statuses/retweeted_to_me | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getRetweetedToMe(paging: Option[Paging] = None): ResponseList[Status]
+  def getRetweetedToMe(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent tweets of the authenticated user that have been retweeted by others.
@@ -92,7 +92,7 @@ trait TimelineMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">GET statuses/retweets_of_me | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getRetweetsOfMe(paging: Option[Paging] = None): ResponseList[Status]
+  def getRetweetsOfMe(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent retweets posted by users the specified user follows. This method is identical to statuses/retweeted_to_me except you can choose the user to view.
@@ -111,7 +111,10 @@ trait TimelineMethods {
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4J 1.0.0
    */
-  def getRetweetedToUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status]
+  def getRetweetedToUser(
+      paging: Paging,
+      screenName: String = null, 
+      userId: java.lang.Long = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent retweets posted by the specified user. This method is identical to statuses/retweeted_by_me except you can choose the user to view.
@@ -130,5 +133,8 @@ trait TimelineMethods {
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
-  def getRetweetedByUser(paging: Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[Status]
+  def getRetweetedByUser(
+      paging: Paging,
+      screenName: String = null,
+      userId: java.lang.Long = null): ResponseList[Status]
 }

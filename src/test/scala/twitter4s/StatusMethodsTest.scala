@@ -65,20 +65,25 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet by authorized user with page" in {
-      val statuses = twitter1.getRetweetedByMe(Some(Paging(1)))
+      val statuses = twitter1.getRetweetedByMe(Paging(1))
       testRetweetResponseList(statuses)
     }
   }
   
   "getRetweetedByUser" should {
     "get retweet to user specified by id with page" in {
-      val statuses = twitter1.getRetweetedByUser(Paging(1), userId = Some(id1.id))
+      val statuses = twitter1.getRetweetedByUser(Paging(1), userId = id1.id)
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name with page" in {
-      val statuses = twitter1.getRetweetedByUser(Paging(1), screenName = Some(id1.screenName))
+      val statuses = twitter1.getRetweetedByUser(Paging(1), screenName = id1.screenName)
       testRetweetResponseList(statuses)
+    }
+    
+    "throw exception both of parameter screenName and userId are not set" in {
+      twitter1.getRetweetedByUser(Paging(1)) must
+      throwA[IllegalArgumentException]
     }
   }
   
@@ -89,20 +94,25 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet to authorized user with page" in {
-      val statuses = twitter1.getRetweetedToMe(Some(Paging(1)))
+      val statuses = twitter1.getRetweetedToMe(Paging(1))
       testRetweetResponseList(statuses)
     }
   }
   
   "getRtweetedToUser" should {
     "get retweet to user specified by id" in {
-      val statuses = twitter1.getRetweetedToUser(Paging(1), userId = Some(id1.id))
+      val statuses = twitter1.getRetweetedToUser(Paging(1), userId = id1.id)
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name" in { 
-      val statuses = twitter1.getRetweetedToUser(Paging(1), screenName = Some(id1.screenName))
+      val statuses = twitter1.getRetweetedToUser(Paging(1), screenName = id1.screenName)
       testRetweetResponseList(statuses)
+    }
+    
+    "throw exception both of parameter screenName and userId are not set" in {
+      twitter1.getRetweetedToUser(Paging(1)) must
+      throwA[IllegalArgumentException]
     }
   }
   
@@ -114,7 +124,7 @@ class StatusMethodsTest extends Specification {
     }
     
     "get retweet from authorized user's tweet with page" in {
-      val statuses = twitter1.getRetweetsOfMe(Some(Paging(1)))
+      val statuses = twitter1.getRetweetsOfMe(Paging(1))
       rawJSON(statuses.tw4jObj) must not equalTo(null)
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
     }

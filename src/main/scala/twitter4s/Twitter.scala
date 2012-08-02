@@ -864,8 +864,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedByMe(paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    paging match {
+  def getRetweetedByMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getRetweetedByMe(paging)
       case None => twitter4jObj.getRetweetedByMe()
     }
@@ -874,8 +874,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedToMe(paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    paging match {
+  def getRetweetedToMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
       case None => twitter4jObj.getRetweetedToMe()
     }
@@ -884,8 +884,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetsOfMe(paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    paging match {
+  def getRetweetsOfMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getRetweetsOfMe(paging)
       case None => twitter4jObj.getRetweetsOfMe()
     }
@@ -894,22 +894,28 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getRetweetedToUser(paging: twitter4j.Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[twitter4j.Status] = {
-    (screenName, userId) match {
+  def getRetweetedToUser(
+      paging: twitter4j.Paging,
+      screenName: String = null,
+      userId: java.lang.Long = null): ResponseList[twitter4j.Status] = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.getRetweetedToUser(userId, paging)
       case (Some(screenName), None) => twitter4jObj.getRetweetedToUser(screenName, paging)
-      case (None, Some(userId)) => twitter4jObj.getRetweetedToUser(userId, paging)
-      // case _ => // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def getRetweetedByUser(paging: twitter4j.Paging, screenName: Option[String] = None, userId: Option[Long] = None): ResponseList[twitter4j.Status] = {
-    (screenName, userId) match {
+  def getRetweetedByUser(
+      paging: twitter4j.Paging,
+      screenName: String = null,
+      userId: java.lang.Long = null): ResponseList[twitter4j.Status] = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.getRetweetedByUser(userId, paging)
       case (Some(screenName), None) => twitter4jObj.getRetweetedByUser(screenName, paging)
-      case (None, Some(userId)) => twitter4jObj.getRetweetedByUser(userId, paging)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
     }
   }
   

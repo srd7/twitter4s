@@ -5,7 +5,6 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
-import twitter4j.Paging
 
 @RunWith(classOf[JUnitRunner])
 class TimelineMethodsTest extends Specification {
@@ -83,17 +82,17 @@ class TimelineMethodsTest extends Specification {
     }
     
     "get specified user's mention list with page parameter" in {
-      val statuses = twitter1.getMentions(new Paging(1))
+      val statuses = twitter1.getMentions(Paging(1))
       testStatuses(statuses)
     }
     
     "get specified user's mention list with page and sinceId parameter" in {
-      val statuses = twitter1.getMentions(new Paging(1, 1L))
+      val statuses = twitter1.getMentions(Paging(1, sinceId = 1L))
       testStatuses(statuses)
     }
     
     "get specified user's mention list with sinceId parameter" in {
-      val statuses = twitter1.getMentions(new Paging(1L))
+      val statuses = twitter1.getMentions(Paging(sinceId = 1L))
       testStatuses(statuses)
     }
   }
