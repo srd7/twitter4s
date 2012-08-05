@@ -2,7 +2,7 @@ package twitter4s.api
 
 import twitter4j.Paging
 import twitter4s.ResponseList
-import twitter4j.Status
+import twitter4s.Status
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -31,7 +31,10 @@ trait FavoriteMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">GET favorites | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[Paging] = None): ResponseList[Status]
+  def getFavorites(
+      id: String = null,
+      page: java.lang.Integer = null,
+      paging: Paging = null): ResponseList[twitter4j.Status]
 
   /**
    * Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.

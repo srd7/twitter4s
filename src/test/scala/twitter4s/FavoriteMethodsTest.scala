@@ -1,34 +1,31 @@
 package twitter4s
-import twitter4s._
-import org.specs2.mutable.Specification
-import twitter4j.json.DataObjectFactory
-import Twitter4sTestHelper._
 import org.junit.runner.RunWith
+import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
+
+import Twitter4sTestHelper._
+import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
-import twitter4j.Status
+import twitter4s._
 
 @RunWith(classOf[JUnitRunner])
 class FavoriteMethodsTest extends Specification {
-  
-  private def testStatus(target: Status) = {
-    rawJSON(target) must not equalTo(null)
-    target must equalTo(DataObjectFactory.createStatus(rawJSON(target)))
-  }
   
   "createFavorite" should {
     "mark a tweet as favorite" in {
       // get anyone's tweet from timeline
       // and test getHomeTimeline API method
-      val anyonesStatus = twitter1.getHomeTimeline()(0)
-      testStatus(anyonesStatus)
+      val anyonesStatus: Status = twitter1.getHomeTimeline()(0)
+      rawJSON(anyonesStatus.tw4jObj) must not equalTo(null)
+      anyonesStatus.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(anyonesStatus.tw4jObj)))
       
       // mark favorite and destroy
-      val status = twitter2.createFavorite(anyonesStatus.getId())
-      testStatus(status)
+      val status = twitter2.createFavorite(anyonesStatus.id)
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
       twitter2.getFavorites().size must be_>(0)
       try {
-        twitter2.destroyFavorite(anyonesStatus.getId())
+        twitter2.destroyFavorite(anyonesStatus.id)
       } catch {
         case te: TwitterException =>
           // sometimes destroying favorite fails with 404

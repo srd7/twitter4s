@@ -317,27 +317,33 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inhritDoc}
    */
-  def getFavorites(id: Option[String] = None, page: Option[Int] = None, paging: Option[twitter4j.Paging] = None): ResponseList[twitter4j.Status] = {
-    (id, page, paging) match {
+  def getFavorites(
+      id: String = null,
+      page: java.lang.Integer = null,
+      paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
+    (Option(id), Option(page), Option(paging)) match {
       case (None, None, None) => twitter4jObj.getFavorites()
       case (None, Some(page), None) => twitter4jObj.getFavorites(page)
       case (Some(id), None, None) => twitter4jObj.getFavorites(id)
       case (Some(id), Some(page), None) => twitter4jObj.getFavorites(id, page)
       case (None, None, Some(paging)) => twitter4jObj.getFavorites(paging)
       case (Some(id), None, Some(paging)) => twitter4jObj.getFavorites(id, paging)
+      case (_, Some(page), Some(paging)) => throw new IllegalArgumentException("parameter page or paging must be set either one.")
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def createFavorite(id: Long): twitter4j.Status = {
+  def createFavorite(id: Long): Status = {
     twitter4jObj.createFavorite(id)
   }
   
-  def destroyFavorite(id: Long): twitter4j.Status = {
-    // TODO implements
-    null
+  /**
+   * {@inhritDoc}
+   */
+  def destroyFavorite(id: Long): Status = {
+    twitter4jObj.destroyFavorite(id)
   }
   
   /* FriednsFollowersMethods */
