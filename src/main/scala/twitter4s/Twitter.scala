@@ -663,7 +663,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def showUserListSubscription(listId: Int, userId: Long): twitter4j.User = {
+  def showUserListSubscription(listId: Int, userId: Long): User = {
     twitter4jObj.showUserListSubscription(listId, userId)
   }
   

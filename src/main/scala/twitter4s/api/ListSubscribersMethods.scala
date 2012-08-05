@@ -1,8 +1,8 @@
 package twitter4s.api
 
 import twitter4j.PagableResponseList
-import twitter4j.User
-import twitter4j.UserList
+import twitter4s.User
+import twitter4s.UserList
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -20,7 +20,7 @@ trait ListSubscribersMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/lists/subscribers">GET lists/subscribers | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[User]
+  def getUserListSubscribers(listId: Int, cursor: Long): PagableResponseList[twitter4j.User]
 
   /**
    * Make the authenticated user follow the specified list.
