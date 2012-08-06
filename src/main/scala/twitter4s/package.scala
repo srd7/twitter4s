@@ -7,6 +7,9 @@ object twitter4s {
   // AccountSettings
   implicit def AccountSettingsWrapperJ2S(twt4jAccountSettings: twitter4j.AccountSettings) = internal.json.AccountSettingsImpl(twt4jAccountSettings)
   
+  // DirectMessage
+  implicit def DirectMessageWrapperJ2S(twt4jDirectMessage: twitter4j.DirectMessage) = internal.json.DirectMessageImpl(twt4jDirectMessage)
+  
   // RateLimitStatus
   implicit def RateLimitStatusWrapperJ2S(tw4jRateLimitStatus: twitter4j.RateLimitStatus) = internal.json.RateLimitStatusImpl(tw4jRateLimitStatus)
   

@@ -13,14 +13,19 @@ class DirectMessageMethodsTest extends Specification {
   "sendDirectMessage" should {
     "send message to other user with userId" in {
       val expectedReturn = new Date().toString() + ":directmessage test"
-      val actualReturn = twitter1.sendDirectMessage(userId = Some(id3.id), text = expectedReturn)
+      val actualReturn = twitter1.sendDirectMessage(userId = id3.id, text = expectedReturn)
       
-      actualReturn.getId() must be_>=(0L)
-      rawJSON(actualReturn) must not equalTo(null)
-      DataObjectFactory.createDirectMessage(rawJSON(actualReturn)) must equalTo(actualReturn)
-      actualReturn.getText() must equalTo(expectedReturn)
-      actualReturn.getSender().getScreenName() must equalTo(id1.screenName)
-      actualReturn.getRecipient().getScreenName() must equalTo(id3.screenName)
+      actualReturn.id must be_>=(0L)
+      rawJSON(actualReturn.tw4jObj) must not equalTo(null)
+      DataObjectFactory.createDirectMessage(rawJSON(actualReturn.tw4jObj)) must equalTo(actualReturn.tw4jObj)
+      actualReturn.text must equalTo(expectedReturn)
+      actualReturn.sender.screenName must equalTo(id1.screenName)
+      actualReturn.recipient.screenName must equalTo(id3.screenName)
+    }
+    
+    "throw exception both of parameter screenName and userId are not set" in {
+      twitter1.sendDirectMessage(text = "unsuccess send") must
+      throwA[IllegalArgumentException]
     }
   }
   
@@ -43,9 +48,9 @@ class DirectMessageMethodsTest extends Specification {
     "show direct messages allowed application" in {
       val actualReturnList = twitter3.getDirectMessages()
       val actualReturn = twitter3.showDirectMessage(actualReturnList(0).getId())
-      rawJSON(actualReturn) must not equalTo(null)
-      actualReturn must equalTo(DataObjectFactory.createDirectMessage(rawJSON(actualReturn)))
-      actualReturn.getId() must equalTo(actualReturnList(0).getId())
+      rawJSON(actualReturn.tw4jObj) must not equalTo(null)
+      actualReturn.tw4jObj must equalTo(DataObjectFactory.createDirectMessage(rawJSON(actualReturn.tw4jObj)))
+      actualReturn.id must equalTo(actualReturnList(0).getId())
     }
   }
 }

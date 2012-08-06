@@ -2,7 +2,7 @@ package twitter4s.api
 
 import twitter4j.Paging
 import twitter4s.ResponseList
-import twitter4j.DirectMessage
+import twitter4s.DirectMessage
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -18,7 +18,7 @@ trait DirectMessageMethods {
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages">GET direct_messages | Twitter Developers</a>
    */
-  def getDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage]
+  def getDirectMessages(paging: Paging = null): ResponseList[twitter4j.DirectMessage]
 
   /**
    * Returns a list of the direct messages sent by the authenticating user.
@@ -31,7 +31,7 @@ trait DirectMessageMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/direct_messages/sent">GET direct_messages/sent | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getSentDirectMessages(paging: Option[Paging] = None): ResponseList[DirectMessage]
+  def getSentDirectMessages(paging: Paging = null): ResponseList[twitter4j.DirectMessage]
 
   /**
    * Sends a new direct message to the specified user from the authenticating user. Requires both the user and text parameters below.
@@ -50,7 +50,7 @@ trait DirectMessageMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">POST direct_messages/new | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def sendDirectMessage(screenName: Option[String] = None, userId:Option[Long] = None, text: String): DirectMessage
+  def sendDirectMessage(screenName: String = null, userId: java.lang.Long = null, text: String): DirectMessage
 
   /**
    * Destroys the direct message specified in the required ID parameter. The authenticating user must be the recipient of the specified direct message.

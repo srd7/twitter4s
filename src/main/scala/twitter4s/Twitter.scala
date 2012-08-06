@@ -10,7 +10,6 @@ import twitter4j.auth.Authorization
 import twitter4j.auth.RequestToken
 import twitter4j.conf.Configuration
 import twitter4j.Category
-import twitter4j.DirectMessage
 import twitter4j.Friendship
 import twitter4j.GeoLocation
 import twitter4j.GeoQuery
@@ -278,32 +277,39 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getDirectMessages(paging: Option[twitter4j.Paging] = None): ResponseList[DirectMessage] = {
-    paging match {
+  def getDirectMessages(paging: twitter4j.Paging = null): ResponseList[twitter4j.DirectMessage] = {
+    Option(paging) match {
       case Some(paging) => twitter4jObj.getDirectMessages(paging)
       case None => twitter4jObj.getDirectMessages()
     }
   }
 
-  def getSentDirectMessages(paging: Option[twitter4j.Paging] = None): ResponseList[DirectMessage] = {
-    // TODO implements
-    return null
+  /**
+   * {@inheritDoc}
+   */
+  def getSentDirectMessages(paging: twitter4j.Paging = null): ResponseList[twitter4j.DirectMessage] = {
+    Option(paging) match {
+      case Some(paging) => twitter4jObj.getSentDirectMessages(paging)
+      case None => twitter4jObj.getSentDirectMessages()
+    }
   }
   
   /**
    * {@inheritDoc}
    */
-  def sendDirectMessage(screenName: Option[String] = None, userId:Option[Long] = None, text: String): DirectMessage = {
-    (screenName, userId) match {
+  def sendDirectMessage(screenName: String = null, userId: java.lang.Long = null, text: String): DirectMessage = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.sendDirectMessage(userId, text)
       case (Some(screenName), None) => twitter4jObj.sendDirectMessage(screenName, text)
-      case (None, Some(userId)) => twitter4jObj.sendDirectMessage(userId, text)
-      // case _ => throw new TwitterException("illegal argument") // TODO exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def destroyDirectMessage(id: Long): DirectMessage = {
-    // TODO implements
-    return null
+    twitter4jObj.destroyDirectMessage(id)
   }
 
   /**
