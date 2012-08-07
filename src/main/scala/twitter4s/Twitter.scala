@@ -356,24 +356,22 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getFriendsIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.IDs = {
-    (userId, screenName) match {
-      case (None, None) => twitter4jObj.getFriendsIDs(cursor)
-      case (Some(userId), None) => twitter4jObj.getFriendsIDs(userId, cursor)
+  def getFriendsIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs = {
+    (Option(userId), Option(screenName)) match {
+      case (Some(userId), _) => twitter4jObj.getFriendsIDs(userId, cursor)
       case (None, Some(screenName)) => twitter4jObj.getFriendsIDs(screenName, cursor)
-      // case _ => // TODO exception?
+      case (None, None) => twitter4jObj.getFriendsIDs(cursor)
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def getFollowersIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.IDs = {
-    (userId, screenName) match {
+  def getFollowersIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs = {
+    (Option(userId), Option(screenName)) match {
+      case (Some(userId), _) => twitter4jObj.getFollowersIDs(userId, cursor)
       case (None, Some(screenName)) => twitter4jObj.getFollowersIDs(screenName, cursor)
-      case (Some(userId), None) => twitter4jObj.getFollowersIDs(userId, cursor)
       case (None, None) => twitter4jObj.getFollowersIDs(cursor)
-      // case _ => // TODO exception?
     }
   }
   

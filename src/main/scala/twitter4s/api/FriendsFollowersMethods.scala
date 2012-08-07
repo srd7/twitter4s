@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.IDs
+import twitter4s.IDs
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -21,7 +21,7 @@ trait FriendsFollowersMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/friends/ids">GET friends/ids | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getFriendsIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs
+  def getFriendsIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs
 
   /**
    * Returns an array of numeric IDs for every user the specified user is followed by.
@@ -38,5 +38,5 @@ trait FriendsFollowersMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/followers/ids">GET followers/ids | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getFollowersIDs(cursor: Long, userId: Option[Long] = None, screenName: Option[String] = None): IDs
+  def getFollowersIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs
 }
