@@ -16,6 +16,9 @@ object twitter4s {
   // Relationship
   implicit def RelationshipWrapperJ2S(tw4jRelationship: twitter4j.Relationship) = internal.json.RelationshipImpl(tw4jRelationship)
   
+  // RelatedResults
+  implicit def RelatedResultsWrapperJ2S(tw4jRelatedResults: twitter4j.RelatedResults) = internal.json.RelatedResultsImpl(tw4jRelatedResults)
+  
   // User
   implicit def UserWrapperJ2S(tw4jUser: twitter4j.User) = internal.json.UserImpl(tw4jUser)
   

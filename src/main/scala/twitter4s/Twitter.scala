@@ -19,7 +19,6 @@ import twitter4j.ProfileImage
 import twitter4j.Query
 import twitter4j.QueryResult
 import twitter4j.RateLimitStatusListener
-import twitter4j.RelatedResults
 import twitter4j.SavedSearch
 import twitter4j.SimilarPlaces
 import twitter4j.TwitterAPIConfiguration
@@ -30,10 +29,7 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
-  // TODO UserListのラッピング
   // TODO 他のリターンオブジェクトとFactoryのラッピング
-  // TODO Twitter4Jでカバーしていないパターンに関してはIllegalArgumentExceptionをスローする
-  // TODO IDとスクリーン名を指定する場合はID優先になるようにパターンマッチを修正する
   // TODO ReponseListとPagableResponseListの型パラメータの設定
   
   /* TwitterBase method */
@@ -51,6 +47,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getId()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def addRateLimitStatusListener(listener: RateLimitStatusListener) {
     twitter4jObj.addRateLimitStatusListener(listener)
   }

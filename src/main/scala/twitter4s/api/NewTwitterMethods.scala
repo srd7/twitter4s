@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.RelatedResults
+import twitter4s.RelatedResults
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

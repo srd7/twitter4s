@@ -19,9 +19,9 @@ class NewTwitterMethodsTest extends Specification {
       val relatedResult = twitter1.getRelatedResults(999383469l)
       relatedResult must not equalTo(null)
       
-      testTweetList(relatedResult.getTweetsFromUser())
-      testTweetList(relatedResult.getTweetsWithConversation())
-      testTweetList(relatedResult.getTweetsWithReply())
+      testTweetList(relatedResult.tweetsFromUser)
+      testTweetList(relatedResult.tweetsWithConversation)
+      testTweetList(relatedResult.tweetsWithReply)
     }
   }
 }
