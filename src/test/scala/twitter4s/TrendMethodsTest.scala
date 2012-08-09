@@ -6,12 +6,11 @@ import org.specs2.mutable.Specification
 import Twitter4sTestHelper.rawJSON
 import Twitter4sTestHelper.twitter1
 import twitter4j.json.DataObjectFactory
-import twitter4j.GeoLocation
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TrendMethodsTest extends Specification {
-  val geoLocation = new GeoLocation(0, 0)
+  val geoLocation = GeoLocation(0, 0)
   
   // Local Trends Methods
   "getAvailableTrends" should {

@@ -11,8 +11,6 @@ import twitter4j.auth.RequestToken
 import twitter4j.conf.Configuration
 import twitter4j.Category
 import twitter4j.Friendship
-import twitter4j.GeoLocation
-import twitter4j.GeoQuery
 import twitter4j.Location
 import twitter4j.Place
 import twitter4j.ProfileImage
@@ -474,21 +472,21 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def searchPlaces(query: GeoQuery): ResponseList[Place] = {
+  def searchPlaces(query: twitter4j.GeoQuery): ResponseList[Place] = {
     twitter4jObj.searchPlaces(query)
   }
 
   /**
    * {@inhritDoc}
    */
-  def getSimilarPlaces(location: GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces = {
+  def getSimilarPlaces(location: twitter4j.GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces = {
     twitter4jObj.getSimilarPlaces(location, name, containedWithin, streetAddress)
   }
 
   /**
    * {@inheritDoc}
    */
-  def reverseGeoCode(query: GeoQuery): ResponseList[Place] = {
+  def reverseGeoCode(query: twitter4j.GeoQuery): ResponseList[Place] = {
     twitter4jObj.reverseGeoCode(query)
   }
 
@@ -499,7 +497,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getGeoDetails(id)
   }
   
-  def createPlace(name: String, containedWithin: String, token: String, location: GeoLocation, streetAddress: String): Place = {
+  def createPlace(name: String, containedWithin: String, token: String, location: twitter4j.GeoLocation, streetAddress: String): Place = {
     // TODO implements
     null
   }
@@ -679,7 +677,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getAvailableTrends(location: GeoLocation = null): ResponseList[Location] = {
+  def getAvailableTrends(location: twitter4j.GeoLocation = null): ResponseList[Location] = {
     Option(location) match {
       case Some(location) => twitter4jObj.getAvailableTrends(location)
       case None => twitter4jObj.getAvailableTrends()

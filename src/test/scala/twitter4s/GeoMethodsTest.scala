@@ -4,8 +4,6 @@ import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
-import twitter4j.GeoQuery
-import twitter4j.GeoLocation
 import twitter4j.json.DataObjectFactory
 import twitter4j.Place
 import twitter4j.TwitterException
@@ -22,27 +20,32 @@ class GeoMethodsTest extends Specification {
   
   "reverseGeoCode" should {
     "get no places if location is (0,0)" in {
-      val query = new GeoQuery(new GeoLocation(0, 0))
+      val query = GeoQuery(GeoLocation(0, 0))
       val places = twitter1.reverseGeoCode(query)
       places.size must equalTo(0)
     }
     
     "get place list if location is exists" in {
-      val query = new GeoQuery(new GeoLocation(37.78215, -122.40060))
+      val query = GeoQuery(GeoLocation(37.78215, -122.40060))
+      testPlaces(twitter1.reverseGeoCode(query))
+    }
+    
+    "get place list if location is exists on latitude and longitude" in {
+      val query = GeoQuery(37.78215, -122.40060)
       testPlaces(twitter1.reverseGeoCode(query))
     }
   }
   
   "searchPlaces" should {
     "get place list with location" in {
-      val query = new GeoQuery(new GeoLocation(37.78215, -122.40060))
+      val query = GeoQuery(GeoLocation(37.78215, -122.40060))
       testPlaces(twitter1.searchPlaces(query))
     }
   }
   
   "getSimilarPlaces" should {
     "get similar place list with parameter location" in {
-      val places = twitter1.getSimilarPlaces(new GeoLocation(37.78215, -122.40060), "SoMa", null, null)
+      val places = twitter1.getSimilarPlaces(GeoLocation(37.78215, -122.40060), "SoMa", null, null)
       rawJSON(places.tw4jObj) must not equalTo(null)
       places(0) must equalTo(DataObjectFactory.createPlace(rawJSON(places(0))))
       places.size must be_>(0)
@@ -80,7 +83,7 @@ class GeoMethodsTest extends Specification {
       val longitude = -34.5678d
       val latestStatus = StatusUpdate(new Date() + " status with geo")
       
-      val statusWithGeo = twitter3.updateStatus(latestStatus = latestStatus.location(new GeoLocation(latitude, longitude)))
+      val statusWithGeo = twitter3.updateStatus(latestStatus = latestStatus.location(GeoLocation(latitude, longitude)))
       rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
       statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
       statusWithGeo.user.isGeoEnabled must beTrue
