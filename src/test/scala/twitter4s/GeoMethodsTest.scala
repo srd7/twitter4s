@@ -9,7 +9,6 @@ import twitter4j.GeoLocation
 import twitter4j.json.DataObjectFactory
 import twitter4j.Place
 import twitter4j.TwitterException
-import twitter4j.StatusUpdate
 import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
@@ -44,9 +43,9 @@ class GeoMethodsTest extends Specification {
   "getSimilarPlaces" should {
     "get similar place list with parameter location" in {
       val places = twitter1.getSimilarPlaces(new GeoLocation(37.78215, -122.40060), "SoMa", null, null)
-      rawJSON(places) must not equalTo(null)
-      places.get(0) must equalTo(DataObjectFactory.createPlace(rawJSON(places.get(0))))
-      places.size() must be_>(0)
+      rawJSON(places.tw4jObj) must not equalTo(null)
+      places(0) must equalTo(DataObjectFactory.createPlace(rawJSON(places(0))))
+      places.size must be_>(0)
     }
   }
   
@@ -68,7 +67,7 @@ class GeoMethodsTest extends Specification {
   "updateStatus(StatusMethods)" should {
     "update user status with place information" in {
       val sanFrancisco = "5a110d312052166f"
-      val latestStatus = new StatusUpdate(new Date() + " status with place")
+      val latestStatus = StatusUpdate(new Date() + " status with place")
       val status = twitter3.updateStatus(latestStatus = latestStatus.placeId(sanFrancisco))
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
@@ -79,7 +78,7 @@ class GeoMethodsTest extends Specification {
     "update user status with geo information" in {
       val latitude = 12.3456d
       val longitude = -34.5678d
-      val latestStatus = new StatusUpdate(new Date() + " status with geo")
+      val latestStatus = StatusUpdate(new Date() + " status with geo")
       
       val statusWithGeo = twitter3.updateStatus(latestStatus = latestStatus.location(new GeoLocation(latitude, longitude)))
       rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)

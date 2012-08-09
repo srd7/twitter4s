@@ -32,6 +32,10 @@ object twitter4s {
   implicit def idsWrapperS2Array(tw4sIDs: IDs) = tw4sIDs.ids
   implicit def idsWrapperJ2S(tw4jIDs: twitter4j.IDs) = internal.json.IDsImpl(tw4jIDs)
   
+  // SimilarPlaces
+  implicit def similarPlacesWrapperS2Buffer(tw4sSimilarPlaces: SimilarPlaces) = tw4sSimilarPlaces.listAsScala
+  implicit def similarPlacesWrapperS2J(tw4jSimilarPlaces: twitter4j.SimilarPlaces) = internal.json.SimilarPlacesImpl(tw4jSimilarPlaces)
+  
   // Trends
   implicit def trendsWrapperS2Array(tw4sTrends: Trends) = tw4sTrends.trends
   implicit def trendsWrapperJ2S(tw4jTrends: twitter4j.Trends) = internal.json.TrendsImpl(tw4jTrends)

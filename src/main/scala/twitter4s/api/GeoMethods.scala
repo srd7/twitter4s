@@ -4,7 +4,7 @@ import twitter4j.GeoQuery
 import twitter4s.ResponseList
 import twitter4j.Place
 import twitter4j.GeoLocation
-import twitter4j.SimilarPlaces
+import twitter4s.SimilarPlaces
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
