@@ -5,14 +5,13 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
-import twitter4j.Place
 import twitter4j.TwitterException
 import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
 class GeoMethodsTest extends Specification {
   
-  private def testPlaces(target: ResponseList[Place]) = {
+  private def testPlaces(target: ResponseList[twitter4j.Place]) = {
     rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createPlace(rawJSON(target(0))))
     target.size must be_>(0)
@@ -56,10 +55,10 @@ class GeoMethodsTest extends Specification {
     "get detail location information" in {
       try {
         val place = unauthenticated.getGeoDetails("5a110d312052166f")
-        rawJSON(place) must not equalTo(null)
-        place must equalTo(DataObjectFactory.createPlace(rawJSON(place)))
-        place.getFullName() must equalTo("San Francisco, CA")
-        place.getContainedWithIn()(0).getFullName() must equalTo("California, US")
+        rawJSON(place.tw4jObj) must not equalTo(null)
+        place.tw4jObj must equalTo(DataObjectFactory.createPlace(rawJSON(place.tw4jObj)))
+        place.fullName must equalTo("San Francisco, CA")
+        place.containedWithIn(0).fullName must equalTo("California, US")
       } catch {
         // is being rate limited
         case te: TwitterException => te.getStatusCode must equalTo(404)

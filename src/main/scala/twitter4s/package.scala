@@ -10,6 +10,9 @@ object twitter4s {
   // DirectMessage
   implicit def DirectMessageWrapperJ2S(twt4jDirectMessage: twitter4j.DirectMessage) = internal.json.DirectMessageImpl(twt4jDirectMessage)
   
+  // Place
+  implicit def PlaceWrapperJ2S(twt4jPlace: twitter4j.Place) = internal.json.PlaceImpl(twt4jPlace)
+  
   // RateLimitStatus
   implicit def RateLimitStatusWrapperJ2S(tw4jRateLimitStatus: twitter4j.RateLimitStatus) = internal.json.RateLimitStatusImpl(tw4jRateLimitStatus)
   

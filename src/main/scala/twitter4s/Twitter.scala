@@ -12,7 +12,6 @@ import twitter4j.conf.Configuration
 import twitter4j.Category
 import twitter4j.Friendship
 import twitter4j.Location
-import twitter4j.Place
 import twitter4j.ProfileImage
 import twitter4j.Query
 import twitter4j.QueryResult
@@ -472,7 +471,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def searchPlaces(query: twitter4j.GeoQuery): ResponseList[Place] = {
+  def searchPlaces(query: twitter4j.GeoQuery): ResponseList[twitter4j.Place] = {
     twitter4jObj.searchPlaces(query)
   }
 
@@ -486,7 +485,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def reverseGeoCode(query: twitter4j.GeoQuery): ResponseList[Place] = {
+  def reverseGeoCode(query: twitter4j.GeoQuery): ResponseList[twitter4j.Place] = {
     twitter4jObj.reverseGeoCode(query)
   }
 
@@ -497,9 +496,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getGeoDetails(id)
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def createPlace(name: String, containedWithin: String, token: String, location: twitter4j.GeoLocation, streetAddress: String): Place = {
-    // TODO implements
-    null
+    twitter4jObj.createPlace(name, containedWithin, token, location, streetAddress)
   }
   
   /* LegalResources */
@@ -730,9 +731,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getSavedSearches()
   }
 
+  /**
+   * {@inheritDoc}
+   */
   def showSavedSearch(id: Int): SavedSearch = {
-    // TODO implements
-    null
+    twitter4jObj.showSavedSearch(id)
   }
 
   /**
@@ -763,9 +766,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    */
   def reportSpam(userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.User = {
     (userId, screenName) match {
-      case (Some(userId), None) => twitter4jObj.reportSpam(userId)
+      case (Some(userId), _) => twitter4jObj.reportSpam(userId)
       case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter userId or screenName must be set at least.")
     } 
   }
   

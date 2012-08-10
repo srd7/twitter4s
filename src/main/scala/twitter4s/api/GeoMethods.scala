@@ -2,7 +2,7 @@ package twitter4s.api
 
 import twitter4j.GeoQuery
 import twitter4s.ResponseList
-import twitter4j.Place
+import twitter4s.Place
 import twitter4j.GeoLocation
 import twitter4s.SimilarPlaces
 
@@ -23,7 +23,7 @@ trait GeoMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/geo/search">GET geo/search | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def searchPlaces(query: GeoQuery): ResponseList[Place]
+  def searchPlaces(query: GeoQuery): ResponseList[twitter4j.Place]
   
   /**
    * Locates places near the given coordinates which are similar in name.
@@ -55,7 +55,7 @@ trait GeoMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/geo/reverse_geocode">GET geo/reverse_geocode | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def reverseGeoCode(query: GeoQuery): ResponseList[Place]
+  def reverseGeoCode(query: GeoQuery): ResponseList[twitter4j.Place]
   
   /**
    * Find out more details of a place that was returned from the {@link twitter4j.api.GeoMethods#reverseGeoCode(twitter4j.GeoQuery)} method.
