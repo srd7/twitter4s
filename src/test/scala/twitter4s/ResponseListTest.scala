@@ -5,9 +5,6 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 
 import Twitter4sTestHelper._
-import twitter4j.RateLimitStatus
-import twitter4j.Trends
-import twitter4j.TwitterResponse
 
 @RunWith(classOf[JUnitRunner])
 class ResponseListTest extends Specification {
@@ -34,7 +31,7 @@ class ResponseListTest extends Specification {
     
     "has accessLevel" in {
       val responseList = twitter1.getDailyTrends()
-      responseList.accessLevel must equalTo(TwitterResponse.READ_WRITE)
+      responseList.accessLevel must equalTo(twitter4j.TwitterResponse.READ_WRITE)
     }
     
     "has tw4jObj is instance of twitter4j.ResponseList" in {

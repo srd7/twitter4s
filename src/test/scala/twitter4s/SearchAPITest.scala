@@ -5,14 +5,12 @@ import scala.collection.JavaConverters.asScalaBufferConverter
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4j.Trends
 import Twitter4sTestHelper._
 import java.util.Date
 import twitter4j.Trend
 import java.text.SimpleDateFormat
 import twitter4j.Query
 import twitter4j.json.DataObjectFactory
-import twitter4j.GeoLocation
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -95,13 +93,14 @@ class SearchAPITest extends Specification {
       queryResult1.getTweets.size must be_>(0)
       
       query.setQuery("from:al3x")
-      query.setGeoCode(new GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
+      query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
       
       val queryResult2 = unauthenticated.search(query)
       queryResult2.getTweets.size must be_>=(0)
     }
     
     "get search result is tweeted twit4j user" in {
+      // 状況によって変更する必要あり
       val query = new Query("from:twit4j")
       query.setSinceId(1671199128)
       
@@ -131,8 +130,16 @@ class SearchAPITest extends Specification {
     }
     
     "get top 20 trends exclude hash tags with date and excludeHashTags parameter" in {
-      val trendList = unauthenticated.getDailyTrends(Some(new Date()), Some(true))
+      val trendList = unauthenticated.getDailyTrends(new Date(), true)
       trendListAssert(trendList, dailyTrendsListSize)
+    }
+    
+    "throw exception date or excludeHashTags are not set" in {
+      unauthenticated.getDailyTrends(new Date) must
+      throwA[IllegalArgumentException]
+      
+      unauthenticated.getDailyTrends(excludeHashTags = true) must
+      throwA[IllegalArgumentException]
     }
   }
   
@@ -145,8 +152,16 @@ class SearchAPITest extends Specification {
     }
     
     "get top 30 trends exclude hash tags with data and excludeHashTags parameter" in {
-      val trendList = unauthenticated.getWeeklyTrends(Some(new Date()), Some(false))
+      val trendList = unauthenticated.getWeeklyTrends(new Date(), false)
       trendListAssert(trendList, weeklyTrendsListSize)
+    }
+    
+    "throw exception date or excludeHashTags are not set" in {
+      unauthenticated.getWeeklyTrends(new Date) must
+      throwA[IllegalArgumentException]
+      
+      unauthenticated.getWeeklyTrends(excludeHashTags = true) must
+      throwA[IllegalArgumentException]
     }
   }
 }
