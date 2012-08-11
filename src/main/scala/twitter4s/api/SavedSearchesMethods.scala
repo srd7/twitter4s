@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import twitter4s.ResponseList
-import twitter4j.SavedSearch
+import twitter4s.SavedSearch
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -17,7 +17,7 @@ trait SavedSearchesMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/saved_searches">GET saved_searches | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getSavedSearches: ResponseList[SavedSearch]
+  def getSavedSearches: ResponseList[twitter4j.SavedSearch]
 
   /**
    * Retrieve the data for a saved search owned by the authenticating user specified by the given id.
