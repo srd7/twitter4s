@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.User
+import twitter4s.User
 
 trait NotificationMethods {
   /**
@@ -18,7 +18,7 @@ trait NotificationMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">POST notifications/follow | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def enableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def enableNotification(screenName: String = null, userId: java.lang.Long = null): User
 
   /**
    * Disables notifications for updates from the specified user to the authenticating user. Returns the specified user when successful.
@@ -35,5 +35,5 @@ trait NotificationMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/leave">POST notifications/leave | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def disableNotification(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def disableNotification(screenName: String = null, userId: java.lang.Long = null): User
 }

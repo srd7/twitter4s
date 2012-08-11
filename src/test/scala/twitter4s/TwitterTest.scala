@@ -15,6 +15,7 @@ import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TwitterTest extends Specification {
+  // TODO TwitterResponseの定数をラップする
   "getAccessLevel" should {
     "unauthenticated access level is None" in {
       val response = unauthenticated.getDailyTrends()
