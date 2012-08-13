@@ -16,7 +16,6 @@ import twitter4j.ProfileImage
 import twitter4j.Query
 import twitter4j.QueryResult
 import twitter4j.RateLimitStatusListener
-import twitter4j.TwitterAPIConfiguration
 import twitter4j.TwitterFactory
 import auth.ConsumerKey
 

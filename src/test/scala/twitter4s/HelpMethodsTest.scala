@@ -32,13 +32,13 @@ class HelpMethodsTest extends Specification {
     "get API configuration from twitter" in {
       val conf = twitter1.getAPIConfiguration
       
-      conf.getPhotoSizeLimit must equalTo(3145728)
-      conf.getCharactersReservedPerMedia must equalTo(21)
-      conf.getShortURLLength() must equalTo(20)
-      conf.getShortURLLengthHttps() must equalTo(21)
-      conf.getPhotoSizes().size() must equalTo(4)
-      conf.getNonUsernamePaths().length must be_>(20)
-      conf.getMaxMediaPerUpload() must equalTo(1)
+      conf.photoSizeLimit must equalTo(3145728)
+      conf.charactersReservedPerMedia must equalTo(21)
+      conf.shortURLLength must equalTo(20)
+      conf.shortURLLengthHttps must equalTo(21)
+      conf.photoSizes.size must equalTo(4)
+      conf.nonUsernamePaths.length must be_>(20)
+      conf.maxMediaPerUpload must equalTo(1)
     }
   }
 }

@@ -25,6 +25,9 @@ object twitter4s {
   // SavedSearch
   implicit def SavedSearchWrapperJ2S(tw4jSavedSearch: twitter4j.SavedSearch) = internal.json.SavedSearchImpl(tw4jSavedSearch)
   
+  // TwitterAPIConfiguration
+  implicit def TwitterAPIConfigurationWrapperJ2S(tw4jApiConfiguration: twitter4j.TwitterAPIConfiguration) = internal.json.TwitterAPIConfigurationImpl(tw4jApiConfiguration)
+  
   // User
   implicit def UserWrapperJ2S(tw4jUser: twitter4j.User) = internal.json.UserImpl(tw4jUser)
   
