@@ -1,7 +1,7 @@
 package twitter4s.api
 
 import twitter4j.Query
-import twitter4j.QueryResult
+import twitter4s.QueryResult
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com

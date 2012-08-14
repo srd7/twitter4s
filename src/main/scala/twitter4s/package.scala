@@ -13,6 +13,9 @@ object twitter4s {
   // Place
   implicit def PlaceWrapperJ2S(twt4jPlace: twitter4j.Place) = internal.json.PlaceImpl(twt4jPlace)
   
+  // QueryResult
+  implicit def QueryResultWrapperJ2S(twt4jQueryResult: twitter4j.QueryResult) = internal.json.QueryResultImpl(twt4jQueryResult)
+  
   // RateLimitStatus
   implicit def RateLimitStatusWrapperJ2S(tw4jRateLimitStatus: twitter4j.RateLimitStatus) = internal.json.RateLimitStatusImpl(tw4jRateLimitStatus)
   

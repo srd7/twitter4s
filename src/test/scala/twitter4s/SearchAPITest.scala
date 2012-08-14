@@ -9,7 +9,6 @@ import Twitter4sTestHelper._
 import java.util.Date
 import twitter4j.Trend
 import java.text.SimpleDateFormat
-import twitter4j.Query
 import twitter4j.json.DataObjectFactory
 
 /**
@@ -17,7 +16,8 @@ import twitter4j.json.DataObjectFactory
  */
 @RunWith(classOf[JUnitRunner])
 class SearchAPITest extends Specification {
-  
+  // TODO Queryの定数をラップする
+  // TODO Tweetのラップ
   // TODO ラップオブジェクト対応(Trends)
   private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
     var trendAt: Date = null
@@ -33,51 +33,49 @@ class SearchAPITest extends Specification {
     }
   }
   
-  // TODO Queryはラップするときにテストを書く
-  
   "search" should {
     val testQueryStr = "test"
     val dateFormatter = new SimpleDateFormat("yyyy-MM-dd")
     val dateStr = dateFormatter.format(new java.util.Date(System.currentTimeMillis() - 24 * 3600 * 1000))
     
     "get result include query string until yesterday" in {
-      val query  = new Query(testQueryStr).until(dateStr)
+      val query  = Query(testQueryStr).until(dateStr)
       
       val queryResult = unauthenticated.search(query)
-      queryResult.getSinceId() must not equalTo(-1)
-      queryResult.getMaxId() must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
-      queryResult.getRefreshUrl().indexOf(testQueryStr) must not equalTo(-1)
-      queryResult.getResultsPerPage() must equalTo(15)
-      queryResult.getCompletedIn() must be_>(0d)
-      queryResult.getPage() must equalTo(1)
+      queryResult.sinceId must not equalTo(-1)
+      queryResult.maxId must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
+      queryResult.refreshUrl.indexOf(testQueryStr) must not equalTo(-1)
+      queryResult.resultsPerPage must equalTo(15)
+      queryResult.completedIn must be_>(0d)
+      queryResult.page must equalTo(1)
     }
     
     "get tweets from search result" in {
-      val query = new Query(testQueryStr).until(dateStr)
-      val tweets = unauthenticated.search(query).getTweets()
+      val query = Query(testQueryStr).until(dateStr)
+      val tweets = unauthenticated.search(query).tweets
       
-      tweets.size() must be_>=(1)
-      tweets.get(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets.get(0))))
-      tweets.get(0).getText() must not equalTo(null)
-      tweets.get(0).getCreatedAt() must not equalTo(null)
-      tweets.get(0).getFromUser() must not equalTo(null)
-      tweets.get(0).getFromUserName() must not equalTo(null)
-      tweets.get(0).getId() must not equalTo(-1L)
-      tweets.get(0).getProfileImageUrl() must not equalTo(null)
-      val source = tweets.get(0).getSource()
+      tweets.size must be_>=(1)
+      tweets(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets(0))))
+      tweets(0).getText() must not equalTo(null)
+      tweets(0).getCreatedAt() must not equalTo(null)
+      tweets(0).getFromUser() must not equalTo(null)
+      tweets(0).getFromUserName() must not equalTo(null)
+      tweets(0).getId() must not equalTo(-1L)
+      tweets(0).getProfileImageUrl() must not equalTo(null)
+      val source = tweets(0).getSource()
       (source.indexOf("<a href=\"") != -1 or "web" == source or "API" == source)
     }
     
     "get search result if does not hit" in {
       val notHitQueryStr = "from:twit4j doesnothit"
-      val query = new Query(notHitQueryStr)
+      val query = Query(notHitQueryStr)
       val queryResult = unauthenticated.search(query)
       
-      queryResult.getSinceId() must equalTo(0)
-      queryResult.getResultsPerPage() must equalTo(15)
-      queryResult.getWarning() must equalTo(null)
-      queryResult.getCompletedIn() must be_<(4d)
-      queryResult.getQuery() must equalTo(notHitQueryStr)
+      queryResult.sinceId must equalTo(0)
+      queryResult.resultsPerPage must equalTo(15)
+      queryResult.warning must equalTo(null)
+      queryResult.completedIn must be_<(4d)
+      queryResult.query must equalTo(notHitQueryStr)
     }
     
     "get search result if Japanese query" in {
@@ -86,19 +84,20 @@ class SearchAPITest extends Specification {
       // 他の箇所でupdateStatusのテストがなければクエリ文字列を変更してテストする
       // twitter1.updateStatus(status = Some("テスト：" + japaneseQueryStr + new Date()))
       
-      val query = new Query(japaneseQueryStr)
+      val query = Query(japaneseQueryStr)
       val queryResult1 = unauthenticated.search(query)
       
-      queryResult1.getQuery() must equalTo(japaneseQueryStr)
-      queryResult1.getTweets.size must be_>(0)
+      queryResult1.query must equalTo(japaneseQueryStr)
+      queryResult1.tweets.size must be_>(0)
       
       query.setQuery("from:al3x")
-      query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
+      query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, twitter4j.Query.KILOMETERS)
       
       val queryResult2 = unauthenticated.search(query)
-      queryResult2.getTweets.size must be_>=(0)
+      queryResult2.tweets.size must be_>=(0)
     }
     
+    /*
     "get search result is tweeted twit4j user" in {
       // 状況によって変更する必要あり
       val query = new Query("from:twit4j")
@@ -119,6 +118,7 @@ class SearchAPITest extends Specification {
       queryResult.getTweets().get(0).getUserMentionEntities() must not equalTo(null)
       queryResult.getTweets().get(0).getURLEntities() must not equalTo(null)
     }
+    */
   }
 
   "getDailyTrends" should {

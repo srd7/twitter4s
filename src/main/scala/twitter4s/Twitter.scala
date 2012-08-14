@@ -13,8 +13,6 @@ import twitter4j.Category
 import twitter4j.Friendship
 import twitter4j.Location
 import twitter4j.ProfileImage
-import twitter4j.Query
-import twitter4j.QueryResult
 import twitter4j.RateLimitStatusListener
 import twitter4j.TwitterFactory
 import auth.ConsumerKey
@@ -754,7 +752,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def search(query: Query): QueryResult = {
+  def search(query: twitter4j.Query): QueryResult = {
     twitter4jObj.search(query)
   }
   
