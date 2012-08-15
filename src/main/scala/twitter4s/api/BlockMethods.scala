@@ -1,8 +1,8 @@
 package twitter4s.api
 
-import twitter4j.User
+import twitter4s.User
 import twitter4s.ResponseList
-import twitter4j.IDs
+import twitter4s.IDs
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -23,7 +23,7 @@ trait BlockMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/create">POST blocks/create | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def createBlock(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def createBlock(screenName: String = null, userId: java.lang.Long = null): User
 
   /**
    * Un-blocks the user specified in the ID parameter as the authenticating user. Returns the un-blocked user in the requested format when successful.
@@ -40,7 +40,7 @@ trait BlockMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/post/blocks/destroy">POST blocks/destroy | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def destroyBlock(screenName: Option[String] = None, userId: Option[Long] = None): User
+  def destroyBlock(screenName: String = null, userId: java.lang.Long = null): User
 
   /**
    * Returns if the authenticating user is blocking a target user. Will return the blocked user's object if a block exists, and error with a HTTP 404 response code otherwise.
@@ -57,7 +57,7 @@ trait BlockMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/exists">GET blocks/exists | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def existsBlock(screenName: Option[String] = None, userId: Option[Long] = None): Boolean
+  def existsBlock(screenName: String = null, userId: java.lang.Long = null): Boolean
 
   /**
    * Returns a list of user objects that the authenticating user is blocking.
@@ -70,7 +70,7 @@ trait BlockMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">GET blocks/blocking | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlockingUsers(page: Option[Int] = None): ResponseList[User]
+  def getBlockingUsers(page: java.lang.Integer = null): ResponseList[twitter4j.User]
 
   /**
    * Returns an array of numeric user ids the authenticating user is blocking.

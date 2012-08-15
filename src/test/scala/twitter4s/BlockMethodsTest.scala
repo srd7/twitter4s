@@ -5,7 +5,6 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
-import twitter4j.User
 
 @RunWith(classOf[JUnitRunner])
 class BlockMethodsTest extends Specification {
@@ -19,23 +18,40 @@ class BlockMethodsTest extends Specification {
   
   "createBlock" should {
     "create block and get blocked user" in {
-      val user = twitter2.createBlock(Some(id1.screenName))
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+      val user = twitter2.createBlock(id3.screenName)
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+    }
+    
+    "throw exception both of screenName and userId are not set" in {
+      twitter2.createBlock() must
+      throwA[IllegalArgumentException]
     }
   }
   
   "destryoBlock" should {
     "destroy block and get unblocked user" in {
-      val user = twitter2.destroyBlock(Some(id1.screenName))
-      rawJSON(user) must not equalTo(null)
-      user must equalTo(DataObjectFactory.createUser(rawJSON(user)))
+      val user = twitter2.destroyBlock(id3.screenName)
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       
       // check destroyed block
-      twitter1.existsBlock(Some(id2.screenName)) must beFalse
+      twitter3.existsBlock(id2.screenName) must beFalse
       // check blocked user
       val blockedUserScreenName = blockingScreenName
-      twitter1.existsBlock(Some(blockedUserScreenName)) must beTrue
+      twitter1.existsBlock(blockedUserScreenName) must beTrue
+    }
+    
+    "throw exception both of screenName and userId are not set" in {
+      twitter2.destroyBlock() must
+      throwA[IllegalArgumentException] 
+    }
+  }
+  
+  "existBlock" should {
+    "thorw exception both of screenName and userId are not set" in {
+      twitter2.existsBlock() must
+      throwA[IllegalArgumentException]
     }
   }
   
@@ -45,16 +61,16 @@ class BlockMethodsTest extends Specification {
     }
     
     "get user list specified page blocking by authorized user" in {
-      testBlockingUsers(twitter1.getBlockingUsers(Some(1)))
+      testBlockingUsers(twitter1.getBlockingUsers(1))
     }
   }
   
   "getBlockingUsersIDs" should {
     "get user id list blocking by authorized user" in {
       val ids = twitter1.getBlockingUsersIDs
-      rawJSON(ids) must not equalTo(null)
-      ids.getIDs().size must equalTo(blockingUsersSize)
-      ids.getIDs()(0) must equalTo(blockingUserId)
+      rawJSON(ids.tw4jObj) must not equalTo(null)
+      ids.ids.size must equalTo(blockingUsersSize)
+      ids.ids(0) must equalTo(blockingUserId)
     }
   }
 }

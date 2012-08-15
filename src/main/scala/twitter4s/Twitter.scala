@@ -217,41 +217,41 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createBlock(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
-    (screenName, userId) match {
+  def createBlock(screenName: String = null, userId: java.lang.Long = null): User = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.createBlock(userId)
       case (Some(screenName), None) => twitter4jObj.createBlock(screenName)
-      case (None, Some(userId)) => twitter4jObj.createBlock(userId)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.");
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def destroyBlock(screenName: Option[String] = None, userId: Option[Long] = None): twitter4j.User = {
-    (screenName, userId) match {
+  def destroyBlock(screenName: String = null, userId: java.lang.Long = null): User = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.destroyBlock(userId)
       case (Some(screenName), None) => twitter4jObj.destroyBlock(screenName)
-      case (None, Some(userId)) => twitter4jObj.destroyBlock(userId)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least."); 
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def existsBlock(screenName: Option[String] = None, userId: Option[Long] = None): Boolean = {
-    (screenName, userId) match {
+  def existsBlock(screenName: String = null, userId: java.lang.Long = null): Boolean = {
+    (Option(screenName), Option(userId)) match {
+      case (_, Some(userId)) => twitter4jObj.existsBlock(userId)
       case (Some(screenName), None) => twitter4jObj.existsBlock(screenName)
-      case (None, Some(userId)) => twitter4jObj.existsBlock(userId)
-      // case _ => // TODO Exception?
+      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.");
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def getBlockingUsers(page: Option[Int] = None): ResponseList[twitter4j.User] = {
-    page match {
+  def getBlockingUsers(page: java.lang.Integer = null): ResponseList[twitter4j.User] = {
+    Option(page) match {
       case Some(page) => twitter4jObj.getBlockingUsers(page)
       case None => twitter4jObj.getBlockingUsers()
     }
@@ -260,7 +260,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getBlockingUsersIDs: twitter4j.IDs = {
+  def getBlockingUsersIDs: IDs = {
     twitter4jObj.getBlockingUsersIDs()
   }
   
