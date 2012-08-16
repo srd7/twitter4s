@@ -944,7 +944,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getDailyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = { // TODO ラップオブジェクト対応
+  def getDailyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
     (Option(date), Option(excludeHashTags)) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getDailyTrends()
@@ -955,7 +955,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getWeeklyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = { // TODO ラップオブジェクト対応
+  def getWeeklyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
     (Option(date), Option(excludeHashTags)) match {
       case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
       case (None, None) => twitter4jObj.getWeeklyTrends()
