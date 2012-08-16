@@ -102,14 +102,32 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
   }
   
-  def getOAuthRequestToken(callbackURL: Option[String], xAuthAccessType: Option[String]): RequestToken = {
-    // TODO implements
-    return null
+  /**
+   * {@inheritDoc}
+   */
+  def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken = {
+    (Option(callbackURL), Option(xAuthAccessType)) match {
+      case (None, None) => twitter4jObj.getOAuthRequestToken()
+      case (Some(callbackURL), None) => twitter4jObj.getOAuthRequestToken(callbackURL)
+      case (Some(callbackURL), Some(xAuthAccessType)) => twitter4jObj.getOAuthRequestToken(callbackURL, xAuthAccessType)
+    }
   }
   
-  def getOAuthAccessToken(oauthVerifier: Option[String], requestToken: Option[RequestToken], screenName: Option[String], password: Option[String]): AccessToken = {
-    // TODO implements
-    return null
+  /**
+   * {@inheritDoc}
+   */
+  def getOAuthAccessToken(
+      oauthVerifier: String = null,
+      requestToken: RequestToken = null,
+      screenName: String = null,
+      password: String = null): AccessToken = {
+    (Option(oauthVerifier), Option(requestToken), Option(screenName), Option(password)) match {
+      case (None, None, None, None) => twitter4jObj.getOAuthAccessToken()
+      case (Some(oauthVerifier), None, None, None) => twitter4jObj.getOAuthAccessToken(oauthVerifier)
+      case (Some(oauthVerifier), Some(requestToken), None, None) => twitter4jObj.getOAuthAccessToken(requestToken, oauthVerifier)
+      case (None, Some(requestToken), None, None) => twitter4jObj.getOAuthAccessToken(requestToken)
+      case (None, None, Some(screenName), Some(password)) => twitter4jObj.getOAuthAccessToken(screenName, password)
+    }
   }
   
   /**

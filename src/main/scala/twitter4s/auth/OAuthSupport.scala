@@ -1,6 +1,5 @@
 package twitter4s.auth
 import twitter4j.auth.RequestToken
-import twitter4j.auth.AccessToken
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -19,9 +18,13 @@ trait OAuthSupport {
   
   def setOAuthConsumer(consumerKey: ConsumerKey): Unit
   
-  def getOAuthRequestToken(callbackURL: Option[String], xAuthAccessType: Option[String]): RequestToken
+  def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken
   
-  def getOAuthAccessToken(oauthVerifier: Option[String], requestToken: Option[RequestToken], screenName: Option[String], password: Option[String]): AccessToken
+  def getOAuthAccessToken(
+      oauthVerifier: String = null,
+      requestToken: RequestToken = null,
+      screenName: String = null,
+      password: String = null): twitter4j.auth.AccessToken
   
-  def setOAuthAccessToken(accessToken: AccessToken)
+  def setOAuthAccessToken(accessToken: twitter4j.auth.AccessToken)
 }
