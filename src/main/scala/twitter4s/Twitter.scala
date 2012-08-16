@@ -21,8 +21,6 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
-  // TODO 他のリターンオブジェクトとFactoryのラッピング
-  // TODO ReponseListとPagableResponseListの型パラメータの設定
   
   /* TwitterBase method */
   /**
@@ -760,8 +758,8 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def reportSpam(userId: Option[Long] = None, screenName: Option[String] = None): twitter4j.User = {
-    (userId, screenName) match {
+  def reportSpam(userId: java.lang.Long = null, screenName: String = null): User = {
+    (Option(userId), Option(screenName)) match {
       case (Some(userId), _) => twitter4jObj.reportSpam(userId)
       case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
       case _ => throw new IllegalArgumentException("Parameter userId or screenName must be set at least.")

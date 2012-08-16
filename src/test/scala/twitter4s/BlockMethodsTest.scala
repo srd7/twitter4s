@@ -13,7 +13,7 @@ class BlockMethodsTest extends Specification {
     rawJSON(target.tw4jObj) must not equalTo(null)
     target(0) must equalTo(DataObjectFactory.createUser(rawJSON(target(0))))
     target.size must equalTo(blockingUsersSize)
-    target(0).getId() must equalTo(blockingUserId)
+    target(0).id must equalTo(blockingUserId)
   }
   
   "createBlock" should {

@@ -18,14 +18,13 @@ import twitter4j.json.DataObjectFactory
 class SearchAPITest extends Specification {
   // TODO Queryの定数をラップする
   // TODO Tweetのラップ
-  // TODO ラップオブジェクト対応(Trends)
   private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
     var trendAt: Date = null
     forall(trendList) { (singleTrends: twitter4j.Trends) =>
-      singleTrends.getTrends().size must be_>(expectSize - 10)
-      if (trendAt != null) trendAt.before(singleTrends.getTrendAt()) must beTrue
-      trendAt = singleTrends.getTrendAt()
-      forall(singleTrends.getTrends().toList) { (trend: Trend) =>
+      singleTrends.trends.size must be_>(expectSize - 10)
+      if (trendAt != null) trendAt.before(singleTrends.trendAt) must beTrue
+      trendAt = singleTrends.trendAt
+      forall(singleTrends.trends.toList) { (trend: Trend) =>
         trend.getName() mustNotEqual(null)
         trend.getUrl() mustEqual(null)
         trend.getQuery() mustNotEqual(null)

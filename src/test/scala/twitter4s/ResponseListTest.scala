@@ -8,7 +8,6 @@ import Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class ResponseListTest extends Specification {
-  // TODO ラップオブジェクト対応
   "apply with index parameter" should {
     "get twitter4j object in list" in {
       val responseList = twitter1.getDailyTrends()
