@@ -111,7 +111,7 @@ trait User extends TwitterResponse {
 
 object User {
   // type alias
-  type SpecifiedInfo = Either[String, Long]
+  type SpecificInfo = Either[String, Long]
   
   /**
    * generate information that user specified by screen name.
@@ -119,8 +119,9 @@ object User {
    * @param screenName user specific data.
    * @return Left(screenName) is specified information.
    */
-  def isSpecifiedBy(screenName: String): SpecifiedInfo = {
+  def isSpecifiedBy(screenName: String): SpecificInfo = {
     require(screenName != null)
+    
     Left(screenName)
   }
 }

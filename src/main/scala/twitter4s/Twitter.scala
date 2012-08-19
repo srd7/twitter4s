@@ -716,22 +716,24 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def enableNotification(userSpecifiedData: User.SpecifiedInfo): User = {
-    userSpecifiedData match {
+  def enableNotification(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
       case Right(userId) => twitter4jObj.enableNotification(userId)
       case Left(screenName) => twitter4jObj.enableNotification(screenName)
-      case _ => throw new IllegalArgumentException("Parameter user specified must not be null.") 
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def disableNotification(userSpecifiedData: User.SpecifiedInfo): User = {
-    userSpecifiedData match {
+  def disableNotification(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
       case Right(userId) => twitter4jObj.disableNotification(userId)
       case Left(screenName) => twitter4jObj.disableNotification(screenName)
-      case _ => throw new IllegalArgumentException("Parameter user specified must not be null.")
     }
   }
   
