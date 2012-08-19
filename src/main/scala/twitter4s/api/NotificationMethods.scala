@@ -10,15 +10,14 @@ trait NotificationMethods {
    * <br />Note1: You must set screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) Specifies the screen name of the user to follow with device updates.
-   * @param userId (optional) Specifies the ID of the user to follow with device updates.
+   * @param userSpecifiedData(requied) data specific user to follow with device updates. This data is screen name or user id.
    * @return User
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenName and userId are not set.
+   * @throws IllegalArgumentException when user specified data is not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/follow">POST notifications/follow | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def enableNotification(screenName: String = null, userId: java.lang.Long = null): User
+  def enableNotification(userSpecifiedData: User.SpecifiedInfo): User
 
   /**
    * Disables notifications for updates from the specified user to the authenticating user. Returns the specified user when successful.
@@ -27,13 +26,12 @@ trait NotificationMethods {
    * <br />Note1: You must set screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) Specifies the screen name of the user to disable device notifications.
-   * @param userId (optional) Specifies the ID of the user to disable device notifications.
+   * @param userSpecifiedData(requied) data specific user to disable device notifications. This data is screen name or user id.
    * @return User
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenName and userId are not set.
+   * @throws IllegalArgumentException when user specified data is not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/notifications/leave">POST notifications/leave | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def disableNotification(screenName: String = null, userId: java.lang.Long = null): User
+  def disableNotification(userSpecifiedData: User.SpecifiedInfo): User
 }

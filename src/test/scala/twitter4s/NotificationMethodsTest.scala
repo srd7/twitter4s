@@ -17,24 +17,29 @@ class NotificationMethodsTest extends Specification {
   "enableNotification" should {
     "set notificate from specified user to authorized user" in {
       try {
-        twitter1.disableNotification(id3.screenName)
+        twitter1.disableNotification(
+            User.isSpecifiedBy(id3.screenName))
       } catch {
         case ex : TwitterException => // do nothing
       }
       
-      testUser(twitter1.enableNotification(id3.screenName))
-      testUser(twitter2.disableNotification(id3.screenName))
+      testUser(
+          twitter1.enableNotification(
+              User.isSpecifiedBy(id3.screenName)))
+      testUser(
+          twitter2.disableNotification(
+              User.isSpecifiedBy(id3.screenName)))
     }
     
-    "throw exception both of screenName and userId are not set" in {
-      twitter1.enableNotification() must
+    "throw exception when user specified info is null" in {
+      twitter1.enableNotification(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "disableNotification" should {
-    "throw exception both of screenName and userId are not set" in {
-      twitter2.disableNotification() must
+    "throw exception when user specified info is null" in {
+      twitter2.disableNotification(null) must
       throwA[IllegalArgumentException]
     }
   }

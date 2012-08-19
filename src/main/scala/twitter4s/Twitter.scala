@@ -716,22 +716,22 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def enableNotification(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.enableNotification(userId)
-      case (Some(screenName), None) => twitter4jObj.enableNotification(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.") 
+  def enableNotification(userSpecifiedData: User.SpecifiedInfo): User = {
+    userSpecifiedData match {
+      case Right(userId) => twitter4jObj.enableNotification(userId)
+      case Left(screenName) => twitter4jObj.enableNotification(screenName)
+      case _ => throw new IllegalArgumentException("Parameter user specified must not be null.") 
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def disableNotification(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.disableNotification(userId)
-      case (Some(screenName), None) => twitter4jObj.disableNotification(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+  def disableNotification(userSpecifiedData: User.SpecifiedInfo): User = {
+    userSpecifiedData match {
+      case Right(userId) => twitter4jObj.disableNotification(userId)
+      case Left(screenName) => twitter4jObj.disableNotification(screenName)
+      case _ => throw new IllegalArgumentException("Parameter user specified must not be null.")
     }
   }
   
