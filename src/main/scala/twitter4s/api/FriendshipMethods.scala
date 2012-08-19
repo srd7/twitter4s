@@ -68,21 +68,17 @@ trait FriendshipMethods {
    * <br />Note1: You must set source and target ScreenName or source and target Id at least combination
    * <br />Note2: Id is taken priority over ScreenName.
    *
-   * @param sourceScreenName (optional) the screen name of the source user
-   * @param targetScreenName (optional) the screen name of the target user
-   * @param sourceId (optional) the ID of the source user
-   * @param targetId (optional) the ID of the target user
+   * @param sourceSpecificUser (required) the source user specific information(screen name or ID)
+   * @param targetSpecificUser (required) the target user specific information(screen name or ID)
    * @return Relationship
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when all parameters are not set or source and target combination can not create.
+   * @throws IllegalArgumentException when same information combination on source and target can not create.
    * @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/show">GET friendships/show | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def showFriendship(
-      sourceScreenName: String = null,
-      targetScreenName: String = null,
-      sourceId: java.lang.Long = null,
-      targetId: java.lang.Long = null): Relationship
+      sourceSpecificUser: User.SpecificInfo,
+      targetSpecificUser: User.SpecificInfo): Relationship
 
   /**
    * Returns an array of numeric IDs for every user who has a pending request to follow the authenticating user.
@@ -136,21 +132,19 @@ trait FriendshipMethods {
    * <br />Note1: You must set screenName or id at least.
    * <br />Note2: Parameter id is taken priority over screenName.
    *
+   * @param specificUser (required) user specific information(screen name or ID) to update
    * @param enableDeviceNotification (required) set true to enable device notification
    * @param retweets (required) set true to enable retweets
-   * @param screenName (optional) screen name to update
-   * @param id (optional) user id to update
    * @return Relationship
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenName and id are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
   def updateFriendship(
+      specificUser: User.SpecificInfo,
       enableDeviceNotification: Boolean,
-      retweets: Boolean,
-      screenName: String = null,
-      userId: java.lang.Long = null): Relationship
+      retweets: Boolean): Relationship
 
   /**
    * Returns the list of user_ids for which the authenticating user has said they do not want to receive retweets from when successful.

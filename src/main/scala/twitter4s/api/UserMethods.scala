@@ -17,15 +17,14 @@ trait UserMethods {
    * <br />Note1: You must set screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) the screen name of the user for whom to request the detail
-   * @param userId (optional) the ID of the user for whom to request the detail
+   * @param specificUser (required) the user specific information(screen name or ID) for whom to request the detail
    * @return users
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenName and userId are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/show">GET users/show | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def showUser(screenName: String = null, userId: java.lang.Long = null): User
+  def showUser(specificUser: User.SpecificInfo): User
 
   /**
    * Return up to 100 users worth of extended information, specified by either ID, screen name, or combination of the two. The author's most recent status (if the authenticating user has permission) will be returned inline.

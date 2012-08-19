@@ -1,5 +1,6 @@
 package twitter4s.api
 
+import twitter4s.User
 import twitter4s.UserList
 import twitter4s.PagableResponseList
 import twitter4j.Paging
@@ -48,19 +49,17 @@ trait ListMethods {
    * <br />Note1: You must set listOwnerScreenName or listOwnerUserId at least.
    * <br />Note2: Parameter listOwnerUserId is taken priority over listOwnerScreenName.
    *
+   * @param listOwnerSpecificUser (required) the user specific information(screen name or ID) of the list owner
    * @param cursor (required) Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
-   * @param listOwnerScreenName (optional) The screen name of the list owner
-   * @param listOwnerUserId (optional) The id of the list owner
    * @return the list of lists
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of listOwnerScreenName and listOwnerUserId are not set.
+   * @throws IllegalArgumentException when listOwnerSpecificUser is set null.
    * @see <a href="https://dev.twitter.com/docs/api/1/get/lists">GET lists | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getUserLists(
-      cursor: Long,
-      listOwnerScreenName: String = null,
-      listOwnerUserId: java.lang.Long = null): PagableResponseList[twitter4j.UserList]
+      listOwnerSpecificUser: User.SpecificInfo,
+      cursor: Long): PagableResponseList[twitter4j.UserList]
 
   /**
    * Show the specified list. Private lists will only be shown if the authenticated user owns the specified list.
@@ -108,9 +107,8 @@ trait ListMethods {
    * <br />getUserListMemberships calls http://api.twitter.com/1/lists/memberships.json
    * <br />Note: Parameter listMemberId is taken priority over listMemberScreenName.
    * 
+   * @param listMemberSpecificUser (optional) the user specific information (screen name or ID) of the list member
    * @param cursor (required) Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
-   * @param listMemberScreenName (optional) The screen name of the list member
-   * @param listMemberId (optional) The id of the list member
    * @param filterToOwnedLists (optional) Whether to return just lists the authenticating user owns, and the user represented by listMemberScreenName is a member of.
    * @return the list of lists
    * @throws TwitterException when Twitter service or network is unavailable
@@ -119,9 +117,8 @@ trait ListMethods {
    * @since Twitter4S 1.0.0
    */
   def getUserListMemberships(
+      listMemberSpecificUser: User.SpecificInfo = null,
       cursor: Long,
-      listMemberId: java.lang.Long = null,
-      listMemberScreenName: String = null,
       filterToOwnedLists: java.lang.Boolean = null): PagableResponseList[twitter4j.UserList]
 
   /**
@@ -146,12 +143,11 @@ trait ListMethods {
    * <br />Note1: You must set screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) screen name to look up
-   * @param userId (optional) user id to look up
+   * @param specificUser (required) the user specific information(screen name or ID) to look up
    * @return list of lists
    * @throws TwitterException when Twitter service or network is unavailable
    * @throws IllegalArgumentException when both of screenName and userId are not set.
    * @since Twitter4S 1.0.0
    */
-  def getAllUserLists(screenName: String = null, userId: java.lang.Long = null): ResponseList[twitter4j.UserList]
+  def getAllUserLists(specificUser: User.SpecificInfo): ResponseList[twitter4j.UserList]
 }

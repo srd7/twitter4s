@@ -14,7 +14,8 @@ class UserMethodsTest extends Specification {
 
   "showUser" should {
     "get specified user profile with screenName" in {
-      val user = twitter1.showUser(id1.screenName)
+      val user = twitter1.showUser(
+          User.isSpecifiedBy(id1.screenName))
       user.screenName must equalTo(id1.screenName)
       user.location must not equalTo(null)
       user.description must not equalTo(null)
@@ -51,29 +52,26 @@ class UserMethodsTest extends Specification {
     }
     
     "get specified user with no status" in {
-      val user = twitter1.showUser("tigertest")
+      val user = twitter1.showUser(
+          User.isSpecifiedBy("tigertest"))
       rawJSON(user.tw4jObj) must not equalTo(null)
       
-      val nextUser = twitter1.showUser(numberId)
+      val nextUser = twitter1.showUser(
+          User.isSpecifiedBy(numberId))
       nextUser.id must equalTo(numberIdId)
       rawJSON(user.tw4jObj) must equalTo(null)
       rawJSON(nextUser.tw4jObj) must not equalTo(null)
       nextUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(nextUser.tw4jObj)))
       
-      val thirdUser = twitter1.showUser(userId = numberIdId)
+      val thirdUser = twitter1.showUser(
+          User.isSpecifiedBy(numberIdId))
       thirdUser.id must equalTo(numberIdId)
       rawJSON(thirdUser.tw4jObj) must not equalTo(null)
       thirdUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(thirdUser.tw4jObj)))
     }
     
     "throw IllegalArgumentException are not set both parameters" in {
-      twitter1.showUser() must throwA[IllegalArgumentException]
-    }
-    
-    "is taken priority parameter userId" in {
-      val user = twitter1.showUser(screenName = "tigertest", userId = id1.id)
-      user.id must equalTo(id1.id)
-      user.screenName must not equalTo("tigertest")
+      twitter1.showUser(null) must throwA[IllegalArgumentException]
     }
   }
   

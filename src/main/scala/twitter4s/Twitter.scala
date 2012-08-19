@@ -167,6 +167,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ファイルをEitherにする
   def updateProfileImage(
       imageFile: File = null,
       imageStream: InputStream = null): User = {
@@ -435,16 +436,16 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
   def showFriendship(
-      sourceScreenName: String = null,
-      targetScreenName: String = null,
-      sourceId: java.lang.Long = null,
-      targetId: java.lang.Long = null): Relationship = {
-    (Option(sourceScreenName), Option(targetScreenName), Option(sourceId), Option(targetId)) match {
-      case (_, _, Some(sourceId), Some(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
-      case (Some(sourceScreenName), Some(targetScreenName), None, None) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
-      case _ => throw new IllegalArgumentException("Parameter combination can not create. See API method comment.")
+      sourceSpecificUser: User.SpecificInfo,
+      targetSpecificUser: User.SpecificInfo): Relationship = {
+    require(sourceSpecificUser != null && targetSpecificUser != null)
+    require((sourceSpecificUser.isRight && targetSpecificUser.isRight) ||
+        (sourceSpecificUser.isLeft && targetSpecificUser.isLeft))
+    
+    (sourceSpecificUser, targetSpecificUser) match {
+      case (Right(sourceId), Right(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
+      case (Left(sourceScreenName), Left(targetScreenName)) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
     }
   }
 
@@ -477,16 +478,15 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
   def updateFriendship(
+      specificUser: User.SpecificInfo,
       enableDeviceNotification: Boolean,
-      retweets: Boolean,
-      screenName: String = null,
-      userId: java.lang.Long = null): Relationship = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
-      case (Some(screenName), None) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
-      case _ => throw new IllegalArgumentException("Parameter must be set screenName or id userId at least.")
+      retweets: Boolean): Relationship = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
+      case Left(screenName) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
     }
   }
 
@@ -610,14 +610,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
-  def getUserLists(cursor: Long,
-      listOwnerScreenName: String = null,
-      listOwnerUserId: java.lang.Long = null): PagableResponseList[twitter4j.UserList] = {
-    (Option(listOwnerScreenName), Option(listOwnerUserId)) match {
-      case (_, Some(listOwnerUserId)) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
-      case (Some(listOwnerScreenName), None) => twitter4jObj.getUserLists(listOwnerScreenName, cursor)
-      case _ => throw new IllegalArgumentException("Parameter listOwnerScreenName or listOwnerUserId must be set at least.")
+  def getUserLists(
+      listOwnerSpecificUser: User.SpecificInfo,
+      cursor: Long): PagableResponseList[twitter4j.UserList] = {
+    require(listOwnerSpecificUser != null)
+    
+    listOwnerSpecificUser match {
+      case Right(listOwnerUserId) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
+      case Left(listOwnerScreenName) => twitter4jObj.getUserLists(listOwnerScreenName, cursor)
     }
   }
 
@@ -645,18 +645,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
   def getUserListMemberships(
+      listMemberSpecificUser: User.SpecificInfo = null,
       cursor: Long,
-      listMemberId: java.lang.Long = null,
-      listMemberScreenName: String = null,
       filterToOwnedLists: java.lang.Boolean = null): PagableResponseList[twitter4j.UserList] = {
-    (Option(listMemberId), Option(listMemberScreenName), Option(filterToOwnedLists)) match {
-      case (Some(listMemberId), _, None) => twitter4jObj.getUserListMemberships(listMemberId, cursor)
-      case (None, Some(listMemberScreenName), None) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor)
-      case (Some(listMemberId), _, Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberId, cursor, filterToOwnedLists)
-      case (None, Some(listMemberScreenName), Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor, filterToOwnedLists)
-      case (None, None, None) => twitter4jObj.getUserListMemberships(cursor)
+    (Option(listMemberSpecificUser)) match {
+      case None => twitter4jObj.getUserListMemberships(cursor)
+      case Some(listMemberSpecificUser) => (listMemberSpecificUser, Option(filterToOwnedLists)) match {
+        case (Right(listMemberId), None) => twitter4jObj.getUserListMemberships(listMemberId, cursor)
+        case (Right(listMemberId), Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberId, cursor, filterToOwnedLists)
+        case (Left(listMemberScreenName), None) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor)
+        case (Left(listMemberScreenName), Some(filterToOwnedLists)) => twitter4jObj.getUserListMemberships(listMemberScreenName, cursor, filterToOwnedLists)
+      }
     }
   }
 
@@ -670,12 +670,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
-  def getAllUserLists(screenName: String = null, userId: java.lang.Long = null): ResponseList[twitter4j.UserList] = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.getAllUserLists(userId)
-      case (Some(screenName), None) => twitter4jObj.getAllUserLists(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+  def getAllUserLists(specificUser: User.SpecificInfo): ResponseList[twitter4j.UserList] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.getAllUserLists(userId)
+      case Left(screenName) => twitter4jObj.getAllUserLists(screenName)
     }
   }
   
@@ -820,6 +820,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ステータス情報をEitherに
   def updateStatus(status: String = null, latestStatus: twitter4j.StatusUpdate = null): Status = {
     (Option(status), Option(latestStatus)) match {
       case (Some(status), None) => twitter4jObj.updateStatus(status)
@@ -995,12 +996,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定変更
-  def showUser(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.showUser(userId)
-      case (Some(screenName), None) => twitter4jObj.showUser(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+  def showUser(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.showUser(userId)
+      case Left(screenName) => twitter4jObj.showUser(screenName)
     }
   }
   

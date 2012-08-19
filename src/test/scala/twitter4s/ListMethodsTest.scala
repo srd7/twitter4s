@@ -14,7 +14,8 @@ import twitter4j.TwitterException
 class ListMethodsTest extends Specification {
 
   def makePrecondition = {
-    val userLists = twitter2.getUserLists(-1L, listOwnerScreenName = id2.screenName)
+    val userLists = twitter2.getUserLists(
+        User.isSpecifiedBy(id2.screenName), -1L)
     userLists.foreach(alist => try {twitter2.destroyUserList(alist.getId)} catch {case e:TwitterException =>})
     twitter2.createUserList("testpoint1", false, "description1")
   }
@@ -29,7 +30,8 @@ class ListMethodsTest extends Specification {
       userList.name must equalTo("testpoint1")
       userList.description must equalTo("description1")
       
-      val userLists = twitter1.getUserLists(-1L, listOwnerScreenName = id1.screenName)
+      val userLists = twitter1.getUserLists(
+          User.isSpecifiedBy(id1.screenName), -1L)
       userLists.size must not equalTo(0)
       
       // showUserList test
@@ -40,14 +42,15 @@ class ListMethodsTest extends Specification {
     }
     
     "throw exception both of parameter listOwnerScreenName and listOwnerUserId are not set" in {
-      twitter1.getUserLists(-1L) must
+      twitter1.getUserLists(null, -1L) must
       throwA[IllegalArgumentException]
     }
   }
   
   "getUserListStatuses" should {
     "get status from user list specified by list id" in {
-      val userLists = twitter1.getUserLists(-1L, listOwnerUserId = id1.id)
+      val userLists = twitter1.getUserLists(
+          User.isSpecifiedBy(id1.id), -1L)
       val statuses = twitter1.getUserListStatuses(userLists(0).getId, Paging())
       statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))
       rawJSON(statuses.tw4jObj) must not equalTo(null)
@@ -57,17 +60,19 @@ class ListMethodsTest extends Specification {
   
   "getAllUserLists" should {
     "get user's list specified by user id" in {
-      val lists = twitter1.getAllUserLists(userId = id1.id)
+      val lists = twitter1.getAllUserLists(
+          User.isSpecifiedBy(id1.id))
       lists.size must be_>(0)
     }
     
     "get user's list specified by screen name" in {
-      val lists = twitter1.getAllUserLists(screenName = id1.screenName)
+      val lists = twitter1.getAllUserLists(
+          User.isSpecifiedBy(id1.screenName))
       lists.size must be_>(0)
     }
     
     "throw exception both of parameter are not set" in {
-      twitter1.getAllUserLists() must
+      twitter1.getAllUserLists(null) must
       throwA[IllegalArgumentException]
     }
   }
@@ -132,7 +137,9 @@ class ListMethodsTest extends Specification {
       deletedList.tw4jObj must equalTo(DataObjectFactory.createUserList(rawJSON(deletedList.tw4jObj)))
       
       // getUserListMemberships test
-      val userLists = twitter2.getUserListMemberships(-1, listMemberScreenName = id1.screenName)
+      val userLists = twitter2.getUserListMemberships(
+          User.isSpecifiedBy(id1.screenName),
+          -1)
       rawJSON(userLists.tw4jObj) must not equalTo(null)
       userLists(0) must equalTo(DataObjectFactory.createUserList(rawJSON(userLists(0))))
       
