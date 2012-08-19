@@ -72,17 +72,19 @@ class StatusMethodsTest extends Specification {
   
   "getRetweetedByUser" should {
     "get retweet to user specified by id with page" in {
-      val statuses = twitter1.getRetweetedByUser(Paging(1), userId = id1.id)
+      val statuses = twitter1.getRetweetedByUser(
+          User.isSpecifiedBy(id1.id), Paging(1))
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name with page" in {
-      val statuses = twitter1.getRetweetedByUser(Paging(1), screenName = id1.screenName)
+      val statuses = twitter1.getRetweetedByUser(
+          User.isSpecifiedBy(id1.screenName), Paging(1))
       testRetweetResponseList(statuses)
     }
     
-    "throw exception both of parameter screenName and userId are not set" in {
-      twitter1.getRetweetedByUser(Paging(1)) must
+    "throw exception when parameter specificUser is null" in {
+      twitter1.getRetweetedByUser(null, Paging(1)) must
       throwA[IllegalArgumentException]
     }
   }
@@ -101,17 +103,19 @@ class StatusMethodsTest extends Specification {
   
   "getRtweetedToUser" should {
     "get retweet to user specified by id" in {
-      val statuses = twitter1.getRetweetedToUser(Paging(1), userId = id1.id)
+      val statuses = twitter1.getRetweetedToUser(
+          User.isSpecifiedBy(id1.id), Paging(1))
       testRetweetResponseList(statuses)
     }
     
     "get retweet to user specified by screen name" in { 
-      val statuses = twitter1.getRetweetedToUser(Paging(1), screenName = id1.screenName)
+      val statuses = twitter1.getRetweetedToUser(
+          User.isSpecifiedBy(id1.screenName), Paging(1))
       testRetweetResponseList(statuses)
     }
     
-    "throw exception both of parameter screenName and userId are not set" in {
-      twitter1.getRetweetedToUser(Paging(1)) must
+    "throw exception when parameter specificUser is null" in {
+      twitter1.getRetweetedToUser(null, Paging(1)) must
       throwA[IllegalArgumentException]
     }
   }

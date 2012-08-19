@@ -124,4 +124,14 @@ object User {
     
     Left(screenName)
   }
+  
+  /**
+   * generate information that user specified by user id.
+   * 
+   * @param id user specific data.
+   * @return Right(id) is specified information.
+   */
+  def isSpecifiedBy(id: Long): SpecificInfo = {
+    Right(id)
+  }
 }

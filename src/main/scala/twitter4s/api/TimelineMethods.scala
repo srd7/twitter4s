@@ -1,5 +1,6 @@
 package twitter4s.api
 
+import twitter4s.User
 import twitter4j.Paging
 import twitter4s.ResponseList
 import twitter4j.Status
@@ -29,8 +30,7 @@ trait TimelineMethods {
    * <br />This method calls 
    * <br />This method calls http://api.twitter.com/1/statuses/user_timeline.json
    *
-   * @param screenName (optional) specifies the screen name of the user for whom to return the user_timeline
-   * @param userId (optional) specifies the ID of the user for whom to return the user_timeline
+   * @param specificUser (optional) specifies information of the user(screen name or ID) for whom to return the user_timeline
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return list of the user Timeline
    * @throws TwitterException when Twitter service or network is unavailable
@@ -38,8 +38,7 @@ trait TimelineMethods {
    * @since Twitter4S 1.0.0
    */
   def getUserTimeline(
-      screenName: String = null,
-      userId: java.lang.Long = null,
+      specificUser: User.SpecificInfo = null,
       paging: Paging = null): ResponseList[Status]
 
   /**
@@ -102,19 +101,17 @@ trait TimelineMethods {
    * <br />Note1: You must set screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
+   * @param specificUser (required) the user to view.
    * @param paging (required) controls pagination. Supports since_id, max_id, count and page parameters.
-   * @param screenName (optional) the user to view
-   * @param userId (optional) the user to view
    * @return the 20 most recent retweets posted by the authenticating user's friends.
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenName and userId are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4J 1.0.0
    */
   def getRetweetedToUser(
-      paging: Paging,
-      screenName: String = null, 
-      userId: java.lang.Long = null): ResponseList[Status]
+      specificUser: User.SpecificInfo,
+      paging: Paging): ResponseList[Status]
 
   /**
    * Returns the 20 most recent retweets posted by the specified user. This method is identical to statuses/retweeted_by_me except you can choose the user to view.
@@ -124,17 +121,15 @@ trait TimelineMethods {
    * <br />Note1: You must set userId or screenName at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
+   * @param specificUser (required) the user to view.
    * @param paging (required) controls pagination. Supports since_id, max_id, count and page parameters.
-   * @param userId (optional) the user to view
-   * @param screenName (optional) the user to view
    * @return the 20 most recent retweets posted by the authenticating user
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of userId and screenName are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
   def getRetweetedByUser(
-      paging: Paging,
-      screenName: String = null,
-      userId: java.lang.Long = null): ResponseList[Status]
+      specificUser: User.SpecificInfo,
+      paging: Paging): ResponseList[Status]
 }

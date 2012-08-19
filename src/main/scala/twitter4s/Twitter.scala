@@ -233,33 +233,36 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def createBlock(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.createBlock(userId)
-      case (Some(screenName), None) => twitter4jObj.createBlock(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.");
+  def createBlock(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.createBlock(userId)
+      case Left(screenName) => twitter4jObj.createBlock(screenName)
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def destroyBlock(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.destroyBlock(userId)
-      case (Some(screenName), None) => twitter4jObj.destroyBlock(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least."); 
+  def destroyBlock(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.destroyBlock(userId)
+      case Left(screenName) => twitter4jObj.destroyBlock(screenName) 
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  def existsBlock(screenName: String = null, userId: java.lang.Long = null): Boolean = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.existsBlock(userId)
-      case (Some(screenName), None) => twitter4jObj.existsBlock(screenName)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.");
+  def existsBlock(specificUser: User.SpecificInfo): Boolean = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.existsBlock(userId)
+      case Left(screenName) => twitter4jObj.existsBlock(screenName)
     }
   }
   
@@ -861,16 +864,19 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritedDoc}
    */
   def getUserTimeline(
-      screenName: String = null,
-      userId: java.lang.Long = null,
+      specificUser: User.SpecificInfo = null,
       paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    (Option(screenName), Option(userId), Option(paging)) match {
-      case (None, None, None) => twitter4jObj.getUserTimeline()
-      case (_, Some(userId), None) => twitter4jObj.getUserTimeline(userId)
-      case (Some(screenName), None, None) => twitter4jObj.getUserTimeline(screenName)
-      case (_, Some(userId), Some(paging)) => twitter4jObj.getUserTimeline(userId, paging)
-      case (Some(screenName), None, Some(paging)) => twitter4jObj.getUserTimeline(screenName, paging)
-      case (None, None, Some(paging)) => twitter4jObj.getUserTimeline(paging)
+    (Option(specificUser), Option(paging)) match {
+      case (None, None) => twitter4jObj.getUserTimeline()
+      case (None, Some(paging)) => twitter4jObj.getUserTimeline(paging)
+      case (Some(speficifUser), None) => specificUser match {
+        case Right(userId) => twitter4jObj.getUserTimeline(userId)
+        case Left(screenName) => twitter4jObj.getUserTimeline(screenName)
+      }
+      case (Some(specificUser), Some(paging)) => specificUser match {
+        case Right(userId) => twitter4jObj.getUserTimeline(userId, paging)
+        case Left(screenName) => twitter4jObj.getUserTimeline(screenName, paging)
+      }
     }
   }
   
@@ -918,13 +924,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getRetweetedToUser(
-      paging: twitter4j.Paging,
-      screenName: String = null,
-      userId: java.lang.Long = null): ResponseList[twitter4j.Status] = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.getRetweetedToUser(userId, paging)
-      case (Some(screenName), None) => twitter4jObj.getRetweetedToUser(screenName, paging)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+      specificUser: User.SpecificInfo, 
+      paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.getRetweetedToUser(userId, paging)
+      case Left(screenName) => twitter4jObj.getRetweetedToUser(screenName, paging)
     }
   }
 
@@ -932,13 +938,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getRetweetedByUser(
-      paging: twitter4j.Paging,
-      screenName: String = null,
-      userId: java.lang.Long = null): ResponseList[twitter4j.Status] = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.getRetweetedByUser(userId, paging)
-      case (Some(screenName), None) => twitter4jObj.getRetweetedByUser(screenName, paging)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+      specificUser: User.SpecificInfo,
+      paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.getRetweetedByUser(userId, paging)
+      case Left(screenName) => twitter4jObj.getRetweetedByUser(screenName, paging)
     }
   }
   

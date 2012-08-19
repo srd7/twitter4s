@@ -18,39 +18,43 @@ class BlockMethodsTest extends Specification {
   
   "createBlock" should {
     "create block and get blocked user" in {
-      val user = twitter2.createBlock(id3.screenName)
+      val user = twitter2.createBlock(
+          User.isSpecifiedBy(id3.id))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
-    "throw exception both of screenName and userId are not set" in {
-      twitter2.createBlock() must
+    "throw exception when user specific info is set null" in {
+      twitter2.createBlock(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "destryoBlock" should {
     "destroy block and get unblocked user" in {
-      val user = twitter2.destroyBlock(id3.screenName)
+      val user = twitter2.destroyBlock(
+          User.isSpecifiedBy(id3.screenName))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       
       // check destroyed block
-      twitter3.existsBlock(id2.screenName) must beFalse
+      twitter3.existsBlock(
+          User.isSpecifiedBy(id2.id)) must beFalse
       // check blocked user
       val blockedUserScreenName = blockingScreenName
-      twitter1.existsBlock(blockedUserScreenName) must beTrue
+      twitter1.existsBlock(
+          User.isSpecifiedBy(blockedUserScreenName)) must beTrue
     }
     
-    "throw exception both of screenName and userId are not set" in {
-      twitter2.destroyBlock() must
+    "throw exception when user specific info is set null" in {
+      twitter2.destroyBlock(null) must
       throwA[IllegalArgumentException] 
     }
   }
   
   "existBlock" should {
     "thorw exception both of screenName and userId are not set" in {
-      twitter2.existsBlock() must
+      twitter2.existsBlock(null) must
       throwA[IllegalArgumentException]
     }
   }

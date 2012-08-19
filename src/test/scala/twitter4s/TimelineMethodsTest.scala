@@ -37,24 +37,28 @@ class TimelineMethodsTest extends Specification {
     }
     
     "get spcified user screen name timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline("1000")
+      val statuses = unauthenticated.getUserTimeline(
+          User.isSpecifiedBy("1000"))
       testStatuses(statuses)
       statuses(0).getUser().getId() must equalTo(9737332L)
     }
     
     "get specified user id timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(userId = 1000L)
+      val statuses = unauthenticated.getUserTimeline(
+          User.isSpecifiedBy(1000L))
       testStatuses(statuses)
       statuses(0).getUser().getId() must equalTo(1000L)
     }
     
     "get specified user screen name and page count timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(screenName = id1.screenName, paging = Paging().count(10))
+      val statuses = unauthenticated.getUserTimeline(
+          User.isSpecifiedBy(id1.screenName), paging = Paging().count(10))
       testStatuses(statuses)
     }
     
     "get specified user id and sinceid timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(userId = id1.id, paging = Paging(sinceId = 999383469L))
+      val statuses = unauthenticated.getUserTimeline(
+          User.isSpecifiedBy(id1.id), paging = Paging(sinceId = 999383469L))
       testStatuses(statuses)
     }
     
