@@ -21,34 +21,46 @@ class FriendsFollowersMethodsTest extends Specification {
     }
     
     "get friend ID array specified by user id" in {
-      val ids = twitter1.getFriendsIDs(-1, userId = ryunosukey)
+      val ids = twitter1.getFriendsIDs(
+          -1,
+          User.isSpecifiedBy(ryunosukey))
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
       ids.length must equalTo(0)
     }
     
     "get friend ID array specified by user screen name" in {
-      val ids = twitter1.getFriendsIDs(-1, screenName = "yusuke")
+      val ids = twitter1.getFriendsIDs(
+          -1,
+          User.isSpecifiedBy("yusuke"))
       rawJSON(ids.tw4jObj) must not equalTo(null)
       atLeastOnce(ids.ids) { (_:Long) must equalTo(ryunosukey)}
     }
     
     "get friend ID array with cursor specified by user id" in {
-      val firstCursor = twitter1.getFriendsIDs(-1, userId = obamaId)
+      val firstCursor = twitter1.getFriendsIDs(
+          -1,
+          User.isSpecifiedBy(obamaId))
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFriendsIDs(firstCursor.nextCursor, userId = obamaId)
+      val secondCursor = twitter1.getFriendsIDs(
+          firstCursor.nextCursor,
+          User.isSpecifiedBy(obamaId))
       secondCursor.hasNext must beTrue
       secondCursor.hasPrevious must beTrue
     }
     
     "get friend ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1.getFriendsIDs(-1, screenName = obamaScreenName)
+      val firstCursor = twitter1.getFriendsIDs(
+          -1,
+          User.isSpecifiedBy(obamaScreenName))
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFriendsIDs(firstCursor.nextCursor, screenName = obamaScreenName)
+      val secondCursor = twitter1.getFriendsIDs(
+          firstCursor.nextCursor,
+          User.isSpecifiedBy(obamaScreenName))
       secondCursor.hasNext must beTrue
       secondCursor.hasPrevious must beTrue
     }
@@ -56,25 +68,33 @@ class FriendsFollowersMethodsTest extends Specification {
   
   "getFollowersIDs" should {
     "get followers ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1.getFollowersIDs(-1, screenName = obamaScreenName)
+      val firstCursor = twitter1.getFollowersIDs(
+          -1,
+          User.isSpecifiedBy(obamaScreenName))
       rawJSON(firstCursor.tw4jObj) must not equalTo(null)
       firstCursor.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(firstCursor.tw4jObj)))
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFollowersIDs(firstCursor.nextCursor, screenName = obamaScreenName)
+      val secondCursor = twitter1.getFollowersIDs(
+          firstCursor.nextCursor,
+          User.isSpecifiedBy(obamaScreenName))
       secondCursor.hasNext must beTrue
       secondCursor.hasPrevious must beTrue
     }
     
     "get followers ID array specified by user id" in {
-      val ids = twitter1.getFollowersIDs(-1, userId = obamaId)
+      val ids = twitter1.getFollowersIDs(
+          -1,
+          User.isSpecifiedBy(obamaId))
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
       ids.hasNext must beTrue
       ids.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFollowersIDs(ids.nextCursor, userId = obamaId)
+      val secondCursor = twitter1.getFollowersIDs(
+          ids.nextCursor,
+          User.isSpecifiedBy(obamaId))
       secondCursor.hasNext must beTrue
       secondCursor.hasPrevious must beTrue
     }

@@ -18,18 +18,16 @@ trait FriendshipMethods {
    * <br />Note1: You must set parameter screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) the screen name of the user to be befriended
-   * @param userId (optional) the ID of the user to be befriended
-   * @param follow Enable notifications for the target user in addition to becoming friends.
+   * @param specificUser (required) the user specific information(screen name or ID) to be befriended.
+   * @param follow (optional) Enable notifications for the target user in addition to becoming friends.
    * @return the befriended user
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of parameter screenName and userId are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/create">POST friendships/create | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def createFriendship(
-      screenName: String = null,
-      userId: java.lang.Long = null,
+      specificUser: User.SpecificInfo,
       follow: java.lang.Boolean = null): User
 
   /**
@@ -40,15 +38,14 @@ trait FriendshipMethods {
    * <br />Note1: You must set parameter screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName the screen name of the user for whom to request a list of friends
-   * @param userId the ID of the user for whom to request a list of friends
+   * @param specificUser the user specific information (screen name or ID) for whom to request a list of friends
    * @return User
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of parameter screenName and userId are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/friendships/destroy">POST friendships/destroy | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def destroyFriendship(screenName: String = null, userId: java.lang.Long = null): User
+  def destroyFriendship(specificUser: User.SpecificInfo): User
 
   /**
    * Tests for the existence of friendship between two users. Will return true if user_a follows user_b, otherwise will return false.

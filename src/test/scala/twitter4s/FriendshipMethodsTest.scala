@@ -13,14 +13,17 @@ class FriendshipMethodsTest extends Specification {
   "destroyFriendship" should {
     "destroy specified user's friendship" in {
       if(!twitter1.existsFriendship(id1.screenName, id2.screenName))
-        twitter1.createFriendship(userId = id1.id, follow = true)
-      val user = twitter2.destroyFriendship(id1.screenName)
+        twitter1.createFriendship(
+            User.isSpecifiedBy(id1.id), follow = true)
+      val user = twitter2.destroyFriendship(
+          User.isSpecifiedBy(id1.screenName))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "destroy specified user was destroyed" in {
-      val user = twitter2.destroyFriendship(userId = id1.id)
+      val user = twitter2.destroyFriendship(
+          User.isSpecifiedBy(id1.id))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       
@@ -29,31 +32,34 @@ class FriendshipMethodsTest extends Specification {
     }
     
     "throw exception with no target user specific information" in {
-      twitter2.destroyFriendship() must
+      twitter2.destroyFriendship(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "createFriendship" should {
     "create specified user's friendship" in {
-      val user = twitter2.createFriendship(screenName = id1.screenName, follow = true)
+      val user = twitter2.createFriendship(
+          User.isSpecifiedBy(id1.screenName), follow = true)
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       user.screenName must equalTo(id1.screenName)
     }
     
     "throw exception create friendship with myself" in {
-      twitter2.createFriendship(userId = id2.id) must
+      twitter2.createFriendship(
+          User.isSpecifiedBy(id2.id)) must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(403)}
     }
     
     "throw exception create friendship with not-exists usre" in {
-      twitter2.createFriendship("dosentexists--") must
+      twitter2.createFriendship(
+          User.isSpecifiedBy("dosentexists--")) must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(404)}
     }
     
-    "throw exception with no target user specific information" in {
-      twitter2.createFriendship() must
+    "throw exception when specificUser is set null" in {
+      twitter2.createFriendship(null, null) must
       throwA[IllegalArgumentException]
     }
   }

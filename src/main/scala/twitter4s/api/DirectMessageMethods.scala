@@ -1,5 +1,6 @@
 package twitter4s.api
 
+import twitter4s.User
 import twitter4j.Paging
 import twitter4s.ResponseList
 import twitter4s.DirectMessage
@@ -41,16 +42,15 @@ trait DirectMessageMethods {
    * <br />Note1: You must set parameter screenName or userId at least.
    * <br />Note2: Parameter userId is taken priority over screenName.
    *
-   * @param screenName (optional) the screen name of the user to whom send the direct message
-   * @param userId (optional) the screen name of the user to whom send the direct message
+   * @param specificUser (required) the user specific information(screen name or ID) to whom send the direct message
    * @param text (required) The text of your direct message.
    * @return DirectMessage
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of parameter screenName and userId are not set.
+   * @throws IllegalArgumentException when specificUser is set null.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/direct_messages/new">POST direct_messages/new | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def sendDirectMessage(screenName: String = null, userId: java.lang.Long = null, text: String): DirectMessage
+  def sendDirectMessage(specificUser: User.SpecificInfo, text: String): DirectMessage
 
   /**
    * Destroys the direct message specified in the required ID parameter. The authenticating user must be the recipient of the specified direct message.

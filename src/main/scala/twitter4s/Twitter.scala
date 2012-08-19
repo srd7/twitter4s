@@ -180,6 +180,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ファイルをEitherにする
   def updateProfileBackgroundImage(
       imageFile: File = null,
       imageStream: InputStream = null,
@@ -307,11 +308,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def sendDirectMessage(screenName: String = null, userId: java.lang.Long = null, text: String): DirectMessage = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.sendDirectMessage(userId, text)
-      case (Some(screenName), None) => twitter4jObj.sendDirectMessage(screenName, text)
-      case _ => throw new IllegalArgumentException("Parameter screenName or userId must be set at least.")
+  def sendDirectMessage(specificUser: User.SpecificInfo, text: String): DirectMessage = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.sendDirectMessage(userId, text)
+      case Left(screenName) => twitter4jObj.sendDirectMessage(screenName, text)
     }
   }
 
@@ -333,6 +335,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inhritDoc}
    */
+  // TODO pageとpagingはどちらかのみにする
   def getFavorites(
       id: String = null,
       page: java.lang.Integer = null,
@@ -366,22 +369,26 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getFriendsIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs = {
-    (Option(userId), Option(screenName)) match {
-      case (Some(userId), _) => twitter4jObj.getFriendsIDs(userId, cursor)
-      case (None, Some(screenName)) => twitter4jObj.getFriendsIDs(screenName, cursor)
-      case (None, None) => twitter4jObj.getFriendsIDs(cursor)
+  def getFriendsIDs(cursor: Long, specificUser: User.SpecificInfo = null): IDs = {
+    Option(specificUser) match {
+      case Some(specificUser) => specificUser match {
+        case Right(userId) => twitter4jObj.getFriendsIDs(userId, cursor)
+        case Left(screenName) => twitter4jObj.getFriendsIDs(screenName, cursor)
+      }
+      case None => twitter4jObj.getFriendsIDs(cursor)
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def getFollowersIDs(cursor: Long, userId: java.lang.Long = null, screenName: String = null): IDs = {
-    (Option(userId), Option(screenName)) match {
-      case (Some(userId), _) => twitter4jObj.getFollowersIDs(userId, cursor)
-      case (None, Some(screenName)) => twitter4jObj.getFollowersIDs(screenName, cursor)
-      case (None, None) => twitter4jObj.getFollowersIDs(cursor)
+  def getFollowersIDs(cursor: Long, specificUser: User.SpecificInfo = null): IDs = {
+    Option(specificUser) match {
+      case Some(specificUser) => specificUser match {
+        case Right(userId) => twitter4jObj.getFollowersIDs(userId, cursor)
+        case Left(screenName) => twitter4jObj.getFollowersIDs(screenName, cursor)
+      }
+      case None => twitter4jObj.getFollowersIDs(cursor)
     }
   }
   
@@ -390,26 +397,31 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def createFriendship(
-      screenName: String = null,
-      userId: java.lang.Long = null,
+      specificUser: User.SpecificInfo,
       follow: java.lang.Boolean = null): User = {
-    (Option(screenName), Option(userId), Option(follow)) match {
-      case (_, Some(userId), None) => twitter4jObj.createFriendship(userId)
-      case (_, Some(userId), Some(follow)) => twitter4jObj.createFriendship(userId, follow)
-      case (Some(screenName), None, None) => twitter4jObj.createFriendship(screenName)
-      case (Some(screenName), None, Some(follow)) => twitter4jObj.createFriendship(screenName, follow)
-      case _ => throw new IllegalArgumentException("Parameter must set screenName or userId at least.")
+    require(specificUser != null)
+    
+    Option(follow) match {
+      case None => specificUser match {
+        case Right(userId) => twitter4jObj.createFriendship(userId)
+        case Left(screenName) => twitter4jObj.createFriendship(screenName)
+      }
+      case Some(follow) => specificUser match {
+        case Right(userId) => twitter4jObj.createFriendship(userId, follow)
+        case Left(screenName) => twitter4jObj.createFriendship(screenName, follow)
+      }
     }
   }
 
   /**
    * {@inheritDoc}
    */
-  def destroyFriendship(screenName: String = null, userId: java.lang.Long = null): User = {
-    (Option(screenName), Option(userId)) match {
-      case (_, Some(userId)) => twitter4jObj.destroyFriendship(userId)
-      case (Some(screenName), None) => twitter4jObj.destroyFriendship(screenName)
-      case _ => throw new IllegalArgumentException("Parameter must set screenName or userId at least.")
+  def destroyFriendship(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.destroyFriendship(userId)
+      case Left(screenName) => twitter4jObj.destroyFriendship(screenName)
     }
   }
 
@@ -423,6 +435,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def showFriendship(
       sourceScreenName: String = null,
       targetScreenName: String = null,
@@ -452,6 +465,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定情報の配列化
   def lookupFriendships(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[Friendship] = {
     (Option(screenNames), Option(ids)) match {
       case (_, Some(ids)) => twitter4jObj.lookupFriendships(ids)
@@ -463,6 +477,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def updateFriendship(
       enableDeviceNotification: Boolean,
       retweets: Boolean,
@@ -551,6 +566,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定情報の配列化
   def addUserListMembers(
       listId: Int,
       userIds: Array[Long] = null,
@@ -594,6 +610,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def getUserLists(cursor: Long,
       listOwnerScreenName: String = null,
       listOwnerUserId: java.lang.Long = null): PagableResponseList[twitter4j.UserList] = {
@@ -628,6 +645,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def getUserListMemberships(
       cursor: Long,
       listMemberId: java.lang.Long = null,
@@ -652,6 +670,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def getAllUserLists(screenName: String = null, userId: java.lang.Long = null): ResponseList[twitter4j.UserList] = {
     (Option(screenName), Option(userId)) match {
       case (_, Some(userId)) => twitter4jObj.getAllUserLists(userId)
@@ -781,11 +800,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def reportSpam(userId: java.lang.Long = null, screenName: String = null): User = {
-    (Option(userId), Option(screenName)) match {
-      case (Some(userId), _) => twitter4jObj.reportSpam(userId)
-      case (None, Some(screenName)) => twitter4jObj.reportSpam(screenName)
-      case _ => throw new IllegalArgumentException("Parameter userId or screenName must be set at least.")
+  def reportSpam(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.reportSpam(userId)
+      case Left(screenName) => twitter4jObj.reportSpam(screenName)
     } 
   }
   
@@ -975,6 +995,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定変更
   def showUser(screenName: String = null, userId: java.lang.Long = null): User = {
     (Option(screenName), Option(userId)) match {
       case (_, Some(userId)) => twitter4jObj.showUser(userId)
@@ -986,6 +1007,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO ユーザ指定情報の配列化
   def lookupUsers(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[twitter4j.User] = {
     (Option(screenNames), Option(ids)) match {
       case (_, Some(ids)) => twitter4jObj.lookupUsers(ids)

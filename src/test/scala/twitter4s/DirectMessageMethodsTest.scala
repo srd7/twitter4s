@@ -13,7 +13,8 @@ class DirectMessageMethodsTest extends Specification {
   "sendDirectMessage" should {
     "send message to other user with userId" in {
       val expectedReturn = new Date().toString() + ":directmessage test"
-      val actualReturn = twitter1.sendDirectMessage(userId = id3.id, text = expectedReturn)
+      val actualReturn = twitter1.sendDirectMessage(
+          User.isSpecifiedBy(id3.id), text = expectedReturn)
       
       actualReturn.id must be_>=(0L)
       rawJSON(actualReturn.tw4jObj) must not equalTo(null)
@@ -24,7 +25,7 @@ class DirectMessageMethodsTest extends Specification {
     }
     
     "throw exception both of parameter screenName and userId are not set" in {
-      twitter1.sendDirectMessage(text = "unsuccess send") must
+      twitter1.sendDirectMessage(null, text = "unsuccess send") must
       throwA[IllegalArgumentException]
     }
   }
