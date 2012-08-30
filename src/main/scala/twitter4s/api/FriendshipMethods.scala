@@ -1,6 +1,7 @@
 package twitter4s.api
 
 import twitter4s.User
+import twitter4s.Users
 import twitter4s.Relationship
 import twitter4s.IDs
 import twitter4s.ResponseList
@@ -114,15 +115,13 @@ trait FriendshipMethods {
    * <br />Note1: You must set screenNames or ids at least.
    * <br />Note2: Parameter ids is taken priority over screenNames.
    *
-   * @param screenNames (optional) array of the screen names to lookup
-   * @param ids (optional) array of the ids to lookup
+   * @param specificUsers (required) array of user specific informations(screen names or ids) to lookup
    * @return list of Relationships
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenNames and ids are not set.
    * @see <a href="http://groups.google.com/group/twitter-api-announce/msg/34909da7c399169e">#newtwitter and the API - Twitter API Announcements | Google Group</a>
    * @since Twitter4S 1.0.0
    */
-  def lookupFriendships(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[Friendship]
+  def lookupFriendships(specificUsers: Users.SpecificInfo): ResponseList[Friendship]
 
   /**
    * Allows you to enable or disable retweets and device notifications from the specified user.

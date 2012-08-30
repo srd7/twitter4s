@@ -135,3 +135,20 @@ object User {
     Right(id)
   }
 }
+
+object Users {
+  // type alias
+  type SpecificInfo = Either[Array[String], Array[Long]]
+  
+  def areSpecifiedBy(screenNames: Array[String]): SpecificInfo = {
+    require(screenNames != null && !screenNames.isEmpty)
+    
+    Left(screenNames)
+  }
+  
+  def areSpecifiedBy(ids: Array[Long]): SpecificInfo = {
+    require(ids != null && !ids.isEmpty)
+    
+    Right(ids)
+  }
+}

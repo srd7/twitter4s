@@ -467,11 +467,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   // TODO ユーザ指定情報の配列化
-  def lookupFriendships(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[Friendship] = {
-    (Option(screenNames), Option(ids)) match {
-      case (_, Some(ids)) => twitter4jObj.lookupFriendships(ids)
-      case (Some(screenNames), None) => twitter4jObj.lookupFriendships(screenNames)
-      case _ => throw new IllegalArgumentException("Parameter must be set screenNames or ids at least.")
+  def lookupFriendships(specificUsers: Users.SpecificInfo): ResponseList[Friendship] = {
+    require(specificUsers != null)
+    
+    specificUsers match {
+      case Right(ids) => twitter4jObj.lookupFriendships(ids)
+      case Left(screenNames) => twitter4jObj.lookupFriendships(screenNames)
     }
   }
 

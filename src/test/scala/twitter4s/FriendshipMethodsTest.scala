@@ -119,7 +119,8 @@ class FriendshipMethodsTest extends Specification {
   
   "lookupFriendships" should {
     "get friendship status list with specified users by screen name" in {
-      val friendshipList = twitter1.lookupFriendships(Array("barakobama", id2.screenName, id3.screenName))
+      val friendshipList = twitter1.lookupFriendships(
+          Users.areSpecifiedBy(Array("barakobama", id2.screenName, id3.screenName)))
       friendshipList.size must equalTo(3)
       friendshipList(0).getScreenName() must equalTo("barakobama")
       friendshipList(0).isFollowedBy() must beFalse
@@ -130,13 +131,9 @@ class FriendshipMethodsTest extends Specification {
     }
     
     "get friendship status list with specified users by id" in {
-      val friendshipList = twitter1.lookupFriendships(ids = Array(id2.id, id3.id))
+      val friendshipList = twitter1.lookupFriendships(
+          Users.areSpecifiedBy(Array(id2.id, id3.id)))
       friendshipList.size must equalTo(2)
-    }
-    
-    "throw exception without parameters" in {
-      twitter1.lookupFriendships() must
-      throwA[IllegalArgumentException]
     }
   }
   
