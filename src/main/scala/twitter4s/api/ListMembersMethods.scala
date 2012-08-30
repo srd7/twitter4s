@@ -1,6 +1,7 @@
 package twitter4s.api
 
 import twitter4s.User
+import twitter4s.Users
 import twitter4s.UserList
 import twitter4s.PagableResponseList
 
@@ -44,17 +45,14 @@ trait ListMembersMethods {
    * <br />Note2: Parameter userIds is taken priority over screenNames.
    *
    * @param listId (required) The id of the list.
-   * @param userIds (optional) The array of ids of the user to add as member of the list. up to 100 are allowed in a single request.
-   * @param screenNames (optional) The array of screen names of the user to add as member of the list. up to 100 are allowed in a single request.
+   * @param specificUsers(required) The array of user specifc informations(ids or screen names) of the user to add as member of the list. up to 100 are allowed in a single request.
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IellegalArgumentException when userIds and screenNames are not set
    * @see <a href="https://dev.twitter.com/docs/api/1/post/lists/members/create_all">POST lists/members/create_all | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def addUserListMembers(
       listId: Int,
-      userIds: Array[Long] = null,
-      screenNames: Array[String] = null): UserList
+      specificUsers: Users.SpecificInfo): UserList
 
   /**
    * Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.

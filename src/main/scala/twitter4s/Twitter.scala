@@ -566,15 +566,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定情報の配列化
   def addUserListMembers(
       listId: Int,
-      userIds: Array[Long] = null,
-      screenNames: Array[String] = null): UserList = {
-    (Option(userIds), Option(screenNames)) match {
-      case (_, Some(screenNames)) => twitter4jObj.addUserListMembers(listId, screenNames)
-      case (Some(userIds), None) => twitter4jObj.addUserListMembers(listId, userIds)
-      case _ => throw new IllegalArgumentException("Parameter userIds and screenNames must be set at least.")
+      specificUsers: Users.SpecificInfo): UserList = {
+    require(specificUsers != null)
+    
+    specificUsers match {
+      case Right(userIds) => twitter4jObj.addUserListMembers(listId, userIds)
+      case Left(screenNames) => twitter4jObj.addUserListMembers(listId, screenNames)
     }
   }
 

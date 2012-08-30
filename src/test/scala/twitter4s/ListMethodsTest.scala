@@ -92,8 +92,8 @@ class ListMethodsTest extends Specification {
   }
   
   "addUserListMembers" should {
-    "throw exception both of parameter userIds and screenNames are not set" in {
-      twitter1.addUserListMembers(1) must 
+    "throw exception both of parameter specificUsers is null" in {
+      twitter1.addUserListMembers(1, null) must 
       throwA[IllegalArgumentException]
     }
   }
@@ -111,11 +111,11 @@ class ListMethodsTest extends Specification {
       rawJSON(addedList1.tw4jObj) must not equalTo(null)
       addedList1.tw4jObj must equalTo(DataObjectFactory.createUserList(rawJSON(addedList1.tw4jObj)))
       
-      val addedList2 = twitter2.addUserListMembers(userList.id, Array(id3.id, id1.id))
+      val addedList2 = twitter2.addUserListMembers(userList.id, Users.areSpecifiedBy(Array(id3.id, id1.id)))
       rawJSON(addedList2.tw4jObj) must not equalTo(null)
       addedList2.tw4jObj must equalTo(DataObjectFactory.createUserList(rawJSON(addedList2.tw4jObj)))
       
-      val addedList3 = twitter2.addUserListMembers(listId = userList.id, screenNames = Array(prop.getProperty("followsOneWay")))
+      val addedList3 = twitter2.addUserListMembers(listId = userList.id, Users.areSpecifiedBy(Array(prop.getProperty("followsOneWay"))))
       rawJSON(addedList3.tw4jObj) must not equalTo(null)
       addedList3.tw4jObj must equalTo(DataObjectFactory.createUserList(rawJSON(addedList3.tw4jObj)))
       
