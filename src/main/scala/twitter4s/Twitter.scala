@@ -466,7 +466,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定情報の配列化
   def lookupFriendships(specificUsers: Users.SpecificInfo): ResponseList[Friendship] = {
     require(specificUsers != null)
     
