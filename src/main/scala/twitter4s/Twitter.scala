@@ -1007,12 +1007,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ユーザ指定情報の配列化
-  def lookupUsers(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[twitter4j.User] = {
-    (Option(screenNames), Option(ids)) match {
-      case (_, Some(ids)) => twitter4jObj.lookupUsers(ids)
-      case (Some(screenNames), None) => twitter4jObj.lookupUsers(screenNames)
-      case _ => throw new IllegalArgumentException("Parameter screenNames or ids must be set at least.")
+  def lookupUsers(specificUsers: Users.SpecificInfo): ResponseList[twitter4j.User] = {
+    require(specificUsers != null)
+    
+    specificUsers match {
+      case Right(ids) => twitter4jObj.lookupUsers(ids)
+      case Left(screenNames) => twitter4jObj.lookupUsers(screenNames)
     }
   }
 

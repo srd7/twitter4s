@@ -77,14 +77,14 @@ class UserMethodsTest extends Specification {
   
   "lookupUsers" should {
     "get lookup user list specified screen names" in {
-      val users = twitter1.lookupUsers(Array(id1.screenName, id2.screenName))
+      val users = twitter1.lookupUsers(Users.areSpecifiedBy(Array(id1.screenName, id2.screenName)))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
     }
     
     "get lookup user list specified user ids" in {
-      val users = twitter1.lookupUsers(ids = Array(id1.id, id2.id))
+      val users = twitter1.lookupUsers(Users.areSpecifiedBy(Array(id1.id, id2.id)))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
@@ -93,18 +93,8 @@ class UserMethodsTest extends Specification {
       rawJSON(users.tw4jObj) must not equalTo(null)
     }
     
-    "throw IllegalArgumentException are not set both parameter" in {
-      twitter1.lookupUsers() must throwA[IllegalArgumentException]
-    }
-    
-    "is taken priority parameter ids" in {
-      val users = twitter1.lookupUsers(
-          screenNames = Array(id2.screenName, id3.screenName),
-          ids = Array(id1.id, id2.id))
-      users.size must equalTo(2)
-      users.exists(_.getId() == id1.id) must beTrue
-      users.exists(_.getId() == id2.id) must beTrue
-      users.exists(_.getId() == id3.id) must beFalse
+    "throw IllegalArgumentException when specificUsers is null" in {
+      twitter1.lookupUsers(null) must throwA[IllegalArgumentException]
     }
   }
   

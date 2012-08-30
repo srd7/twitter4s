@@ -1,6 +1,7 @@
 package twitter4s.api
 
 import twitter4s.User
+import twitter4s.Users
 import twitter4s.ResponseList
 import twitter4j.Query
 import twitter4j.Category
@@ -33,15 +34,13 @@ trait UserMethods {
    * <br />Note1: You must set screenNames or ids at least.
    * <br />Note2: Parameter ids is taken priority over screenNames.
    *
-   * @param screenNames (optional) Specifies the screen names of the users to return.
-   * @param ids (optional) Specifies the screen names of the users to return.
+   * @param specificUsers (optional) user specific information(screen names or ids) to return
    * @return users
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of screenNames and ids are not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/lookup">GET users/lookup | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def lookupUsers(screenNames: Array[String] = null, ids: Array[Long] = null): ResponseList[twitter4j.User]
+  def lookupUsers(specificUsers: Users.SpecificInfo): ResponseList[twitter4j.User]
 
   /**
    * Run a search for users similar to the Find People button on Twitter.com; the same results returned by people search on Twitter.com will be returned by using this API.<br />
