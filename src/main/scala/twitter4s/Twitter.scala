@@ -167,29 +167,26 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO ファイルをEitherにする
-  def updateProfileImage(
-      imageFile: File = null,
-      imageStream: InputStream = null): User = {
-    (Option(imageFile), Option(imageStream)) match {
-      case (None, Some(imageStream)) => twitter4jObj.updateProfileImage(imageStream)
-      case (Some(imageFile), None) => twitter4jObj.updateProfileImage(imageFile)
-      case _ => throw new IllegalArgumentException("Parameter can set either imageFile or imageStream.")
+  def updateProfileImage(imageResource: ImageResource.SpecificResource): User = {
+    require(imageResource != null)
+    
+    imageResource match {
+      case Left(imageStream) => twitter4jObj.updateProfileImage(imageStream)
+      case Right(imageFile) => twitter4jObj.updateProfileImage(imageFile)
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  // TODO ファイルをEitherにする
   def updateProfileBackgroundImage(
-      imageFile: File = null,
-      imageStream: InputStream = null,
+      imageResource: ImageResource.SpecificResource,
       tile: Boolean): User = {
-    (Option(imageFile), Option(imageStream)) match {
-      case(None, Some(imageStream)) => twitter4jObj.updateProfileBackgroundImage(imageStream, tile)
-      case(Some(imageFile), None) => twitter4jObj.updateProfileBackgroundImage(imageFile, tile)
-      case _ => throw new IllegalArgumentException("Parameter can set either imageFile or imageStream.")
+    require(imageResource != null)
+    
+    imageResource match {
+      case Left(imageStream) => twitter4jObj.updateProfileBackgroundImage(imageStream, tile)
+      case Right(imageFile) => twitter4jObj.updateProfileBackgroundImage(imageFile, tile)
     }
   }
   

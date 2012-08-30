@@ -4,9 +4,9 @@ import twitter4s.User
 import twitter4s.RateLimitStatus
 import twitter4s.AccountTotals
 import twitter4s.AccountSettings
-
 import java.io.File
 import java.io.InputStream
+import twitter4s.ImageResource
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -66,19 +66,15 @@ trait AccountMethods {
    * <br />Note: You must set parameter imageFile or imageStream at least.
    * <br />Profile image must be a valid GIF, JPG, or PNG image of less than 700 kilobytes in size. Images with width larger than 500 pixels will be scaled down.
    *
-   * @param imageFile (optional) Profile image as File object.
-   * @param imageStream (optional) Profile image as Stream object.
+   * @param imageResource (require) Profile image as File or Stream object.
    * @return the updated user
    * @throws TwitterException when Twitter service or network is unavailable,
    * or when the specified file is not found (FileNotFoundException will be nested),
    * or when the specified file object in not representing a file (IOException will be nested).
-   * @throws IllegalArgumentException when the both of parameters are set or not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_image">POST account/update_profile_image | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def updateProfileImage(
-      imageFile: File = null,
-      imageStream: InputStream = null): User
+  def updateProfileImage(imageResource: ImageResource.SpecificResource): User
   
   /**
    * Updates the authenticating user's profile background image.<br/>
@@ -87,20 +83,17 @@ trait AccountMethods {
    * <br />Note: You must set prameter imageFile or imageStream at least.
    * <br />Background image must be a valid GIF, JPG, or PNG image of less than 800 kilobytes in size. Images with width larger than 2048 pixels will be forceably scaled down.
    *
-   * @param imageFile (optional) Background image as File object.
-   * @param imageStream (optional) Background image as Stream object.
+   * @param imageResource (require) Background image as File or Stream object.
    * @param tile (required) If set to true the background image will be displayed tiled. The image will not be tiled otherwise.
    * @return the updated user
    * @throws TwitterException when Twitter service or network is unavailable,
    * or when the specified file is not found (FileNotFoundException will be nested),
    * or when the specified file object in not representing a file (IOException will be nested)
-   * @throws IllegalArgumentException when the both of imageFile and imageStream parameters are set or not set.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/account/update_profile_background_image">POST account/update_profile_background_image | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def updateProfileBackgroundImage(
-      imageFile: File = null,
-      imageStream: InputStream = null,
+      imageResource: ImageResource.SpecificResource,
       tile: Boolean): User
   
   /**

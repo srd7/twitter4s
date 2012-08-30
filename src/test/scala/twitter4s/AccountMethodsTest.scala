@@ -124,26 +124,27 @@ class AccountMethodsTest extends Specification {
   
   "updateProfileImage" should {
     "change profile image" in {
-      val user = twitter2.updateProfileImage(imageStream = new FileInputStream(getRandomlyChosenFile))
+      val user = twitter2.updateProfileImage(
+          ImageResource.isAssigned(new FileInputStream(getRandomlyChosenFile)))
       rawJSON(user.tw4jObj) must not equalTo(null)
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-       twitter2.updateProfileImage() must throwA[IllegalArgumentException]
+       twitter2.updateProfileImage(null) must throwA[IllegalArgumentException]
     }
   }
   
   "updateProfileBackgroundImage" should {
     "change background image in authorized user page" in {
       val user = twitter2.updateProfileBackgroundImage(
-          imageFile = getRandomlyChosenFile,
-          tile = (5 < System.currentTimeMillis() % 5))
+          ImageResource.isAssigned(getRandomlyChosenFile),
+          (5 < System.currentTimeMillis() % 5))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-      twitter2.updateProfileBackgroundImage(tile = true) must throwA[IllegalArgumentException]
+      twitter2.updateProfileBackgroundImage(null, true) must throwA[IllegalArgumentException]
     }
   }
   
