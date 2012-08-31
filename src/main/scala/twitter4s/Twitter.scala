@@ -333,19 +333,20 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inhritDoc}
    */
-  // TODO pageとpagingはどちらかのみにする
   def getFavorites(
       id: String = null,
-      page: java.lang.Integer = null,
-      paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    (Option(id), Option(page), Option(paging)) match {
-      case (None, None, None) => twitter4jObj.getFavorites()
-      case (None, Some(page), None) => twitter4jObj.getFavorites(page)
-      case (Some(id), None, None) => twitter4jObj.getFavorites(id)
-      case (Some(id), Some(page), None) => twitter4jObj.getFavorites(id, page)
-      case (None, None, Some(paging)) => twitter4jObj.getFavorites(paging)
-      case (Some(id), None, Some(paging)) => twitter4jObj.getFavorites(id, paging)
-      case (_, Some(page), Some(paging)) => throw new IllegalArgumentException("parameter page or paging must be set either one.")
+      page: Page.PageSpecific = null): ResponseList[twitter4j.Status] = {
+    (Option(id), Option(page)) match {
+      case (None, None) => twitter4jObj.getFavorites()
+      case (Some(id), None) => twitter4jObj.getFavorites(id)
+      case (Some(id), Some(page)) => page match {
+        case Left(pageNumber) => twitter4jObj.getFavorites(id, pageNumber)
+        case Right(paging) => twitter4jObj.getFavorites(id, paging)
+      }
+      case (None, Some(page)) => page match {
+        case Left(pageNumber) => twitter4jObj.getFavorites(pageNumber)
+        case Right(paging) => twitter4jObj.getFavorites(paging)
+      }
     }
   }
   

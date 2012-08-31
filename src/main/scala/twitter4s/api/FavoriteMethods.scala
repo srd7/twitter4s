@@ -1,6 +1,6 @@
 package twitter4s.api
 
-import twitter4j.Paging
+import twitter4s.Page
 import twitter4s.ResponseList
 import twitter4s.Status
 
@@ -23,8 +23,7 @@ trait FavoriteMethods {
    * <br />getFavorites method calls http://api.twitter.com/1/favorites.json
    * 
    * @param id (optional) the ID or screen name of the user for whom to request a list of favorite statuses
-   * @param page (optional) the number of page
-   * @param paging (optional) controls pagination. Supports sinceId and page parameters.
+   * @param page (optional) page specific information (number or controls pagination. Supports sinceId and page parameters.)
    * @return List<Status>
    * @throws TwitterException when Twitter service or network is unavailable
    * @throws IllegalArgumentException when both of parameters page and paging are set.
@@ -33,8 +32,7 @@ trait FavoriteMethods {
    */
   def getFavorites(
       id: String = null,
-      page: java.lang.Integer = null,
-      paging: Paging = null): ResponseList[twitter4j.Status]
+      page: Page.PageSpecific = null): ResponseList[twitter4j.Status]
 
   /**
    * Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.
