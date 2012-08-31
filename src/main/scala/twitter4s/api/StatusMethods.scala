@@ -30,15 +30,13 @@ trait StatusMethods {
    * <br />updateStatus calls http://api.twitter.com/1/statuses/update
    * <br />Note: You must set either status or latestStatus.
    *
-   * @param status (optional) the text of your status update
-   * @param latestStatus (optional) the latest status to be updated.
+   * @param status (require) your status to be update (text or latest status obejct).
    * @return the latest status
    * @throws TwitterException when Twitter service or network is unavailable
-   * @throws IllegalArgumentException when both of status and latestStatus are set or not.
    * @see <a href="https://dev.twitter.com/docs/api/1/post/statuses/update">POST statuses/update | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def updateStatus(status: String = null, latestStatus: StatusUpdate = null): Status
+  def updateStatus(status: Status.StatusSpecific): Status
 
   /**
    * Destroys the status specified by the required ID parameter.<br />

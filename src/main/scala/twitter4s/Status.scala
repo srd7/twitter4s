@@ -27,3 +27,19 @@ trait Status extends TwitterResponse with Twt with EntitySupport {
   
   def annotations: Annotations
 }
+
+object Status {
+  type StatusSpecific = Either[String, twitter4j.StatusUpdate]
+  
+  def isWrittenBy(text: String) = {
+    require(text != null)
+    
+    Left(text)
+  }
+  
+  def isSetBy(latestStatus: twitter4j.StatusUpdate) = {
+    require(latestStatus != null)
+    
+    Right(latestStatus)
+  }
+}
