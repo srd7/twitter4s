@@ -79,7 +79,7 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
   
   def rateLimitStatus = RateLimitStatusImpl(twt4jUser.getRateLimitStatus())
   
-  def accessLevel = twt4jUser.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jUser.getAccessLevel())
   
   def tw4jObj = twt4jUser
 }

@@ -1,6 +1,7 @@
 package twitter4s.internal.json
 
 import twitter4s.IDs
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -20,7 +21,7 @@ case class IDsImpl(twt4jIDs: twitter4j.IDs) extends IDs {
   
   def rateLimitStatus = RateLimitStatusImpl(twt4jIDs.getRateLimitStatus())
   
-  def accessLevel = twt4jIDs.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jIDs.getAccessLevel())
   
   def tw4jObj = twt4jIDs
 

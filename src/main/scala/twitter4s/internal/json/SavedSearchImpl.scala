@@ -2,6 +2,7 @@ package twitter4s.internal.json
 
 import twitter4s.SavedSearch
 import java.util.Date
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -23,7 +24,7 @@ case class SavedSearchImpl(twt4jSavedSearch: twitter4j.SavedSearch) extends Save
   
   def rateLimitStatus = RateLimitStatusImpl(twt4jSavedSearch.getRateLimitStatus())
   
-  def accessLevel = twt4jSavedSearch.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jSavedSearch.getAccessLevel())
   
   def tw4jObj = twt4jSavedSearch
 }

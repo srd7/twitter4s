@@ -3,6 +3,7 @@ package twitter4s.internal.json
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.collection.mutable.Buffer
 import twitter4s.ResponseList
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -29,7 +30,7 @@ case class ResponseListImpl[T](twt4jResponseList: twitter4j.ResponseList[T]) ext
   /**
    * access level
    */
-  def accessLevel = twt4jResponseList.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jResponseList.getAccessLevel())
   
   /**
    * Get object in scala converted list method.

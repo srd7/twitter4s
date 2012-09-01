@@ -4,6 +4,7 @@ import twitter4j.Trend
 import twitter4j.RateLimitStatus
 import twitter4j.Location
 import java.util.Date
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -21,7 +22,7 @@ case class TrendsImpl(twt4jTrends: twitter4j.Trends) extends Trends {
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jTrends.getRateLimitStatus())
 
-  def accessLevel = twt4jTrends.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jTrends.getAccessLevel())
 
   def tw4jObj = twt4jTrends
 

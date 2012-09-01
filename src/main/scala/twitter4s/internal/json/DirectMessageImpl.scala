@@ -1,6 +1,7 @@
 package twitter4s.internal.json
 
 import twitter4s.DirectMessage
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -28,7 +29,7 @@ case class DirectMessageImpl(twt4jDirectMessage: twitter4j.DirectMessage) extend
   
   def rateLimitStatus = RateLimitStatusImpl(twt4jDirectMessage.getRateLimitStatus())
 
-  def accessLevel = twt4jDirectMessage.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jDirectMessage.getAccessLevel())
 
   def tw4jObj = twt4jDirectMessage
 }

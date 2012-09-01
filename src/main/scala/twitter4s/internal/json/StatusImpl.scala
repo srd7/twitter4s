@@ -51,7 +51,7 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jStatus.getRateLimitStatus())
 
-  def accessLevel = twt4jStatus.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jStatus.getAccessLevel())
 
   def tw4jObj = twt4jStatus
 

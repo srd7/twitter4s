@@ -2,6 +2,7 @@ package twitter4s.internal.json
 
 import twitter4s.UserList
 import java.net.URI
+import twitter4s.AccessLevel
 
 case class UserListImpl(twt4jUserList: twitter4j.UserList) extends UserList {
   type Tw4jResponse = twitter4j.UserList
@@ -32,7 +33,7 @@ case class UserListImpl(twt4jUserList: twitter4j.UserList) extends UserList {
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jUserList.getRateLimitStatus())
   
-  def accessLevel = twt4jUserList.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jUserList.getAccessLevel())
   
   def tw4jObj = twt4jUserList
 }

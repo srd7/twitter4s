@@ -3,6 +3,7 @@ package twitter4s.internal.json
 import twitter4j.PagableResponseList
 import twitter4s.PagableResponseList
 import scala.collection.JavaConverters._
+import twitter4s.AccessLevel
 
 case class PagableResponseListImpl[T <: twitter4j.TwitterResponse](twt4jPagableResponseList: twitter4j.PagableResponseList[T])
 extends twitter4s.PagableResponseList[T] {
@@ -22,7 +23,7 @@ extends twitter4s.PagableResponseList[T] {
 
   def featureSpecificRateLimitStatus = RateLimitStatusImpl(twt4jPagableResponseList.getFeatureSpecificRateLimitStatus())
 
-  def accessLevel = twt4jPagableResponseList.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jPagableResponseList.getAccessLevel())
   
   def apply(idx: Int) = listAsScala(idx)
   

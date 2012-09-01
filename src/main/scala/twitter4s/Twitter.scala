@@ -21,6 +21,8 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
+  // TODO RequestTokenほか認証情報オブジェクトのラップ
+  // TODO 設定がらみのラップ
   
   /* TwitterBase method */
   /**
@@ -1064,7 +1066,7 @@ object Twitter {
    * @return twitter4s.Twitter
    * @since Twitter4S 1.0.0
    */
-  // TODO 引数リストのカリー化
+  // TODO 引数からOptionの排除
   def apply(conf: Option[Configuration] = None, configTreePath: Option[String] = None, accessToken: Option[AccessToken] = None, auth: Option[Authorization] = None) = {
     val factory4j = getTwitterFactory4j(conf, configTreePath)
     new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
@@ -1091,6 +1093,7 @@ object Twitter {
    * @return twitter4j.TwitterFactory
    * @since Twitter4S 1.0.0
    */
+  // TODO 引数からOptionの排除
   private def getTwitterFactory4j(conf: Option[Configuration], configTreePath: Option[String]) = {
     (conf, configTreePath) match {
       case (None, None) => new TwitterFactory()
@@ -1108,6 +1111,7 @@ object Twitter {
    * @return twitter4j.Twitter
    * @since Twitter4S 1.0.0
    */
+  // TODO 引数からOptionの排除
   private def getTwitter4jInstance(factory4j: TwitterFactory, accessToken: Option[AccessToken], auth: Option[Authorization]) = {
     (accessToken, auth) match {
       case (None, None) => factory4j.getInstance()

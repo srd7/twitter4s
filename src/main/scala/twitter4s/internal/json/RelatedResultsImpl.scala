@@ -1,6 +1,7 @@
 package twitter4s.internal.json
 
 import twitter4s.RelatedResults
+import twitter4s.AccessLevel
 
 case class RelatedResultsImpl(twt4jRelatedResults: twitter4j.RelatedResults) extends RelatedResults {
   type Tw4jResponse = twitter4j.RelatedResults
@@ -13,7 +14,7 @@ case class RelatedResultsImpl(twt4jRelatedResults: twitter4j.RelatedResults) ext
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jRelatedResults.getRateLimitStatus())
 
-  def accessLevel = twt4jRelatedResults.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jRelatedResults.getAccessLevel())
 
   def tw4jObj = twt4jRelatedResults
 

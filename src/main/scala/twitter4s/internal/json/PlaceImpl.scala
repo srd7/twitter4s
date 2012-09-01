@@ -1,6 +1,7 @@
 package twitter4s.internal.json
 
 import twitter4s.Place
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -36,7 +37,7 @@ case class PlaceImpl(tw4jPlace: twitter4j.Place) extends Place {
   
   def rateLimitStatus = RateLimitStatusImpl(tw4jPlace.getRateLimitStatus())
   
-  def accessLevel = tw4jPlace.getAccessLevel()
+  def accessLevel = AccessLevel(tw4jPlace.getAccessLevel())
   
   def tw4jObj = tw4jPlace
 

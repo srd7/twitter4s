@@ -2,6 +2,7 @@ package twitter4s.internal.json
 import scala.collection.JavaConverters.asScalaBufferConverter
 import twitter4s.SimilarPlaces
 import twitter4j.Place
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -27,7 +28,7 @@ case class SimilarPlacesImpl(tw4jSimilarPlaces: twitter4j.SimilarPlaces) extends
   /**
    * access level
    */
-  def accessLevel = tw4jSimilarPlaces.getAccessLevel()
+  def accessLevel = AccessLevel(tw4jSimilarPlaces.getAccessLevel())
   
   /**
    * Get object in scala converted list method.

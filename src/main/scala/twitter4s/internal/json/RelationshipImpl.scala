@@ -1,6 +1,7 @@
 package twitter4s.internal.json
 
 import twitter4s.Relationship
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -30,7 +31,7 @@ case class RelationshipImpl(twt4jRelationship: twitter4j.Relationship) extends R
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jRelationship.getRateLimitStatus())
 
-  def accessLevel = twt4jRelationship.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jRelationship.getAccessLevel())
 
   def tw4jObj = twt4jRelationship
 

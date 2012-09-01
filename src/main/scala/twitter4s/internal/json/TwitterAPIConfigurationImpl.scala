@@ -2,6 +2,7 @@ package twitter4s.internal.json
 
 import twitter4s.TwitterAPIConfiguration
 import scala.collection.JavaConverters._
+import twitter4s.AccessLevel
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -25,7 +26,7 @@ case class TwitterAPIConfigurationImpl(tw4jApiConfiguration: twitter4j.TwitterAP
   
   def rateLimitStatus = RateLimitStatusImpl(tw4jApiConfiguration.getRateLimitStatus())
   
-  def accessLevel = tw4jApiConfiguration.getAccessLevel()
+  def accessLevel = AccessLevel(tw4jApiConfiguration.getAccessLevel())
   
   def tw4jObj = tw4jApiConfiguration
 

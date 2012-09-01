@@ -1,5 +1,6 @@
 package twitter4s.internal.json
 import twitter4s.AccountSettings
+import twitter4s.AccessLevel
 
 case class AccountSettingsImpl(twt4jAccountSettings: twitter4j.AccountSettings) extends AccountSettings {
   type Tw4jResponse = twitter4j.AccountSettings
@@ -24,7 +25,7 @@ case class AccountSettingsImpl(twt4jAccountSettings: twitter4j.AccountSettings) 
   
   def rateLimitStatus = RateLimitStatusImpl(twt4jAccountSettings.getRateLimitStatus())
   
-  def accessLevel = twt4jAccountSettings.getAccessLevel()
+  def accessLevel = AccessLevel(twt4jAccountSettings.getAccessLevel())
   
   def tw4jObj = twt4jAccountSettings
 }
