@@ -90,7 +90,7 @@ class SearchAPITest extends Specification {
       queryResult1.tweets.size must be_>(0)
       
       query.setQuery("from:al3x")
-      query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, twitter4j.Query.KILOMETERS)
+      query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
       
       val queryResult2 = unauthenticated.search(query)
       queryResult2.tweets.size must be_>=(0)
