@@ -20,7 +20,6 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
-  // TODO 設定がらみのラップ
   
   /* TwitterBase method */
   /**
@@ -105,7 +104,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO RequestTokenのラップ <- ファクトリオブジェクトだけの方が良いかも
   def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken = {
     (Option(callbackURL), Option(xAuthAccessType)) match {
       case (None, None) => twitter4jObj.getOAuthRequestToken()
@@ -117,7 +115,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  // TODO RequestTokenのラップ <- ファクトリオブジェクトだけの方が良いかも
   def getOAuthAccessToken(
       oauthVerifier: String = null,
       requestToken: RequestToken = null,
@@ -1059,22 +1056,23 @@ object Twitter {
   /**
    * Create Twitter4S object from twitter4j factory.
    * 
-   * @param conf (optional) Configuration object for create factory. This parameter is used high priority.
-   * @param configTreePath (optional) configuration strings for create factory.
-   * @param accessToken (optional) AccessToken object for create twitter4j object. This parameter is used high priority.
-   * @param auth (optional) Authorization object for create twitter4j object.
+   * @param conf (optional) Configuration object or configuration strings for create factory.
+   * @param accessToken (optional) AccessToken or Authorization object for create twitter4j object.
    * @return twitter4s.Twitter
    * @since Twitter4S 1.0.0
    */
-  // TODO Configurationのファクトリ
-  // TODO Authorizationのファクトリ
   def apply(conf: Configuration.SpecificInfo = null, auth: AuthorizationInformation.SpecificType = null) = {
     val factory4j = getTwitterFactory4j(Option(conf))
     new Twitter(getTwitter4jInstance(factory4j, Option(auth)))
   }
   
   /**
+   * Create Twitter4S object from twitter4j factory.
    * 
+   * @param consumerKey(required) Consumer key object for create factory.
+   * @param accessToken(required) Access token object for create twitter4j object.
+   * @return twitter4s.Twitter
+   * @since Twitter4S 1.0.0
    */
   def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
     val twitter4jObj = getTwitter4jInstance(
