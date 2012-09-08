@@ -29,21 +29,24 @@ object Twitter4sTestHelper {
    * Get Twitter4S object from test.propreties with prefix id1
    */
   def twitter1 = {
-    Twitter(conf = Some(new PropertyConfiguration(prop, "/id1")))
+    Twitter(
+        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id1")))
   }
   
   /**
    * Get Twitter4S object from test.properties with prefix id2
    */
   def twitter2 = {
-    Twitter(conf = Some(new PropertyConfiguration(prop, "/id2")))
+    Twitter(
+        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id2")))
   }
   
   /**
    * Get Twitter4S object from test.propreties with prefix id3
    */
   def twitter3 = {
-    Twitter(conf = Some(new PropertyConfiguration(prop, "/id3")))
+    Twitter(
+        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id3")))
   }
   
   /**
@@ -51,14 +54,15 @@ object Twitter4sTestHelper {
    * with access level Read, write, and direct messages
    */
   def rwPrivateMessage = {
-    Twitter(conf = Some(new PropertyConfiguration(prop, "/r-w-private")))
+    Twitter(
+        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/r-w-private")))
   }
   
   /**
    * Get Twitter4S object not authorized
    */
   def unauthenticated = {
-    Twitter(conf = Some(new ConfigurationBuilder().setJSONStoreEnabled(true).build()))
+    Twitter(Configuration.isSpecifiedBy(new ConfigurationBuilder().setJSONStoreEnabled(true).build()))
   }
   
   /**

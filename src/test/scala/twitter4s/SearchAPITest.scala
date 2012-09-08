@@ -16,7 +16,6 @@ import twitter4j.json.DataObjectFactory
  */
 @RunWith(classOf[JUnitRunner])
 class SearchAPITest extends Specification {
-  // TODO Queryの定数をラップする
   // TODO Tweetのラップ
   private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
     var trendAt: Date = null

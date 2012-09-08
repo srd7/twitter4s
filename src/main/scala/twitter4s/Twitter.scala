@@ -8,7 +8,6 @@ import twitter4j.api.HelpMethods.Language
 import twitter4j.auth.AccessToken
 import twitter4j.auth.Authorization
 import twitter4j.auth.RequestToken
-import twitter4j.conf.Configuration
 import twitter4j.Category
 import twitter4j.Friendship
 import twitter4j.Location
@@ -21,7 +20,6 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
-  // TODO RequestTokenほか認証情報オブジェクトのラップ
   // TODO 設定がらみのラップ
   
   /* TwitterBase method */
@@ -56,7 +54,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def configuration: Configuration = {
+  def configuration: twitter4j.conf.Configuration = {
     twitter4jObj.getConfiguration()
   }
   
@@ -107,6 +105,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO RequestTokenのラップ <- ファクトリオブジェクトだけの方が良いかも
   def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken = {
     (Option(callbackURL), Option(xAuthAccessType)) match {
       case (None, None) => twitter4jObj.getOAuthRequestToken()
@@ -118,6 +117,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
+  // TODO RequestTokenのラップ <- ファクトリオブジェクトだけの方が良いかも
   def getOAuthAccessToken(
       oauthVerifier: String = null,
       requestToken: RequestToken = null,
@@ -1066,10 +1066,11 @@ object Twitter {
    * @return twitter4s.Twitter
    * @since Twitter4S 1.0.0
    */
-  // TODO 引数からOptionの排除
-  def apply(conf: Option[Configuration] = None, configTreePath: Option[String] = None, accessToken: Option[AccessToken] = None, auth: Option[Authorization] = None) = {
-    val factory4j = getTwitterFactory4j(conf, configTreePath)
-    new Twitter(getTwitter4jInstance(factory4j, accessToken, auth))
+  // TODO Configurationのファクトリ
+  // TODO Authorizationのファクトリ
+  def apply(conf: Configuration.SpecificInfo = null, auth: AuthorizationInformation.SpecificType = null) = {
+    val factory4j = getTwitterFactory4j(Option(conf))
+    new Twitter(getTwitter4jInstance(factory4j, Option(auth)))
   }
   
   /**
@@ -1077,8 +1078,7 @@ object Twitter {
    */
   def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
     val twitter4jObj = getTwitter4jInstance(
-        getTwitterFactory4j(None, None),
-        None,
+        getTwitterFactory4j(None),
         None)
     twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
     twitter4jObj.setOAuthAccessToken(accessToken)
@@ -1088,17 +1088,17 @@ object Twitter {
   /**
    * Create TwitterFactory object from configurations.
    * 
-   * @param conf (optional) Configuration object. This parameter is used high priority.
-   * @param configTreePath (optional) configuration strings.
+   * @param conf (optional) Configuration object or configuration strings.
    * @return twitter4j.TwitterFactory
    * @since Twitter4S 1.0.0
    */
-  // TODO 引数からOptionの排除
-  private def getTwitterFactory4j(conf: Option[Configuration], configTreePath: Option[String]) = {
-    (conf, configTreePath) match {
-      case (None, None) => new TwitterFactory()
-      case (Some(conf), _) => new TwitterFactory(conf)
-      case (None, Some(configTreePath)) => new TwitterFactory(configTreePath)
+  private def getTwitterFactory4j(conf: Option[Configuration.SpecificInfo]) = {
+    conf match {
+      case None => new TwitterFactory()
+      case Some(conf) => conf match {
+        case Left(conf) => new TwitterFactory(conf)
+        case Right(configTreePath) => new TwitterFactory(configTreePath)
+      }
     }
   }
   
@@ -1106,17 +1106,17 @@ object Twitter {
    * Create Twitter4J object from factory.
    * 
    * @param factory4j (required) TwitterFactory is created by configuration.
-   * @param accessToken (optional) AccessToken object. This parameter is used high priority.
-   * @param auth (optinal) Authorization object.
+   * @param auth (optinal) Authorization or AccessToken object.
    * @return twitter4j.Twitter
    * @since Twitter4S 1.0.0
    */
-  // TODO 引数からOptionの排除
-  private def getTwitter4jInstance(factory4j: TwitterFactory, accessToken: Option[AccessToken], auth: Option[Authorization]) = {
-    (accessToken, auth) match {
-      case (None, None) => factory4j.getInstance()
-      case (Some(accessToken), _) => factory4j.getInstance(accessToken)
-      case (None, Some(auth)) => factory4j.getInstance(auth)
+  private def getTwitter4jInstance(factory4j: TwitterFactory, auth: Option[AuthorizationInformation.SpecificType]) = {
+    auth match {
+      case None => factory4j.getInstance()
+      case Some(auth) => auth match {
+        case Right(accessToken) => factory4j.getInstance(accessToken)
+        case Left(auth) => factory4j.getInstance(auth)
+      }
     }
   }
 }
