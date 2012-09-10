@@ -1,6 +1,7 @@
 package twitter4s
+
+import conf.PropertyConfiguration
 import java.util.Properties
-import twitter4j.conf.PropertyConfiguration
 import twitter4j.conf.ConfigurationBuilder
 import twitter4j.json.DataObjectFactory
 
@@ -30,7 +31,7 @@ object Twitter4sTestHelper {
    */
   def twitter1 = {
     Twitter(
-        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id1")))
+        Configuration.isSpecifiedBy(PropertyConfiguration(prop, "/id1")))
   }
   
   /**
@@ -38,7 +39,7 @@ object Twitter4sTestHelper {
    */
   def twitter2 = {
     Twitter(
-        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id2")))
+        Configuration.isSpecifiedBy(PropertyConfiguration(prop, "/id2")))
   }
   
   /**
@@ -46,7 +47,7 @@ object Twitter4sTestHelper {
    */
   def twitter3 = {
     Twitter(
-        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/id3")))
+        Configuration.isSpecifiedBy(PropertyConfiguration(prop, "/id3")))
   }
   
   /**
@@ -55,7 +56,7 @@ object Twitter4sTestHelper {
    */
   def rwPrivateMessage = {
     Twitter(
-        Configuration.isSpecifiedBy(new PropertyConfiguration(prop, "/r-w-private")))
+        Configuration.isSpecifiedBy(PropertyConfiguration(prop, "/r-w-private")))
   }
   
   /**
