@@ -1,8 +1,8 @@
 package twitter4s
 
 import conf.PropertyConfiguration
+import conf.ConfigurationBuilder
 import java.util.Properties
-import twitter4j.conf.ConfigurationBuilder
 import twitter4j.json.DataObjectFactory
 
 object Twitter4sTestHelper {
@@ -63,7 +63,7 @@ object Twitter4sTestHelper {
    * Get Twitter4S object not authorized
    */
   def unauthenticated = {
-    Twitter(Configuration.isSpecifiedBy(new ConfigurationBuilder().setJSONStoreEnabled(true).build()))
+    Twitter(Configuration.isSpecifiedBy(ConfigurationBuilder().setJSONStoreEnabled(true).build()))
   }
   
   /**
