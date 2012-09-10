@@ -6,7 +6,6 @@ import java.io.InputStream
 import java.util.Date
 import twitter4j.api.HelpMethods.Language
 import twitter4j.auth.AccessToken
-import twitter4j.auth.Authorization
 import twitter4j.auth.RequestToken
 import twitter4j.Category
 import twitter4j.Friendship
@@ -46,7 +45,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def authorization: Authorization = {
+  def authorization: twitter4j.auth.Authorization = {
     twitter4jObj.getAuthorization()
   }
   
