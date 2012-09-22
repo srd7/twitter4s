@@ -45,7 +45,7 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   def inReplyToStatusId = twt4jStatus.getInReplyToStatusId()
 
-  def place = twt4jStatus.getPlace()
+  def place = PlaceImpl(twt4jStatus.getPlace())
 
   def geoLocation = twt4jStatus.getGeoLocation()
 

@@ -1,6 +1,4 @@
 package twitter4s
-import twitter4j.GeoLocation
-import twitter4j.Place
 import java.util.Date
 
 /**
@@ -19,5 +17,5 @@ trait Twt {
   
   def place: Place
   
-  def geoLocation: GeoLocation
+  def geoLocation: twitter4j.GeoLocation
 }

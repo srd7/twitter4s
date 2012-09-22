@@ -1,7 +1,5 @@
 package twitter4s
 import twitter4j.RateLimitStatusListener
-import twitter4j.auth.Authorization
-import twitter4j.conf.Configuration
 import auth.OAuthSupport
 import twitter4j.auth.AccessToken
 import twitter4j.auth.RequestToken
@@ -44,7 +42,7 @@ trait TwitterBase extends AnyRef with OAuthSupport {
    * @return authorization object
    * @since Twitter4S 1.0.0
    */
-  def authorization: Authorization
+  def authorization: twitter4j.auth.Authorization
   
   /**
    * Get configuration object from twitter object.
@@ -53,7 +51,7 @@ trait TwitterBase extends AnyRef with OAuthSupport {
    * @return configuration object
    * @since Twitter4S 1.0.0
    */
-  def configuration: Configuration
+  def configuration: twitter4j.conf.Configuration
   
   /**
    * Shotdown twitter object.
