@@ -22,13 +22,15 @@ import twitter4s.RateLimitStatus
 case class RateLimitStatusImpl(twt4jRateLimitStatus: twitter4j.RateLimitStatus) extends RateLimitStatus {
   def remainingHits = twt4jRateLimitStatus.getRemainingHits()
 
-  def hourlyLimit = twt4jRateLimitStatus.getHourlyLimit()
+  // TODO 削除メソッド
+//  def hourlyLimit = twt4jRateLimitStatus.getHourlyLimit()
 
   def resetTimeInSeconds = twt4jRateLimitStatus.getResetTimeInSeconds()
 
   def secondsUntilReset = twt4jRateLimitStatus.getSecondsUntilReset()
 
-  def resetTime = twt4jRateLimitStatus.getResetTime()
+  // TODO 変更メソッド => resetTimeInSeconds
+//  def resetTime = twt4jRateLimitStatus.getResetTime()
   
   def tw4jObj = twt4jRateLimitStatus
 }

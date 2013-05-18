@@ -82,7 +82,7 @@ class TwitterTest extends Specification {
       val rateLimitStatus = twitter1.getRateLimitStatus
       rawJSON(rateLimitStatus.tw4jObj) must not equalTo(null)
       rateLimitStatus.tw4jObj must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus.tw4jObj)))
-      rateLimitStatus.hourlyLimit must be_>(10)
+//      rateLimitStatus.hourlyLimit must be_>(10)
       rateLimitStatus.remainingHits must be_>(10)
     }
     
@@ -94,7 +94,7 @@ class TwitterTest extends Specification {
       val afterStatus = twitter1.getRateLimitStatus
       
       previousStatus.remainingHits must be_>(afterStatus.remainingHits)
-      previousStatus.hourlyLimit must equalTo(afterStatus.hourlyLimit)
+//      previousStatus.hourlyLimit must equalTo(afterStatus.hourlyLimit)
     }
   }
   

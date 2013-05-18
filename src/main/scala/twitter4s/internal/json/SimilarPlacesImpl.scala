@@ -38,7 +38,8 @@ case class SimilarPlacesImpl(tw4jSimilarPlaces: twitter4j.SimilarPlaces) extends
   /**
    * feature specific rate limit status
    */
-  def featureSpecificRateLimitStatus = RateLimitStatusImpl(tw4jSimilarPlaces.getFeatureSpecificRateLimitStatus())
+  // TODO 削除メソッド
+//  def featureSpecificRateLimitStatus = RateLimitStatusImpl(tw4jSimilarPlaces.getFeatureSpecificRateLimitStatus())
   
   /**
    * access level

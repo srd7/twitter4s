@@ -14,7 +14,7 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4j.Annotations
+//import twitter4j.Annotations
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -40,7 +40,8 @@ trait Status extends TwitterResponse with Twt with EntitySupport {
   
   def isRetweetedByMe: Boolean
   
-  def annotations: Annotations
+  // TODO 削除メソッド
+//  def annotations: Annotations
 }
 
 /**

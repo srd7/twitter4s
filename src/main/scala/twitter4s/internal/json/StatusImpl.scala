@@ -44,7 +44,8 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   def isRetweetedByMe = twt4jStatus.isRetweetedByMe()
 
-  def annotations = twt4jStatus.getAnnotations()
+  // TODO 削除メソッド
+//  def annotations = twt4jStatus.getAnnotations()
 
   def urlEntities = twt4jStatus.getURLEntities()
 

@@ -5,7 +5,6 @@ import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import twitter4j.json.DataObjectFactory
-import twitter4j.ProfileImage
 import Twitter4sTestHelper._
 import internal.json.ResponseListImpl
 
@@ -102,7 +101,7 @@ class UserMethodsTest extends Specification {
     "get matched user list specified search text" in {
       val users = twitter1.searchUsers("Doug Williams", 1)
       users.size must be_>=(4)
-      users.featureSpecificRateLimitStatus must not equalTo(null)
+//      users.featureSpecificRateLimitStatus must not equalTo(null)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       rawJSON(users.tw4jObj) must not equalTo(null)
@@ -142,10 +141,11 @@ class UserMethodsTest extends Specification {
     }
   }
   
-  "getProfileImage" should {
-    "get image url" in {
-      val image = twitter1.getProfileImage(id1.screenName, ProfileImage.BIGGER)
-      image.getURL must not equalTo(null)
-    }
-  }
+  // TODO 削除メソッド
+//  "getProfileImage" should {
+//    "get image url" in {
+//      val image = twitter1.getProfileImage(id1.screenName, ProfileImage.BIGGER)
+//      image.getURL must not equalTo(null)
+//    }
+//  }
 }

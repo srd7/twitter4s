@@ -18,13 +18,12 @@ import twitter4s._
 import java.io.File
 import java.io.InputStream
 import java.util.Date
-import twitter4j.api.HelpMethods.Language
+import twitter4j.api.HelpResources.Language
 import twitter4j.auth.AccessToken
 import twitter4j.auth.RequestToken
 import twitter4j.Category
 import twitter4j.Friendship
 import twitter4j.Location
-import twitter4j.ProfileImage
 import twitter4j.RateLimitStatusListener
 import twitter4j.TwitterFactory
 import auth.ConsumerKey
@@ -81,9 +80,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def test: Boolean = {
-    twitter4jObj.test()
-  }
+  // TODO 削除メソッド
+//  def test: Boolean = {
+//    twitter4jObj.test()
+//  }
 
   /**
    * {@inheritDoc}
@@ -161,7 +161,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getRateLimitStatus: RateLimitStatus = {
-    twitter4jObj.getRateLimitStatus()
+    // TODO twitter4jの戻り値がMap<String, RateLimitStatus>に変わっている
+//    twitter4jObj.getRateLimitStatus()
+    null
   }
   
   /**
@@ -217,7 +219,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getAccountTotals: AccountTotals = {
-    twitter4jObj.getAccountTotals()
+    // TODO 削除メソッド
+//    twitter4jObj.getAccountTotals()
+    null
   }
   
   /**
@@ -271,27 +275,33 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def existsBlock(specificUser: User.SpecificInfo): Boolean = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.existsBlock(userId)
-      case Left(screenName) => twitter4jObj.existsBlock(screenName)
-    }
+    // TODO 削除メソッド
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.existsBlock(userId)
+//      case Left(screenName) => twitter4jObj.existsBlock(screenName)
+//    }
+    false
   }
   
   /**
    * {@inheritDoc}
    */
   def getBlockingUsers(page: java.lang.Integer = null): ResponseList[twitter4j.User] = {
-    Option(page) match {
-      case Some(page) => twitter4jObj.getBlockingUsers(page)
-      case None => twitter4jObj.getBlockingUsers()
-    }
+    // TODO 削除メソッド or メソッド変更
+//    Option(page) match {
+//      case Some(page) => twitter4jObj.getBlockingUsers(page)
+//      case None => twitter4jObj.getBlockingUsers()
+//    }
+    null
   }
   
   /**
    * {@inheritDoc}
    */
   def getBlockingUsersIDs: IDs = {
-    twitter4jObj.getBlockingUsersIDs()
+    // TODO 削除メソッド or メソッド変更
+//    twitter4jObj.getBlockingUsersIDs()
+    null
   }
   
   /* DirectMessageMethods */
@@ -352,11 +362,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       case (None, None) => twitter4jObj.getFavorites()
       case (Some(id), None) => twitter4jObj.getFavorites(id)
       case (Some(id), Some(page)) => page match {
-        case Left(pageNumber) => twitter4jObj.getFavorites(id, pageNumber)
+        // TODO getFavoritesからpageNumberのパターンがなくなった
+        case Left(pageNumber) => null//twitter4jObj.getFavorites(id, pageNumber)
         case Right(paging) => twitter4jObj.getFavorites(id, paging)
       }
       case (None, Some(page)) => page match {
-        case Left(pageNumber) => twitter4jObj.getFavorites(pageNumber)
+        // TODO getFavoritesからpageNumberのパターンがなくなった
+        case Left(pageNumber) => null//twitter4jObj.getFavorites(pageNumber)
         case Right(paging) => twitter4jObj.getFavorites(paging)
       }
     }
@@ -440,7 +452,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def existsFriendship(userA: String, userB: String): Boolean = {
-    twitter4jObj.existsFriendship(userA, userB)
+    // TODO 削除メソッド
+//    twitter4jObj.existsFriendship(userA, userB)
+    false
   }
 
   /**
@@ -504,7 +518,9 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getNoRetweetIds: IDs = {
-    twitter4jObj.getNoRetweetIds()
+    // TODO メソッド削除
+//    twitter4jObj.getNoRetweetIds()
+    null
   }
   
   /* GeoMethods */
@@ -624,9 +640,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       cursor: Long): PagableResponseList[twitter4j.UserList] = {
     require(listOwnerSpecificUser != null)
     
+    // TODO cursorは指定しなくなった
+    // TODO PagableResponseListからResponseListに戻り値が変更
     listOwnerSpecificUser match {
-      case Right(listOwnerUserId) => twitter4jObj.getUserLists(listOwnerUserId, cursor)
-      case Left(listOwnerScreenName) => twitter4jObj.getUserLists(listOwnerScreenName, cursor)
+      case Right(listOwnerUserId) => null//twitter4jObj.getUserLists(listOwnerUserId, cursor)
+      case Left(listOwnerScreenName) => null//twitter4jObj.getUserLists(listOwnerScreenName, cursor)
     }
   }
 
@@ -682,10 +700,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def getAllUserLists(specificUser: User.SpecificInfo): ResponseList[twitter4j.UserList] = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.getAllUserLists(userId)
-      case Left(screenName) => twitter4jObj.getAllUserLists(screenName)
-    }
+    // TODO メソッド削除
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.getAllUserLists(userId)
+//      case Left(screenName) => twitter4jObj.getAllUserLists(screenName)
+//    }
+    null
   }
   
   /* ListSubscribersMethods */
@@ -750,10 +770,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def enableNotification(specificUser: User.SpecificInfo): User = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.enableNotification(userId)
-      case Left(screenName) => twitter4jObj.enableNotification(screenName)
-    }
+    // TODO メソッド削除
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.enableNotification(userId)
+//      case Left(screenName) => twitter4jObj.enableNotification(screenName)
+//    }
+    null
   }
 
   /**
@@ -762,10 +784,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def disableNotification(specificUser: User.SpecificInfo): User = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.disableNotification(userId)
-      case Left(screenName) => twitter4jObj.disableNotification(screenName)
-    }
+    // TODO メソッド削除
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.disableNotification(userId)
+//      case Left(screenName) => twitter4jObj.disableNotification(screenName)
+//    }
+    null
   }
   
   /* SavedSearchedMethods */
@@ -863,20 +887,24 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getRetweetedBy(statusId: Long, paging: twitter4j.Paging = null): ResponseList[twitter4j.User] = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
-      case None => twitter4jObj.getRetweetedBy(statusId)
-    }
+    // TODO メソッド削除
+//    Option(paging) match {
+//      case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
+//      case None => twitter4jObj.getRetweetedBy(statusId)
+//    }
+    null
   }
   
   /**
    * {@inheritDoc}
    */
   def getRetweetedByIDs(statusId: Long, paging: twitter4j.Paging = null): IDs = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getRetweetedByIDs(statusId, paging)
-      case None => twitter4jObj.getRetweetedByIDs(statusId)
-    }
+    // TODO メソッド削除
+//    Option(paging) match {
+//      case Some(paging) => twitter4jObj.getRetweetedByIDs(statusId, paging)
+//      case None => twitter4jObj.getRetweetedByIDs(statusId)
+//    }
+    null
   }
   
   /* TimelineMethods */
@@ -924,20 +952,24 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getRetweetedByMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getRetweetedByMe(paging)
-      case None => twitter4jObj.getRetweetedByMe()
-    }
+    // TODO メソッド削除
+//    Option(paging) match {
+//      case Some(paging) => twitter4jObj.getRetweetedByMe(paging)
+//      case None => twitter4jObj.getRetweetedByMe()
+//    }
+    null
   }
   
   /**
    * {@inheritDoc}
    */
   def getRetweetedToMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
-      case None => twitter4jObj.getRetweetedToMe()
-    }
+    // TODO メソッド削除
+//    Option(paging) match {
+//      case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
+//      case None => twitter4jObj.getRetweetedToMe()
+//    }
+    null
   }
 
   /**
@@ -958,10 +990,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.getRetweetedToUser(userId, paging)
-      case Left(screenName) => twitter4jObj.getRetweetedToUser(screenName, paging)
-    }
+    // TODO メソッド削除
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.getRetweetedToUser(userId, paging)
+//      case Left(screenName) => twitter4jObj.getRetweetedToUser(screenName, paging)
+//    }
+    null
   }
 
   /**
@@ -972,10 +1006,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
     require(specificUser != null)
     
-    specificUser match {
-      case Right(userId) => twitter4jObj.getRetweetedByUser(userId, paging)
-      case Left(screenName) => twitter4jObj.getRetweetedByUser(screenName, paging)
-    }
+    // TODO メソッド削除 or 変更　
+//    specificUser match {
+//      case Right(userId) => twitter4jObj.getRetweetedByUser(userId, paging)
+//      case Left(screenName) => twitter4jObj.getRetweetedByUser(screenName, paging)
+//    }
+    null
   }
   
   /* TrendMethods */
@@ -983,22 +1019,26 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
    * {@inheritDoc}
    */
   def getDailyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
-    (Option(date), Option(excludeHashTags)) match {
-      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
-      case (None, None) => twitter4jObj.getDailyTrends()
-      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
-    }
+    // TODO メソッド削除
+//    (Option(date), Option(excludeHashTags)) match {
+//      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
+//      case (None, None) => twitter4jObj.getDailyTrends()
+//      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
+//    }
+    null
   }
   
   /**
    * {@inheritDoc}
    */
   def getWeeklyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
-    (Option(date), Option(excludeHashTags)) match {
-      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
-      case (None, None) => twitter4jObj.getWeeklyTrends()
-      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
-    }
+    // TODO メソッド削除
+//    (Option(date), Option(excludeHashTags)) match {
+//      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
+//      case (None, None) => twitter4jObj.getWeeklyTrends()
+//      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
+//    }
+    null
   }
   
   /* UserMethods */
@@ -1054,12 +1094,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.getMemberSuggestions(categorySlug)
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage = {
-    twitter4jObj.getProfileImage(screenName, size)
-  }
+  // TODO 削除メソッド
+//  /**
+//   * {@inheritDoc}
+//   */
+//  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage = {
+//    twitter4jObj.getProfileImage(screenName, size)
+//  }
 }
 
 /**

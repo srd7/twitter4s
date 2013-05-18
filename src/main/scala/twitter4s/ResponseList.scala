@@ -34,7 +34,8 @@ trait ResponseList[T] extends TwitterResponse {
    * @return rate limit status
    * @since Twitter4S 1.0.0
    */
-  def featureSpecificRateLimitStatus:RateLimitStatus
+  // TODO メソッド削除
+//  def featureSpecificRateLimitStatus:RateLimitStatus
   
   /**
    * apply method for get item specified by index.

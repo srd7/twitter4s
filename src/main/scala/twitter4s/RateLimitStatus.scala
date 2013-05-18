@@ -21,13 +21,15 @@ import java.util.Date
 trait RateLimitStatus {
   def remainingHits: Int
 
-  def hourlyLimit: Int
+  // TODO 削除メソッド
+//  def hourlyLimit: Int
 
   def resetTimeInSeconds: Int
 
   def secondsUntilReset: Int
 
-  def resetTime: Date
+  // TODO 削除メソッド
+//  def resetTime: Date
   
   def tw4jObj: twitter4j.RateLimitStatus
 }

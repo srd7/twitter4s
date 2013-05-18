@@ -14,7 +14,7 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4j.Tweet
+import twitter4j.Status // TODO 不要？
 import scala.collection.mutable.Buffer
 
 /**
@@ -27,17 +27,21 @@ trait QueryResult {
   
   def refreshUrl: String
   
-  def resultsPerPage: Int
+  // TODO 削除メソッド
+//  def resultsPerPage: Int
   
-  def warning: String
+  // TODO 削除メソッド
+//  def warning: String
   
   def completedIn: Double
   
-  def page: Int
+  // TODO 削除メソッド
+//  def page: Int
   
   def query: String
   
-  def tweets: Buffer[Tweet]
+  // TODO Statusに変更になった
+//  def tweets: Buffer[Status]
   
   /* TODO Twitter4j 3.0.0対応
   def nextQuery: twitter4j.Query

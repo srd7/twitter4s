@@ -14,7 +14,7 @@ package twitter4s.internal.json
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4j.Tweet
+//import twitter4j.Tweet
 import twitter4s.QueryResult
 import scala.collection.JavaConverters._
 
@@ -28,15 +28,19 @@ case class QueryResultImpl(tw4jQueryResult: twitter4j.QueryResult) extends Query
   
   def refreshUrl = tw4jQueryResult.getRefreshUrl()
   
-  def resultsPerPage = tw4jQueryResult.getResultsPerPage()
-  
-  def warning = tw4jQueryResult.getWarning()
+  // TODO 削除メソッド
+//  def resultsPerPage = tw4jQueryResult.getResultsPerPage()
+//  
+  // TODO 削除メソッド
+//  def warning = tw4jQueryResult.getWarning()
   
   def completedIn = tw4jQueryResult.getCompletedIn()
   
-  def page = tw4jQueryResult.getPage()
+  // TODO 削除メソッド
+//  def page = tw4jQueryResult.getPage()
   
   def query = tw4jQueryResult.getQuery()
   
-  def tweets = tw4jQueryResult.getTweets().asScala
+  // TODO 戻り値がStatusに変更
+//  def tweets = tw4jQueryResult.getTweets().asScala
 }

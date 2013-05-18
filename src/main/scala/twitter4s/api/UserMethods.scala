@@ -19,7 +19,6 @@ import twitter4s.Users
 import twitter4s.ResponseList
 import twitter4j.Query
 import twitter4j.Category
-import twitter4j.ProfileImage
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -124,5 +123,6 @@ trait UserMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/:screen_name">GET users/profile_image/:screen_name | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage
+  // TODO 削除メソッド
+//  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage
 }

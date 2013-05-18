@@ -36,11 +36,14 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
 
   def isContributorsEnabled = twt4jUser.isContributorsEnabled()
 
-  def profileImageURL = twt4jUser.getProfileImageURL()
+  // TODO twitter4jはStringに変更
+  def profileImageURL = new java.net.URL(twt4jUser.getProfileImageURL())
 
+  // TODO StringとURLでオーバーロード
   def profileImageUrlHttps = twt4jUser.getProfileImageUrlHttps()
 
-  def url = twt4jUser.getURL()
+  // TODO twitter4jはStringに変更
+  def url = new java.net.URL(twt4jUser.getURL())
 
   def isProtected = twt4jUser.isProtected()
 

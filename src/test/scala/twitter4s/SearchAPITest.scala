@@ -42,26 +42,27 @@ class SearchAPITest extends Specification {
       queryResult.sinceId must not equalTo(-1)
       queryResult.maxId must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
       queryResult.refreshUrl.indexOf(testQueryStr) must not equalTo(-1)
-      queryResult.resultsPerPage must equalTo(15)
+//      queryResult.resultsPerPage must equalTo(15)
       queryResult.completedIn must be_>(0d)
-      queryResult.page must equalTo(1)
+//      queryResult.page must equalTo(1)
     }
     
-    "get tweets from search result" in {
-      val query = Query(testQueryStr).until(dateStr)
-      val tweets = unauthenticated.search(query).tweets
-      
-      tweets.size must be_>=(1)
-      tweets(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets(0))))
-      tweets(0).getText() must not equalTo(null)
-      tweets(0).getCreatedAt() must not equalTo(null)
-      tweets(0).getFromUser() must not equalTo(null)
-      tweets(0).getFromUserName() must not equalTo(null)
-      tweets(0).getId() must not equalTo(-1L)
-      tweets(0).getProfileImageUrl() must not equalTo(null)
-      val source = tweets(0).getSource()
-      (source.indexOf("<a href=\"") != -1 or "web" == source or "API" == source)
-    }
+    // TODO 削除したメソッドのテスト
+//    "get tweets from search result" in {
+//      val query = Query(testQueryStr).until(dateStr)
+////      val tweets = unauthenticated.search(query).tweets
+//      
+////      tweets.size must be_>=(1)
+////      tweets(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets(0))))
+////      tweets(0).getText() must not equalTo(null)
+////      tweets(0).getCreatedAt() must not equalTo(null)
+////      tweets(0).getFromUser() must not equalTo(null)
+////      tweets(0).getFromUserName() must not equalTo(null)
+////      tweets(0).getId() must not equalTo(-1L)
+////      tweets(0).getProfileImageUrl() must not equalTo(null)
+////      val source = tweets(0).getSource()
+////      (source.indexOf("<a href=\"") != -1 or "web" == source or "API" == source)
+//    }
     
     "get search result if does not hit" in {
       val notHitQueryStr = "from:twit4j doesnothit"
@@ -69,8 +70,8 @@ class SearchAPITest extends Specification {
       val queryResult = unauthenticated.search(query)
       
       queryResult.sinceId must equalTo(0)
-      queryResult.resultsPerPage must equalTo(15)
-      queryResult.warning must equalTo(null)
+//      queryResult.resultsPerPage must equalTo(15)
+//      queryResult.warning must equalTo(null)
       queryResult.completedIn must be_<(4d)
       queryResult.query must equalTo(notHitQueryStr)
     }
@@ -85,13 +86,13 @@ class SearchAPITest extends Specification {
       val queryResult1 = unauthenticated.search(query)
       
       queryResult1.query must equalTo(japaneseQueryStr)
-      queryResult1.tweets.size must be_>(0)
+//      queryResult1.tweets.size must be_>(0)
       
       query.setQuery("from:al3x")
       query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
       
-      val queryResult2 = unauthenticated.search(query)
-      queryResult2.tweets.size must be_>=(0)
+//      val queryResult2 = unauthenticated.search(query)
+//      queryResult2.tweets.size must be_>=(0)
     }
     
     /*

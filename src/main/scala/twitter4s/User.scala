@@ -63,11 +63,11 @@ trait User extends TwitterResponse {
 
   def isContributorsEnabled: Boolean
 
-  def profileImageURL: URL
+  def profileImageURL: URL // TODO Stringに変更
 
-  def profileImageUrlHttps: URL
+  def profileImageUrlHttps: URL // TODO StringとURLでオーバーロード
 
-  def url: URL
+  def url: URL // TODO Stringに変更
 
   /**
    * is user account protected ?

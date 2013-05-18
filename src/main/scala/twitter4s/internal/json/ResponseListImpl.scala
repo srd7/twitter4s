@@ -39,7 +39,8 @@ case class ResponseListImpl[T](twt4jResponseList: twitter4j.ResponseList[T]) ext
   /**
    * feature specific rate limit status
    */
-  def featureSpecificRateLimitStatus = RateLimitStatusImpl(twt4jResponseList.getFeatureSpecificRateLimitStatus())
+  // TODO RateLimitStatusに変更
+//  def featureSpecificRateLimitStatus = RateLimitStatusImpl(twt4jResponseList.getFeatureSpecificRateLimitStatus())
   
   /**
    * access level

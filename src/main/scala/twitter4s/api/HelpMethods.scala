@@ -16,7 +16,7 @@ package twitter4s.api
  */
 import twitter4s.TwitterAPIConfiguration
 import twitter4s.ResponseList
-import twitter4j.api.HelpMethods.Language
+import twitter4j.api.HelpResources.Language
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -32,7 +32,8 @@ trait HelpMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/help/test">GET help/test | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def test: Boolean
+  // TODO 削除メソッド
+//  def test: Boolean
 
   /**
    * Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutons, and t.co URL lengths.<br />
