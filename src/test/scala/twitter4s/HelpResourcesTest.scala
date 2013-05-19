@@ -7,7 +7,7 @@ import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
-class HelpMethodsTest extends Specification {
+class HelpResourcesTest extends Specification {
   // TODO 削除メソッド
 //  "test" should {
 //    "return true" in {

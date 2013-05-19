@@ -21,7 +21,7 @@ import twitter4j.api.HelpResources.Language
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait HelpMethods {
+trait HelpResources {
   /**
    * Returns the string "ok" in the requested format with a 200 OK HTTP status code.
    * <br />This method calls twitter4j.Twitter.test.
