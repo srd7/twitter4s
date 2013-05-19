@@ -18,6 +18,7 @@ import twitter4j.MediaEntity
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
+ * @since 1.0.0
  */
 trait TwitterAPIConfiguration extends TwitterResponse {
   def photoSizeLimit: Int
