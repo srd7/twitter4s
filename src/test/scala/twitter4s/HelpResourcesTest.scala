@@ -5,12 +5,17 @@ import org.specs2.mutable.Specification
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
+import conf.PropertyConfiguration
+import api.impl.HelpResourcesImpl
 
 @RunWith(classOf[JUnitRunner])
 class HelpResourcesTest extends Specification {
+  val twitter4jFactory = new twitter4j.TwitterFactory(PropertyConfiguration(prop, "/id1"))
+  val twitterHelpResourceRole = new Twitter(twitter4jFactory.getInstance()) with HelpResourcesImpl
+  
   "getLanguage" should {
     "get Language settings from twitter" in {
-      val languages = twitter1.getLanguages
+      val languages = twitterHelpResourceRole.getLanguages
       
       languages.size must be_>(5)
       
@@ -24,7 +29,7 @@ class HelpResourcesTest extends Specification {
   
   "getAPIConfiguration" should {
     "get API configuration from twitter" in {
-      val conf = twitter1.getAPIConfiguration
+      val conf = twitterHelpResourceRole.getAPIConfiguration
       
       conf.photoSizeLimit must equalTo(3145728)
       conf.charactersReservedPerMedia must equalTo(23)
@@ -38,13 +43,13 @@ class HelpResourcesTest extends Specification {
   
   "getTermsOfService" should {
     "get value from twitter" in {
-      twitter1.getTermsOfService must not equalTo(null)
+      twitterHelpResourceRole.getTermsOfService must not equalTo(null)
     }
   }
   
   "getPrivacyPolicy" should {
     "get value from twitter" in {
-      twitter1.getPrivacyPolicy must not equalTo(null)
+      twitterHelpResourceRole.getPrivacyPolicy must not equalTo(null)
     }
   }
 }
