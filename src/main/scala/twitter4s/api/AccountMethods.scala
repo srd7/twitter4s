@@ -40,18 +40,6 @@ trait AccountMethods {
   def verifyCredentials: User
   
   /**
-   * Returns the remaining number of API requests available to the requesting user before the API limit is reached for the current hour. Calls to rate_limit_status do not count against the rate limit. If authentication credentials are provided, the rate limit status for the authenticating user is returned. Otherwise, the rate limit status for the requester's IP address is returned.<br/>
-   * <br />This method calls twitter4j.Twitter.getRateLimitStatus.
-   * <br />getRateLimitStatus calls http://api.twitter.com/1/account/rate_limit_status.json
-   * 
-   * @return the rate limit status
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/account/rate_limit_status">GET account/rate_limit_status | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def getRateLimitStatus: RateLimitStatus
-  
-  /**
    * Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com. Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).<br/>
    * <br />This method calls twitter4j.Twitter.updateProfileColors.
    * <br />updateProfileColors calls http://api.twitter.com/1/account/update_profile_colors.json
