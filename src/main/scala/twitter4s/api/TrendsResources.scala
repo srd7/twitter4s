@@ -51,5 +51,5 @@ trait TrendsResources {
   
   def getPlaceTrends(woeid: Int): Trends
   
-//  def getClosestTrends(location: GeoLocation): ResponseList[Location]
+  def getClosestTrends(location: GeoLocation): ResponseList[Location]
 }

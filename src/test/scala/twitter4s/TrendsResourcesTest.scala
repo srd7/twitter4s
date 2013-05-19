@@ -65,5 +65,11 @@ class TrendsResourcesTest extends Specification {
       trends.location.getName mustEqual("世界中")
     } 
   }
-
+  
+  "getClosestTrends" should {
+    "get location trends with geo location" in {
+      val locations = twitter2.getClosestTrends(GeoLocation(35.677248D, 139.72911D))
+      locations(0).getName mustEqual("東京")
+    }
+  }
 }
