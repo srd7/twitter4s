@@ -4,6 +4,8 @@ import twitter4s._
 import api.HelpResources
 import twitter4j.api.HelpResources.Language
 import api.impl._
+import scala.collection.JavaConversions._
+import scala.collection.mutable.Map
 
 trait HelpResourcesImpl extends HelpResources {
   self: Twitter => 
@@ -34,5 +36,13 @@ trait HelpResourcesImpl extends HelpResources {
    */
   def getPrivacyPolicy: String = {
     twitter4jObj.getPrivacyPolicy()
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getRateLimitStatus(resources: String*): Map[String, twitter4j.RateLimitStatus] = {
+    if(resources.isEmpty) twitter4jObj.getRateLimitStatus()
+    else twitter4jObj.getRateLimitStatus(resources: _*)
   }
 }

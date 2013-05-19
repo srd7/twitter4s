@@ -17,6 +17,7 @@ package twitter4s.api
 import twitter4s.TwitterAPIConfiguration
 import twitter4s.ResponseList
 import twitter4j.api.HelpResources.Language
+import scala.collection.mutable.Map
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -71,4 +72,6 @@ trait HelpResources {
    * @since Twitter4S 1.0.0
    */
   def getPrivacyPolicy: String
+  
+  def getRateLimitStatus(resources: String*): Map[String, twitter4j.RateLimitStatus]
 }
