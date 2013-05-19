@@ -8,13 +8,6 @@ import Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
 class HelpResourcesTest extends Specification {
-  // TODO 削除メソッド
-//  "test" should {
-//    "return true" in {
-//      unauthenticated.test must beTrue
-//    }
-//  }
-  
   "getLanguage" should {
     "get Language settings from twitter" in {
       val languages = twitter1.getLanguages
