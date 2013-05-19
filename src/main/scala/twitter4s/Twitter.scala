@@ -691,24 +691,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.showUserListSubscription(listId, userId)
   }
   
-  /* LocalTrendsMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getAvailableTrends(location: twitter4j.GeoLocation = null): ResponseList[Location] = {
-    Option(location) match {
-      case Some(location) => twitter4jObj.getAvailableTrends(location)
-      case None => twitter4jObj.getAvailableTrends()
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getLocationTrends(woeid: Int): Trends = {
-    twitter4jObj.getLocationTrends(woeid)
-  }
-  
   /* NewTwitterMethods */
   /**
    * {@inheritDoc}
@@ -1066,6 +1048,7 @@ object Twitter {
   
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
     new Twitter(twitter4jObj) with HelpResourcesImpl
+                              with TrendsResourcesImpl
   }
   
   /**
