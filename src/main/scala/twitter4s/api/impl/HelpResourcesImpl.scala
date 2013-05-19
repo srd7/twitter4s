@@ -3,6 +3,7 @@ package twitter4s.api.impl
 import twitter4s._
 import api.HelpResources
 import twitter4j.api.HelpResources.Language
+import api.impl._
 
 trait HelpResourcesImpl extends HelpResources {
   self: Twitter => 
@@ -11,10 +12,10 @@ trait HelpResourcesImpl extends HelpResources {
    * {@inheritDoc}
    */
   def getAPIConfiguration: TwitterAPIConfiguration = {
-    twitter4s.TwitterAPIConfigurationWrapperJ2S(twitter4jObj.getAPIConfiguration())
+    twitter4jObj.getAPIConfiguration()
   }
   
   def getLanguages: ResponseList[Language] = {
-    twitter4s.responseListWrapperJ2S(twitter4jObj.getLanguages())
+    twitter4jObj.getLanguages()
   }
 }
