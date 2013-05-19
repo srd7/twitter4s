@@ -42,4 +42,16 @@ class HelpResourcesTest extends Specification {
       conf.maxMediaPerUpload must equalTo(1)
     }
   }
+  
+  "getTermsOfService" should {
+    "get value from twitter" in {
+      twitter1.getTermsOfService must not equalTo(null)
+    }
+  }
+  
+  "getPrivacyPolicy" should {
+    "get value from twitter" in {
+      twitter1.getPrivacyPolicy must not equalTo(null)
+    }
+  }
 }
