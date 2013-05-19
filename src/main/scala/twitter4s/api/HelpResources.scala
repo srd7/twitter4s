@@ -27,11 +27,11 @@ trait HelpResources {
    * Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutons, and t.co URL lengths.<br />
    * It is recommended applications request this endpoint when they are loaded, but no more than once a day.
    * <br />This method calls twitter4j.Twitter.getAPIConfiguration
-   * <br />getAPIConfiguration calls https://api.twitter.com/1/help/configuration.json
+   * <br />getAPIConfiguration calls https://api.twitter.com/1.1/help/configuration.json 
    * 
    * @return configuration
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/help/configuration">GET help/configuration | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/help/configuration">GET help/configuration | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getAPIConfiguration: TwitterAPIConfiguration
@@ -39,11 +39,11 @@ trait HelpResources {
   /**
    * Returns the list of languages supported by Twitter along with their ISO 639-1 code. The ISO 639-1 code is the two letter value to use if you include lang with any of your requests.
    * <br />This method calls twitter4j.Twitter.getLanguages
-   * <br />getLoanguages calls https://api.twitter.com/1/help/languages.json
+   * <br />getLoanguages calls https://api.twitter.com/1.1/help/languages.json 
    * 
    * @return list of languages supported by Twitter
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/help/languages">GET help/languages | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/help/languages">GET help/languages | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getLanguages: ResponseList[Language]
@@ -51,11 +51,11 @@ trait HelpResources {
   /**
    * Returns Twitter's' Terms of Service.
    * <br />This method calls twitter4j.Twitter.getTermsOfService.
-   * <br />getTermsOfService calls http://api.twitter.com/1/legal/tos.json
+   * <br />getTermsOfService calls https://api.twitter.com/1.1/help/tos.json 
    *
    * @return Terms of Service
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/legal/tos">GET legal/tos | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/help/tos">GET help/tos | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getTermsOfService: String
@@ -63,11 +63,11 @@ trait HelpResources {
   /**
    * Returns Twitter's Privacy Policy.
    * <br />This method calls twitter4j.Twitter.getPrivacyPolicy.
-   * <br />getPrivacyPolicy calls http://api.twitter.com/1/legal/privacy.json
+   * <br />getPrivacyPolicy calls https://api.twitter.com/1.1/help/privacy.json 
    *
    * @return privacy policy
    * @throws twitter4j.TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/legal/privacy">GET legal/privacy | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/help/privacy">GET help/privacy | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getPrivacyPolicy: String
