@@ -34,9 +34,9 @@ class HelpResourcesTest extends Specification {
       val conf = twitter1.getAPIConfiguration
       
       conf.photoSizeLimit must equalTo(3145728)
-      conf.charactersReservedPerMedia must equalTo(21)
-      conf.shortURLLength must equalTo(20)
-      conf.shortURLLengthHttps must equalTo(21)
+      conf.charactersReservedPerMedia must equalTo(23)
+      conf.shortURLLength must equalTo(22)
+      conf.shortURLLengthHttps must equalTo(23)
       conf.photoSizes.size must equalTo(4)
       conf.nonUsernamePaths.length must be_>(20)
       conf.maxMediaPerUpload must equalTo(1)
