@@ -49,7 +49,8 @@ trait AccountMethods {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/account/rate_limit_status">GET account/rate_limit_status | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getRateLimitStatus: RateLimitStatus
+  // TODO 削除
+//  def getRateLimitStatus: RateLimitStatus
   
   /**
    * Sets one or more hex values that control the color scheme of the authenticating user's profile page on twitter.com. Each parameter's value must be a valid hexidecimal value, and may be either three or six characters (ex: #fff or #ffffff).<br/>
