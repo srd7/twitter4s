@@ -22,18 +22,6 @@ import twitter4j.api.HelpResources.Language
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait HelpResources {
-  /**
-   * Returns the string "ok" in the requested format with a 200 OK HTTP status code.
-   * <br />This method calls twitter4j.Twitter.test.
-   * <br />test calls https://api.twitter.com/1/help/test.json 
-   * 
-   * @return true if the API is working
-   * @throws twitter4j.TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/help/test">GET help/test | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  // TODO 削除メソッド
-//  def test: Boolean
 
   /**
    * Returns the current configuration used by Twitter including twitter.com slugs which are not usernames, maximum photo resolutons, and t.co URL lengths.<br />

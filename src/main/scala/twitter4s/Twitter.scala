@@ -77,31 +77,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.shutdown()
   }
   
-  /* HelpMethods */
-  /**
-   * {@inheritDoc}
-   */
-  // TODO 削除メソッド
-//  def test: Boolean = {
-//    twitter4jObj.test()
-//  }
-
-  /**
-   * {@inheritDoc}
-   */
-  // TODO 削除
-//  def getAPIConfiguration: TwitterAPIConfiguration = {
-//    twitter4jObj.getAPIConfiguration()
-//  }
-
-  /**
-   * {@inheritDoc}
-   */
-  // TODO 削除
-//  def getLanguages: ResponseList[Language] = {
-//    twitter4jObj.getLanguages()
-//  }
-  
   /* OAuthSupport */
   /**
    * {@inheritDoc}
