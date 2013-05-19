@@ -24,7 +24,6 @@ with FavoriteMethods
 with FriendsFollowersMethods
 with FriendshipMethods
 with GeoMethods
-with LegalResources
 with ListMembersMethods
 with ListMethods
 with LocalTrendsMethods
