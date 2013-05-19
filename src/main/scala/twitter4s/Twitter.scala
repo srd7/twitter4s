@@ -968,33 +968,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
-  /* TrendMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getDailyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
-    // TODO メソッド削除
-//    (Option(date), Option(excludeHashTags)) match {
-//      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getDailyTrends(date, excludeHashTags)
-//      case (None, None) => twitter4jObj.getDailyTrends()
-//      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
-//    }
-    null
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getWeeklyTrends(date: Date = null, excludeHashTags: java.lang.Boolean = null): ResponseList[twitter4j.Trends] = {
-    // TODO メソッド削除
-//    (Option(date), Option(excludeHashTags)) match {
-//      case (Some(date), Some(excludeHashTags)) => twitter4jObj.getWeeklyTrends(date, excludeHashTags)
-//      case (None, None) => twitter4jObj.getWeeklyTrends()
-//      case _ => throw new IllegalArgumentException("Parameter must set nothing or both of date and excludeHashTags.")
-//    }
-    null
-  }
-  
   /* UserMethods */
   /**
    * {@inheritDoc}
