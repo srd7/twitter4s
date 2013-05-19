@@ -48,4 +48,8 @@ trait TrendsResources {
    * @since Twitter4S 1.0.0
    */
   def getLocationTrends(woeid: Int): Trends
+  
+  def getPlaceTrends(woeid: Int): Trends
+  
+//  def getClosestTrends(location: GeoLocation): ResponseList[Location]
 }

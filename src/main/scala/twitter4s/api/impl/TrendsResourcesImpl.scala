@@ -43,4 +43,11 @@ trait TrendsResourcesImpl extends TrendsResources {
   def getLocationTrends(woeid: Int): Trends = {
     twitter4jObj.getLocationTrends(woeid)
   }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getPlaceTrends(woeid: Int): Trends = {
+    twitter4jObj.getPlaceTrends(woeid)
+  }
 }

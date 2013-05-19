@@ -5,6 +5,7 @@ import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper.rawJSON
 import Twitter4sTestHelper.twitter1
+import Twitter4sTestHelper.twitter2
 import twitter4j.json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
 
@@ -12,7 +13,6 @@ import org.specs2.runner.JUnitRunner
 class TrendsResourcesTest extends Specification {
   val geoLocation = GeoLocation(0, 0)
   
-  // Local Trends Methods
   "getAvailableTrends" should {
     "get trends without localtion parameter" in {
       val locations = twitter1.getAvailableTrends()
@@ -57,6 +57,13 @@ class TrendsResourcesTest extends Specification {
       
       trends must beAnInstanceOf[twitter4j.Trends]
     }
+  }
+  
+  "getPlaceTrends" should {
+    "get trends with place id" in {
+      val trends = twitter2.getPlaceTrends(1)
+      trends.location.getName mustEqual("世界中")
+    } 
   }
 
 }
