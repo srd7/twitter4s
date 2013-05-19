@@ -537,21 +537,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.createPlace(name, containedWithin, token, location, streetAddress)
   }
   
-  /* LegalResources */
-  /**
-   * {@inheritDoc}
-   */
-  def getTermsOfService: String = {
-    twitter4jObj.getTermsOfService()
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getPrivacyPolicy: String = {
-    twitter4jObj.getPrivacyPolicy()
-  }
-  
   /* ListMemberMethods */
   /**
    * {@inheritDoc}

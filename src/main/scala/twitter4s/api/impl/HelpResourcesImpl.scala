@@ -15,7 +15,24 @@ trait HelpResourcesImpl extends HelpResources {
     twitter4jObj.getAPIConfiguration()
   }
   
+  /**
+   * {@inheritDoc}
+   */
   def getLanguages: ResponseList[Language] = {
     twitter4jObj.getLanguages()
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getTermsOfService: String = {
+    twitter4jObj.getTermsOfService()
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getPrivacyPolicy: String = {
+    twitter4jObj.getPrivacyPolicy()
   }
 }
