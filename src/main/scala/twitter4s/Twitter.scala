@@ -1117,7 +1117,7 @@ object Twitter {
    */
   def apply(conf: Configuration.SpecificInfo = null, auth: AuthorizationInformation.SpecificType = null) = {
     val factory4j = getTwitterFactory4j(Option(conf))
-    new Twitter(getTwitter4jInstance(factory4j, Option(auth)))
+    buildTwitter4sObject(getTwitter4jInstance(factory4j, Option(auth)))
   }
   
   /**
@@ -1134,6 +1134,10 @@ object Twitter {
         None)
     twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
     twitter4jObj.setOAuthAccessToken(accessToken)
+    buildTwitter4sObject(twitter4jObj)
+  }
+  
+  private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
     new Twitter(twitter4jObj)
   }
   
