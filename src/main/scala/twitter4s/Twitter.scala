@@ -136,16 +136,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   }
   
   /**
-   * {@inheritDoc}
-   */
-  // TODO 削除
-//  def getRateLimitStatus: RateLimitStatus = {
-//    // TODO twitter4jの戻り値がMap<String, RateLimitStatus>に変わっている
-////    twitter4jObj.getRateLimitStatus()
-//    null
-//  }
-  
-  /**
    * {@inherited}
    */
   def updateProfileColors(
