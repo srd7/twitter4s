@@ -17,8 +17,9 @@ import org.specs2.runner.JUnitRunner
 class TwitterTest extends Specification {
   "getAccessLevel" should {
     "unauthenticated access level is None" in {
-      val response = unauthenticated.getDailyTrends()
-      response.accessLevel must equalTo(TwitterResponse.NONE)
+      // TODO getDailyTrendsメソッド削除
+//      val response = unauthenticated.getDailyTrends()
+//      response.accessLevel must equalTo(TwitterResponse.NONE)
     }
   
     "application has read and write access level is READ_WRITE" in {

@@ -22,7 +22,7 @@ import twitter4s.Trends
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait LocalTrendsMethods {
+trait TrendsResources {
   /**
    * Returns the locations that Twitter has trending topic information for.The response is an array of &quot;locations&quot; that encode the location's WOEID (a <a href="http://developer.yahoo.com/geo/geoplanet/">Yahoo! Where On Earth ID</a>) and some other human-readable information such as a canonical name and country the location belongs in.
    * <br />This method calls twitter4j.Twitter.getAvailableTrends.

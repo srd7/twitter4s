@@ -9,7 +9,7 @@ import twitter4j.json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class TrendMethodsTest extends Specification {
+class TrendsResourcesTest extends Specification {
   val geoLocation = GeoLocation(0, 0)
   
   // Local Trends Methods

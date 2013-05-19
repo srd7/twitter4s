@@ -26,7 +26,7 @@ with FriendshipMethods
 with GeoMethods
 with ListMembersMethods
 with ListMethods
-with LocalTrendsMethods
+with TrendsResources
 with NewTwitterMethods
 with NotificationMethods
 with SavedSearchesMethods

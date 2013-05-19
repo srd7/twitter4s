@@ -123,21 +123,27 @@ class SearchAPITest extends Specification {
     val dailyTrendsListSize = 20
     
     "get top 20 trends without parameter" in {
-      val trendList = unauthenticated.getDailyTrends()
-      trendListAssert(trendList, dailyTrendsListSize)
+      // TODO getDailyTrendsメソッド削除
+//      val trendList = unauthenticated.getDailyTrends()
+//      trendListAssert(trendList, dailyTrendsListSize)
+      true
     }
     
     "get top 20 trends exclude hash tags with date and excludeHashTags parameter" in {
-      val trendList = unauthenticated.getDailyTrends(new Date(), true)
-      trendListAssert(trendList, dailyTrendsListSize)
+      // TODO getDailyTrends削除
+//      val trendList = unauthenticated.getDailyTrends(new Date(), true)
+//      trendListAssert(trendList, dailyTrendsListSize)
+      true
     }
     
     "throw exception date or excludeHashTags are not set" in {
-      unauthenticated.getDailyTrends(new Date) must
-      throwA[IllegalArgumentException]
-      
-      unauthenticated.getDailyTrends(excludeHashTags = true) must
-      throwA[IllegalArgumentException]
+      // TODO getDailyTrendsメソッド削除
+//      unauthenticated.getDailyTrends(new Date) must
+//      throwA[IllegalArgumentException]
+//      
+//      unauthenticated.getDailyTrends(excludeHashTags = true) must
+//      throwA[IllegalArgumentException]
+      // true
     }
   }
   
@@ -145,21 +151,26 @@ class SearchAPITest extends Specification {
     val weeklyTrendsListSize = 30
     
     "get top 30 trends without parameter" in {
-      val trendList = unauthenticated.getWeeklyTrends()
-      trendListAssert(trendList, weeklyTrendsListSize)
+      // TODO getWeeklyTrendsメソッド削除
+//      val trendList = unauthenticated.getWeeklyTrends()
+//      trendListAssert(trendList, weeklyTrendsListSize)
+      true
     }
     
     "get top 30 trends exclude hash tags with data and excludeHashTags parameter" in {
-      val trendList = unauthenticated.getWeeklyTrends(new Date(), false)
-      trendListAssert(trendList, weeklyTrendsListSize)
+      // TODO getWeeklyTrendsメソッド削除
+//      val trendList = unauthenticated.getWeeklyTrends(new Date(), false)
+//      trendListAssert(trendList, weeklyTrendsListSize)
+      true
     }
     
     "throw exception date or excludeHashTags are not set" in {
-      unauthenticated.getWeeklyTrends(new Date) must
-      throwA[IllegalArgumentException]
-      
-      unauthenticated.getWeeklyTrends(excludeHashTags = true) must
-      throwA[IllegalArgumentException]
+      // TODO getWeeklyTrendsメソッド削除
+//      unauthenticated.getWeeklyTrends(new Date) must
+//      throwA[IllegalArgumentException]
+//      
+//      unauthenticated.getWeeklyTrends(excludeHashTags = true) must
+//      throwA[IllegalArgumentException]
     }
   }
 }
