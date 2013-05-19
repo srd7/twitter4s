@@ -17,7 +17,7 @@ package twitter4s
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-object twitter4s {
+package object twitter4s {
   // This object has implicit type cast methods.
   // In client code, if type "import twitter4s._" import bellow type cast methods.
   

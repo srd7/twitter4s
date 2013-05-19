@@ -15,7 +15,7 @@ package twitter4s
  * limitations under the License.
  */
 import twitter4s._
-import api._
+import api.impl._
 import java.io.File
 import java.io.InputStream
 import java.util.Date
@@ -89,16 +89,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   /**
    * {@inheritDoc}
    */
-  def getAPIConfiguration: TwitterAPIConfiguration = {
-    twitter4jObj.getAPIConfiguration()
-  }
+  // TODO 削除
+//  def getAPIConfiguration: TwitterAPIConfiguration = {
+//    twitter4jObj.getAPIConfiguration()
+//  }
 
   /**
    * {@inheritDoc}
    */
-  def getLanguages: ResponseList[Language] = {
-    twitter4jObj.getLanguages()
-  }
+  // TODO 削除
+//  def getLanguages: ResponseList[Language] = {
+//    twitter4jObj.getLanguages()
+//  }
   
   /* OAuthSupport */
   /**
@@ -1139,7 +1141,7 @@ object Twitter {
   }
   
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
-    new Twitter(twitter4jObj) with HelpResources
+    new Twitter(twitter4jObj) with HelpResourcesImpl
   }
   
   /**
