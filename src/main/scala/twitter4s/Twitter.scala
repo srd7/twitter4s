@@ -15,6 +15,7 @@ package twitter4s
  * limitations under the License.
  */
 import twitter4s._
+import api._
 import java.io.File
 import java.io.InputStream
 import java.util.Date
@@ -1138,7 +1139,7 @@ object Twitter {
   }
   
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
-    new Twitter(twitter4jObj)
+    new Twitter(twitter4jObj) with HelpResources
   }
   
   /**
