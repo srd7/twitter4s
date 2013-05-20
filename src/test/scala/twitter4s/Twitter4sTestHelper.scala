@@ -98,4 +98,11 @@ object Twitter4sTestHelper {
   
   def followsOneWay = prop.getProperty("followsOneWay")
   
+  def twitter4jInstance(testUser: TestUser): twitter4j.Twitter = new twitter4j.TwitterFactory(PropertyConfiguration(prop, testUser.idPrefix)).getInstance()
 }
+
+sealed case class TestUser(idPrefix: String)
+object User1 extends TestUser("/id1")
+object User2 extends TestUser("/id2")
+object User3 extends TestUser("/id3")
+object UserRWPrivate extends TestUser("/r-w-private")

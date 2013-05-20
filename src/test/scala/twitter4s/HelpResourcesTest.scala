@@ -10,8 +10,7 @@ import api.impl.HelpResourcesImpl
 
 @RunWith(classOf[JUnitRunner])
 class HelpResourcesTest extends Specification {
-  val twitter4jFactory = new twitter4j.TwitterFactory(PropertyConfiguration(prop, "/id1"))
-  val twitterHelpResourceRole = new Twitter(twitter4jFactory.getInstance()) with HelpResourcesImpl
+  val twitterHelpResourceRole = new Twitter(twitter4jInstance(User1)) with HelpResourcesImpl
   
   "getLanguage" should {
     "get Language settings from twitter" in {

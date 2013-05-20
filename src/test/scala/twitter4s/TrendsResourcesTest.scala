@@ -3,19 +3,21 @@ package twitter4s
 import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
-import Twitter4sTestHelper.rawJSON
-import Twitter4sTestHelper.twitter1
-import Twitter4sTestHelper.twitter2
+import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
+import twitter4s.conf.PropertyConfiguration
+import twitter4s.api.impl.TrendsResourcesImpl
 
 @RunWith(classOf[JUnitRunner])
 class TrendsResourcesTest extends Specification {
   val geoLocation = GeoLocation(0, 0)
   
+  val twitterTrendsResourceRole1 = new Twitter(twitter4jInstance(User2)) with TrendsResourcesImpl
+  
   "getAvailableTrends" should {
     "get trends without localtion parameter" in {
-      val locations = twitter1.getAvailableTrends()
+      val locations = twitterTrendsResourceRole1.getAvailableTrends()
       
       rawJSON(locations.tw4jObj) mustNotEqual(null)
       locations(0) must equalTo(DataObjectFactory.createLocation(rawJSON(locations(0))))
@@ -23,7 +25,7 @@ class TrendsResourcesTest extends Specification {
     }
     
     "get trends with location parameter" in {
-      val locations = twitter1.getAvailableTrends(geoLocation)
+      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
       
       rawJSON(locations.tw4jObj) mustNotEqual(null)
       locations.size must be_>(0)
@@ -32,7 +34,7 @@ class TrendsResourcesTest extends Specification {
   
   "getLocationTrends" should {
     "get locations trends" in {
-      val locations = twitter1.getAvailableTrends(geoLocation)
+      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
       val woeid = locations(0).getWoeid()
       val trends = twitter1.getLocationTrends(woeid)
       
@@ -44,14 +46,14 @@ class TrendsResourcesTest extends Specification {
     }
     
     "throw exception if locations trends not exists" in {
-      twitter1.getLocationTrends(2345889/*woeid of Tokyo*/) must 
+      twitterTrendsResourceRole1.getLocationTrends(2345889/*woeid of Tokyo*/) must 
       throwA[Exception]
     }
   }
   
   "property tw4jObj of Trends class" should {
     "is instance of twitter4j.Trends" in {
-      val locations = twitter1.getAvailableTrends(geoLocation)
+      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
       val woeid = locations(0).getWoeid()
       val trends = twitter1.getLocationTrends(woeid).tw4jObj
       
@@ -61,14 +63,14 @@ class TrendsResourcesTest extends Specification {
   
   "getPlaceTrends" should {
     "get trends with place id" in {
-      val trends = twitter2.getPlaceTrends(1)
+      val trends = twitterTrendsResourceRole1.getPlaceTrends(1)
       trends.location.getName mustEqual("世界中")
     } 
   }
   
   "getClosestTrends" should {
     "get location trends with geo location" in {
-      val locations = twitter2.getClosestTrends(GeoLocation(35.677248D, 139.72911D))
+      val locations = twitterTrendsResourceRole1.getClosestTrends(GeoLocation(35.677248D, 139.72911D))
       locations(0).getName mustEqual("東京")
     }
   }
