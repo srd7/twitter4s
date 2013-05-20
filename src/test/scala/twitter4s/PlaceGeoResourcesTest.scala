@@ -9,7 +9,7 @@ import twitter4j.TwitterException
 import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
-class GeoMethodsTest extends Specification {
+class PlaceGeoResourcesTest extends Specification {
   
   private def testPlaces(target: ResponseList[twitter4j.Place]) = {
     rawJSON(target.tw4jObj) must not equalTo(null)
