@@ -7,9 +7,12 @@ import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
 import java.util.Date
+import twitter4s.api.impl.PlaceGeoResourcesImpl
 
 @RunWith(classOf[JUnitRunner])
 class PlaceGeoResourcesTest extends Specification {
+  
+  val twitterPlaceGeoResourceRole = new Twitter(twitter4jInstance(User1)) with PlaceGeoResourcesImpl
   
   private def testPlaces(target: ResponseList[twitter4j.Place]) = {
     rawJSON(target.tw4jObj) must not equalTo(null)
@@ -20,31 +23,31 @@ class PlaceGeoResourcesTest extends Specification {
   "reverseGeoCode" should {
     "get no places if location is (0,0)" in {
       val query = GeoQuery(GeoLocation(0, 0))
-      val places = twitter1.reverseGeoCode(query)
+      val places = twitterPlaceGeoResourceRole.reverseGeoCode(query)
       places.size must equalTo(0)
     }
     
     "get place list if location is exists" in {
       val query = GeoQuery(GeoLocation(37.78215, -122.40060))
-      testPlaces(twitter1.reverseGeoCode(query))
+      testPlaces(twitterPlaceGeoResourceRole.reverseGeoCode(query))
     }
     
     "get place list if location is exists on latitude and longitude" in {
       val query = GeoQuery(37.78215, -122.40060)
-      testPlaces(twitter1.reverseGeoCode(query))
+      testPlaces(twitterPlaceGeoResourceRole.reverseGeoCode(query))
     }
   }
   
   "searchPlaces" should {
     "get place list with location" in {
       val query = GeoQuery(GeoLocation(37.78215, -122.40060))
-      testPlaces(twitter1.searchPlaces(query))
+      testPlaces(twitterPlaceGeoResourceRole.searchPlaces(query))
     }
   }
   
   "getSimilarPlaces" should {
     "get similar place list with parameter location" in {
-      val places = twitter1.getSimilarPlaces(GeoLocation(37.78215, -122.40060), "SoMa", null, null)
+      val places = twitterPlaceGeoResourceRole.getSimilarPlaces(GeoLocation(37.78215, -122.40060), "SoMa", null, null)
       rawJSON(places.tw4jObj) must not equalTo(null)
       places(0) must equalTo(DataObjectFactory.createPlace(rawJSON(places(0))))
       places.size must be_>(0)
@@ -54,8 +57,7 @@ class PlaceGeoResourcesTest extends Specification {
   "getGeoDetails" should {
     "get detail location information" in {
       try {
-        val place = twitter1.getGeoDetails("5a110d312052166f")
-//        val place = unauthenticated.getGeoDetails("5a110d312052166f")
+        val place = twitterPlaceGeoResourceRole.getGeoDetails("5a110d312052166f")
         rawJSON(place.tw4jObj) must not equalTo(null)
         place.tw4jObj must equalTo(DataObjectFactory.createPlace(rawJSON(place.tw4jObj)))
         place.fullName must equalTo("San Francisco, CA")
