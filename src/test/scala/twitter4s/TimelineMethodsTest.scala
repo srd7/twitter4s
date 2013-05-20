@@ -35,32 +35,33 @@ class TimelineMethodsTest extends Specification {
       val statuses = twitter1.getUserTimeline()
       statuses.size must be_>(0)
     }
-    
-    "get spcified user screen name timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(
-          User.isSpecifiedBy("1000"))
-      testStatuses(statuses)
-      statuses(0).getUser().getId() must equalTo(9737332L)
-    }
-    
-    "get specified user id timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(
-          User.isSpecifiedBy(1000L))
-      testStatuses(statuses)
-      statuses(0).getUser().getId() must equalTo(1000L)
-    }
-    
-    "get specified user screen name and page count timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(
-          User.isSpecifiedBy(id1.screenName), paging = Paging().count(10))
-      testStatuses(statuses)
-    }
-    
-    "get specified user id and sinceid timeline unauthenticated" in {
-      val statuses = unauthenticated.getUserTimeline(
-          User.isSpecifiedBy(id1.id), paging = Paging(sinceId = 999383469L))
-      testStatuses(statuses)
-    }
+    // TODO unauthenticateユーザはAPI 1.1から使えない
+//    
+//    "get spcified user screen name timeline unauthenticated" in {
+//      val statuses = unauthenticated.getUserTimeline(
+//          User.isSpecifiedBy("1000"))
+//      testStatuses(statuses)
+//      statuses(0).getUser().getId() must equalTo(9737332L)
+//    }
+//    
+//    "get specified user id timeline unauthenticated" in {
+//      val statuses = unauthenticated.getUserTimeline(
+//          User.isSpecifiedBy(1000L))
+//      testStatuses(statuses)
+//      statuses(0).getUser().getId() must equalTo(1000L)
+//    }
+//    
+//    "get specified user screen name and page count timeline unauthenticated" in {
+//      val statuses = unauthenticated.getUserTimeline(
+//          User.isSpecifiedBy(id1.screenName), paging = Paging().count(10))
+//      testStatuses(statuses)
+//    }
+//    
+//    "get specified user id and sinceid timeline unauthenticated" in {
+//      val statuses = unauthenticated.getUserTimeline(
+//          User.isSpecifiedBy(id1.id), paging = Paging(sinceId = 999383469L))
+//      testStatuses(statuses)
+//    }
     
     "get authed user's timeline specified sinceid" in {
       val statuses = twitter1.getUserTimeline(paging = Paging(sinceId = 999383469L))
