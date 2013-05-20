@@ -492,42 +492,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
-  /* GeoMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def searchPlaces(query: twitter4j.GeoQuery): ResponseList[twitter4j.Place] = {
-    twitter4jObj.searchPlaces(query)
-  }
-
-  /**
-   * {@inhritDoc}
-   */
-  def getSimilarPlaces(location: twitter4j.GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces = {
-    twitter4jObj.getSimilarPlaces(location, name, containedWithin, streetAddress)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def reverseGeoCode(query: twitter4j.GeoQuery): ResponseList[twitter4j.Place] = {
-    twitter4jObj.reverseGeoCode(query)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getGeoDetails(id: String): Place = {
-    twitter4jObj.getGeoDetails(id)
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def createPlace(name: String, containedWithin: String, token: String, location: twitter4j.GeoLocation, streetAddress: String): Place = {
-    twitter4jObj.createPlace(name, containedWithin, token, location, streetAddress)
-  }
-  
   /* ListMemberMethods */
   /**
    * {@inheritDoc}
@@ -1049,6 +1013,7 @@ object Twitter {
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
     new Twitter(twitter4jObj) with HelpResourcesImpl
                               with TrendsResourcesImpl
+                              with PlaceGeoResourcesImpl
   }
   
   /**
