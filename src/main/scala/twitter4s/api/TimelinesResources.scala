@@ -22,7 +22,7 @@ import twitter4j.Status
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait TimelineMethods {
+trait TimelinesResources {
   /**
    * Returns the 20 most recent statuses, including retweets, posted by the authenticating user and that user's friends. This is the equivalent of /timeline/home on the Web.<br />
    * Usage note: This home_timeline call is identical to statuses/friends_timeline, except that home_timeline also contains retweets, while statuses/friends_timeline does not for backwards compatibility reasons. In a future version of the API, statuses/friends_timeline will be deprected and replaced by home_timeline.
