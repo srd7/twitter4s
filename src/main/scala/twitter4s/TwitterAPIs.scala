@@ -31,4 +31,3 @@ with SavedSearchesMethods
 with SearchMethods
 with SpamReportingMethods
 with StatusMethods
-with TimelinesResources

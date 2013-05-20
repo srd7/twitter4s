@@ -52,13 +52,15 @@ class StatusMethodsTest extends Specification {
   
   "getRetweetedByMe" should {
     "get retweet by authorized user without page" in {
-      val statuses = twitter1.getRetweetedByMe()
-      testRetweetResponseList(statuses)
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedByMe()
+//      testRetweetResponseList(statuses)
     }
     
     "get retweet by authorized user with page" in {
-      val statuses = twitter1.getRetweetedByMe(Paging(1))
-      testRetweetResponseList(statuses)
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedByMe(Paging(1))
+//      testRetweetResponseList(statuses)
     }
   }
   
