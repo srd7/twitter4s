@@ -67,18 +67,6 @@ trait TimelinesResourcesImpl extends TimelinesResources {
       case Some(paging) => twitter4jObj.getMentions(paging)
     }
   }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweetedToMe(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    // TODO メソッド削除
-//    Option(paging) match {
-//      case Some(paging) => twitter4jObj.getRetweetedToMe(paging)
-//      case None => twitter4jObj.getRetweetedToMe()
-//    }
-    null
-  }
 
   /**
    * {@inheritDoc}

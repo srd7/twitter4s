@@ -69,19 +69,6 @@ trait TimelinesResources {
   def getMentions(paging: Paging = null): ResponseList[Status]
 
   /**
-   * Returns the 20 most recent retweets posted by the authenticating user's friends.
-   * <br />This method calls twitter4j.Twitter.getRetweetedToMe.
-   * <br />This method calls http://api.twitter.com/1/statuses/retweeted_to_me
-   *
-   * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
-   * @return the 20 most recent retweets posted by the authenticating user's friends.
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweeted_to_me">GET statuses/retweeted_to_me | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def getRetweetedToMe(paging: Paging = null): ResponseList[Status]
-
-  /**
    * Returns the 20 most recent tweets of the authenticated user that have been retweeted by others.
    * <br />This method calls twitter4j.Twitter.getRetweetsOfMe
    * <br />This method calls http://api.twitter.com/1/statuses/retweets_of_me

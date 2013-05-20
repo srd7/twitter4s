@@ -85,32 +85,37 @@ class StatusMethodsTest extends Specification {
   
   "getRetweetedToMe" should {
     "get retweet to authorized user without page" in {
-      val statuses = twitter1.getRetweetedToMe()
-      testRetweetResponseList(statuses)
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedToMe()
+//      testRetweetResponseList(statuses)
     }
     
     "get retweet to authorized user with page" in {
-      val statuses = twitter1.getRetweetedToMe(Paging(1))
-      testRetweetResponseList(statuses)
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedToMe(Paging(1))
+//      testRetweetResponseList(statuses)
     }
   }
   
   "getRtweetedToUser" should {
     "get retweet to user specified by id" in {
-      val statuses = twitter1.getRetweetedToUser(
-          User.isSpecifiedBy(id1.id), Paging(1))
-      testRetweetResponseList(statuses)
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedToUser(
+//          User.isSpecifiedBy(id1.id), Paging(1))
+//      testRetweetResponseList(statuses)
     }
     
-    "get retweet to user specified by screen name" in { 
-      val statuses = twitter1.getRetweetedToUser(
-          User.isSpecifiedBy(id1.screenName), Paging(1))
-      testRetweetResponseList(statuses)
+    "get retweet to user specified by screen name" in {
+      // TODO メソッド削除
+//      val statuses = twitter1.getRetweetedToUser(
+//          User.isSpecifiedBy(id1.screenName), Paging(1))
+//      testRetweetResponseList(statuses)
     }
     
     "throw exception when parameter specificUser is null" in {
-      twitter1.getRetweetedToUser(null, Paging(1)) must
-      throwA[IllegalArgumentException]
+      // TODO メソッド削除
+//      twitter1.getRetweetedToUser(null, Paging(1)) must
+//      throwA[IllegalArgumentException]
     }
   }
   
