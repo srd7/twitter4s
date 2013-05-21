@@ -77,36 +77,4 @@ trait TimelinesResourcesImpl extends TimelinesResources {
       case None => twitter4jObj.getRetweetsOfMe()
     }
   }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweetedToUser(
-      specificUser: User.SpecificInfo, 
-      paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
-    require(specificUser != null)
-    
-    // TODO メソッド削除
-//    specificUser match {
-//      case Right(userId) => twitter4jObj.getRetweetedToUser(userId, paging)
-//      case Left(screenName) => twitter4jObj.getRetweetedToUser(screenName, paging)
-//    }
-    null
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweetedByUser(
-      specificUser: User.SpecificInfo,
-      paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
-    require(specificUser != null)
-    
-    // TODO メソッド削除 or 変更　
-//    specificUser match {
-//      case Right(userId) => twitter4jObj.getRetweetedByUser(userId, paging)
-//      case Left(screenName) => twitter4jObj.getRetweetedByUser(screenName, paging)
-//    }
-    null
-  }
 }
