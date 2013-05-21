@@ -81,4 +81,20 @@ trait TimelinesResources {
    * @since Twitter4S 1.0.0
    */
   def getRetweetsOfMe(paging: Paging = null): ResponseList[Status]
+  
+  /**
+   * Returns the 20 most recent mentions (tweets containing a users's @screen_name) for the authenticating user.<br>
+   * The timeline returned is the equivalent of the one seen when you view your mentions on twitter.com.<br>
+   * This method can only return up to 800 tweets.<br>
+   * See <a href="https://dev.twitter.com/docs/working-with-timelines"></a>Working with Timelines</a> for instructions on traversing timelines.
+   * <br />This method calls twitte4j.Twitter.getMentionsTimeline
+   * <br />This method calls http://api.twitter.com/1.1/statuses/mentions_timeline
+   * 
+   * @param paging (optional) controls pagination. Supports since_id, max_id, zcount parameters.
+   * @return the 20 most recent replies
+   * @throws TwitterException when Twitter service or network is unavailable
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions">GET statuses/mentions | Twitter Developers</a>
+   * @since Twitter4S 2.0.0
+   */
+  def getMentionsTimeline(paging: Paging = null): ResponseList[Status]
 }
