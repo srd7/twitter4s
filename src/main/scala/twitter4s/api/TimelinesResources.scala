@@ -27,12 +27,12 @@ trait TimelinesResources {
    * Returns the 20 most recent statuses, including retweets, posted by the authenticating user and that user's friends. This is the equivalent of /timeline/home on the Web.<br />
    * Usage note: This home_timeline call is identical to statuses/friends_timeline, except that home_timeline also contains retweets, while statuses/friends_timeline does not for backwards compatibility reasons. In a future version of the API, statuses/friends_timeline will be deprected and replaced by home_timeline.
    * <br />This method calls twitter4j.Twitter.getHomeTimeline.
-   * <br />getHomeTimeline calls http://api.twitter.com/1/statuses/home_timeline
+   * <br />getHomeTimeline calls http://api.twitter.com/1.1/statuses/home_timeline
    *
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return list of the home Timeline
    * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">GET statuses/home_timeline | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline">GET statuses/home_timeline | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getHomeTimeline(paging: Paging = null): ResponseList[Status]
@@ -58,25 +58,26 @@ trait TimelinesResources {
   /**
    * Returns the 20 most recent mentions (status containing @username) for the authenticating user.
    * <br />This method calls twitter4j.Twitter.getMentions.
-   * <br />getMentions calls http://api.twitter.com/1/statuses/mentions
+   * <br />getMentions calls http://api.twitter.com/1.1/statuses/mentions
    *
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return the 20 most recent replies
    * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/mentions">GET statuses/mentions | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions">GET statuses/mentions | Twitter Developers</a>
    * @since Twitter4S 1.0.0
+   * @deprecated use {@link #getMentionsTimeline(twitter4s.Paging)} instead
    */
   def getMentions(paging: Paging = null): ResponseList[Status]
 
   /**
    * Returns the 20 most recent tweets of the authenticated user that have been retweeted by others.
    * <br />This method calls twitter4j.Twitter.getRetweetsOfMe
-   * <br />This method calls http://api.twitter.com/1/statuses/retweets_of_me
+   * <br />This method calls http://api.twitter.com/1.1/statuses/retweets_of_me.json
    *
    * @param paging (optional) controls pagination. Supports since_id, max_id, count and page parameters.
    * @return the 20 most recent tweets of the authenticated user that have been retweeted by others.
    * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/retweets_of_me">GET statuses/retweets_of_me | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me">GET statuses/retweets_of_me | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getRetweetsOfMe(paging: Paging = null): ResponseList[Status]
