@@ -15,7 +15,7 @@ import twitter4j.json.DataObjectFactory
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 @RunWith(classOf[JUnitRunner])
-class SearchAPITest extends Specification {
+class SearchResourcesTest extends Specification {
   private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
     var trendAt: Date = null
     forall(trendList) { (singleTrends: twitter4j.Trends) =>
@@ -47,7 +47,7 @@ class SearchAPITest extends Specification {
 //      queryResult.page must equalTo(1)
     }
     
-    // TODO 削除したメソッドのテスト？
+    // TODO QueryResultモデルの変更対応
 //    "get tweets from search result" in {
 //      val query = Query(testQueryStr).until(dateStr)
 ////      val tweets = unauthenticated.search(query).tweets

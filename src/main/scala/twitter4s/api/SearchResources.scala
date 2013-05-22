@@ -20,7 +20,7 @@ import twitter4s.QueryResult
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait SearchMethods {
+trait SearchResources {
   /**
    * Returns tweets that match a specified query.
    * <br />This method calls twitter4j.Twitter.search.

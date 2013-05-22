@@ -28,6 +28,6 @@ with ListMethods
 with NewTwitterMethods
 with NotificationMethods
 with SavedSearchesMethods
-with SearchMethods
+with SearchResources
 with SpamReportingMethods
 with StatusMethods
