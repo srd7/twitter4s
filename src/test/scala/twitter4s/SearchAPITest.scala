@@ -38,7 +38,7 @@ class SearchAPITest extends Specification {
     "get result include query string until yesterday" in {
       val query  = Query(testQueryStr).until(dateStr)
       
-      val queryResult = unauthenticated.search(query)
+      val queryResult = twitter1.search(query)
       queryResult.sinceId must not equalTo(-1)
       queryResult.maxId must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
       queryResult.refreshUrl.indexOf(testQueryStr) must not equalTo(-1)
@@ -47,7 +47,7 @@ class SearchAPITest extends Specification {
 //      queryResult.page must equalTo(1)
     }
     
-    // TODO 削除したメソッドのテスト
+    // TODO 削除したメソッドのテスト？
 //    "get tweets from search result" in {
 //      val query = Query(testQueryStr).until(dateStr)
 ////      val tweets = unauthenticated.search(query).tweets
@@ -67,7 +67,7 @@ class SearchAPITest extends Specification {
     "get search result if does not hit" in {
       val notHitQueryStr = "from:twit4j doesnothit"
       val query = Query(notHitQueryStr)
-      val queryResult = unauthenticated.search(query)
+      val queryResult = twitter1.search(query)
       
       queryResult.sinceId must equalTo(0)
 //      queryResult.resultsPerPage must equalTo(15)
@@ -83,7 +83,7 @@ class SearchAPITest extends Specification {
       // twitter1.updateStatus(status = Some("テスト：" + japaneseQueryStr + new Date()))
       
       val query = Query(japaneseQueryStr)
-      val queryResult1 = unauthenticated.search(query)
+      val queryResult1 = twitter1.search(query)
       
       queryResult1.query must equalTo(japaneseQueryStr)
 //      queryResult1.tweets.size must be_>(0)
