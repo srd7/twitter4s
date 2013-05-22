@@ -28,19 +28,17 @@ case class QueryResultImpl(tw4jQueryResult: twitter4j.QueryResult) extends Query
   
   def refreshUrl = tw4jQueryResult.getRefreshUrl()
   
-  // TODO 削除メソッド
-//  def resultsPerPage = tw4jQueryResult.getResultsPerPage()
-//  
-  // TODO 削除メソッド
-//  def warning = tw4jQueryResult.getWarning()
+  def refreshURL = tw4jQueryResult.getRefreshURL()
+  
+  def count = tw4jQueryResult.getCount()
   
   def completedIn = tw4jQueryResult.getCompletedIn()
   
-  // TODO 削除メソッド
-//  def page = tw4jQueryResult.getPage()
-  
   def query = tw4jQueryResult.getQuery()
   
-  // TODO 戻り値がStatusに変更
-//  def tweets = tw4jQueryResult.getTweets().asScala
+  def tweets = tw4jQueryResult.getTweets().asScala
+  
+  def nextQuery = tw4jQueryResult.nextQuery()
+  
+  def hasNext = tw4jQueryResult.hasNext()
 }

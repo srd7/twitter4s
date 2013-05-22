@@ -721,14 +721,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.destroySavedSearch(id)
   }
   
-  /* SearchMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def search(query: twitter4j.Query): QueryResult = {
-    twitter4jObj.search(query)
-  }
-  
   /* SpamReportingMethods */
   /**
    * {@inheritDoc}
@@ -908,6 +900,7 @@ object Twitter {
                               with TrendsResourcesImpl
                               with PlaceGeoResourcesImpl
                               with TimelinesResourcesImpl
+                              with SearchResourcesImpl
   }
   
   /**

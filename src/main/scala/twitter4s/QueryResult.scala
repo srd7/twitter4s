@@ -1,20 +1,5 @@
 package twitter4s
-/*
- * Copyright (C) 2012 Shinsuke Abe
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-import twitter4j.Status // TODO 不要？
+
 import scala.collection.mutable.Buffer
 
 /**
@@ -25,27 +10,33 @@ trait QueryResult {
   
   def maxId: Long
   
+  /**
+   * @deprecated use {@link #refreshURL} instead
+   */
   def refreshUrl: String
   
-  // TODO 削除メソッド
-//  def resultsPerPage: Int
+  def refreshURL: String
   
-  // TODO 削除メソッド
-//  def warning: String
+  def count: Int
   
   def completedIn: Double
   
-  // TODO 削除メソッド
-//  def page: Int
-  
   def query: String
   
-  // TODO Statusに変更になった
-//  def tweets: Buffer[Status]
+  def tweets: Buffer[twitter4j.Status]
   
-  /* TODO Twitter4j 3.0.0対応
+  /**
+   * Returns a Query instance to fetch next page or null if there is no next page.
+   * 
+   * @return Query instance to fetch 
+   * @since Twitter4S 2.0.0
+   */
   def nextQuery: twitter4j.Query
-  
+  /**
+   * test if there is next page
+   *
+   * @return if there is next page
+   * @since Twitter4S 2.0.0
+   */
   def hasNext: Boolean
-  */
 }

@@ -1,6 +1,6 @@
-package twitter4s
+package twitter4s.api.impl
 /*
- * Copyright (C) 2012 Shinsuke Abe
+ * Copyright (C) 2013 Shinsuke Abe
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,22 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import api._
+import twitter4s.QueryResult
+import twitter4j.Query
+import twitter4s.api.SearchResources
+import twitter4s.Twitter
 
-trait TwitterAPIs extends AnyRef
-with AccountMethods
-with BlockMethods
-with DirectMessageMethods
-with FavoriteMethods
-with FriendsFollowersMethods
-with FriendshipMethods
-with ListMembersMethods
-with ListMethods
-with NewTwitterMethods
-with NotificationMethods
-with SavedSearchesMethods
-with SpamReportingMethods
-with StatusMethods
+/**
+ * @author Shinsuke Abe - mao.instantlife at gmail.com
+ * @since Twitter4S 2.0.0
+ */
+trait SearchResourcesImpl extends SearchResources {
+  self: Twitter =>
+    
+  /**
+   * {@inheritDoc}
+   */
+  def search(query: twitter4j.Query): QueryResult = {
+    twitter4jObj.search(query)
+  }
+}
