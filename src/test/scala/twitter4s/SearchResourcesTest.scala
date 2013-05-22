@@ -10,12 +10,15 @@ import java.util.Date
 import twitter4j.Trend
 import java.text.SimpleDateFormat
 import twitter4j.json.DataObjectFactory
+import twitter4s.api.impl.SearchResourcesImpl
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 @RunWith(classOf[JUnitRunner])
 class SearchResourcesTest extends Specification {
+  
+  val twitterSearchResourcesRole = new Twitter(twitter4jInstance(User1)) with SearchResourcesImpl
   
   "search" should {
     val testQueryStr = "test"
@@ -25,7 +28,7 @@ class SearchResourcesTest extends Specification {
     "get result include query string until yesterday" in {
       val query  = Query(testQueryStr).until(dateStr)
       
-      val queryResult = twitter1.search(query)
+      val queryResult = twitterSearchResourcesRole.search(query)
       queryResult.sinceId must not equalTo(-1)
       queryResult.maxId must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
       queryResult.refreshURL.indexOf(testQueryStr) must not equalTo(-1)
@@ -36,7 +39,7 @@ class SearchResourcesTest extends Specification {
     
     "get tweets from search result" in {
       val query = Query(testQueryStr).until(dateStr)
-      val tweets = twitter1.search(query).tweets
+      val tweets = twitterSearchResourcesRole.search(query).tweets
       
       tweets.size must be_>=(1)
       tweets(0) must equalTo(DataObjectFactory.createStatus(rawJSON(tweets(0))))
@@ -52,7 +55,7 @@ class SearchResourcesTest extends Specification {
     "get search result if does not hit" in {
       val notHitQueryStr = "from:twit4j doesnothit"
       val query = Query(notHitQueryStr)
-      val queryResult = twitter1.search(query)
+      val queryResult = twitterSearchResourcesRole.search(query)
       
       queryResult.sinceId must equalTo(0)
       queryResult.count must equalTo(15)
@@ -64,10 +67,10 @@ class SearchResourcesTest extends Specification {
       val japaneseQueryStr = "%... 日本語"
       // 一般的すぎてupdateStatusの意味がない
       // 他の箇所でupdateStatusのテストがなければクエリ文字列を変更してテストする
-      // twitter1.updateStatus(status = Some("テスト：" + japaneseQueryStr + new Date()))
+      // twitterSearchResourcesRole.updateStatus(status = Some("テスト：" + japaneseQueryStr + new Date()))
       
       val query = Query(japaneseQueryStr)
-      val queryResult1 = twitter1.search(query)
+      val queryResult1 = twitterSearchResourcesRole.search(query)
       
       queryResult1.query must equalTo(japaneseQueryStr)
       queryResult1.tweets.size must be_>(0)
@@ -75,7 +78,7 @@ class SearchResourcesTest extends Specification {
       query.setQuery("from:al3x")
       query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
       
-      val queryResult2 = twitter1.search(query)
+      val queryResult2 = twitterSearchResourcesRole.search(query)
       queryResult2.tweets.size must be_>=(0)
     }
     
@@ -84,7 +87,7 @@ class SearchResourcesTest extends Specification {
       val query = Query("from:tsuda")
       query.setSinceId(1671199128)
       
-      val queryResult = twitter1.search(query)
+      val queryResult = twitterSearchResourcesRole.search(query)
       queryResult.tweets.size must be_>(0)
       queryResult.tweets(0).user.id must equalTo(4171231)
       queryResult.hasNext must beTrue
@@ -97,7 +100,7 @@ class SearchResourcesTest extends Specification {
       // 時事性の強いテストデータになっている
       val query = new Query("#sendro to:yusukey").rpp(100).page(1)
       
-      val queryResult = twitter1.search(query)
+      val queryResult = twitterSearchResourcesRole.search(query)
       queryResult.getTweets().get(0).getHashtagEntities() must not equalTo(null)
       queryResult.getTweets().get(0).getUserMentionEntities() must not equalTo(null)
       queryResult.getTweets().get(0).getURLEntities() must not equalTo(null)
