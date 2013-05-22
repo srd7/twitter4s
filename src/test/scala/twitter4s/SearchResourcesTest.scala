@@ -16,19 +16,6 @@ import twitter4j.json.DataObjectFactory
  */
 @RunWith(classOf[JUnitRunner])
 class SearchResourcesTest extends Specification {
-  private def trendListAssert(trendList: ResponseList[twitter4j.Trends], expectSize: Int) = {
-    var trendAt: Date = null
-    forall(trendList) { (singleTrends: twitter4j.Trends) =>
-      singleTrends.trends.size must be_>(expectSize - 10)
-      if (trendAt != null) trendAt.before(singleTrends.trendAt) must beTrue
-      trendAt = singleTrends.trendAt
-      forall(singleTrends.trends.toList) { (trend: Trend) =>
-        trend.getName() mustNotEqual(null)
-        trend.getUrl() mustEqual(null)
-        trend.getQuery() mustNotEqual(null)
-      }
-    }
-  }
   
   "search" should {
     val testQueryStr = "test"
@@ -41,28 +28,26 @@ class SearchResourcesTest extends Specification {
       val queryResult = twitter1.search(query)
       queryResult.sinceId must not equalTo(-1)
       queryResult.maxId must be_>(1265204883L) // 値はTwitter4Jから引き継ぎ。期待値がどこから来てるか不明
-      queryResult.refreshUrl.indexOf(testQueryStr) must not equalTo(-1)
-//      queryResult.resultsPerPage must equalTo(15)
+      queryResult.refreshURL.indexOf(testQueryStr) must not equalTo(-1)
+      queryResult.count must equalTo(15)
       queryResult.completedIn must be_>(0d)
-//      queryResult.page must equalTo(1)
+      queryResult.query must equalTo(testQueryStr + " until:" + dateStr)
     }
     
-    // TODO QueryResultモデルの変更対応
-//    "get tweets from search result" in {
-//      val query = Query(testQueryStr).until(dateStr)
-////      val tweets = unauthenticated.search(query).tweets
-//      
-////      tweets.size must be_>=(1)
-////      tweets(0) must equalTo(DataObjectFactory.createTweet(rawJSON(tweets(0))))
-////      tweets(0).getText() must not equalTo(null)
-////      tweets(0).getCreatedAt() must not equalTo(null)
-////      tweets(0).getFromUser() must not equalTo(null)
-////      tweets(0).getFromUserName() must not equalTo(null)
-////      tweets(0).getId() must not equalTo(-1L)
-////      tweets(0).getProfileImageUrl() must not equalTo(null)
-////      val source = tweets(0).getSource()
-////      (source.indexOf("<a href=\"") != -1 or "web" == source or "API" == source)
-//    }
+    "get tweets from search result" in {
+      val query = Query(testQueryStr).until(dateStr)
+      val tweets = twitter1.search(query).tweets
+      
+      tweets.size must be_>=(1)
+      tweets(0) must equalTo(DataObjectFactory.createStatus(rawJSON(tweets(0))))
+      tweets(0).text must not equalTo(null)
+      tweets(0).createdAt must not equalTo(null)
+      tweets(0).user must not equalTo(null)
+      tweets(0).id must not equalTo(-1L)
+      tweets(0).user.profileImageURL must not equalTo(null)
+      val source = tweets(0).getSource()
+      (source.indexOf("<a href=\"") != -1 or "web" == source or "API" == source)
+    }
     
     "get search result if does not hit" in {
       val notHitQueryStr = "from:twit4j doesnothit"
@@ -70,8 +55,7 @@ class SearchResourcesTest extends Specification {
       val queryResult = twitter1.search(query)
       
       queryResult.sinceId must equalTo(0)
-//      queryResult.resultsPerPage must equalTo(15)
-//      queryResult.warning must equalTo(null)
+      queryResult.count must equalTo(15)
       queryResult.completedIn must be_<(4d)
       queryResult.query must equalTo(notHitQueryStr)
     }
@@ -86,26 +70,28 @@ class SearchResourcesTest extends Specification {
       val queryResult1 = twitter1.search(query)
       
       queryResult1.query must equalTo(japaneseQueryStr)
-//      queryResult1.tweets.size must be_>(0)
+      queryResult1.tweets.size must be_>(0)
       
       query.setQuery("from:al3x")
       query.setGeoCode(GeoLocation(37.78233252646689, -122.39301681518555), 10, Query.KILOMETERS)
       
-//      val queryResult2 = unauthenticated.search(query)
-//      queryResult2.tweets.size must be_>=(0)
+      val queryResult2 = twitter1.search(query)
+      queryResult2.tweets.size must be_>=(0)
+    }
+    
+    "get search result is tweeted tsuda user" in {
+      // 状況によって変更する必要あり
+      val query = Query("from:tsuda")
+      query.setSinceId(1671199128)
+      
+      val queryResult = twitter1.search(query)
+      queryResult.tweets.size must be_>(0)
+      queryResult.tweets(0).user.id must equalTo(4171231)
+      queryResult.hasNext must beTrue
+      queryResult.nextQuery must not equalTo(null)
     }
     
     /*
-    "get search result is tweeted twit4j user" in {
-      // 状況によって変更する必要あり
-      val query = new Query("from:twit4j")
-      query.setSinceId(1671199128)
-      
-      val queryResult = unauthenticated.search(query)
-      queryResult.getTweets.size must be_>(0)
-      queryResult.getTweets.get(0).getFromUserId must equalTo(6358482)
-    }
-    
     "get search result from authed user" in {
       // 状況によって変更する必要あり
       // 時事性の強いテストデータになっている
