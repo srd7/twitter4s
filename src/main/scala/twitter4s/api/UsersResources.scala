@@ -120,19 +120,6 @@ trait UsersResources {
       description: String = null): User
   
   /**
-   * Returns the current count of friends, followers, updates (statuses) and favorites of the authenticating user.
-   * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
-   * <br />This method calls twitter4j.Twitter.getAccountTotals.
-   * <br />getAccountTotals calls http://api.twitter.com/1/account/totals.json
-   *
-   * @return the current count of friends, followers, updates (statuses) and favorites of the authenticating user
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/account/totals">GET account/totals | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def getAccountTotals: AccountTotals
-  
-  /**
    * Returns the current trend, geo, language, timezone and sleep time information for the authenticating user.
    * <br />This method has not been finalized and the interface is subject to change in incompatible ways.
    * <br />This method calls twitter4j.Twitter.getAccountSettings.
@@ -241,7 +228,7 @@ trait UsersResources {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking/ids">GET blocks/blocking/ids | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlockingUsersIDs: IDs
+  def getBlocksIDs: IDs
   
   /**
    * Returns extended information of a given user, specified by ID or screen name as per the required id parameter. The author's most recent status will be returned inline.

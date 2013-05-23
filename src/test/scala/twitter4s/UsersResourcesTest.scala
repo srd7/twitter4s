@@ -218,17 +218,6 @@ class UsersResourcesTest extends Specification {
     }
   }
   
-  "getAccountTotals" should {
-    "get user's (favorite, followers, friends, udpates) total number" in {
-      val totals = twitter1.getAccountTotals
-      totals.favorites must be_>(0)
-      totals.followers must be_>(0)
-      totals.friends must be_>(0)
-      totals.updates must be_>(0)
-      totals.tw4jObj must equalTo(DataObjectFactory.createAccountTotals(rawJSON(totals.tw4jObj)))
-    }
-  }
-  
   "getAccountSettings" should {
     "get authorized user's account settings" in {
       val settings = twitter1.getAccountSettings
@@ -358,7 +347,7 @@ class UsersResourcesTest extends Specification {
   
   "getBlockingUsersIDs" should {
     "get user id list blocking by authorized user" in {
-      val ids = twitter1.getBlockingUsersIDs
+      val ids = twitter1.getBlocksIDs
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.ids.size must equalTo(blockingUsersSize)
       ids.ids(0) must equalTo(blockingUserId)

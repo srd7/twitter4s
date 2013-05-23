@@ -92,15 +92,6 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def getAccountTotals: AccountTotals = {
-    // TODO 削除メソッド
-//    twitter4jObj.getAccountTotals()
-    null
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
   def getAccountSettings: AccountSettings = {
     twitter4jObj.getAccountSettings()
   }
@@ -171,7 +162,7 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def getBlockingUsersIDs: IDs = {
+  def getBlocksIDs: IDs = {
     // TODO 削除メソッド or メソッド変更
 //    twitter4jObj.getBlockingUsersIDs()
     null
