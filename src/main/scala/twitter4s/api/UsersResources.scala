@@ -300,19 +300,4 @@ trait UsersResources {
    */
   def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User]
 
-  /**
-   * Access the profile image in various sizes for the user with the indicated screen_name. If no size is provided the normal image is returned. This resource does not return JSON or XML, but instead returns a 302 redirect to the actual image resource.
-   * This method should only be used by application developers to lookup or check the profile image URL for a user. This method must not be used as the image source URL presented to users of your application.
-   * <br />This method calls twitter4j.Twitter.getProfileImage.
-   * <br />getProfileImage calls http://api.twitter.com/1/users/profile_image/:screen_name.json
-   *
-   * @param screenName The screen name of the user for whom to return results for.
-   * @param size Specifies the size of image to fetch. Not specifying a size will give the default, normal size of 48px by 48px. Valid options include: bigger - 73px by 73px normal - 48px by 48px mini - 24px by 24px
-   * @return profile image
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/users/profile_image/:screen_name">GET users/profile_image/:screen_name | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  // TODO 削除メソッド
-//  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage
 }

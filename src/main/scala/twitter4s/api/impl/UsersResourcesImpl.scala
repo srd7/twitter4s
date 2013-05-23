@@ -205,12 +205,4 @@ trait UsersResourcesImpl extends UsersResources {
   def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
     twitter4jObj.getMemberSuggestions(categorySlug)
   }
-
-  // TODO 削除メソッド
-//  /**
-//   * {@inheritDoc}
-//   */
-//  def getProfileImage(screenName: String, size: ProfileImage.ImageSize): ProfileImage = {
-//    twitter4jObj.getProfileImage(screenName, size)
-//  }
 }
