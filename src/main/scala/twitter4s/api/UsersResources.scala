@@ -200,7 +200,7 @@ trait UsersResources {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">GET blocks/blocking | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlocksList(page: java.lang.Integer = null): ResponseList[twitter4j.User]
+  def getBlocksList(cursor: java.lang.Long = null): ResponseList[twitter4j.User]
 
   /**
    * Returns an array of numeric user ids the authenticating user is blocking.
@@ -212,7 +212,7 @@ trait UsersResources {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking/ids">GET blocks/blocking/ids | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlocksIDs: IDs
+  def getBlocksIDs(cursor: java.lang.Long = null): IDs
   
   /**
    * Returns extended information of a given user, specified by ID or screen name as per the required id parameter. The author's most recent status will be returned inline.

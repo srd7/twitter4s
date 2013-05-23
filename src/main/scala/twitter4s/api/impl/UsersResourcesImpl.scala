@@ -136,22 +136,21 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def getBlocksList(page: java.lang.Integer = null): ResponseList[twitter4j.User] = {
-    // TODO 削除メソッド or メソッド変更
-//    Option(page) match {
-//      case Some(page) => twitter4jObj.getBlockingUsers(page)
-//      case None => twitter4jObj.getBlockingUsers()
-//    }
-    null
+  def getBlocksList(cursor: java.lang.Long = null): ResponseList[twitter4j.User] = {
+    Option(cursor) match {
+      case Some(cursor) => twitter4jObj.getBlocksList(cursor)
+      case None => twitter4jObj.getBlocksList()
+    }
   }
   
   /**
    * {@inheritDoc}
    */
-  def getBlocksIDs: IDs = {
-    // TODO 削除メソッド or メソッド変更
-//    twitter4jObj.getBlockingUsersIDs()
-    null
+  def getBlocksIDs(cursor: java.lang.Long = null): IDs = {
+    Option(cursor) match {
+      case Some(cursor) => twitter4jObj.getBlocksIDs(cursor)
+      case None => twitter4jObj.getBlocksIDs()
+    }
   }
   
     /**
