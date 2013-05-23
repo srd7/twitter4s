@@ -9,7 +9,7 @@ import Twitter4sTestHelper._
 import internal.json.ResponseListImpl
 
 @RunWith(classOf[JUnitRunner])
-class UserMethodsTest extends Specification {
+class UsersResourcesTest extends Specification {
 
   "showUser" should {
     "get specified user profile with screenName" in {

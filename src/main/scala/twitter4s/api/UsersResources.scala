@@ -23,7 +23,7 @@ import twitter4j.Category
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait UserMethods {
+trait UsersResources {
   /**
    * Returns extended information of a given user, specified by ID or screen name as per the required id parameter. The author's most recent status will be returned inline.
    * <br />This method calls twitter4j.Twitter.showUser.
