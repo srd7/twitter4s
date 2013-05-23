@@ -220,7 +220,7 @@ trait UsersResources {
 
   /**
    * Returns a list of user objects that the authenticating user is blocking.
-   * <br />This method calls twitter4j.Twitter.getBlockingUsers() or getBlockingUsers(page)
+   * <br />This method calls twitter4j.Twitter.getBlocksList() or getBlocksList(page)
    * <br />getBlockingUsers calls http://api.twitter.com/1/blocks/blocking.json
    *
    * @param page (optional) the number of page
@@ -229,7 +229,7 @@ trait UsersResources {
    * @see <a href="https://dev.twitter.com/docs/api/1/get/blocks/blocking">GET blocks/blocking | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlockingUsers(page: java.lang.Integer = null): ResponseList[twitter4j.User]
+  def getBlocksList(page: java.lang.Integer = null): ResponseList[twitter4j.User]
 
   /**
    * Returns an array of numeric user ids the authenticating user is blocking.

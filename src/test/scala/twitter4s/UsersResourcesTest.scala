@@ -348,11 +348,11 @@ class UsersResourcesTest extends Specification {
   
   "getBlockingUsers" should {
     "get all user list blocking by authorized user" in {
-      testBlockingUsers(twitter1.getBlockingUsers())
+      testBlockingUsers(twitter1.getBlocksList())
     }
     
     "get user list specified page blocking by authorized user" in {
-      testBlockingUsers(twitter1.getBlockingUsers(1))
+      testBlockingUsers(twitter1.getBlocksList(1))
     }
   }
   
