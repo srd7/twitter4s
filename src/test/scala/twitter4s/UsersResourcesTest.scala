@@ -313,25 +313,19 @@ class UsersResourcesTest extends Specification {
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
       
-      // check destroyed block
-      twitter3.existsBlock(
-          User.isSpecifiedBy(id2.id)) must beFalse
-      // check blocked user
-      val blockedUserScreenName = blockingScreenName
-      twitter1.existsBlock(
-          User.isSpecifiedBy(blockedUserScreenName)) must beTrue
+      // remove existsBlock method since Twitter4J 3.0.0
+//      // check destroyed block
+//      twitter3.existsBlock(
+//          User.isSpecifiedBy(id2.id)) must beFalse
+//      // check blocked user
+//      val blockedUserScreenName = blockingScreenName
+//      twitter1.existsBlock(
+//          User.isSpecifiedBy(blockedUserScreenName)) must beTrue
     }
     
     "throw exception when user specific info is set null" in {
       twitter2.destroyBlock(null) must
       throwA[IllegalArgumentException] 
-    }
-  }
-  
-  "existBlock" should {
-    "thorw exception both of screenName and userId are not set" in {
-      twitter2.existsBlock(null) must
-      throwA[IllegalArgumentException]
     }
   }
   

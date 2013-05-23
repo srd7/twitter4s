@@ -136,20 +136,6 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def existsBlock(specificUser: User.SpecificInfo): Boolean = {
-    require(specificUser != null)
-    
-    // TODO 削除メソッド
-//    specificUser match {
-//      case Right(userId) => twitter4jObj.existsBlock(userId)
-//      case Left(screenName) => twitter4jObj.existsBlock(screenName)
-//    }
-    false
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
   def getBlocksList(page: java.lang.Integer = null): ResponseList[twitter4j.User] = {
     // TODO 削除メソッド or メソッド変更
 //    Option(page) match {
