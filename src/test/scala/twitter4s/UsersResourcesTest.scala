@@ -144,14 +144,8 @@ class UsersResourcesTest extends Specification {
     }
   }
   
-  // TODO 削除メソッド
-//  "getProfileImage" should {
-//    "get image url" in {
-//      val image = twitter1.getProfileImage(id1.screenName, ProfileImage.BIGGER)
-//      image.getURL must not equalTo(null)
-//    }
-//  }
-    "verifyCredentials" should {
+
+  "verifyCredentials" should {
     "get authorized user's credentials information" in {
       val original = twitter1.verifyCredentials
       rawJSON(original.tw4jObj) must not equalTo(null)
