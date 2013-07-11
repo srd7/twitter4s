@@ -21,7 +21,12 @@ class UsersResourcesTest extends Specification {
       user.screenName must equalTo(id1.screenName)
       user.location must not equalTo(null)
       user.description must not equalTo(null)
+      
       user.profileImageURL must not equalTo(null)
+      user.biggerProfileImageURL must not equalTo(null)
+      user.miniProfileImageURL must not equalTo(null)
+      user.originalProfileImageURL must not equalTo(null)
+      
       user.url must not equalTo(null)
       user.isProtected must beFalse
       

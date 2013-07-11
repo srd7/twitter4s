@@ -63,7 +63,13 @@ trait User extends TwitterResponse {
 
   def isContributorsEnabled: Boolean
 
-  def profileImageURL: URL // TODO Stringに変更
+  /**
+   * Returns the profile image url of the user
+   */
+  def profileImageURL: String
+  def biggerProfileImageURL: String
+  def miniProfileImageURL: String
+  def originalProfileImageURL: String
 
   def profileImageUrlHttps: URL // TODO StringとURLでオーバーロード
 
