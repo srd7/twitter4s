@@ -204,4 +204,44 @@ trait UsersResourcesImpl extends UsersResources {
   def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
     twitter4jObj.getMemberSuggestions(categorySlug)
   }
+  
+  def getContributees(specificUser: User.SpecificInfo): ResponseList[twitter4j.User] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(id) => twitter4jObj.getContributees(id)
+      case Left(screenName) => twitter4jObj.getContributees(screenName)
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getContributors(specificUser: User.SpecificInfo): ResponseList[twitter4j.User] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(id) => twitter4jObj.getContributors(id)
+      case Left(screenName) => twitter4jObj.getContributors(screenName)
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def removeProfileBanner() {
+    twitter4jObj.removeProfileBanner()
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def updateProfileBanner(imageResource: ImageResource.SpecificResource) {
+    require(imageResource != null)
+    
+    imageResource match {
+      case Right(imageFile) => twitter4jObj.updateProfileBanner(imageFile)
+      case Left(imageStream) => twitter4jObj.updateProfileBanner(imageStream)
+    }
+  }
 }

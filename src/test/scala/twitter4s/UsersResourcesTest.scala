@@ -342,4 +342,20 @@ class UsersResourcesTest extends Specification {
       ids.ids(0) must equalTo(blockingUserId)
     }
   }
+  
+  // TODO
+  // I don't know how to use contributor function.
+  // The following specs is pending until I understand it.
+//  "getContributees" should {
+//    "get user list by authorized user name" in {
+//      val users = twitter1.getContributors("twitter")
+//      users.size must be_>(0)
+//    }
+//  }
+  
+  // TODO
+  // The profile banner methods has no return value.
+  // I have no ideas suitable specs for these methods.
+  // removeProfileBanner
+  // updateProfileBanner
 }
