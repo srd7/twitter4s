@@ -10,13 +10,18 @@ import internal.json.ResponseListImpl
 import java.io.FileInputStream
 import java.util.Date
 import java.io.File
+import twitter4s.api.impl.UsersResourcesImpl
 
 @RunWith(classOf[JUnitRunner])
 class UsersResourcesTest extends Specification {
+  
+  val twitter1UserResourceRole = new Twitter(twitter4jInstance(User1)) with UsersResourcesImpl
+  val twitter2UserResourceRole = new Twitter(twitter4jInstance(User2)) with UsersResourcesImpl
+  val twitter3UserResourceRole = new Twitter(twitter4jInstance(User3)) with UsersResourcesImpl
 
   "showUser" should {
     "get specified user profile with screenName" in {
-      val user = twitter1.showUser(
+      val user = twitter1UserResourceRole.showUser(
           User.isSpecifiedBy(id1.screenName))
       user.screenName must equalTo(id1.screenName)
       user.location must not equalTo(null)
@@ -67,18 +72,18 @@ class UsersResourcesTest extends Specification {
     }
     
     "get specified user with no status" in {
-      val user = twitter1.showUser(
+      val user = twitter1UserResourceRole.showUser(
           User.isSpecifiedBy("tigertest"))
       rawJSON(user.tw4jObj) must not equalTo(null)
       
-      val nextUser = twitter1.showUser(
+      val nextUser = twitter1UserResourceRole.showUser(
           User.isSpecifiedBy(numberId))
       nextUser.id must equalTo(numberIdId)
       rawJSON(user.tw4jObj) must equalTo(null)
       rawJSON(nextUser.tw4jObj) must not equalTo(null)
       nextUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(nextUser.tw4jObj)))
       
-      val thirdUser = twitter1.showUser(
+      val thirdUser = twitter1UserResourceRole.showUser(
           User.isSpecifiedBy(numberIdId))
       thirdUser.id must equalTo(numberIdId)
       rawJSON(thirdUser.tw4jObj) must not equalTo(null)
@@ -86,20 +91,20 @@ class UsersResourcesTest extends Specification {
     }
     
     "throw IllegalArgumentException are not set both parameters" in {
-      twitter1.showUser(null) must throwA[IllegalArgumentException]
+      twitter1UserResourceRole.showUser(null) must throwA[IllegalArgumentException]
     }
   }
   
   "lookupUsers" should {
     "get lookup user list specified screen names" in {
-      val users = twitter1.lookupUsers(Users.areSpecifiedBy(Array(id1.screenName, id2.screenName)))
+      val users = twitter1UserResourceRole.lookupUsers(Users.areSpecifiedBy(Array(id1.screenName, id2.screenName)))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
     }
     
     "get lookup user list specified user ids" in {
-      val users = twitter1.lookupUsers(Users.areSpecifiedBy(Array(id1.id, id2.id)))
+      val users = twitter1UserResourceRole.lookupUsers(Users.areSpecifiedBy(Array(id1.id, id2.id)))
       users.size must equalTo(2)
       users.exists(_.getId() == id1.id) must beTrue
       users.exists(_.getId() == id2.id) must beTrue
@@ -109,60 +114,23 @@ class UsersResourcesTest extends Specification {
     }
     
     "throw IllegalArgumentException when specificUsers is null" in {
-      twitter1.lookupUsers(null) must throwA[IllegalArgumentException]
+      twitter1UserResourceRole.lookupUsers(null) must throwA[IllegalArgumentException]
     }
   }
   
   "searchUser" should {
     "get matched user list specified search text" in {
-      val users = twitter1.searchUsers("Doug Williams", 1)
+      val users = twitter1UserResourceRole.searchUsers("Doug Williams", 1)
       users.size must be_>=(4)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       rawJSON(users.tw4jObj) must not equalTo(null)
     }
   }
-  
-  // TODO 別Resourceに移動
-  "getSuggestedUserCategories" should {
-    "get suggest category list" in {
-      val categories = twitter1.getSuggestedUserCategories
-      categories.size must be_>(0)
-      rawJSON(categories.tw4jObj) must not equalTo(null)
-      categories(0) must equalTo(DataObjectFactory.createCategory(rawJSON(categories(0))))
-    }
-  }
-  
-  // TODO 別Resourceに移動
-  "getUserSuggestions" should {
-    "get suggest user list" in {
-      val categories = twitter1.getSuggestedUserCategories
-      val users = twitter1.getUserSuggestions(categories(0).getSlug())
-      users.size must be_>=(0)
-      users(0).getStatus() must equalTo(null)
-      rawJSON(users.tw4jObj) must not equalTo(null)
-      rawJSON(users(0)) must not equalTo(null)
-      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-    }
-  }
-  
-  // TODO 別Resourceに移動
-  "getMemberSuggestions" should {
-    "get suggerst members list" in {
-      val categories = twitter1.getSuggestedUserCategories
-      val users = twitter1.getMemberSuggestions(categories(0).getSlug())
-      users.size must be_>=(0)
-      users(0).getStatus() must not equalTo(null)
-      rawJSON(users.tw4jObj) must not equalTo(null)
-      rawJSON(users(0)) must not equalTo(null)
-      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-    }
-  }
-  
 
   "verifyCredentials" should {
     "get authorized user's credentials information" in {
-      val original = twitter1.verifyCredentials
+      val original = twitter1UserResourceRole.verifyCredentials
       rawJSON(original.tw4jObj) must not equalTo(null)
       original.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(original.tw4jObj)))
     }
@@ -171,7 +139,7 @@ class UsersResourcesTest extends Specification {
   "updateProfile" should {
     "update user profile(name, url, location, description)" in {
       // make precondition
-      val original = twitter3.updateProfile(
+      val original = twitter3UserResourceRole.updateProfile(
           "twt4s_id3",
           "https://github.com/Shinsuke-Abe/twitter4s",
           ":Location",
@@ -183,7 +151,7 @@ class UsersResourcesTest extends Specification {
       val newDescription = original.description + "new"
       
       // test
-      val altered = twitter3.updateProfile(newName, newURL, newLocation, newDescription)
+      val altered = twitter3UserResourceRole.updateProfile(newName, newURL, newLocation, newDescription)
       rawJSON(altered.tw4jObj) must not equalTo(null)
       original.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(original.tw4jObj)))
       altered.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(altered.tw4jObj)))
@@ -210,7 +178,7 @@ class UsersResourcesTest extends Specification {
     }
     
     "change colors on user status page with three characters" in {
-      val updatedUser = twitter3.updateProfileColors("f00", "f0f", "0ff", "0f0", "f0f")
+      val updatedUser = twitter3UserResourceRole.updateProfileColors("f00", "f0f", "0ff", "0f0", "f0f")
       rawJSON(updatedUser.tw4jObj) must not equalTo(null)
       updatedUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(updatedUser.tw4jObj)))
       testProfileColors(updatedUser, "FF0000", "FF00FF", "00FFFF", "00FF00", "FF00FF")
@@ -220,7 +188,7 @@ class UsersResourcesTest extends Specification {
     }
     
     "change colors on user status page with six characters" in {
-      val updatedUser = twitter3.updateProfileColors("87bc44", "9ae4e8", "000000", "0000ff", "e0ff92")
+      val updatedUser = twitter3UserResourceRole.updateProfileColors("87bc44", "9ae4e8", "000000", "0000ff", "e0ff92")
       rawJSON(updatedUser.tw4jObj) must not equalTo(null)
       updatedUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(updatedUser.tw4jObj)))
       testProfileColors(updatedUser, "87BC44", "9AE4E8", "000000", "0000FF", "E0FF92")
@@ -229,7 +197,7 @@ class UsersResourcesTest extends Specification {
   
   "getAccountSettings" should {
     "get authorized user's account settings" in {
-      val settings = twitter1.getAccountSettings
+      val settings = twitter1UserResourceRole.getAccountSettings
       settings.isSleepTimeEnabled must beTrue // this setting's default is false
       settings.isGeoEnabled must beFalse // this setting's default is false
       settings.language must equalTo("ja")
@@ -242,7 +210,7 @@ class UsersResourcesTest extends Specification {
   
   "updateAccountSettings" should {
     "change authorized user's account settings" in {
-      val intermSetting = twitter3.updateAccountSettings(1, true, "23", "08", "Helsinki", "it")
+      val intermSetting = twitter3UserResourceRole.updateAccountSettings(1, true, "23", "08", "Helsinki", "it")
       rawJSON(intermSetting.tw4jObj) must not equalTo(null)
       intermSetting.sleepStartTime must equalTo("23")
       intermSetting.sleepEndTime must equalTo("8")
@@ -257,19 +225,19 @@ class UsersResourcesTest extends Specification {
   
   "updateProfileImage" should {
     "change profile image" in {
-      val user = twitter2.updateProfileImage(
+      val user = twitter2UserResourceRole.updateProfileImage(
           ImageResource.isAssigned(new FileInputStream(getRandomlyChosenFile)))
       rawJSON(user.tw4jObj) must not equalTo(null)
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-       twitter2.updateProfileImage(null) must throwA[IllegalArgumentException]
+       twitter2UserResourceRole.updateProfileImage(null) must throwA[IllegalArgumentException]
     }
   }
   
   "updateProfileBackgroundImage" should {
     "change background image in authorized user page" in {
-      val user = twitter2.updateProfileBackgroundImage(
+      val user = twitter2UserResourceRole.updateProfileBackgroundImage(
           ImageResource.isAssigned(getRandomlyChosenFile),
           (5 < System.currentTimeMillis() % 5))
       rawJSON(user.tw4jObj) must not equalTo(null)
@@ -277,7 +245,7 @@ class UsersResourcesTest extends Specification {
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-      twitter2.updateProfileBackgroundImage(null, true) must throwA[IllegalArgumentException]
+      twitter2UserResourceRole.updateProfileBackgroundImage(null, true) must throwA[IllegalArgumentException]
     }
   }
   
@@ -303,41 +271,41 @@ class UsersResourcesTest extends Specification {
   
   "createBlock" should {
     "create block and get blocked user" in {
-      val user = twitter2.createBlock(
+      val user = twitter2UserResourceRole.createBlock(
           User.isSpecifiedBy(id3.id))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "throw exception when user specific info is set null" in {
-      twitter2.createBlock(null) must
+      twitter2UserResourceRole.createBlock(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "destryoBlock" should {
     "destroy block and get unblocked user" in {
-      val user = twitter2.destroyBlock(
+      val user = twitter2UserResourceRole.destroyBlock(
           User.isSpecifiedBy(id3.screenName))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "throw exception when user specific info is set null" in {
-      twitter2.destroyBlock(null) must
+      twitter2UserResourceRole.destroyBlock(null) must
       throwA[IllegalArgumentException] 
     }
   }
   
   "getBlockingUsers" should {
     "get all user list blocking by authorized user" in {
-      testBlockingUsers(twitter1.getBlocksList())
+      testBlockingUsers(twitter1UserResourceRole.getBlocksList())
     }
   }
   
   "getBlockingUsersIDs" should {
     "get user id list blocking by authorized user" in {
-      val ids = twitter1.getBlocksIDs()
+      val ids = twitter1UserResourceRole.getBlocksIDs()
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.ids.size must equalTo(blockingUsersSize)
       ids.ids(0) must equalTo(blockingUserId)

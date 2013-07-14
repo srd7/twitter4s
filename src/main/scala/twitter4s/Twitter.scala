@@ -698,6 +698,7 @@ object Twitter {
                               with TimelinesResourcesImpl
                               with SearchResourcesImpl
                               with UsersResourcesImpl
+                              with SuggestedUsersResourcesImpl
   }
   
   /**

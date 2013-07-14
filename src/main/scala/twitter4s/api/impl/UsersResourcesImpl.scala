@@ -187,24 +187,6 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def getSuggestedUserCategories: ResponseList[Category] = {
-    twitter4jObj.getSuggestedUserCategories()
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getUserSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
-    twitter4jObj.getUserSuggestions(categorySlug)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getMemberSuggestions(categorySlug: String): ResponseList[twitter4j.User] = {
-    twitter4jObj.getMemberSuggestions(categorySlug)
-  }
-  
   def getContributees(specificUser: User.SpecificInfo): ResponseList[twitter4j.User] = {
     require(specificUser != null)
     
