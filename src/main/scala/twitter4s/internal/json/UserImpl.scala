@@ -43,12 +43,28 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
   def miniProfileImageURL = twt4jUser.getMiniProfileImageURL()
   
   def originalProfileImageURL = twt4jUser.getOriginalProfileImageURL()
+  
+  def profileImageURLHttps = twt4jUser.getProfileImageURLHttps()
+  
+  def biggerProfileImageURLHttps = twt4jUser.getBiggerProfileImageURLHttps()
+  
+  def miniProfileImageURLHttps = twt4jUser.getMiniProfileImageURLHttps()
+  
+  def originalProdileImageURLHttps = twt4jUser.getOriginalProfileImageURLHttps()
+  
+  def profileBannerURL = twt4jUser.getProfileBannerURL()
+  
+  def profileBannerRetinaURL = twt4jUser.getProfileBannerRetinaURL()
+  
+  def profileBannerIPadURL = twt4jUser.getProfileBannerIPadURL()
+  
+  def profileBannerIPadRetinaURL = twt4jUser.getProfileBannerIPadRetinaURL()
+  
+  def profileBannerMobileURL = twt4jUser.getProfileBannerMobileURL()
+  
+  def profileBannerMobileRetinaURL = twt4jUser.getProfileBannerMobileRetinaURL()
 
-  // TODO StringとURLでオーバーロード
-  def profileImageUrlHttps = twt4jUser.getProfileImageUrlHttps()
-
-  // TODO twitter4jはStringに変更
-  def url = new java.net.URL(twt4jUser.getURL())
+  def url = twt4jUser.getURL()
 
   def isProtected = twt4jUser.isProtected()
 

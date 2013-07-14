@@ -71,9 +71,17 @@ trait User extends TwitterResponse {
   def miniProfileImageURL: String
   def originalProfileImageURL: String
 
-  def profileImageUrlHttps: URL // TODO StringとURLでオーバーロード
+  /**
+   * Returns the profile image url of the user, served over SSL
+   * 
+   * @deprecated use {@link #profileImageURL} instead
+   */
+  def profileImageURLHttps: String
+  def biggerProfileImageURLHttps: String
+  def miniProfileImageURLHttps: String
+  def originalProdileImageURLHttps: String
 
-  def url: URL // TODO Stringに変更
+  def url: String
 
   /**
    * is user account protected ?
@@ -108,10 +116,23 @@ trait User extends TwitterResponse {
 
   def timeZone: String
 
+  /**
+   * @deprecated use {@link #profileImageURL} instead
+   */
   def profileBackgroundImageUrl: String
 
   def profileBackgroundImageUrlHttps: String
 
+  /**
+   * @since Twitter4S 2.0.0
+   */
+  def profileBannerURL: String
+  def profileBannerRetinaURL: String
+  def profileBannerIPadURL: String
+  def profileBannerIPadRetinaURL: String
+  def profileBannerMobileURL: String
+  def profileBannerMobileRetinaURL: String
+  
   def isProfileBackgroundTiled: Boolean
 
   def lang: String
@@ -127,6 +148,10 @@ trait User extends TwitterResponse {
   def listedCount: Int
 
   def isFollowRequestSent: Boolean
+  
+  // TODO add fields
+  // descriptionURLEntities: URLEntity[]
+  // urlEntity: URLEntity
 }
 
 object User {

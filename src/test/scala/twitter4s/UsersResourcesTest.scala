@@ -27,6 +27,18 @@ class UsersResourcesTest extends Specification {
       user.miniProfileImageURL must not equalTo(null)
       user.originalProfileImageURL must not equalTo(null)
       
+      user.profileImageURLHttps must not equalTo(null)
+      user.biggerProfileImageURLHttps must not equalTo(null)
+      user.miniProfileImageURLHttps must not equalTo(null)
+      user.originalProdileImageURLHttps must not equalTo(null)
+      
+      user.profileBannerURL must equalTo(null) // for test user's banner is null
+      user.profileBannerRetinaURL must equalTo(null)
+      user.profileBannerIPadURL must equalTo(null)
+      user.profileBannerIPadRetinaURL must equalTo(null)
+      user.profileBannerMobileURL must equalTo(null)
+      user.profileBannerMobileRetinaURL must equalTo(null)
+      
       user.url must not equalTo(null)
       user.isProtected must beFalse
       
@@ -49,10 +61,6 @@ class UsersResourcesTest extends Specification {
         user.status.createdAt must not equalTo(null)
         user.status.text must not equalTo(null)
         user.status.source must not equalTo(null)
-        user.status.isFavorited must beFalse
-//        user.status.inReplyToUserId must equalTo(-1) // TODO リプライされているっぽい
-        user.status.inReplyToStatusId must equalTo(-1)
-//        user.status.inReplyToScreenName must equalTo(null) // TODO リプライしてる。。。
       }
       user.listedCount must be_>=(0)
       user.isFollowRequestSent must beFalse
@@ -109,13 +117,13 @@ class UsersResourcesTest extends Specification {
     "get matched user list specified search text" in {
       val users = twitter1.searchUsers("Doug Williams", 1)
       users.size must be_>=(4)
-//      users.featureSpecificRateLimitStatus must not equalTo(null)
       rawJSON(users(0)) must not equalTo(null)
       users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
       rawJSON(users.tw4jObj) must not equalTo(null)
     }
   }
   
+  // TODO 別Resourceに移動
   "getSuggestedUserCategories" should {
     "get suggest category list" in {
       val categories = twitter1.getSuggestedUserCategories
@@ -125,6 +133,7 @@ class UsersResourcesTest extends Specification {
     }
   }
   
+  // TODO 別Resourceに移動
   "getUserSuggestions" should {
     "get suggest user list" in {
       val categories = twitter1.getSuggestedUserCategories
@@ -137,6 +146,7 @@ class UsersResourcesTest extends Specification {
     }
   }
   
+  // TODO 別Resourceに移動
   "getMemberSuggestions" should {
     "get suggerst members list" in {
       val categories = twitter1.getSuggestedUserCategories
@@ -178,7 +188,7 @@ class UsersResourcesTest extends Specification {
       original.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(original.tw4jObj)))
       altered.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(altered.tw4jObj)))
       altered.name must equalTo(newName)
-      altered.url.toString() must equalTo(newURL)
+      altered.url must equalTo(newURL)
       altered.location must equalTo(newLocation)
       altered.description must equalTo(newDescription)
     }
@@ -311,15 +321,6 @@ class UsersResourcesTest extends Specification {
           User.isSpecifiedBy(id3.screenName))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-      
-      // remove existsBlock method since Twitter4J 3.0.0
-//      // check destroyed block
-//      twitter3.existsBlock(
-//          User.isSpecifiedBy(id2.id)) must beFalse
-//      // check blocked user
-//      val blockedUserScreenName = blockingScreenName
-//      twitter1.existsBlock(
-//          User.isSpecifiedBy(blockedUserScreenName)) must beTrue
     }
     
     "throw exception when user specific info is set null" in {
@@ -332,11 +333,6 @@ class UsersResourcesTest extends Specification {
     "get all user list blocking by authorized user" in {
       testBlockingUsers(twitter1.getBlocksList())
     }
-    
-    // TODO 位置づけが変わった
-//    "get user list specified page blocking by authorized user" in {
-//      testBlockingUsers(twitter1.getBlocksList(1))
-//    }
   }
   
   "getBlockingUsersIDs" should {
