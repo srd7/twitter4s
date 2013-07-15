@@ -549,35 +549,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     null
   }
   
-  /* SavedSearchedMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getSavedSearches: ResponseList[twitter4j.SavedSearch] = {
-    twitter4jObj.getSavedSearches()
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def showSavedSearch(id: Int): SavedSearch = {
-    twitter4jObj.showSavedSearch(id)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def createSavedSearch(query: String): SavedSearch = {
-    twitter4jObj.createSavedSearch(query)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def destroySavedSearch(id: Int): SavedSearch = {
-    twitter4jObj.destroySavedSearch(id)
-  }
-  
   /* SpamReportingMethods */
   /**
    * {@inheritDoc}
@@ -699,6 +670,7 @@ object Twitter {
                               with SearchResourcesImpl
                               with UsersResourcesImpl
                               with SuggestedUsersResourcesImpl
+                              with SavedSearchesResourcesImpl
   }
   
   /**

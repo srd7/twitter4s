@@ -25,6 +25,5 @@ with ListMembersMethods
 with ListMethods
 with NewTwitterMethods
 with NotificationMethods
-with SavedSearchesMethods
 with SpamReportingMethods
 with StatusMethods
