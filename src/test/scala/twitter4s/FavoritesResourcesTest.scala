@@ -9,7 +9,7 @@ import twitter4j.TwitterException
 import twitter4s._
 
 @RunWith(classOf[JUnitRunner])
-class FavoriteMethodsTest extends Specification {
+class FavoritesResourcesTest extends Specification {
   
   "createFavorite" should {
     "mark a tweet as favorite" in {
