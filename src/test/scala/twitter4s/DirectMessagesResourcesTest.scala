@@ -9,7 +9,7 @@ import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
 
 @RunWith(classOf[JUnitRunner])
-class DirectMessageMethodsTest extends Specification {
+class DirectMessagesResourcesTest extends Specification {
   "sendDirectMessage" should {
     "send message to other user with userId" in {
       val expectedReturn = new Date().toString() + ":directmessage test"
