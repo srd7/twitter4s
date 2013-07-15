@@ -23,7 +23,12 @@ class FavoritesResourcesTest extends Specification {
       val status = twitter2.createFavorite(anyonesStatus.id)
       rawJSON(status.tw4jObj) must not equalTo(null)
       status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
+      
       twitter2.getFavorites().size must be_>(0)
+      twitter2.getFavorites(User.isSpecifiedBy(id1.screenName)).size must be_>(0)
+      twitter2.getFavorites(User.isSpecifiedBy(id1.screenName), Paging(1)).size must be_>(0) 
+      twitter2.getFavorites(User.isSpecifiedBy(id1.id)).size must be_>(0)
+      twitter2.getFavorites(User.isSpecifiedBy(id1.id), Paging(1)).size must be_>(0)
       try {
         twitter2.destroyFavorite(anyonesStatus.id)
       } catch {

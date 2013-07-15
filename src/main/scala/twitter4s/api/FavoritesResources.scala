@@ -14,9 +14,10 @@ package twitter4s.api
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.Page
 import twitter4s.ResponseList
 import twitter4s.Status
+import twitter4j.Paging
+import twitter4s.User
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -28,35 +29,35 @@ trait FavoritesResources {
    * <br /> 
    * <ul>
    * <li>getFavorites()</li>
-   * <li>getFavorites(page)</li>
    * <li>getFavorites(id)</li>
-   * <li>getFavorites(id, page)</li>
+   * <li>getFavorites(screenName)</li>
    * <li>getFavorites(paging)</li>
    * <li>getFavorites(id, paging)</li>
+   * <li>getFavorites(screenName, paging)
    * </ul>
-   * <br />getFavorites method calls http://api.twitter.com/1/favorites.json
+   * <br />getFavorites method calls http://api.twitter.com/1.1/favorites.json
    * 
-   * @param id (optional) the ID or screen name of the user for whom to request a list of favorite statuses
-   * @param page (optional) page specific information (number or controls pagination. Supports sinceId and page parameters.)
+   * @param specificUser (optional) the ID or screen name of the user for whom to request a list of favorite statuses
+   * @param paging (optional) page specific information (controls pagination. Supports sinceId and page parameters.)
    * @return List<Status>
    * @throws TwitterException when Twitter service or network is unavailable
    * @throws IllegalArgumentException when both of parameters page and paging are set.
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/favorites">GET favorites | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/favorites">GET favorites | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def getFavorites(
-      id: String = null,
-      page: Page.PageSpecific = null): ResponseList[twitter4j.Status]
+      specificUser: User.SpecificInfo = null,
+      paging: Paging = null): ResponseList[twitter4j.Status]
 
   /**
    * Favorites the status specified in the ID parameter as the authenticating user. Returns the favorite status when successful.
    * <br />This method calls twitter4j.Twitter.createFavorite
-   * <br />createFavorite calls http://api.twitter.com/1/favorites/create/[id].json
+   * <br />createFavorite calls http://api.twitter.com/1.1/favorites/create/[id].json
    *
    * @param id the ID of the status to favorite
    * @return Status
    * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/create/:id">POST favorites/create/:id | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/post/favorites/create/:id">POST favorites/create/:id | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def createFavorite(id: Long): Status
@@ -64,12 +65,12 @@ trait FavoritesResources {
   /**
    * Un-favorites the status specified in the ID parameter as the authenticating user. Returns the un-favorited status in the requested format when successful.
    * <br />This method calls twitter4j.Twitter.destroyFavorite
-   * <br />This method calls http://api.twitter.com/1/favorites/destroy/[id].json
+   * <br />This method calls http://api.twitter.com/1.1/favorites/destroy/[id].json
    *
    * @param id the ID of the status to un-favorite
    * @return Status
    * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/post/favorites/destroy/:id">POST favorites/destroy/:id | Twitter Developers</a>
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/post/favorites/destroy/:id">POST favorites/destroy/:id | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
   def destroyFavorite(id: Long): Status
