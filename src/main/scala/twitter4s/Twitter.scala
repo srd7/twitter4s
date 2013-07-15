@@ -127,43 +127,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.setOAuthAccessToken(accessToken)
   }
   
-  /* FavoriteMethods */
-  /**
-   * {@inhritDoc}
-   */
-  def getFavorites(
-      id: String = null,
-      page: Page.PageSpecific = null): ResponseList[twitter4j.Status] = {
-    (Option(id), Option(page)) match {
-      case (None, None) => twitter4jObj.getFavorites()
-      case (Some(id), None) => twitter4jObj.getFavorites(id)
-      case (Some(id), Some(page)) => page match {
-        // TODO getFavoritesからpageNumberのパターンがなくなった
-        case Left(pageNumber) => null//twitter4jObj.getFavorites(id, pageNumber)
-        case Right(paging) => twitter4jObj.getFavorites(id, paging)
-      }
-      case (None, Some(page)) => page match {
-        // TODO getFavoritesからpageNumberのパターンがなくなった
-        case Left(pageNumber) => null//twitter4jObj.getFavorites(pageNumber)
-        case Right(paging) => twitter4jObj.getFavorites(paging)
-      }
-    }
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def createFavorite(id: Long): Status = {
-    twitter4jObj.createFavorite(id)
-  }
-  
-  /**
-   * {@inhritDoc}
-   */
-  def destroyFavorite(id: Long): Status = {
-    twitter4jObj.destroyFavorite(id)
-  }
-  
   /* FriednsFollowersMethods */
   /**
    * {@inheritDoc}
@@ -622,6 +585,7 @@ object Twitter {
                               with SuggestedUsersResourcesImpl
                               with SavedSearchesResourcesImpl
                               with DirectMessagesResourcesImpl
+                              with FavoritesResourcesImpl
   }
   
   /**
