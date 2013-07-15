@@ -22,7 +22,7 @@ import twitter4s.DirectMessage
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait DirectMessageMethods {
+trait DirectMessagesResources {
   /**
    * Returns a list of the direct messages sent to the authenticating user.
    * <br />This method calls twitter4j.Twitter.getDirectMessages
