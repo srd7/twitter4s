@@ -127,56 +127,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
     twitter4jObj.setOAuthAccessToken(accessToken)
   }
   
-  /* AccountMethods */
-
-  
-  /* DirectMessageMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getDirectMessages(paging: twitter4j.Paging = null): ResponseList[twitter4j.DirectMessage] = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getDirectMessages(paging)
-      case None => twitter4jObj.getDirectMessages()
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getSentDirectMessages(paging: twitter4j.Paging = null): ResponseList[twitter4j.DirectMessage] = {
-    Option(paging) match {
-      case Some(paging) => twitter4jObj.getSentDirectMessages(paging)
-      case None => twitter4jObj.getSentDirectMessages()
-    }
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def sendDirectMessage(specificUser: User.SpecificInfo, text: String): DirectMessage = {
-    require(specificUser != null)
-    
-    specificUser match {
-      case Right(userId) => twitter4jObj.sendDirectMessage(userId, text)
-      case Left(screenName) => twitter4jObj.sendDirectMessage(screenName, text)
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def destroyDirectMessage(id: Long): DirectMessage = {
-    twitter4jObj.destroyDirectMessage(id)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def showDirectMessage(id: Long): DirectMessage = {
-    twitter4jObj.showDirectMessage(id)
-  }
-  
   /* FavoriteMethods */
   /**
    * {@inhritDoc}
@@ -671,6 +621,7 @@ object Twitter {
                               with UsersResourcesImpl
                               with SuggestedUsersResourcesImpl
                               with SavedSearchesResourcesImpl
+                              with DirectMessagesResourcesImpl
   }
   
   /**
