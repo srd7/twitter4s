@@ -21,7 +21,7 @@ import twitter4s.Status
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait FavoriteMethods {
+trait FavoritesResources {
   /**
    * Returns the 20 most recent favorite statuses for the authenticating user or user specified by the ID parameter in the requested format.
    * <br />This method calls twitter4j.Twitter.getFavorites by one of below parameters combinations.
