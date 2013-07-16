@@ -7,12 +7,13 @@ import twitter4s.Twitter
 import twitter4s.Users
 import twitter4s.Relationship
 import twitter4s.ResponseList
-import twitter4s.User
 import twitter4j.Friendship
+import twitter4s.User
+import twitter4s.PagableResponseList
 
 trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   self: Twitter =>
-  
+    
   /**
    * {@inheritDoc}
    */
@@ -74,15 +75,6 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   /**
    * {@inheritDoc}
    */
-  def existsFriendship(userA: String, userB: String): Boolean = {
-    // TODO 削除メソッド
-//    twitter4jObj.existsFriendship(userA, userB)
-    false
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   def showFriendship(
       sourceSpecificUser: User.SpecificInfo,
       targetSpecificUser: User.SpecificInfo): Relationship = {
@@ -136,13 +128,22 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
       case Left(screenName) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
     }
   }
-
-  /**
-   * {@inheritDoc}
-   */
-  def getNoRetweetIds: IDs = {
-    // TODO メソッド削除
-//    twitter4jObj.getNoRetweetIds()
-    null
+  
+  def getFriendsList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Left(screenName) => twitter4jObj.getFriendsList(screenName, cursor)
+      case Right(userId) => twitter4jObj.getFriendsList(userId, cursor)
+    }
+  }
+  
+  def getFollowersList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Left(screenName) => twitter4jObj.getFollowersList(screenName, cursor)
+      case Right(userId) => twitter4jObj.getFollowersList(userId, cursor)
+    }
   }
 }

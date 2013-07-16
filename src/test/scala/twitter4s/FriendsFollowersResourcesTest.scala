@@ -112,18 +112,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   
   "destroyFriendship" should {
-    // TODO テストの最新化で調整
-//    "destroy specified user's friendship" in {
-//      if(!twitter1.existsFriendship(id1.screenName, id2.screenName))
-//        twitter1.createFriendship(
-//            User.isSpecifiedBy(id1.id), follow = true)
-//      val user = twitter2.destroyFriendship(
-//          User.isSpecifiedBy(id1.screenName))
-//      rawJSON(user.tw4jObj) must not equalTo(null)
-//      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-//    }
-    
-    "destroy specified user was destroyed" in {
+    "destroy specified user was destroyed by id" in {
       val user = twitter2.destroyFriendship(
           User.isSpecifiedBy(id1.id))
       rawJSON(user.tw4jObj) must not equalTo(null)
@@ -131,6 +120,12 @@ class FriendsFollowersResourcesTest extends Specification {
       
       // Test code in Twitter4J, check TwitterException(status code = 403).
       // Checking ratelimitstatus?
+    }
+    
+    "destroy specified user was destroyed by screen name" in {
+      val user = twitter2.destroyFriendship(User.isSpecifiedBy(id1.screenName))
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "throw exception with no target user specific information" in {
@@ -251,9 +246,11 @@ class FriendsFollowersResourcesTest extends Specification {
     "update friendship to specified user by id" in {
       val relationship = twitter1.updateFriendship(
           User.isSpecifiedBy(id3.id),
-          true,
-          true)
+          false,
+          false)
       relationship.targetUserScreenName must equalTo(id3.screenName)
+      relationship.isSourceNotificationsEnabled must beFalse
+      relationship.isSourceWantRetweets must beFalse
     }
     
     "throw exception when user specific information is null" in {
@@ -280,12 +277,41 @@ class FriendsFollowersResourcesTest extends Specification {
     }
   }
   
-  // TODO 削除メソッド
-//  "getNoRetweetIDs" should {
-//    "get not retweet users id" in {
-//      val ids = twitter2.getNoRetweetIds
-//      rawJSON(ids.tw4jObj) must not equalTo(null)
-//      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-//    }
-//  }
+  "getFriendsList" should {
+    "get friend list by screen name" in {
+      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
+      t4jFriends.size must be_>=(0)
+    }
+    
+    "get friend list by user id" in {
+      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
+      t4jFriends.size must be_>=(0)
+    }
+    
+    "get equal friend list regardless of specified information" in {
+      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFriends2 = twitter1.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
+      
+      t4jFriends.tw4jObj must equalTo(t4jFriends2.tw4jObj)
+    }
+  }
+  
+  "getFollowersList" should {
+    "get followers list by screen name" in {
+      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
+      t4jFollowers.size must be_>=(0)
+    }
+    
+    "get followers list by user id" in {
+      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
+      t4jFollowers.size must be_>=(0)
+    }
+    
+    "get equal followers list regardless of specified information" in {
+      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFollowers2 = twitter1.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
+      
+      t4jFollowers.tw4jObj must equalTo(t4jFollowers2.tw4jObj)
+    }
+  }
 }

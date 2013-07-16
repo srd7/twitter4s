@@ -48,5 +48,10 @@ case class RelationshipImpl(twt4jRelationship: twitter4j.Relationship) extends R
   def accessLevel = AccessLevel(twt4jRelationship.getAccessLevel())
 
   def tw4jObj = twt4jRelationship
+  
+  /**
+   * @since Twitter4S 2.0.0
+   */
+  def isSourceWantRetweets = twt4jRelationship.isSourceWantRetweets()
 
 }

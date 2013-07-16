@@ -37,4 +37,9 @@ trait Relationship extends TwitterResponse {
   def isTargetFollowedBySource: Boolean
   
   def isSourceNotificationsEnabled: Boolean
+  
+  /**
+   * @since Twitter4S 2.0.0
+   */
+  def isSourceWantRetweets: Boolean
 }

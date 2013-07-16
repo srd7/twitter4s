@@ -20,6 +20,7 @@ import twitter4s.Users
 import twitter4s.Relationship
 import twitter4s.ResponseList
 import twitter4j.Friendship
+import twitter4s.PagableResponseList
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -93,20 +94,6 @@ trait FriendsFollowersResources {
    * @since Twitter4S 1.0.0
    */
   def destroyFriendship(specificUser: User.SpecificInfo): User
-
-  /**
-   * Tests for the existence of friendship between two users. Will return true if user_a follows user_b, otherwise will return false.
-   * <br />This method calls twitter4j.Twitter.existsFriendship.
-   * <br />existsFriendship calls http://api.twitter.com/1/friendships/exists.json
-   *
-   * @param userA The ID or screen_name of the first user to test friendship for.
-   * @param userB The ID or screen_name of the second user to test friendship for.
-   * @return if a friendship exists between two users.
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/friendships/exists">GET friendships/exists | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def existsFriendship(userA: String, userB: String): Boolean
 
   /**
    * Returns detailed information about the relationship between two users.
@@ -190,17 +177,8 @@ trait FriendsFollowersResources {
       specificUser: User.SpecificInfo,
       enableDeviceNotification: Boolean,
       retweets: Boolean): Relationship
-
-  /**
-   * Returns the list of user_ids for which the authenticating user has said they do not want to receive retweets from when successful.
-   * <br />Now the return value had no data for paging.
-   * <br />This method calls twitter4j.Twitter.getNoRetweetIds.
-   * <br />getNoRetweetIds calls http://api.twitter.com/1/friendships/no_retweet_ids.json
-   *
-   * @return IDs
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="http://groups.google.com/group/twitter-api-announce/browse_thread/thread/6f734611ac57e281">Some changes and updates to the API and Tweet Button - Twitter API Announcements | Google Groups</a>
-   * @since Twitter4S 1.0.0
-   */
-  def getNoRetweetIds: IDs
+  
+  def getFriendsList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User]
+  
+  def getFollowersList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User]
 }
