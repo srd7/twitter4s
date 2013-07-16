@@ -18,7 +18,6 @@ import api._
 
 trait TwitterAPIs extends AnyRef
 with FriendsFollowersMethods
-with FriendshipMethods
 with ListMembersMethods
 with ListMethods
 with NewTwitterMethods
