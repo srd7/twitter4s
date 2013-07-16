@@ -1,0 +1,148 @@
+package twitter4s.api.impl
+
+import twitter4s.IDs
+import twitter4s.api.FriendsFollowersResources
+import scala.util.Either
+import twitter4s.Twitter
+import twitter4s.Users
+import twitter4s.Relationship
+import twitter4s.ResponseList
+import twitter4s.User
+import twitter4j.Friendship
+
+trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
+  self: Twitter =>
+  
+  /**
+   * {@inheritDoc}
+   */
+  def getFriendsIDs(cursor: Long, specificUser: User.SpecificInfo = null): IDs = {
+    Option(specificUser) match {
+      case Some(specificUser) => specificUser match {
+        case Right(userId) => twitter4jObj.getFriendsIDs(userId, cursor)
+        case Left(screenName) => twitter4jObj.getFriendsIDs(screenName, cursor)
+      }
+      case None => twitter4jObj.getFriendsIDs(cursor)
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getFollowersIDs(cursor: Long, specificUser: User.SpecificInfo = null): IDs = {
+    Option(specificUser) match {
+      case Some(specificUser) => specificUser match {
+        case Right(userId) => twitter4jObj.getFollowersIDs(userId, cursor)
+        case Left(screenName) => twitter4jObj.getFollowersIDs(screenName, cursor)
+      }
+      case None => twitter4jObj.getFollowersIDs(cursor)
+    }
+  }
+  
+  /**
+   * {@inheritDoc}
+   */
+  def createFriendship(
+      specificUser: User.SpecificInfo,
+      follow: java.lang.Boolean = null): User = {
+    require(specificUser != null)
+    
+    Option(follow) match {
+      case None => specificUser match {
+        case Right(userId) => twitter4jObj.createFriendship(userId)
+        case Left(screenName) => twitter4jObj.createFriendship(screenName)
+      }
+      case Some(follow) => specificUser match {
+        case Right(userId) => twitter4jObj.createFriendship(userId, follow)
+        case Left(screenName) => twitter4jObj.createFriendship(screenName, follow)
+      }
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def destroyFriendship(specificUser: User.SpecificInfo): User = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.destroyFriendship(userId)
+      case Left(screenName) => twitter4jObj.destroyFriendship(screenName)
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def existsFriendship(userA: String, userB: String): Boolean = {
+    // TODO 削除メソッド
+//    twitter4jObj.existsFriendship(userA, userB)
+    false
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def showFriendship(
+      sourceSpecificUser: User.SpecificInfo,
+      targetSpecificUser: User.SpecificInfo): Relationship = {
+    require(sourceSpecificUser != null && targetSpecificUser != null)
+    require((sourceSpecificUser.isRight && targetSpecificUser.isRight) ||
+        (sourceSpecificUser.isLeft && targetSpecificUser.isLeft))
+    
+    (sourceSpecificUser, targetSpecificUser) match {
+      case (Right(sourceId), Right(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
+      case (Left(sourceScreenName), Left(targetScreenName)) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getIncomingFriendships(cursor: Long): IDs = {
+    twitter4jObj.getIncomingFriendships(cursor)
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getOutgoingFriendships(cursor: Long): IDs = {
+    twitter4jObj.getOutgoingFriendships(cursor)
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def lookupFriendships(specificUsers: Users.SpecificInfo): ResponseList[Friendship] = {
+    require(specificUsers != null)
+    
+    specificUsers match {
+      case Right(ids) => twitter4jObj.lookupFriendships(ids)
+      case Left(screenNames) => twitter4jObj.lookupFriendships(screenNames)
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def updateFriendship(
+      specificUser: User.SpecificInfo,
+      enableDeviceNotification: Boolean,
+      retweets: Boolean): Relationship = {
+    require(specificUser != null)
+    
+    specificUser match {
+      case Right(userId) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
+      case Left(screenName) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  def getNoRetweetIds: IDs = {
+    // TODO メソッド削除
+//    twitter4jObj.getNoRetweetIds()
+    null
+  }
+}
