@@ -24,7 +24,7 @@ import twitter4j.Friendship
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait FriendsFollowersMethods {
+trait FriendsFollowersResources {
   /**
    * Returns an array of numeric IDs for every user the authenticating user is following.
    * <br />This method calls twitter4j.Twitter.getFriendsIDs.

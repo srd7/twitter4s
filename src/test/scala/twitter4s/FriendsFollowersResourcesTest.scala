@@ -11,7 +11,7 @@ import twitter4j.TwitterException
 
 
 @RunWith(classOf[JUnitRunner])
-class FriendsFollowersMethodsTest extends Specification {
+class FriendsFollowersResourcesTest extends Specification {
   val obamaScreenName = "barackobama"
   val obamaId = 813286
 
@@ -112,15 +112,16 @@ class FriendsFollowersMethodsTest extends Specification {
   
   
   "destroyFriendship" should {
-    "destroy specified user's friendship" in {
-      if(!twitter1.existsFriendship(id1.screenName, id2.screenName))
-        twitter1.createFriendship(
-            User.isSpecifiedBy(id1.id), follow = true)
-      val user = twitter2.destroyFriendship(
-          User.isSpecifiedBy(id1.screenName))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-    }
+    // TODO テストの最新化で調整
+//    "destroy specified user's friendship" in {
+//      if(!twitter1.existsFriendship(id1.screenName, id2.screenName))
+//        twitter1.createFriendship(
+//            User.isSpecifiedBy(id1.id), follow = true)
+//      val user = twitter2.destroyFriendship(
+//          User.isSpecifiedBy(id1.screenName))
+//      rawJSON(user.tw4jObj) must not equalTo(null)
+//      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+//    }
     
     "destroy specified user was destroyed" in {
       val user = twitter2.destroyFriendship(
@@ -279,11 +280,12 @@ class FriendsFollowersMethodsTest extends Specification {
     }
   }
   
-  "getNoRetweetIDs" should {
-    "get not retweet users id" in {
-      val ids = twitter2.getNoRetweetIds
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-    }
-  }
+  // TODO 削除メソッド
+//  "getNoRetweetIDs" should {
+//    "get not retweet users id" in {
+//      val ids = twitter2.getNoRetweetIds
+//      rawJSON(ids.tw4jObj) must not equalTo(null)
+//      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
+//    }
+//  }
 }

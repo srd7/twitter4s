@@ -17,7 +17,7 @@ package twitter4s
 import api._
 
 trait TwitterAPIs extends AnyRef
-with FriendsFollowersMethods
+with FriendsFollowersResources
 with ListMembersMethods
 with ListMethods
 with NewTwitterMethods
