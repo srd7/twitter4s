@@ -9,6 +9,7 @@ import twitter4j.json.DataObjectFactory
 import twitter4s._
 import twitter4j.TwitterException
 
+
 @RunWith(classOf[JUnitRunner])
 class FriendsFollowersMethodsTest extends Specification {
   val obamaScreenName = "barackobama"
