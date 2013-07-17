@@ -24,7 +24,7 @@ import twitter4s.IDs
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait StatusMethods {
+trait TweetsResources {
   /**
    * Returns a single status, specified by the id parameter below. The status's author will be returned inline.
    * <br />This method calls twitter4j.Twitter.showStatus.
