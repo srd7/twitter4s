@@ -143,40 +143,4 @@ class TweetsResourcesTest extends Specification {
       statuses.size must be_>(20)
     }
   }
-  
-  "getRetweetedBy" should {
-    // TODO 削除メソッド
-//    "get users list retweeted specified tweet with page 1 per 100" in {
-//      val users = unauthenticated.getRetweetedBy(47621163517624320L, Paging(page = 1, count = 100))
-//      users.size must be_>(50)
-//    }
-//    
-//    "get users list retweeted specified tweet with page 2 per 100" in {
-//      val users = unauthenticated.getRetweetedBy(47621163517624320L, Paging(page = 2, count = 100))
-//      users.size must be_>(10)
-//    }
-//    
-//    "get users list retweeted specified tweet without page" in {
-//      val users = unauthenticated.getRetweetedBy(47621163517624320L)
-//      users.size must be_>(50)
-//    }
-  }
-  
-  "getRetweetedByIDs" should {
-    // TODO 削除メソッド
-//    "get ids list retweeted specified tweet with page 1 per 100" in {
-//      val ids = twitter1.getRetweetedByIDs(47621163517624320L, Paging(page = 1, count = 100))
-//      ids.length must be_>(50)
-//    }
-//    
-//    "get ids list retweeted specidied tweet with page 2 per 100" in {
-//      val ids = twitter1.getRetweetedByIDs(47621163517624320L, Paging(page = 2, count = 100))
-//      ids.length must be_>(10)
-//    }
-//    
-//    "get ids list retweeted specified tweet without page" in {
-//      val ids = twitter1.getRetweetedByIDs(47621163517624320L)
-//      ids.length must be_>(50)
-//    }
-  }
 }

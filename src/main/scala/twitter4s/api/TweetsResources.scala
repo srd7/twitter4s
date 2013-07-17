@@ -91,32 +91,4 @@ trait TweetsResources {
    * @since Twitter4S 1.0.0
    */
   def getRetweets(statusId: Long): ResponseList[twitter4j.Status]
-
-  /**
-   * Show user objects of up to 100 members who retweeted the status.
-   * <br />This method calls twitter4j.Twitter.getRetweetedBy.
-   * <br />getRetweetedBy calls http://api.twitter.com/1/statuses/:id/retweeted_by
-   *
-   * @param statusId The ID of the status you want to get retweeters of
-   * @param paging (optional) controls pagination. Supports count and page parameters.
-   * @return the list of users who retweeted your status
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/:id/retweeted_by">GET statuses/:id/retweeted_by | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def getRetweetedBy(statusId: Long, paging: Paging = null): ResponseList[twitter4j.User]
-
-  /**
-   * Show user ids of up to 100 users who retweeted the status represented by id
-   * <br />This method calls twitter4j.Twitter.getRetweetedByIDs.
-   * <br />getRetweetedByIDs calls http://api.twitter.com/1/statuses/:id/retweeted_by/ids.format
-   * 
-   * @param statusId The ID of the status you want to get retweeters of
-   * @param paging (optional) controls pagination. Supports count and page parameters.
-   * @return IDs of users who retweeted the stats
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1/get/statuses/:id/retweeted_by/ids">GET statuses/:id/retweeted_by/ids | Twitter Developers</a>
-   * @since Twitter4J 1.0.0
-   */
-  def getRetweetedByIDs(statusId: Long, paging: Paging = null): IDs
 }

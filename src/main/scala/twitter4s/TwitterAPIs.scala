@@ -22,4 +22,3 @@ with ListMethods
 with NewTwitterMethods
 with NotificationMethods
 with SpamReportingMethods
-with TweetsResources

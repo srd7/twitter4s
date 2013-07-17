@@ -339,71 +339,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
       case Left(screenName) => twitter4jObj.reportSpam(screenName)
     } 
   }
-  
-  /* StatusMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def showStatus(id: Long): Status = {
-    twitter4jObj.showStatus(id)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def updateStatus(status: Status.StatusSpecific): Status = {
-    require(status != null)
-    
-    status match {
-      case Left(text) => twitter4jObj.updateStatus(text)
-      case Right(latestStatus) => twitter4jObj.updateStatus(latestStatus)
-    }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def destroyStatus(statusId: Long): Status = {
-    twitter4jObj.destroyStatus(statusId)
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def retweetStatus(statusId: Long): Status = {
-    twitter4jObj.retweetStatus(statusId)
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweets(statusId: Long): ResponseList[twitter4j.Status] = {
-    twitter4jObj.getRetweets(statusId)
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweetedBy(statusId: Long, paging: twitter4j.Paging = null): ResponseList[twitter4j.User] = {
-    // TODO メソッド削除
-//    Option(paging) match {
-//      case Some(paging) => twitter4jObj.getRetweetedBy(statusId, paging)
-//      case None => twitter4jObj.getRetweetedBy(statusId)
-//    }
-    null
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getRetweetedByIDs(statusId: Long, paging: twitter4j.Paging = null): IDs = {
-    // TODO メソッド削除
-//    Option(paging) match {
-//      case Some(paging) => twitter4jObj.getRetweetedByIDs(statusId, paging)
-//      case None => twitter4jObj.getRetweetedByIDs(statusId)
-//    }
-    null
-  }
 }
 
 /**
@@ -452,6 +387,7 @@ object Twitter {
                               with DirectMessagesResourcesImpl
                               with FavoritesResourcesImpl
                               with FriendsFollowersResourcesImpl
+                              with TweetsResourcesImpl
   }
   
   /**
