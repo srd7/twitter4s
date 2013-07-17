@@ -8,7 +8,7 @@ import twitter4j.json.DataObjectFactory
 import java.util.Date
 
 @RunWith(classOf[JUnitRunner])
-class StatusMethodsTest extends Specification {
+class TweetsResourcesTest extends Specification {
 
   "showStatus" should {
     "get status specified by tweet id" in {
