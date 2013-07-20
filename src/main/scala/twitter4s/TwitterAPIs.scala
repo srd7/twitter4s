@@ -17,7 +17,6 @@ package twitter4s
 import api._
 
 trait TwitterAPIs extends AnyRef
-with ListsResources
 with NewTwitterMethods
 with NotificationMethods
 with SpamReportingMethods
