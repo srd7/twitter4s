@@ -11,7 +11,7 @@ import twitter4j.json.DataObjectFactory
 import twitter4j.TwitterException
 
 @RunWith(classOf[JUnitRunner])
-class ListMethodsTest extends Specification {
+class ListResourcesTest extends Specification {
 
   def makePrecondition = {
     val userLists = twitter2.getUserLists(
