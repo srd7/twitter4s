@@ -43,9 +43,6 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def retweetCount = twt4jStatus.getRetweetCount()
 
   def isRetweetedByMe = twt4jStatus.isRetweetedByMe()
-
-  // TODO 削除メソッド
-//  def annotations = twt4jStatus.getAnnotations()
   
   def userMentionEntities = twt4jStatus.getUserMentionEntities()
 
@@ -80,4 +77,5 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
    */
   def currentUserRetweetId = twt4jStatus.getCurrentUserRetweetId()
 
+  def isPossiblySensitive = twt4jStatus.isPossiblySensitive()
 }
