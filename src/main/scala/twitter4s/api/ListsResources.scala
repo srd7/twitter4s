@@ -25,7 +25,7 @@ import twitter4s.Users
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-trait ListResources {
+trait ListsResources {
   /**
    * Creates a new list for the authenticated user. Accounts are limited to 20 lists.
    * <br />This method calls twitter4j.Twitter.createUserList.
