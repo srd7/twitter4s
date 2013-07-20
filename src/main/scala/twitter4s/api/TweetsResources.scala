@@ -91,4 +91,6 @@ trait TweetsResources {
    * @since Twitter4S 1.0.0
    */
   def getRetweets(statusId: Long): ResponseList[twitter4j.Status]
+  
+//  def getOEmbed(req: OEmbedRequest): OEmbed // TODO 3.0.4対応
 }

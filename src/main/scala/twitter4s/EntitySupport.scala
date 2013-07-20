@@ -17,14 +17,20 @@ package twitter4s
 import twitter4j.URLEntity
 import twitter4j.MediaEntity
 import twitter4j.HashtagEntity
+import twitter4j.UserMentionEntity
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait EntitySupport {
+  def userMentionEntities: Array[UserMentionEntity]
+  
   def urlEntities: Array[URLEntity]
   
   def hashtagEntities: Array[HashtagEntity]
   
   def mediaEntities: Array[MediaEntity]
+  
+  // TODO Twitter4j 3.0.4対応時
+//  def symbolEntities: Array[SymbolEntity]
 }

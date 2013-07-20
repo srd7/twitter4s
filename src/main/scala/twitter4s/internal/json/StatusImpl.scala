@@ -46,6 +46,8 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
 
   // TODO 削除メソッド
 //  def annotations = twt4jStatus.getAnnotations()
+  
+  def userMentionEntities = twt4jStatus.getUserMentionEntities()
 
   def urlEntities = twt4jStatus.getURLEntities()
 
@@ -72,5 +74,10 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def accessLevel = AccessLevel(twt4jStatus.getAccessLevel())
 
   def tw4jObj = twt4jStatus
+  
+  /**
+   * @since Twitter4S 2.0.0
+   */
+  def currentUserRetweetId = twt4jStatus.getCurrentUserRetweetId()
 
 }

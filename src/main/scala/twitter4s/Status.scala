@@ -42,6 +42,10 @@ trait Status extends TwitterResponse with Twt with EntitySupport {
   
   // TODO 削除メソッド
 //  def annotations: Annotations
+  /**
+   * @since Twitter4S 2.0.0
+   */
+  def currentUserRetweetId: Long
 }
 
 /**
