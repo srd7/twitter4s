@@ -82,19 +82,6 @@ class TweetsResourcesTest extends Specification {
     }
   }
   
-  val imageFiles = Array(
-      "src/test/resources/t4j-reverse.jpeg",
-      "src/test/resources/t4j-reverse.png",
-      "src/test/resources/t4j-reverse.gif",
-      "src/test/resources/t4j.jpeg",
-      "src/test/resources/t4j.png",
-      "src/test/resources/t4j.gif"
-      )
-  
-  def getRandomlyChosenFile = {
-    new File(imageFiles((System.currentTimeMillis() % 6).toInt))
-  }
-  
   def testRetweetResponseList(statuses: ResponseList[twitter4j.Status]) = {
     rawJSON(statuses.tw4jObj) must not equalTo(null)
     statuses(0) must equalTo(DataObjectFactory.createStatus(rawJSON(statuses(0))))

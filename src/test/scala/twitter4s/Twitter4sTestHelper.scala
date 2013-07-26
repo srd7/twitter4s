@@ -4,6 +4,7 @@ import conf.PropertyConfiguration
 import conf.ConfigurationBuilder
 import java.util.Properties
 import twitter4j.json.DataObjectFactory
+import java.io.File
 
 object Twitter4sTestHelper {
   val prop = new Properties()
@@ -99,6 +100,19 @@ object Twitter4sTestHelper {
   def followsOneWay = prop.getProperty("followsOneWay")
   
   def twitter4jInstance(testUser: TestUser): twitter4j.Twitter = new twitter4j.TwitterFactory(PropertyConfiguration(prop, testUser.idPrefix)).getInstance()
+    
+  val imageFiles = Array(
+      "src/test/resources/t4j-reverse.jpeg",
+      "src/test/resources/t4j-reverse.png",
+      "src/test/resources/t4j-reverse.gif",
+      "src/test/resources/t4j.jpeg",
+      "src/test/resources/t4j.png",
+      "src/test/resources/t4j.gif"
+      )
+  
+  def getRandomlyChosenFile = {
+    new File(imageFiles((System.currentTimeMillis() % 6).toInt))
+  }
 }
 
 sealed case class TestUser(idPrefix: String)
