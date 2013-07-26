@@ -19,4 +19,3 @@ import api._
 trait TwitterAPIs extends AnyRef
 with NewTwitterMethods
 with NotificationMethods
-with SpamReportingMethods

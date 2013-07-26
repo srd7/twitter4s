@@ -164,19 +164,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
 //    }
     null
   }
-  
-  /* SpamReportingMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def reportSpam(specificUser: User.SpecificInfo): User = {
-    require(specificUser != null)
-    
-    specificUser match {
-      case Right(userId) => twitter4jObj.reportSpam(userId)
-      case Left(screenName) => twitter4jObj.reportSpam(screenName)
-    } 
-  }
 }
 
 /**
@@ -227,6 +214,7 @@ object Twitter {
                               with FriendsFollowersResourcesImpl
                               with TweetsResourcesImpl
                               with ListsResourcesImpl
+                              with SpamReportingResourcesImpl
   }
   
   /**
