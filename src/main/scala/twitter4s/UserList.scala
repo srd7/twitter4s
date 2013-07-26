@@ -42,3 +42,16 @@ trait UserList extends TwitterResponse with Ordered[UserList] {
 
   def isFollowing: Boolean
 }
+
+object UserList {
+  // type alias
+  type SpecificInfo = Either[Int, (User.SpecificInfo, String)]
+  
+  def isSpecifiedBy(listId: Int) = {
+    Left(listId)
+  }
+  
+  def isSpecifiedBy(listOwnerUser: User.SpecificInfo, slug: String) = {
+    Right(listOwnerUser, slug)
+  }
+}
