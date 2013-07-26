@@ -61,13 +61,6 @@ object Twitter4sTestHelper {
   }
   
   /**
-   * Get Twitter4S object not authorized
-   */
-  def unauthenticated = {
-    Twitter(Configuration.isSpecifiedBy(ConfigurationBuilder().setJSONStoreEnabled(true).build()))
-  }
-  
-  /**
    * Get raw JSON string from Twitter4J object
    */
   def rawJSON(target: Any) = DataObjectFactory.getRawJSON(target)

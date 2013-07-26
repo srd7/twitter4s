@@ -7,7 +7,6 @@ import Twitter4sTestHelper.prop
 import Twitter4sTestHelper.rawJSON
 import Twitter4sTestHelper.rwPrivateMessage
 import Twitter4sTestHelper.twitter1
-import Twitter4sTestHelper.unauthenticated
 import auth.ConsumerKey
 import twitter4j.auth.AccessToken
 import twitter4j.json.DataObjectFactory
