@@ -3,29 +3,33 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-
 import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4s._
 import twitter4j.TwitterException
+import twitter4s.api.impl.FriendsFollowersResourcesImpl
 
 
 @RunWith(classOf[JUnitRunner])
 class FriendsFollowersResourcesTest extends Specification {
+  val twitter1FriendsRole = new Twitter(twitter4jInstance(User1)) with FriendsFollowersResourcesImpl
+  val twitter2FriendsRole = new Twitter(twitter4jInstance(User2)) with FriendsFollowersResourcesImpl
+  val twitter3FriendsRole = new Twitter(twitter4jInstance(User3)) with FriendsFollowersResourcesImpl
+  
   val obamaScreenName = "barackobama"
   val obamaId = 813286
 
   "getFriedsIDs" should {
     val ryunosukey = 48528137
     "get friend ID array specified cursor" in {
-      val ids = twitter1.getFriendsIDs(-1)
+      val ids = twitter1FriendsRole.getFriendsIDs(-1)
       rawJSON(ids.tw4jObj) must not equalTo(null)
       val yusuke = 4933401
       atLeastOnce(ids.ids) { (_:Long) must equalTo(yusuke) }
     }
     
     "get friend ID array specified by user id" in {
-      val ids = twitter1.getFriendsIDs(
+      val ids = twitter1FriendsRole.getFriendsIDs(
           -1,
           User.isSpecifiedBy(ryunosukey))
       rawJSON(ids.tw4jObj) must not equalTo(null)
@@ -34,7 +38,7 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get friend ID array specified by user screen name" in {
-      val ids = twitter1.getFriendsIDs(
+      val ids = twitter1FriendsRole.getFriendsIDs(
           -1,
           User.isSpecifiedBy("yusuke"))
       rawJSON(ids.tw4jObj) must not equalTo(null)
@@ -42,13 +46,13 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get friend ID array with cursor specified by user id" in {
-      val firstCursor = twitter1.getFriendsIDs(
+      val firstCursor = twitter1FriendsRole.getFriendsIDs(
           -1,
           User.isSpecifiedBy(obamaId))
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFriendsIDs(
+      val secondCursor = twitter1FriendsRole.getFriendsIDs(
           firstCursor.nextCursor,
           User.isSpecifiedBy(obamaId))
       secondCursor.hasNext must beTrue
@@ -56,13 +60,13 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get friend ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1.getFriendsIDs(
+      val firstCursor = twitter1FriendsRole.getFriendsIDs(
           -1,
           User.isSpecifiedBy(obamaScreenName))
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFriendsIDs(
+      val secondCursor = twitter1FriendsRole.getFriendsIDs(
           firstCursor.nextCursor,
           User.isSpecifiedBy(obamaScreenName))
       secondCursor.hasNext must beTrue
@@ -72,7 +76,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "getFollowersIDs" should {
     "get followers ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1.getFollowersIDs(
+      val firstCursor = twitter1FriendsRole.getFollowersIDs(
           -1,
           User.isSpecifiedBy(obamaScreenName))
       rawJSON(firstCursor.tw4jObj) must not equalTo(null)
@@ -80,7 +84,7 @@ class FriendsFollowersResourcesTest extends Specification {
       firstCursor.hasNext must beTrue
       firstCursor.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFollowersIDs(
+      val secondCursor = twitter1FriendsRole.getFollowersIDs(
           firstCursor.nextCursor,
           User.isSpecifiedBy(obamaScreenName))
       secondCursor.hasNext must beTrue
@@ -88,7 +92,7 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get followers ID array specified by user id" in {
-      val ids = twitter1.getFollowersIDs(
+      val ids = twitter1FriendsRole.getFollowersIDs(
           -1,
           User.isSpecifiedBy(obamaId))
       rawJSON(ids.tw4jObj) must not equalTo(null)
@@ -96,7 +100,7 @@ class FriendsFollowersResourcesTest extends Specification {
       ids.hasNext must beTrue
       ids.hasPrevious must beFalse
       
-      val secondCursor = twitter1.getFollowersIDs(
+      val secondCursor = twitter1FriendsRole.getFollowersIDs(
           ids.nextCursor,
           User.isSpecifiedBy(obamaId))
       secondCursor.hasNext must beTrue
@@ -104,7 +108,7 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get followers ID array specified by cursor" in {
-      val ids = twitter2.getFollowersIDs(-1)
+      val ids = twitter2FriendsRole.getFollowersIDs(-1)
       rawJSON(ids.tw4jObj) must not equalTo(null)
       atLeastOnce(ids.ids) { (_:Long) must equalTo(id1.id)}
     }
@@ -113,7 +117,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "destroyFriendship" should {
     "destroy specified user was destroyed by id" in {
-      val user = twitter2.destroyFriendship(
+      val user = twitter2FriendsRole.destroyFriendship(
           User.isSpecifiedBy(id1.id))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
@@ -123,20 +127,20 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "destroy specified user was destroyed by screen name" in {
-      val user = twitter2.destroyFriendship(User.isSpecifiedBy(id1.screenName))
+      val user = twitter2FriendsRole.destroyFriendship(User.isSpecifiedBy(id1.screenName))
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "throw exception with no target user specific information" in {
-      twitter2.destroyFriendship(null) must
+      twitter2FriendsRole.destroyFriendship(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "createFriendship" should {
     "create specified user's friendship" in {
-      val user = twitter2.createFriendship(
+      val user = twitter2FriendsRole.createFriendship(
           User.isSpecifiedBy(id1.screenName), follow = true)
       rawJSON(user.tw4jObj) must not equalTo(null)
       user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
@@ -144,26 +148,26 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "throw exception create friendship with myself" in {
-      twitter2.createFriendship(
+      twitter2FriendsRole.createFriendship(
           User.isSpecifiedBy(id2.id)) must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(403)}
     }
     
     "throw exception create friendship with not-exists usre" in {
-      twitter2.createFriendship(
+      twitter2FriendsRole.createFriendship(
           User.isSpecifiedBy("dosentexists--")) must
       throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(404)}
     }
     
     "throw exception when specificUser is set null" in {
-      twitter2.createFriendship(null, null) must
+      twitter2FriendsRole.createFriendship(null, null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "showFriendship" should {
     "get friendship status between user one way follow" in {
-      val rel = twitter1.showFriendship(
+      val rel = twitter1FriendsRole.showFriendship(
           User.isSpecifiedBy(id1.screenName),
           User.isSpecifiedBy(followsOneWay))
       rawJSON(rel.tw4jObj) must not equalTo(null)
@@ -173,14 +177,14 @@ class FriendsFollowersResourcesTest extends Specification {
       rel.isTargetFollowingSource must beTrue
       rel.isTargetFollowedBySource must beFalse
       
-      val rel2 = twitter1.showFriendship(
+      val rel2 = twitter1FriendsRole.showFriendship(
           User.isSpecifiedBy(bestFriend1.id),
           User.isSpecifiedBy(bestFriend2.id))
       rawJSON(rel.tw4jObj) must equalTo(null)
     }
     
     "get friendship status between user best friends" in {
-      val rel = twitter1.showFriendship(
+      val rel = twitter1FriendsRole.showFriendship(
           User.isSpecifiedBy(bestFriend1.id),
           User.isSpecifiedBy(bestFriend2.id))
       rawJSON(rel.tw4jObj) must not equalTo(null)
@@ -192,22 +196,22 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "throw exception with no source user specific information" in {
-      twitter1.showFriendship(null, User.isSpecifiedBy(bestFriend2.id)) must
+      twitter1FriendsRole.showFriendship(null, User.isSpecifiedBy(bestFriend2.id)) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception with no target user specific information" in {
-      twitter1.showFriendship(User.isSpecifiedBy(bestFriend1.id), null) must
+      twitter1FriendsRole.showFriendship(User.isSpecifiedBy(bestFriend1.id), null) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception with no parameter" in {
-      twitter1.showFriendship(null, null) must
+      twitter1FriendsRole.showFriendship(null, null) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception different user specific information between source and target" in {
-      twitter1.showFriendship(
+      twitter1FriendsRole.showFriendship(
           User.isSpecifiedBy(bestFriend1.screenName),
           User.isSpecifiedBy(bestFriend2.id)) must
       throwA[IllegalArgumentException]
@@ -216,7 +220,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "lookupFriendships" should {
     "get friendship status list with specified users by screen name" in {
-      val friendshipList = twitter1.lookupFriendships(
+      val friendshipList = twitter1FriendsRole.lookupFriendships(
           Users.areSpecifiedBy(Array("barakobama", id2.screenName, id3.screenName)))
       friendshipList.size must equalTo(3)
       friendshipList(0).getScreenName() must equalTo("barakobama")
@@ -228,7 +232,7 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "get friendship status list with specified users by id" in {
-      val friendshipList = twitter1.lookupFriendships(
+      val friendshipList = twitter1FriendsRole.lookupFriendships(
           Users.areSpecifiedBy(Array(id2.id, id3.id)))
       friendshipList.size must equalTo(2)
     }
@@ -236,7 +240,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "updateFriendship" should {
     "update friendship to specified user by screen name" in {
-      val relationship = twitter1.updateFriendship(
+      val relationship = twitter1FriendsRole.updateFriendship(
           User.isSpecifiedBy(id3.screenName),
           true,
           true)
@@ -244,7 +248,7 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "update friendship to specified user by id" in {
-      val relationship = twitter1.updateFriendship(
+      val relationship = twitter1FriendsRole.updateFriendship(
           User.isSpecifiedBy(id3.id),
           false,
           false)
@@ -254,14 +258,14 @@ class FriendsFollowersResourcesTest extends Specification {
     }
     
     "throw exception when user specific information is null" in {
-      twitter1.updateFriendship(null, true, true) must
+      twitter1FriendsRole.updateFriendship(null, true, true) must
       throwA[IllegalArgumentException]
     }
   }
   
   "getIncomingFriendships" should {
     "get incoming friendship" in {
-      val ids = twitter3.getIncomingFriendships(-1)
+      val ids = twitter3FriendsRole.getIncomingFriendships(-1)
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
       ids.length must be_>=(0)
@@ -270,7 +274,7 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "getOutcomingFriendships" should {
     "get outcoming friendship" in {
-      val ids = twitter2.getOutgoingFriendships(-1)
+      val ids = twitter2FriendsRole.getOutgoingFriendships(-1)
       rawJSON(ids.tw4jObj) must not equalTo(null)
       ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
       ids.length must be_>=(0)
@@ -279,18 +283,18 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "getFriendsList" should {
     "get friend list by screen name" in {
-      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
       t4jFriends.size must be_>=(0)
     }
     
     "get friend list by user id" in {
-      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
+      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
       t4jFriends.size must be_>=(0)
     }
     
     "get equal friend list regardless of specified information" in {
-      val t4jFriends = twitter1.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
-      val t4jFriends2 = twitter1.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
+      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFriends2 = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
       
       t4jFriends.tw4jObj must equalTo(t4jFriends2.tw4jObj)
     }
@@ -298,18 +302,18 @@ class FriendsFollowersResourcesTest extends Specification {
   
   "getFollowersList" should {
     "get followers list by screen name" in {
-      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
       t4jFollowers.size must be_>=(0)
     }
     
     "get followers list by user id" in {
-      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
+      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
       t4jFollowers.size must be_>=(0)
     }
     
     "get equal followers list regardless of specified information" in {
-      val t4jFollowers = twitter1.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
-      val t4jFollowers2 = twitter1.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
+      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
+      val t4jFollowers2 = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
       
       t4jFollowers.tw4jObj must equalTo(t4jFollowers2.tw4jObj)
     }
