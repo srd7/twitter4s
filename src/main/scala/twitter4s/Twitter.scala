@@ -126,44 +126,6 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with Twi
   def setOAuthAccessToken(accessToken: AccessToken) {
     twitter4jObj.setOAuthAccessToken(accessToken)
   }
-
-  
-  /* NewTwitterMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def getRelatedResults(statusId: Long): RelatedResults = {
-    twitter4jObj.getRelatedResults(statusId)
-  }
-  
-  /* NotificationMethods */
-  /**
-   * {@inheritDoc}
-   */
-  def enableNotification(specificUser: User.SpecificInfo): User = {
-    require(specificUser != null)
-    
-    // TODO メソッド削除
-//    specificUser match {
-//      case Right(userId) => twitter4jObj.enableNotification(userId)
-//      case Left(screenName) => twitter4jObj.enableNotification(screenName)
-//    }
-    null
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  def disableNotification(specificUser: User.SpecificInfo): User = {
-    require(specificUser != null)
-    
-    // TODO メソッド削除
-//    specificUser match {
-//      case Right(userId) => twitter4jObj.disableNotification(userId)
-//      case Left(screenName) => twitter4jObj.disableNotification(screenName)
-//    }
-    null
-  }
 }
 
 /**
