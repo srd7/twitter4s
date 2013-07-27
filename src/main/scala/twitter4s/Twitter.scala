@@ -32,7 +32,7 @@ import auth.ConsumerKey
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase with TwitterAPIs {
+case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   
   /* TwitterBase method */
   /**
