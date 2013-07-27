@@ -71,29 +71,27 @@ class PlaceGeoResourcesTest extends Specification {
   
   "updateStatus(StatusMethods)" should {
     "update user status with place information" in {
-      // TODO updateStatusの変更待ち
-//      val sanFrancisco = "5a110d312052166f"
-//      val latestStatus = StatusUpdate(new Date() + " status with place")
-//      val status = twitter3.updateStatus(Status.isSetBy(latestStatus.placeId(sanFrancisco)))
-//      rawJSON(status.tw4jObj) must not equalTo(null)
-//      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
-//      status.place.id must equalTo(sanFrancisco)
-//      status.contributors must equalTo(null)
+      val sanFrancisco = "5a110d312052166f"
+      val latestStatus = StatusUpdate(new Date() + " status with place")
+      val status = twitter3.updateStatus(Status.isSetBy(latestStatus.placeId(sanFrancisco)))
+      rawJSON(status.tw4jObj) must not equalTo(null)
+      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
+      status.place.id must equalTo(sanFrancisco)
+      status.contributors must equalTo(null)
     }
     
     "update user status with geo information" in {
-      // TODO updateStatusの変更待ち
-//      val latitude = 12.3456d
-//      val longitude = -34.5678d
-//      val latestStatus = StatusUpdate(new Date() + " status with geo")
-//      
-//      val statusWithGeo = twitter3.updateStatus(Status.isSetBy(latestStatus.location(GeoLocation(latitude, longitude))))
-//      rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
-//      statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
-//      statusWithGeo.user.isGeoEnabled must beTrue
-//      statusWithGeo.geoLocation.getLatitude() must equalTo(latitude)
-//      statusWithGeo.geoLocation.getLongitude() must equalTo(longitude)
-//      twitter1.verifyCredentials.isGeoEnabled must beFalse
+      val latitude = 12.3456d
+      val longitude = -34.5678d
+      val latestStatus = StatusUpdate(new Date() + " status with geo")
+      
+      val statusWithGeo = twitter3.updateStatus(Status.isSetBy(latestStatus.location(GeoLocation(latitude, longitude))))
+      rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
+      statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
+      statusWithGeo.user.isGeoEnabled must beTrue
+      statusWithGeo.geoLocation.getLatitude() must equalTo(latitude)
+      statusWithGeo.geoLocation.getLongitude() must equalTo(longitude)
+      twitter1.verifyCredentials.isGeoEnabled must beFalse
     }
   }
 }

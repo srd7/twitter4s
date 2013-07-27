@@ -29,15 +29,6 @@ trait ResponseList[T] extends TwitterResponse {
   def listAsScala:Buffer[T]
   
   /**
-   * get API feature Specific rate limit status
-   * 
-   * @return rate limit status
-   * @since Twitter4S 1.0.0
-   */
-  // TODO メソッド削除
-//  def featureSpecificRateLimitStatus:RateLimitStatus
-  
-  /**
    * apply method for get item specified by index.
    * 
    * @param idx index of list.

@@ -20,17 +20,15 @@ import twitter4s.RateLimitStatus
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class RateLimitStatusImpl(twt4jRateLimitStatus: twitter4j.RateLimitStatus) extends RateLimitStatus {
+  def remaining = twt4jRateLimitStatus.getRemaining()
+  
   def remainingHits = twt4jRateLimitStatus.getRemainingHits()
-
-  // TODO 削除メソッド
-//  def hourlyLimit = twt4jRateLimitStatus.getHourlyLimit()
+  
+  def limit = twt4jRateLimitStatus.getLimit()
 
   def resetTimeInSeconds = twt4jRateLimitStatus.getResetTimeInSeconds()
 
   def secondsUntilReset = twt4jRateLimitStatus.getSecondsUntilReset()
-
-  // TODO 変更メソッド => resetTimeInSeconds
-//  def resetTime = twt4jRateLimitStatus.getResetTime()
   
   def tw4jObj = twt4jRateLimitStatus
 }

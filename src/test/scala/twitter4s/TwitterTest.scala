@@ -15,12 +15,6 @@ import org.specs2.runner.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class TwitterTest extends Specification {
   "getAccessLevel" should {
-    "unauthenticated access level is None" in {
-      // TODO getDailyTrendsメソッド削除
-//      val response = unauthenticated.getDailyTrends()
-//      response.accessLevel must equalTo(TwitterResponse.NONE)
-    }
-  
     "application has read and write access level is READ_WRITE" in {
       val response = twitter1.verifyCredentials
       response.accessLevel must equalTo(TwitterResponse.READ_WRITE)
@@ -48,16 +42,12 @@ class TwitterTest extends Specification {
     val consumerKey = new ConsumerKey(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
     val accessToken = new AccessToken(prop.getProperty("id1.oauth.accessToken"), prop.getProperty("id1.oauth.accessTokenSecret"))
     
-    def testTwitterObjectAuthorize(target: Twitter) = {
-//      val user = target.verifyCredentials
-//      rawJSON(user.tw4jObj) must not equalTo(null)
-//      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-    }
-    
     "create object with consumerKey and consumerSecret" in {
       val twitterObj = Twitter(consumerKey, accessToken)
       // execute authorized api.
-      testTwitterObjectAuthorize(twitterObj)
+      val user = twitterObj.verifyCredentials
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "create object without settings and after set oauth information" in {
@@ -65,7 +55,9 @@ class TwitterTest extends Specification {
       twitterObj.setOAuthConsumer(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
       twitterObj.setOAuthAccessToken(accessToken)
       // execute authorized api.
-      testTwitterObjectAuthorize(twitterObj)
+      val user = twitterObj.verifyCredentials
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
     
     "create object without settings and after set oauth information used by ConsumerKey class" in {
@@ -73,31 +65,35 @@ class TwitterTest extends Specification {
       twitterObj.setOAuthConsumer(consumerKey)
       twitterObj.setOAuthAccessToken(accessToken)
       // execute authorized api.
-      testTwitterObjectAuthorize(twitterObj)
+      val user = twitterObj.verifyCredentials
+      rawJSON(user.tw4jObj) must not equalTo(null)
+      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
     }
   }
 
   "getRateLimitStatus" should {
-    // TODO RateLimitStatusはtwitter4j 3.0.0でHelpResourceに変更してメソッドインタフェースが変わってる
     "get rate limit status" in {
-//      val rateLimitStatus = twitter1.getRateLimitStatus
-//      rawJSON(rateLimitStatus.tw4jObj) must not equalTo(null)
-//      rateLimitStatus.tw4jObj must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus.tw4jObj)))
-//      rateLimitStatus.hourlyLimit must be_>(10)
-//      rateLimitStatus.remainingHits must be_>(10)
-      true
+      val rateLimitStatus = twitter1.getRateLimitStatus()
+      DataObjectFactory.getRawJSON(rateLimitStatus) must not equalTo(null)
+      rateLimitStatus must equalTo(DataObjectFactory.createRateLimitStatus(rawJSON(rateLimitStatus)))
+      
+      val status = rateLimitStatus.values.iterator.next
+      status.limit must be_>(10)
+      status.remaining must be_>(10)
+      status.secondsUntilReset must be_>(0)
     }
     
     "get comparable rate limit status" in {
-      // TODO RateLimitStatusはtwitter4j 3.0.0でHelpResourceに変更してメソッドインタフェースが変わってる
-//      twitter1.getMentions()
-//      val previousStatus = twitter1.getRateLimitStatus
-//      
-//      twitter1.getMentions()
-//      val afterStatus = twitter1.getRateLimitStatus
-//      
-//      previousStatus.remainingHits must be_>(afterStatus.remainingHits)
-//      previousStatus.hourlyLimit must equalTo(afterStatus.hourlyLimit)
+      twitter1.getMentions()
+      val previousRateLimitStatus = twitter1.getRateLimitStatus()
+      val previousStatus = previousRateLimitStatus.values.iterator.next
+      
+      twitter1.getMentions()
+      val afterRateLimitStatus = twitter1.getRateLimitStatus()
+      val afterStatus = afterRateLimitStatus.values.iterator.next
+      
+      previousStatus.remaining must be_>(afterStatus.remaining)
+      previousStatus.limit must equalTo(afterStatus.limit)
       true
     }
   }
