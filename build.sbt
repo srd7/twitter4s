@@ -2,7 +2,7 @@ name := "twitter4s"
 
 version := "2.0.0"
 
-scalaVersion := "2.10.1"
+scalaVersion := "2.10.2"
 
 libraryDependencies ++= Seq(
 	"org.twitter4j" % "twitter4j-core" % "[3.0,)",

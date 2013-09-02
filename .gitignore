@@ -5,4 +5,5 @@ bin/
 .cache
 .settings
 src/test/scala/twitter4s/test.properties
-
+.idea/
+.idea_modules/
