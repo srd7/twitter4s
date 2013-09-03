@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
 	"org.mockito" % "mockito-core" % "1.9.5" % "test"
 )
 
+parallelExecution in Test := false
+
 resolvers += "twitter4j.org Repository" at "http://twitter4j.org/maven2"
 
 resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
