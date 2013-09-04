@@ -61,6 +61,7 @@ class HelpResourcesTest extends Specification with Mockito {
       val languages = twitterHelpResourceRole.getLanguages
       
       languages.size must equalTo(9)
+      there was one(twitter4jMock).getLanguages
     }
   }
   
@@ -69,18 +70,21 @@ class HelpResourcesTest extends Specification with Mockito {
       val conf = twitterHelpResourceRole.getAPIConfiguration
 
       conf.accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(twitter4jMock).getAPIConfiguration
     }
   }
   
   "getTermsOfService" should {
     "get value from twitter" in {
       twitterHelpResourceRole.getTermsOfService must equalTo("call getTermsOfService of mock")
+      there was one(twitter4jMock).getTermsOfService
     }
   }
   
   "getPrivacyPolicy" should {
     "get value from twitter" in {
       twitterHelpResourceRole.getPrivacyPolicy must equalTo("call getPrivacyPolicy of mock")
+      there was one(twitter4jMock).getPrivacyPolicy
     }
   }
 }
