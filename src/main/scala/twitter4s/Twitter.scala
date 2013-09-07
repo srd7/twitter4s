@@ -154,12 +154,7 @@ object Twitter {
    * @since Twitter4S 1.0.0
    */
   def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
-    val twitter4jObj = getTwitter4jInstance(
-        getTwitterFactory4j(None),
-        None)
-    twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
-    twitter4jObj.setOAuthAccessToken(accessToken)
-    buildTwitter4sObject(twitter4jObj)
+    buildTwitter4sObject(buildTwitter4jInstance(consumerKey, accessToken))
   }
   
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
@@ -212,5 +207,22 @@ object Twitter {
         case Left(auth) => factory4j.getInstance(auth)
       }
     }
+  }
+
+  /**
+   * Create Twitter4J instance
+   *
+   * @param consumerKey(required) Consumer key object for create factory.
+   * @param accessToken(required) Access token object for create twitter4j object.
+   * @return twitter4j.Twitter
+   * @since Twitter4S 2.1.0
+   */
+  def buildTwitter4jInstance(consumerKey: ConsumerKey, accessToken: AccessToken) = {
+    val twitter4jObj = getTwitter4jInstance(
+      getTwitterFactory4j(None),
+      None)
+    twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
+    twitter4jObj.setOAuthAccessToken(accessToken)
+    twitter4jObj
   }
 }
