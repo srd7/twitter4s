@@ -3,6 +3,7 @@ package twitter4s.dsl
 import org.specs2.mutable._
 import twitter4s.auth.{AccessToken, ConsumerKey}
 import twitter4s.Twitter
+import twitter4s.api.impl.HelpResourcesImpl
 
 class HelpResourcesDslTest extends Specification with HelpResourcesDsl {
 
@@ -19,7 +20,7 @@ class HelpResourcesDslTest extends Specification with HelpResourcesDsl {
     "create twitter4s resources" in {
       attach(testConsumerKey, testAccessToken)
 
-      resources must not equalTo(null)
+      resources must haveInterface[HelpResourcesImpl]
     }
   }
 }
