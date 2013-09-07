@@ -14,17 +14,9 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s._
 import api.impl._
-import java.io.File
-import java.io.InputStream
-import java.util.Date
-import twitter4j.api.HelpResources.Language
 import twitter4j.auth.AccessToken
 import twitter4j.auth.RequestToken
-import twitter4j.Category
-import twitter4j.Friendship
-import twitter4j.Location
 import twitter4j.RateLimitStatusListener
 import twitter4j.TwitterFactory
 import auth.ConsumerKey
