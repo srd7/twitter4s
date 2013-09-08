@@ -1,15 +1,9 @@
 package twitter4s.dsl
 
 import org.specs2.mutable._
-import twitter4s.auth.{AccessToken, ConsumerKey}
 import twitter4s.Twitter
-import twitter4s.api.impl.HelpResourcesImpl
 
-class HelpResourcesDslTest extends Specification with HelpResourcesDsl {
-
-  val testConsumerKey = ConsumerKey("consumerKey", "consumerSecret")
-  val testAccessToken = AccessToken("accessToken", "tokenSecret")
-
+class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with HelpResourcesDsl {
   "attach" should {
     "create twitter4j resources" in {
       attach(testConsumerKey, testAccessToken)
@@ -20,7 +14,7 @@ class HelpResourcesDslTest extends Specification with HelpResourcesDsl {
     "create twitter4s resources" in {
       attach(testConsumerKey, testAccessToken)
 
-      resources must haveInterface[HelpResourcesImpl]
+      resources must haveInterface[ResourcesType]
     }
   }
 }
