@@ -28,15 +28,9 @@ import scala.collection.mutable
 /**
  * @author mao.instantlife at gmail.com
  */
-trait HelpResourcesDsl extends HelpResources {
-
-  private var twitter4jResources: twitter4j.Twitter = _
-
-  lazy val resources = new Twitter(twitter4jResources) with HelpResourcesImpl
-
-  def attach(consumerKey: ConsumerKey, accessToken: AccessToken) {
-    twitter4jResources = Twitter.buildTwitter4jInstance(consumerKey, accessToken)
-  }
+trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
+  type ResourcesType = HelpResourcesImpl
+  override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration
