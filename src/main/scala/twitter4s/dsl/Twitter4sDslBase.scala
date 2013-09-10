@@ -19,6 +19,7 @@ package twitter4s.dsl
 import twitter4s.auth.ConsumerKey
 import twitter4j.auth.AccessToken
 import twitter4s.Twitter
+import twitter4j.TwitterFactory
 
 /**
  * @author mao.instantlife at gmail.com
@@ -35,4 +36,16 @@ trait Twitter4sDslBase {
   }
 
   def resources = twitter4sResources
+
+  def authorizationURL(consumerKey: ConsumerKey, callbackUrl: String = null) = {
+    val twitterInstance = new Twitter(new TwitterFactory().getInstance())
+
+    twitterInstance.setOAuthConsumer(consumerKey)
+    val requestToken = Option(callbackUrl) match {
+      case Some(callbackUrl) => twitterInstance.getOAuthRequestToken(callbackURL = callbackUrl)
+      case None => twitterInstance.getOAuthRequestToken()
+    }
+
+    requestToken.getAuthorizationURL
+  }
 }

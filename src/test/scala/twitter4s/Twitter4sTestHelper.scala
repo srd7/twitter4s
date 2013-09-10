@@ -18,7 +18,7 @@ object Twitter4sTestHelper {
     val password = prop.getProperty(propName + ".password")
     val id = prop.getProperty(propName + ".id").toLong
     val accessToken = prop.getProperty(propName + ".oauth.accessToken")
-    val accessTokenSecret = prop.getProperty(propName + ".oauth.accessTokenSecret")
+      val accessTokenSecret = prop.getProperty(propName + ".oauth.accessTokenSecret")
   }
   
   val id1 = new TestUserInfo("id1")
