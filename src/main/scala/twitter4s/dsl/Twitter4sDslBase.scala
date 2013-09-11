@@ -27,23 +27,26 @@ import twitter4j.TwitterFactory
 trait Twitter4sDslBase {
   type ResourcesType
 
-  protected var twitter4jResources: twitter4j.Twitter = _
+  protected var twitter4jResources: twitter4j.Twitter = new TwitterFactory().getInstance()
 
   protected val twitter4sResources: Twitter with ResourcesType
 
-  def attach(consumerKey: ConsumerKey, accessToken: AccessToken) {
-    twitter4jResources = Twitter.buildTwitter4jInstance(consumerKey, accessToken)
+  def attach(accessToken: AccessToken)(implicit consumerKey: ConsumerKey) {
+    resources.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
+    resources.setOAuthAccessToken(accessToken)
   }
 
   def resources = twitter4sResources
 
-  def authorizationURL(consumerKey: ConsumerKey, callbackUrl: String = null) = {
-    val twitterInstance = new Twitter(new TwitterFactory().getInstance())
+  def authorizationURL(callbackUrl: String = null)(implicit consumerKey: ConsumerKey) = {
+    // if consumerKey has be set, twitter4j instance cannot consumerKey
+    // create new instance by call
+    val twitterForAuth = new Twitter(new TwitterFactory().getInstance())
 
-    twitterInstance.setOAuthConsumer(consumerKey)
+    twitterForAuth.setOAuthConsumer(consumerKey)
     val requestToken = Option(callbackUrl) match {
-      case Some(callbackUrl) => twitterInstance.getOAuthRequestToken(callbackURL = callbackUrl)
-      case None => twitterInstance.getOAuthRequestToken()
+      case Some(callbackUrl) => twitterForAuth.getOAuthRequestToken(callbackURL = callbackUrl)
+      case None => twitterForAuth.getOAuthRequestToken()
     }
 
     requestToken.getAuthorizationURL

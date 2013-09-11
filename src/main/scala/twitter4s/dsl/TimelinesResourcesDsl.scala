@@ -26,7 +26,6 @@ import twitter4j.{Status, Paging}
  */
 trait TimelinesResourcesDsl extends Twitter4sDslBase with TimelinesResources {
   type ResourcesType = TimelinesResourcesImpl
-
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
 
   // bellow methods implements are a cliche.
