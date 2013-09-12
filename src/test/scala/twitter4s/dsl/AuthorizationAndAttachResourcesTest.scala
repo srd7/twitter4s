@@ -54,7 +54,4 @@ class AuthorizationAndAttachResourcesTest extends Specification with Twitter4sDs
       actual._1 must startWith(authUrl + actual._2.getToken)
     }
   }
-
-  // TODO add test for userAccessToken,
-  // but haven't some good idea how to test callback method.
 }

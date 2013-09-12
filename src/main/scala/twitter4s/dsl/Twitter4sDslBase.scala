@@ -32,6 +32,11 @@ trait Twitter4sDslBase {
 
   protected val twitter4sResources: Twitter with ResourcesType
 
+  // if your application is needed another storer,
+  // create storer object mixined AccessTokenStorer trait
+  // and override this storeExecutor.
+  protected val storeExecutor: AccessTokenStoreExecutor = DefaultAccessTokenStoreExecutor
+
   def attach(accessToken: AccessToken)(implicit consumerKey: ConsumerKey) {
     resources.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
     resources.setOAuthAccessToken(accessToken)
@@ -55,7 +60,7 @@ trait Twitter4sDslBase {
     (twitter.verifyCredentials.id, accessToken)
   }
 
-  private def twitterForAuth(implicit consumerKey: ConsumerKey) = {
+  protected def twitterForAuth(implicit consumerKey: ConsumerKey) = {
     // if consumerKey has be set, twitter4j instance cannot consumerKey
     // create new instance by call
     val twitter = new Twitter(new TwitterFactory().getInstance()) with UsersResourcesImpl
@@ -63,4 +68,13 @@ trait Twitter4sDslBase {
 
     twitter
   }
+
+  class ReqestTokenStoreExecutor(userTokenArgs: Pair[Long, AccessToken], tokenStorer: AccessTokenStoreExecutor) {
+    def andThenStore = {
+      tokenStorer.store(userTokenArgs)
+    }
+  }
+
+  implicit def reqTokenToStore(userTokenArgs: Pair[Long, AccessToken])
+    = new ReqestTokenStoreExecutor(userTokenArgs, storeExecutor)
 }
