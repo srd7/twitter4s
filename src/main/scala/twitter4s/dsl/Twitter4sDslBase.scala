@@ -17,9 +17,10 @@ package twitter4s.dsl
  */
 
 import twitter4s.auth.ConsumerKey
-import twitter4j.auth.AccessToken
+import twitter4j.auth.{RequestToken, AccessToken}
 import twitter4s.Twitter
 import twitter4j.TwitterFactory
+import twitter4s.api.impl.UsersResourcesImpl
 
 /**
  * @author mao.instantlife at gmail.com
@@ -38,17 +39,28 @@ trait Twitter4sDslBase {
 
   def resources = twitter4sResources
 
-  def authorizationURL(callbackUrl: String = null)(implicit consumerKey: ConsumerKey) = {
-    // if consumerKey has be set, twitter4j instance cannot consumerKey
-    // create new instance by call
-    val twitterForAuth = new Twitter(new TwitterFactory().getInstance())
-
-    twitterForAuth.setOAuthConsumer(consumerKey)
+  def authorizationURL(callbackUrl: String = null)(implicit consumerKey: ConsumerKey): (String, RequestToken) = {
     val requestToken = Option(callbackUrl) match {
       case Some(callbackUrl) => twitterForAuth.getOAuthRequestToken(callbackURL = callbackUrl)
       case None => twitterForAuth.getOAuthRequestToken()
     }
 
-    requestToken.getAuthorizationURL
+    (requestToken.getAuthorizationURL, requestToken)
+  }
+
+  def userAccessToken(requestToken: RequestToken, oauthVerifier: String)(implicit consumerKey: ConsumerKey):(Long, AccessToken) = {
+    val twitter = twitterForAuth
+    val accessToken = twitter.getOAuthAccessToken(oauthVerifier, requestToken)
+
+    (twitter.verifyCredentials.id, accessToken)
+  }
+
+  private def twitterForAuth(implicit consumerKey: ConsumerKey) = {
+    // if consumerKey has be set, twitter4j instance cannot consumerKey
+    // create new instance by call
+    val twitter = new Twitter(new TwitterFactory().getInstance()) with UsersResourcesImpl
+    twitter.setOAuthConsumer(consumerKey)
+
+    twitter
   }
 }

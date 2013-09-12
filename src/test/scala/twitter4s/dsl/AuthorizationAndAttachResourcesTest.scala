@@ -6,7 +6,7 @@ import twitter4s.auth.ConsumerKey
 import twitter4s.Twitter
 import twitter4s.api.impl.HelpResourcesImpl
 
-class Twitter4sDslBaseTest extends Specification with Twitter4sDslBase with Twitter4sDslTestBase {
+class AuthorizationAndAttachResourcesTest extends Specification with Twitter4sDslBase with Twitter4sDslTestBase {
   // mixin for test
   type ResourcesType = HelpResourcesImpl
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
@@ -29,24 +29,32 @@ class Twitter4sDslBaseTest extends Specification with Twitter4sDslBase with Twit
       prop.getProperty("browser.oauth.consumerKey"),
       prop.getProperty("browser.oauth.consumerSecret"))
 
-    "returned auth url without callback url" in {
-      authorizationURL()(desktopAppConsKey) must startWith(authUrl)
+    "returned auth url and verifier without callback url" in {
+      val actual = authorizationURL()(desktopAppConsKey)
+
+      actual._1 must startWith(authUrl + actual._2.getToken)
     }
 
     "call by implicit consumerKey without callback url" in {
       implicit val impConsumerKey = desktopAppConsKey
 
-      authorizationURL() must startWith(authUrl)
+      val actual = authorizationURL()
+      actual._1 must startWith(authUrl + actual._2.getToken)
     }
 
-    "returned auth url with callback url" in {
-      authorizationURL("http://hoge.com")(webAppConsKey) must startWith(authUrl)
+    "returned auth url and verifier with callback url" in {
+      val actual = authorizationURL("http://hoge.com")(webAppConsKey)
+      actual._1 must startWith(authUrl + actual._2.getToken)
     }
 
     "call by implicit consumerKey with callback url" in {
       implicit val impConsumerKey = webAppConsKey
 
-      authorizationURL("http://hoge.com") must startWith(authUrl)
+      val actual = authorizationURL("http://hoge.com")
+      actual._1 must startWith(authUrl + actual._2.getToken)
     }
   }
+
+  // TODO add test for userAccessToken,
+  // but haven't some good idea how to test callback method.
 }
