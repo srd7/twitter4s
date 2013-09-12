@@ -70,12 +70,10 @@ trait Twitter4sDslBase {
     twitter
   }
 
-  class ReqestTokenStoreExecutor(userTokenArgs: Pair[Long, AccessToken], tokenStorer: AccessTokenStoreExecutor) {
+  implicit class ReqestTokenStoreExecutor(userTokenArgs: Pair[Long, AccessToken]) {
+    val tokenStoreExecutor = storeExecutor
     def andThenStore = {
-      tokenStorer.store(userTokenArgs)
+      tokenStoreExecutor.store(userTokenArgs)
     }
   }
-
-  implicit def reqTokenToStore(userTokenArgs: Pair[Long, AccessToken])
-    = new ReqestTokenStoreExecutor(userTokenArgs, storeExecutor)
 }
