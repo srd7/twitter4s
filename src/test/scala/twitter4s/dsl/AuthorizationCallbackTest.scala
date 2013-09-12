@@ -8,6 +8,7 @@ import twitter4j.{Status, URLEntity, RateLimitStatus}
 import java.net.URL
 import java.util.Date
 import twitter4s.api.impl.UsersResourcesImpl
+import twitter4s.dsl.storeexecutor.AccessTokenStoreExecutor
 
 class AuthorizationCallbackTest extends Specification with Twitter4sDslBase with Mockito with Twitter4sDslTestBase {
   // mixin for test

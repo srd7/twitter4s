@@ -21,6 +21,7 @@ import twitter4j.auth.{RequestToken, AccessToken}
 import twitter4s.Twitter
 import twitter4j.TwitterFactory
 import twitter4s.api.impl.UsersResourcesImpl
+import twitter4s.dsl.storeexecutor.{DefaultAccessTokenStoreExecutor, AccessTokenStoreExecutor}
 
 /**
  * @author mao.instantlife at gmail.com

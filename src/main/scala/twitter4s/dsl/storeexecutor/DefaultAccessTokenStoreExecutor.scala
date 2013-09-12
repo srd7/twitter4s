@@ -1,4 +1,4 @@
-package twitter4s.dsl
+package twitter4s.dsl.storeexecutor
 
 /*
  * Copyright (C) 2013 Shinsuke Abe
