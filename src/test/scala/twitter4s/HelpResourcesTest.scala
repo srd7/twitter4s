@@ -8,38 +8,12 @@ import org.specs2.mock.Mockito
 import twitter4j.api.HelpResources.Language
 import java.util
 import twitter4j.MediaEntity.Size
+import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class HelpResourcesTest extends Specification with Mockito {
   val twitter4jMock = mock[twitter4j.Twitter]
-  twitter4jMock.getLanguages returns (new twitter4j.ResponseList[Language] {
-    def getAccessLevel: Int = ???
-    def removeAll(c: util.Collection[_]): Boolean = ???
-    def subList(fromIndex: Int, toIndex: Int): util.List[Language] = ???
-    def set(index: Int, element: Language): Language = ???
-    def indexOf(o: scala.Any): Int = ???
-    def get(index: Int): Language = ???
-    def retainAll(c: util.Collection[_]): Boolean = ???
-    def lastIndexOf(o: scala.Any): Int = ???
-    def clear() {}
-    def toArray[T](a: Array[T]): Array[T] = ???
-    def toArray: Array[AnyRef] = ???
-    def listIterator(index: Int): util.ListIterator[Language] = ???
-    def listIterator(): util.ListIterator[Language] = ???
-    def size(): Int = 9
-    def remove(index: Int): Language = ???
-    def remove(o: scala.Any): Boolean = ???
-    def contains(o: scala.Any): Boolean = ???
-    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
-    def iterator(): util.Iterator[Language] = ???
-    def addAll(index: Int, c: util.Collection[_ <: Language]): Boolean = ???
-    def addAll(c: util.Collection[_ <: Language]): Boolean = ???
-    def isEmpty: Boolean = ???
-    def containsAll(c: util.Collection[_]): Boolean = ???
-    def add(index: Int, element: Language) {}
-    def add(e: Language): Boolean = ???
-    def toArray[T](x: Array[T with Object]): Array[T with Object] = ???
-  })
+  twitter4jMock.getLanguages returns FakeValuesUsedByMock.responseList[Language]
   twitter4jMock.getAPIConfiguration returns (new twitter4j.TwitterAPIConfiguration {
     def getAccessLevel: Int = 3 // Read Write DM
     def getMaxMediaPerUpload: Int = ???
@@ -60,7 +34,7 @@ class HelpResourcesTest extends Specification with Mockito {
     "get Language settings from twitter" in {
       val languages = twitterHelpResourceRole.getLanguages
       
-      languages.size must equalTo(9)
+      languages.size must equalTo(1)
       there was one(twitter4jMock).getLanguages
     }
   }

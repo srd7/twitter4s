@@ -6,54 +6,27 @@ import Twitter4sTestHelper._
 import twitter4j.json.DataObjectFactory
 import twitter4s.api.impl.TimelinesResourcesImpl
 import org.specs2.mock.Mockito
-import java.util
+import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class TimelinesResourcesTest extends Specification with Mockito {
-  val fakeReturnsResponseList = new twitter4j.ResponseList[twitter4j.Status] {
-    def getAccessLevel: Int = 3
-    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
-    def size(): Int = 1
-    def isEmpty: Boolean = ???
-    def contains(o: scala.Any): Boolean = ???
-    def iterator(): util.Iterator[twitter4j.Status] = ???
-    def toArray[T](a: Array[T]): Array[T] = ???
-    def toArray: Array[AnyRef] = ???
-    def add(e: twitter4j.Status): Boolean = ???
-    def remove(o: scala.Any): Boolean = ???
-    def containsAll(c: util.Collection[_]): Boolean = ???
-    def addAll(c: util.Collection[_ <: twitter4j.Status]): Boolean = ???
-    def addAll(index: Int, c: util.Collection[_ <: twitter4j.Status]): Boolean = ???
-    def removeAll(c: util.Collection[_]): Boolean = ???
-    def retainAll(c: util.Collection[_]): Boolean = ???
-    def clear() {}
-    def get(index: Int): twitter4j.Status = ???
-    def set(index: Int, element: twitter4j.Status): twitter4j.Status = ???
-    def add(index: Int, element: twitter4j.Status) {}
-    def remove(index: Int): twitter4j.Status = ???
-    def indexOf(o: scala.Any): Int = ???
-    def lastIndexOf(o: scala.Any): Int = ???
-    def listIterator(): util.ListIterator[twitter4j.Status] = ???
-    def listIterator(index: Int): util.ListIterator[twitter4j.Status] = ???
-    def subList(fromIndex: Int, toIndex: Int): util.List[twitter4j.Status] = ???
-    def toArray[T](x: Array[T with Object]): Array[T with Object] = ???
-  }
+  val fakeResponseList = FakeValuesUsedByMock.responseList[twitter4j.Status]
 
   val twitter4jMock = mock[twitter4j.Twitter]
-  twitter4jMock.getHomeTimeline returns fakeReturnsResponseList
-  twitter4jMock.getHomeTimeline(Paging(1)) returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline(Paging(1).count(30)) returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline(1000) returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline(1001, Paging(sinceId = 999383469L)) returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline("1000") returns fakeReturnsResponseList
-  twitter4jMock.getUserTimeline("1001", Paging(1)) returns fakeReturnsResponseList
-  twitter4jMock.getMentions returns fakeReturnsResponseList
-  twitter4jMock.getMentions(Paging(1)) returns fakeReturnsResponseList
-  twitter4jMock.getMentionsTimeline returns fakeReturnsResponseList
-  twitter4jMock.getMentionsTimeline(Paging(1)) returns fakeReturnsResponseList
-  twitter4jMock.getRetweetsOfMe returns fakeReturnsResponseList
-  twitter4jMock.getRetweetsOfMe(Paging(9)) returns fakeReturnsResponseList
+  twitter4jMock.getHomeTimeline returns fakeResponseList
+  twitter4jMock.getHomeTimeline(Paging(1)) returns fakeResponseList
+  twitter4jMock.getUserTimeline returns fakeResponseList
+  twitter4jMock.getUserTimeline(Paging(1).count(30)) returns fakeResponseList
+  twitter4jMock.getUserTimeline(1000) returns fakeResponseList
+  twitter4jMock.getUserTimeline(1001, Paging(sinceId = 999383469L)) returns fakeResponseList
+  twitter4jMock.getUserTimeline("1000") returns fakeResponseList
+  twitter4jMock.getUserTimeline("1001", Paging(1)) returns fakeResponseList
+  twitter4jMock.getMentions returns fakeResponseList
+  twitter4jMock.getMentions(Paging(1)) returns fakeResponseList
+  twitter4jMock.getMentionsTimeline returns fakeResponseList
+  twitter4jMock.getMentionsTimeline(Paging(1)) returns fakeResponseList
+  twitter4jMock.getRetweetsOfMe returns fakeResponseList
+  twitter4jMock.getRetweetsOfMe(Paging(9)) returns fakeResponseList
 
   val twitter4sObj = new Twitter(twitter4jMock) with TimelinesResourcesImpl
   
