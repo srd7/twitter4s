@@ -4,71 +4,40 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import twitter4j._
-import java.util.Date
 import twitter4s.api.impl.TweetsResourcesImpl
-import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
-class TweetsResourcesTest extends Specification with Mockito {
+class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = TweetsResourcesImpl
   
   val twitter2StatusRole = new Twitter(twitter4jInstance(User2)) with TweetsResourcesImpl
 
-  val mockingStatusText = "returned by mocking object"
-  val expectedStatus = new twitter4j.Status {
-    def getAccessLevel: Int = ???
-    def getHashtagEntities: Array[HashtagEntity] = ???
-    def getURLEntities: Array[URLEntity] = ???
-    def getPlace: twitter4j.Place = ???
-    def isRetweet: Boolean = ???
-    def isFavorited: Boolean = ???
-    def getCreatedAt: Date = ???
-    def getUser: twitter4j.User = ???
-    def getContributors: Array[Long] = ???
-    def getRetweetedStatus: twitter4j.Status = ???
-    def getInReplyToScreenName: String = ???
-    def isTruncated: Boolean = ???
-    def getId: Long = ???
-    def getCurrentUserRetweetId: Long = ???
-    def isPossiblySensitive: Boolean = ???
-    def getRetweetCount: Long = ???
-    def compareTo(o: twitter4j.Status): Int = ???
-    def getMediaEntities: Array[MediaEntity] = ???
-    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
-    def getGeoLocation: GeoLocation = ???
-    def getInReplyToUserId: Long = ???
-    def getSource: String = ???
-    def getText: String = mockingStatusText
-    def getInReplyToStatusId: Long = ???
-    def getUserMentionEntities: Array[UserMentionEntity] = ???
-    def isRetweetedByMe: Boolean = ???
-  }
-  val mockedTwitter4j = mock[twitter4j.Twitter]
-  mockedTwitter4j.showStatus(anyLong) returns(expectedStatus)
-  mockedTwitter4j.updateStatus(anyString) returns(expectedStatus)
-  mockedTwitter4j.updateStatus(any[twitter4j.StatusUpdate]) returns(expectedStatus)
-  mockedTwitter4j.destroyStatus(anyLong) returns(expectedStatus)
-  mockedTwitter4j.retweetStatus(anyLong) returns(expectedStatus)
+  mockedTwitter4j.showStatus(anyLong) returns(FakeValuesUsedByMock.status)
+  mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
+  mockedTwitter4j.updateStatus(any[twitter4j.StatusUpdate]) returns(FakeValuesUsedByMock.status)
+  mockedTwitter4j.destroyStatus(anyLong) returns(FakeValuesUsedByMock.status)
+  mockedTwitter4j.retweetStatus(anyLong) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.getRetweets(anyLong) returns(FakeValuesUsedByMock.responseList[twitter4j.Status])
 
-  val twitter = new Twitter(mockedTwitter4j) with TweetsResourcesImpl
+  override val twitter = new Twitter(mockedTwitter4j) with TweetsResourcesImpl
 
   "showStatus" should {
     "call twitter4j showStatus method" in {
-      twitter.showStatus(1000).text must equalTo(mockingStatusText)
+      twitter.showStatus(1000).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).showStatus(1000)
     }
   }
 
   "updateStatus" should {
     "call twitter4j updateStatus by status string method" in {
-      twitter.updateStatus(Status.isWrittenBy("call by string")).text must equalTo(mockingStatusText)
+      twitter.updateStatus(Status.isWrittenBy("call by string")).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).updateStatus("call by string")
     }
 
     "call twitter4j updateStatus by status object method" in {
       val setStatus = StatusUpdate("call by status object")
-      twitter.updateStatus(Status.isSetBy(setStatus)).text must equalTo(mockingStatusText)
+      twitter.updateStatus(Status.isSetBy(setStatus)).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).updateStatus(setStatus)
     }
 
@@ -79,14 +48,14 @@ class TweetsResourcesTest extends Specification with Mockito {
 
   "destroyStatus" should {
     "call twitter4j destroyStatus method" in {
-      twitter.destroyStatus(18594701629L).text must equalTo(mockingStatusText)
+      twitter.destroyStatus(18594701629L).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).destroyStatus(18594701629L)
     }
   }
 
   "retweetStatus" should {
     "call twitter4j retweetStatus method" in {
-      twitter.retweetStatus(18594701628L).text must equalTo(mockingStatusText)
+      twitter.retweetStatus(18594701628L).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).retweetStatus(18594701628L)
     }
   }

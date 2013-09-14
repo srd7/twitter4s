@@ -1,251 +1,152 @@
 package twitter4s
 
-import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import twitter4j.json.DataObjectFactory
 import Twitter4sTestHelper._
-import internal.json.ResponseListImpl
-import java.io.FileInputStream
-import java.util.Date
-import java.io.File
+import java.io.{File, FileInputStream}
 import twitter4s.api.impl.UsersResourcesImpl
+import twitter4j._
+import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
-class UsersResourcesTest extends Specification {
+class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = UsersResourcesImpl
   
   val twitter1UserResourceRole = new Twitter(twitter4jInstance(User1)) with UsersResourcesImpl
   val twitter2UserResourceRole = new Twitter(twitter4jInstance(User2)) with UsersResourcesImpl
   val twitter3UserResourceRole = new Twitter(twitter4jInstance(User3)) with UsersResourcesImpl
 
+  val fakeUsersScreenNameArray = Array("fake_user1", "fake_user2")
+  val fakeUsersIdArray = Array(1L, 2L)
+
+  mockedTwitter4j.showUser(anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.showUser(anyLong) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.lookupUsers(any[Array[String]]) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.lookupUsers(any[Array[Long]]) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.searchUsers(anyString, anyInt) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.verifyCredentials() returns FakeValuesUsedByMock.user
+  mockedTwitter4j.updateProfile(anyString, anyString, anyString, anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.updateProfileColors(anyString, anyString, anyString, anyString, anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.getAccountSettings returns FakeValuesUsedByMock.accountSettings
+  mockedTwitter4j.updateAccountSettings(anyInt, any[Boolean], anyString, anyString, anyString, anyString) returns FakeValuesUsedByMock.accountSettings
+  mockedTwitter4j.updateProfileImage(any[FileInputStream]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.updateProfileImage(any[File]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.updateProfileBackgroundImage(any[FileInputStream], any[Boolean]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.updateProfileBackgroundImage(any[File], any[Boolean]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createBlock(anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createBlock(anyLong) returns FakeValuesUsedByMock.user
+
+  override val twitter = new Twitter(mockedTwitter4j) with UsersResourcesImpl
+
   "showUser" should {
-    "get specified user profile with screenName" in {
-      val user = twitter1UserResourceRole.showUser(
-          User.isSpecifiedBy(id1.screenName))
-      user.screenName must equalTo(id1.screenName)
-      user.location must not equalTo(null)
-      user.description must not equalTo(null)
-      
-      user.profileImageURL must not equalTo(null)
-      user.biggerProfileImageURL must not equalTo(null)
-      user.miniProfileImageURL must not equalTo(null)
-      user.originalProfileImageURL must not equalTo(null)
-      
-      user.profileImageURLHttps must not equalTo(null)
-      user.biggerProfileImageURLHttps must not equalTo(null)
-      user.miniProfileImageURLHttps must not equalTo(null)
-      user.originalProdileImageURLHttps must not equalTo(null)
-      
-      user.profileBannerURL must equalTo(null) // for test user's banner is null
-      user.profileBannerRetinaURL must equalTo(null)
-      user.profileBannerIPadURL must equalTo(null)
-      user.profileBannerIPadRetinaURL must equalTo(null)
-      user.profileBannerMobileURL must equalTo(null)
-      user.profileBannerMobileRetinaURL must equalTo(null)
-      
-      user.url must not equalTo(null)
-      user.isProtected must beFalse
-      
-      user.favouritesCount must be_>=(0)
-      user.followersCount must be_>=(0)
-      user.friendsCount must be_>=(0)
-      
-      user.createdAt must not equalTo(null)
-      user.timeZone must not equalTo(null)
-      user.profileBackgroundImageUrl must not equalTo(null)
-      
-      user.statusesCount must be_>=(0)
-      user.profileBackgroundColor must not equalTo(null)
-      user.profileTextColor must not equalTo(null)
-      user.profileLinkColor must not equalTo(null)
-      user.profileSidebarBorderColor must not equalTo(null)
-      user.profileSidebarFillColor must not equalTo(null)
-      
-      if (user.status != null) {
-        user.status.createdAt must not equalTo(null)
-        user.status.text must not equalTo(null)
-        user.status.source must not equalTo(null)
-      }
-      user.listedCount must be_>=(0)
-      user.isFollowRequestSent must beFalse
+    "call twitter4j showUser method by screen name" in {
+      twitter.showUser(User.isSpecifiedBy("fake_user")).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).showUser("fake_user")
     }
-    
-    "get specified user with no status" in {
-      val user = twitter1UserResourceRole.showUser(
-          User.isSpecifiedBy("tigertest"))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      
-      val nextUser = twitter1UserResourceRole.showUser(
-          User.isSpecifiedBy(numberId))
-      nextUser.id must equalTo(numberIdId)
-      rawJSON(user.tw4jObj) must equalTo(null)
-      rawJSON(nextUser.tw4jObj) must not equalTo(null)
-      nextUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(nextUser.tw4jObj)))
-      
-      val thirdUser = twitter1UserResourceRole.showUser(
-          User.isSpecifiedBy(numberIdId))
-      thirdUser.id must equalTo(numberIdId)
-      rawJSON(thirdUser.tw4jObj) must not equalTo(null)
-      thirdUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(thirdUser.tw4jObj)))
+
+    "call twitter4j showUser method by user id" in {
+      twitter.showUser(User.isSpecifiedBy(1L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).showUser(1L)
     }
     
     "throw IllegalArgumentException are not set both parameters" in {
-      twitter1UserResourceRole.showUser(null) must throwA[IllegalArgumentException]
+      twitter.showUser(null) must throwA[IllegalArgumentException]
     }
   }
-  
+
   "lookupUsers" should {
-    "get lookup user list specified screen names" in {
-      val users = twitter1UserResourceRole.lookupUsers(Users.areSpecifiedBy(Array(id1.screenName, id2.screenName)))
-      users.size must equalTo(2)
-      users.exists(_.getId() == id1.id) must beTrue
-      users.exists(_.getId() == id2.id) must beTrue
+    "call twitter4j lookupUsers method by screen name array" in {
+      twitter.lookupUsers(Users.areSpecifiedBy(fakeUsersScreenNameArray)).size must equalTo(1)
+      there was one(mockedTwitter4j).lookupUsers(fakeUsersScreenNameArray)
     }
-    
-    "get lookup user list specified user ids" in {
-      val users = twitter1UserResourceRole.lookupUsers(Users.areSpecifiedBy(Array(id1.id, id2.id)))
-      users.size must equalTo(2)
-      users.exists(_.getId() == id1.id) must beTrue
-      users.exists(_.getId() == id2.id) must beTrue
-      rawJSON(users(0)) must not equalTo(null)
-      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-      rawJSON(users.tw4jObj) must not equalTo(null)
+
+    "call twitter4j lookupUsers method by user id array" in {
+      twitter.lookupUsers(Users.areSpecifiedBy(fakeUsersIdArray)).size must equalTo(1)
+      there was one(mockedTwitter4j).lookupUsers(fakeUsersIdArray)
     }
     
     "throw IllegalArgumentException when specificUsers is null" in {
-      twitter1UserResourceRole.lookupUsers(null) must throwA[IllegalArgumentException]
+      twitter.lookupUsers(null) must throwA[IllegalArgumentException]
     }
   }
   
   "searchUser" should {
-    "get matched user list specified search text" in {
-      val users = twitter1UserResourceRole.searchUsers("Doug Williams", 1)
-      users.size must be_>=(4)
-      rawJSON(users(0)) must not equalTo(null)
-      users(0) must equalTo(DataObjectFactory.createUser(rawJSON(users(0))))
-      rawJSON(users.tw4jObj) must not equalTo(null)
+    "call twitter4j searchUser method" in {
+      twitter.searchUsers("search user", 1).size must equalTo(1)
+      there was one(mockedTwitter4j).searchUsers("search user", 1)
     }
   }
 
   "verifyCredentials" should {
-    "get authorized user's credentials information" in {
-      val original = twitter1UserResourceRole.verifyCredentials
-      rawJSON(original.tw4jObj) must not equalTo(null)
-      original.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(original.tw4jObj)))
+    "call twitter4j verifyCredentials method" in {
+      twitter.verifyCredentials.screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).verifyCredentials()
     }
   }
   
   "updateProfile" should {
-    "update user profile(name, url, location, description)" in {
-      // make precondition
-      val original = twitter3UserResourceRole.updateProfile(
-          "twt4s_id3",
-          "https://github.com/Shinsuke-Abe/twitter4s",
-          ":Location",
-          "Hi there, I do test a lot!new")
-      
-      val newName = original.name + "new"
-      val newURL = original.url + "new"
-      val newLocation = new Date().toString()
-      val newDescription = original.description + "new"
-      
-      // test
-      val altered = twitter3UserResourceRole.updateProfile(newName, newURL, newLocation, newDescription)
-      rawJSON(altered.tw4jObj) must not equalTo(null)
-      original.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(original.tw4jObj)))
-      altered.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(altered.tw4jObj)))
-      altered.name must equalTo(newName)
-      altered.url must equalTo(newURL)
-      altered.location must equalTo(newLocation)
-      altered.description must equalTo(newDescription)
+    "call twitter4j updateProfile method" in {
+      twitter.updateProfile("twt4s_id", "http://hoge.com", ":Location", "test profile").screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfile("twt4s_id", "http://hoge.com", ":Location", "test profile")
     }
   }
   
   "updateProfileColors" should {
-    def testProfileColors(
-        target: User,
-        profileBackgroundColor: String,
-        profileTextColor: String,
-        profileLinkColor: String,
-        profileSidebarFillColor: String,
-        profileSidebarBorderColor: String) = {
-      target.profileBackgroundColor must equalTo(profileBackgroundColor)
-      target.profileTextColor must equalTo(profileTextColor)
-      target.profileLinkColor must equalTo(profileLinkColor)
-      target.profileSidebarFillColor must equalTo(profileSidebarFillColor)
-      target.profileSidebarBorderColor must equalTo(profileSidebarBorderColor)
-    }
-    
-    "change colors on user status page with three characters" in {
-      val updatedUser = twitter3UserResourceRole.updateProfileColors("f00", "f0f", "0ff", "0f0", "f0f")
-      rawJSON(updatedUser.tw4jObj) must not equalTo(null)
-      updatedUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(updatedUser.tw4jObj)))
-      testProfileColors(updatedUser, "FF0000", "FF00FF", "00FFFF", "00FF00", "FF00FF")
-      updatedUser.isProfileUseBackgroundImage must beTrue
-      updatedUser.isShowAllInlineMedia must beFalse
-      updatedUser.listedCount must be_<=(0)
-    }
-    
-    "change colors on user status page with six characters" in {
-      val updatedUser = twitter3UserResourceRole.updateProfileColors("87bc44", "9ae4e8", "000000", "0000ff", "e0ff92")
-      rawJSON(updatedUser.tw4jObj) must not equalTo(null)
-      updatedUser.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(updatedUser.tw4jObj)))
-      testProfileColors(updatedUser, "87BC44", "9AE4E8", "000000", "0000FF", "E0FF92")
+    "call twitter4j updateProfileColors method" in {
+      twitter.updateProfileColors("f00", "f0f", "0ff", "0f0", "f0f").screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfileColors("f00", "f0f", "0ff", "0f0", "f0f")
     }
   }
   
   "getAccountSettings" should {
-    "get authorized user's account settings" in {
-      val settings = twitter1UserResourceRole.getAccountSettings
-      settings.isSleepTimeEnabled must beTrue // this setting's default is false
-      settings.isGeoEnabled must beFalse // this setting's default is false
-      settings.language must equalTo("ja")
-      settings.timeZone.getName() must equalTo("Osaka")
-      settings.isAlwaysUseHttps must beTrue
-      settings.isDiscoverableByEmail must beTrue
-      settings.trendLocations.length must be_>(0)
+    "call twitter4j getAccountSettings method" in {
+      twitter.getAccountSettings.accessLevel must equalTo(TwitterResponse.READ_WRITE)
+      there was one(mockedTwitter4j).getAccountSettings
     }
   }
   
   "updateAccountSettings" should {
-    "change authorized user's account settings" in {
-      val intermSetting = twitter3UserResourceRole.updateAccountSettings(1, true, "23", "08", "Helsinki", "it")
-      rawJSON(intermSetting.tw4jObj) must not equalTo(null)
-      intermSetting.sleepStartTime must equalTo("23")
-      intermSetting.sleepEndTime must equalTo("8")
-      intermSetting.isGeoEnabled must beTrue // is default false
-      intermSetting.language must equalTo("it")
-      intermSetting.isAlwaysUseHttps must beTrue
-      intermSetting.isDiscoverableByEmail must beTrue // is default
-      intermSetting.timeZone.getName() must equalTo("Helsinki")
-      intermSetting.trendLocations.length must be_>(0)
+    "call twitter4j updateAccountSettings method" in {
+      twitter.updateAccountSettings(1, true, "23", "08", "Helsinki", "it").accessLevel must equalTo(TwitterResponse.READ_WRITE)
+      there was one(mockedTwitter4j).updateAccountSettings(1, true, "23", "08", "Helsinki", "it")
     }
   }
   
   "updateProfileImage" should {
-    "change profile image" in {
-      val user = twitter2UserResourceRole.updateProfileImage(
-          ImageResource.isAssigned(new FileInputStream(getRandomlyChosenFile)))
-      rawJSON(user.tw4jObj) must not equalTo(null)
+    "call twitter4j updateProfileImage method by image stream" in {
+      val inputStream = new FileInputStream(getRandomlyChosenFile)
+      twitter.updateProfileImage(ImageResource.isAssigned(inputStream)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfileImage(inputStream)
+    }
+
+    "call twitter4j updateProfileImage method by image file" in {
+      val image = getRandomlyChosenFile
+      twitter.updateProfileImage(ImageResource.isAssigned(image)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfileImage(image)
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-       twitter2UserResourceRole.updateProfileImage(null) must throwA[IllegalArgumentException]
+       twitter.updateProfileImage(null) must throwA[IllegalArgumentException]
     }
   }
   
   "updateProfileBackgroundImage" should {
-    "change background image in authorized user page" in {
-      val user = twitter2UserResourceRole.updateProfileBackgroundImage(
-          ImageResource.isAssigned(getRandomlyChosenFile),
-          (5 < System.currentTimeMillis() % 5))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+    "call twitter4j updateProfileBackgroundImage method by image stream" in {
+      val inputStream = new FileInputStream(getRandomlyChosenFile)
+      twitter.updateProfileBackgroundImage(ImageResource.isAssigned(inputStream), true).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfileBackgroundImage(inputStream, true)
+    }
+
+    "call twitter4j updateProfileBackgroundImage method by image file" in {
+      val image = getRandomlyChosenFile
+      twitter.updateProfileBackgroundImage(ImageResource.isAssigned(image), false).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).updateProfileBackgroundImage(image, false)
     }
     
     "throws IllegalArgumentException with no image file and stream" in {
-      twitter2UserResourceRole.updateProfileBackgroundImage(null, true) must throwA[IllegalArgumentException]
+      twitter.updateProfileBackgroundImage(null, true) must throwA[IllegalArgumentException]
     }
   }
   
@@ -257,15 +158,18 @@ class UsersResourcesTest extends Specification {
   }
   
   "createBlock" should {
-    "create block and get blocked user" in {
-      val user = twitter2UserResourceRole.createBlock(
-          User.isSpecifiedBy(id3.id))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+    "call twitter4j createBlock method by screen name" in {
+      twitter.createBlock(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createBlock(FakeValuesUsedByMock.userName)
+    }
+
+    "call twitter4j createBlock method by user id" in {
+      twitter.createBlock(User.isSpecifiedBy(1L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createBlock(1L)
     }
     
     "throw exception when user specific info is set null" in {
-      twitter2UserResourceRole.createBlock(null) must
+      twitter.createBlock(null) must
       throwA[IllegalArgumentException]
     }
   }
