@@ -3,20 +3,14 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4j.json.DataObjectFactory
 import Twitter4sTestHelper._
 import java.io.{File, FileInputStream}
 import twitter4s.api.impl.UsersResourcesImpl
-import twitter4j._
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
   type TargetResourcesType = UsersResourcesImpl
-  
-  val twitter1UserResourceRole = new Twitter(twitter4jInstance(User1)) with UsersResourcesImpl
-  val twitter2UserResourceRole = new Twitter(twitter4jInstance(User2)) with UsersResourcesImpl
-  val twitter3UserResourceRole = new Twitter(twitter4jInstance(User3)) with UsersResourcesImpl
 
   val fakeUsersScreenNameArray = Array("fake_user1", "fake_user2")
   val fakeUsersIdArray = Array(1L, 2L)
@@ -37,6 +31,23 @@ class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
   mockedTwitter4j.updateProfileBackgroundImage(any[File], any[Boolean]) returns FakeValuesUsedByMock.user
   mockedTwitter4j.createBlock(anyString) returns FakeValuesUsedByMock.user
   mockedTwitter4j.createBlock(anyLong) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.destroyBlock(anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.destroyBlock(anyLong) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.getBlocksList returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+  mockedTwitter4j.getBlocksList(anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+  mockedTwitter4j.getBlocksIDs returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getBlocksIDs(anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getContributees(anyString) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.getContributees(anyLong) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.getContributors(anyString) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  mockedTwitter4j.getContributors(anyLong) returns FakeValuesUsedByMock.responseList[twitter4j.User]
+  var mockCallStatusRemoveProfileBanner: String = _
+  mockedTwitter4j.removeProfileBanner() answers{_ => mockCallStatusRemoveProfileBanner = "called removeProfileBanner"}
+  var mockCallStatusUpdateProfileBannerStream: String = _
+  mockedTwitter4j.updateProfileBanner(any[FileInputStream]) answers{_ => mockCallStatusUpdateProfileBannerStream = "called updateProfileBanner by image stream"}
+  var mockCallStatusUpdateProfileBannerFile: String = _
+  mockedTwitter4j.updateProfileBanner(any[File]) answers{_ => mockCallStatusUpdateProfileBannerFile = "called updateProfileBanner by image file"}
+
 
   override val twitter = new Twitter(mockedTwitter4j) with UsersResourcesImpl
 
@@ -150,13 +161,6 @@ class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
     }
   }
   
-  private def testBlockingUsers(target: ResponseList[twitter4j.User]) = {
-    rawJSON(target.tw4jObj) must not equalTo(null)
-    target(0) must equalTo(DataObjectFactory.createUser(rawJSON(target(0))))
-    target.size must equalTo(blockingUsersSize)
-    target(0).id must equalTo(blockingUserId)
-  }
-  
   "createBlock" should {
     "call twitter4j createBlock method by screen name" in {
       twitter.createBlock(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).screenName must equalTo(FakeValuesUsedByMock.userName)
@@ -175,47 +179,111 @@ class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
   }
   
   "destryoBlock" should {
-    "destroy block and get unblocked user" in {
-      val user = twitter2UserResourceRole.destroyBlock(
-          User.isSpecifiedBy(id3.screenName))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+    "call twitter4j destroyBlock method by screen name" in {
+      twitter.destroyBlock(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).destroyBlock(FakeValuesUsedByMock.userName)
+    }
+
+    "call twitter4j destroyBlock method by user id" in {
+      twitter.destroyBlock(User.isSpecifiedBy(2L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).destroyBlock(2L)
     }
     
     "throw exception when user specific info is set null" in {
-      twitter2UserResourceRole.destroyBlock(null) must
+      twitter.destroyBlock(null) must
       throwA[IllegalArgumentException] 
     }
   }
   
-  "getBlockingUsers" should {
-    "get all user list blocking by authorized user" in {
-      testBlockingUsers(twitter1UserResourceRole.getBlocksList())
+  "getBlocksList" should {
+    "call twitter4j getBlocksList method without parameter" in {
+      val actual = twitter.getBlocksList()
+      actual.size must equalTo(50)
+      actual.hasNext must beTrue
+      there was one(mockedTwitter4j).getBlocksList
+    }
+
+    "call twitter4j getBlocksList method by cursor" in {
+      val actual = twitter.getBlocksList(3L)
+      actual.size must equalTo(50)
+      actual.hasPrevious must beTrue
+      there was one(mockedTwitter4j).getBlocksList(3L)
     }
   }
   
-  "getBlockingUsersIDs" should {
-    "get user id list blocking by authorized user" in {
-      val ids = twitter1UserResourceRole.getBlocksIDs()
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.ids.size must equalTo(blockingUsersSize)
-      ids.ids(0) must equalTo(blockingUserId)
+  "getBlocksIDs" should {
+    "call twitter4j getBlocksIDs method without parameter" in {
+      twitter.getBlocksIDs().accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getBlocksIDs
+    }
+
+    "call twitter4j getBlocksIDs method by cursor" in {
+      twitter.getBlocksIDs(4L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getBlocksIDs(4L)
     }
   }
-  
-  // TODO
-  // I don't know how to use contributor function.
-  // The following specs is pending until I understand it.
-//  "getContributees" should {
-//    "get user list by authorized user name" in {
-//      val users = twitter1.getContributors("twitter")
-//      users.size must be_>(0)
-//    }
-//  }
-  
-  // TODO
-  // The profile banner methods has no return value.
-  // I have no ideas suitable specs for these methods.
-  // removeProfileBanner
-  // updateProfileBanner
+
+  "getContributees" should {
+    "call twitter4j getContributees method by screen name" in {
+      twitter.getContributees(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).size must equalTo(1)
+      there was one(mockedTwitter4j).getContributees(FakeValuesUsedByMock.userName)
+    }
+
+    "call twitter4j getContributees method by user id" in {
+      twitter.getContributees(User.isSpecifiedBy(5L)).size must equalTo(1)
+      there was one(mockedTwitter4j).getContributees(5L)
+    }
+
+    "throw exception when user specific info is set null" in {
+      twitter.getContributees(null) must
+      throwA[IllegalArgumentException]
+    }
+  }
+
+  "getContributors" should {
+    "call twitter4j getContirbutors method by screen name" in {
+      twitter.getContributors(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).size must equalTo(1)
+      there was one(mockedTwitter4j).getContributors(FakeValuesUsedByMock.userName)
+    }
+
+    "call twitter4j getContributors method by user id" in {
+      twitter.getContributors(User.isSpecifiedBy(6L)).size must equalTo(1)
+      there was one(mockedTwitter4j).getContributors(6L)
+    }
+
+    "throw exception when user specific info is set null" in {
+      twitter.getContributors(null) must
+      throwA[IllegalArgumentException]
+    }
+  }
+
+  "removeProfileBanner" should {
+    "call twitter4j removeProfileBanner method" in {
+      twitter.removeProfileBanner()
+      mockCallStatusRemoveProfileBanner must equalTo("called removeProfileBanner")
+
+      there was one(mockedTwitter4j).removeProfileBanner()
+    }
+  }
+
+  "updateProfileBanner" should {
+    "call twitter4j updateProfileBanner method by image stream" in {
+      val inputStream = new FileInputStream(getRandomlyChosenFile)
+      twitter.updateProfileBanner(ImageResource.isAssigned(inputStream))
+      mockCallStatusUpdateProfileBannerStream must equalTo("called updateProfileBanner by image stream")
+      there was one(mockedTwitter4j).updateProfileBanner(inputStream)
+    }
+
+    "call twitter4j updateProfileBanner method by image file" in {
+      val image = getRandomlyChosenFile
+      twitter.updateProfileBanner(ImageResource.isAssigned(image))
+      mockCallStatusUpdateProfileBannerFile must equalTo("called updateProfileBanner by image file")
+      there was one(mockedTwitter4j).updateProfileBanner(image)
+    }
+
+    "throw exception when image resources specific info is set null" in {
+      twitter.updateProfileBanner(null) must
+      throwA[IllegalArgumentException]
+    }
+  }
 }

@@ -14,17 +14,11 @@ package twitter4s.api.impl
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.User
+import twitter4s._
 import twitter4s.api.UsersResources
 import scala.util.Either
-import twitter4s.Users
-import twitter4s.ImageResource
-import twitter4s.IDs
-import twitter4s.AccountTotals
-import twitter4s.Twitter
-import twitter4s.ResponseList
-import twitter4s.AccountSettings
 import twitter4j.Category
+import scala.Some
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -136,7 +130,7 @@ trait UsersResourcesImpl extends UsersResources {
   /**
    * {@inheritDoc}
    */
-  def getBlocksList(cursor: java.lang.Long = null): ResponseList[twitter4j.User] = {
+  def getBlocksList(cursor: java.lang.Long = null): PagableResponseList[twitter4j.User] = {
     Option(cursor) match {
       case Some(cursor) => twitter4jObj.getBlocksList(cursor)
       case None => twitter4jObj.getBlocksList()

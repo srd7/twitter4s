@@ -35,6 +35,49 @@ object FakeValuesUsedByMock {
     def toArray[T](x: Array[T with Object]): Array[T with Object] = ???
   }
 
+  def pagableResponseList[T <: twitter4j.TwitterResponse]:twitter4j.PagableResponseList[T] = new twitter4j.PagableResponseList[T] {
+    def getAccessLevel: Int = 1
+    def size(): Int = 50
+    def isEmpty: Boolean = ???
+    def contains(o: scala.Any): Boolean = ???
+    def iterator(): util.Iterator[T] = ???
+    def toArray: Array[AnyRef] = ???
+    def toArray[T](a: Array[T]): Array[T] = ???
+    def add(e: T): Boolean = ???
+    def remove(o: scala.Any): Boolean = ???
+    def containsAll(c: util.Collection[_]): Boolean = ???
+    def addAll(c: util.Collection[_ <: T]): Boolean = ???
+    def addAll(index: Int, c: util.Collection[_ <: T]): Boolean = ???
+    def removeAll(c: util.Collection[_]): Boolean = ???
+    def retainAll(c: util.Collection[_]): Boolean = ???
+    def clear() {}
+    def get(index: Int): T = ???
+    def set(index: Int, element: T): T = ???
+    def add(index: Int, element: T) {}
+    def remove(index: Int): T = ???
+    def indexOf(o: scala.Any): Int = ???
+    def lastIndexOf(o: scala.Any): Int = ???
+    def listIterator(): util.ListIterator[T] = ???
+    def listIterator(index: Int): util.ListIterator[T] = ???
+    def subList(fromIndex: Int, toIndex: Int): util.List[T] = ???
+    def hasPrevious: Boolean = true
+    def getPreviousCursor: Long = ???
+    def hasNext: Boolean = true
+    def getNextCursor: Long = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def toArray[T](x: Array[T with Object]): Array[T with Object] = ???
+  }
+
+  def ids = new twitter4j.IDs {
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getAccessLevel: Int = 3
+    def getIDs: Array[Long] = ???
+    def hasPrevious: Boolean = true
+    def getPreviousCursor: Long = ???
+    def hasNext: Boolean = true
+    def getNextCursor: Long = ???
+  }
+
   val userName = "fake_return_user"
   def user = new twitter4j.User {
     def getAccessLevel: Int = ???

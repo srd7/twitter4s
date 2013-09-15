@@ -14,15 +14,9 @@ package twitter4s.api
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.User
-import twitter4s.Users
-import twitter4s.ResponseList
+import twitter4s._
 import twitter4j.Query
 import twitter4j.Category
-import twitter4s.ImageResource
-import twitter4s.AccountTotals
-import twitter4s.AccountSettings
-import twitter4s.IDs
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -200,7 +194,7 @@ trait UsersResources {
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/blocks/blocking">GET blocks/blocking | Twitter Developers</a>
    * @since Twitter4S 1.0.0
    */
-  def getBlocksList(cursor: java.lang.Long = null): ResponseList[twitter4j.User]
+  def getBlocksList(cursor: java.lang.Long = null): PagableResponseList[twitter4j.User]
 
   /**
    * Returns an array of numeric user ids the authenticating user is blocking.
