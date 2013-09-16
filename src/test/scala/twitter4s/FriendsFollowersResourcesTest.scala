@@ -3,319 +3,240 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import Twitter4sTestHelper._
-import twitter4j.json.DataObjectFactory
-import twitter4s._
-import twitter4j.TwitterException
 import twitter4s.api.impl.FriendsFollowersResourcesImpl
+import twitter4s.mocked.FakeValuesUsedByMock
 
 
 @RunWith(classOf[JUnitRunner])
-class FriendsFollowersResourcesTest extends Specification {
-  val twitter1FriendsRole = new Twitter(twitter4jInstance(User1)) with FriendsFollowersResourcesImpl
-  val twitter2FriendsRole = new Twitter(twitter4jInstance(User2)) with FriendsFollowersResourcesImpl
-  val twitter3FriendsRole = new Twitter(twitter4jInstance(User3)) with FriendsFollowersResourcesImpl
-  
-  val obamaScreenName = "barackobama"
-  val obamaId = 813286
+class FriendsFollowersResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = FriendsFollowersResourcesImpl
 
-  "getFriedsIDs" should {
-    val ryunosukey = 48528137
-    "get friend ID array specified cursor" in {
-      val ids = twitter1FriendsRole.getFriendsIDs(-1)
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      val yusuke = 4933401
-      atLeastOnce(ids.ids) { (_:Long) must equalTo(yusuke) }
+  mockedTwitter4j.getFriendsIDs(anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFriendsIDs(anyString, anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFriendsIDs(anyLong, anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFollowersIDs(anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFollowersIDs(anyString, anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFollowersIDs(anyLong, anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.destroyFriendship(anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.destroyFriendship(anyLong) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createFriendship(anyString) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createFriendship(anyLong) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createFriendship(anyString, any[java.lang.Boolean]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.createFriendship(anyLong, any[java.lang.Boolean]) returns FakeValuesUsedByMock.user
+  mockedTwitter4j.showFriendship(anyString, anyString) returns FakeValuesUsedByMock.relationShip
+  mockedTwitter4j.showFriendship(anyLong, anyLong) returns FakeValuesUsedByMock.relationShip
+  mockedTwitter4j.lookupFriendships(any[Array[String]]) returns FakeValuesUsedByMock.responseList[twitter4j.Friendship]
+  mockedTwitter4j.lookupFriendships(any[Array[Long]]) returns FakeValuesUsedByMock.responseList[twitter4j.Friendship]
+  mockedTwitter4j.updateFriendship(anyString, any[java.lang.Boolean], any[java.lang.Boolean]) returns FakeValuesUsedByMock.relationShip
+  mockedTwitter4j.updateFriendship(anyLong, any[java.lang.Boolean], any[java.lang.Boolean]) returns FakeValuesUsedByMock.relationShip
+  mockedTwitter4j.getIncomingFriendships(anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getOutgoingFriendships(anyLong) returns FakeValuesUsedByMock.ids
+  mockedTwitter4j.getFriendsList(anyString, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+  mockedTwitter4j.getFriendsList(anyLong, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+  mockedTwitter4j.getFollowersList(anyString, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+  mockedTwitter4j.getFollowersList(anyLong, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
+
+  override val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
+
+  "getFriendsIDs" should {
+    "call twitter4j getFriendsIDs method by cursor only" in {
+      twitter.getFriendsIDs(1L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFriendsIDs(1L)
     }
-    
-    "get friend ID array specified by user id" in {
-      val ids = twitter1FriendsRole.getFriendsIDs(
-          -1,
-          User.isSpecifiedBy(ryunosukey))
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-      ids.length must equalTo(0)
+
+    "call twitter4j getFriendsIDs method by cursor and screen name" in {
+      twitter.getFriendsIDs(2L, User.isSpecifiedBy(FakeValuesUsedByMock.userName)).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFriendsIDs(FakeValuesUsedByMock.userName, 2L)
     }
-    
-    "get friend ID array specified by user screen name" in {
-      val ids = twitter1FriendsRole.getFriendsIDs(
-          -1,
-          User.isSpecifiedBy("yusuke"))
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      atLeastOnce(ids.ids) { (_:Long) must equalTo(ryunosukey)}
-    }
-    
-    "get friend ID array with cursor specified by user id" in {
-      val firstCursor = twitter1FriendsRole.getFriendsIDs(
-          -1,
-          User.isSpecifiedBy(obamaId))
-      firstCursor.hasNext must beTrue
-      firstCursor.hasPrevious must beFalse
-      
-      val secondCursor = twitter1FriendsRole.getFriendsIDs(
-          firstCursor.nextCursor,
-          User.isSpecifiedBy(obamaId))
-      secondCursor.hasNext must beTrue
-      secondCursor.hasPrevious must beTrue
-    }
-    
-    "get friend ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1FriendsRole.getFriendsIDs(
-          -1,
-          User.isSpecifiedBy(obamaScreenName))
-      firstCursor.hasNext must beTrue
-      firstCursor.hasPrevious must beFalse
-      
-      val secondCursor = twitter1FriendsRole.getFriendsIDs(
-          firstCursor.nextCursor,
-          User.isSpecifiedBy(obamaScreenName))
-      secondCursor.hasNext must beTrue
-      secondCursor.hasPrevious must beTrue
+
+    "call twitter4j getFriendsIDs method by cursor and user id" in {
+      twitter.getFriendsIDs(4L, User.isSpecifiedBy(3L)).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFriendsIDs(3L, 4L)
     }
   }
   
   "getFollowersIDs" should {
-    "get followers ID array with cursor specified by user screen name" in {
-      val firstCursor = twitter1FriendsRole.getFollowersIDs(
-          -1,
-          User.isSpecifiedBy(obamaScreenName))
-      rawJSON(firstCursor.tw4jObj) must not equalTo(null)
-      firstCursor.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(firstCursor.tw4jObj)))
-      firstCursor.hasNext must beTrue
-      firstCursor.hasPrevious must beFalse
-      
-      val secondCursor = twitter1FriendsRole.getFollowersIDs(
-          firstCursor.nextCursor,
-          User.isSpecifiedBy(obamaScreenName))
-      secondCursor.hasNext must beTrue
-      secondCursor.hasPrevious must beTrue
+    "call twitter4j getFollowersIDs method by cursor only" in {
+      twitter.getFollowersIDs(5L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFollowersIDs(5L)
     }
-    
-    "get followers ID array specified by user id" in {
-      val ids = twitter1FriendsRole.getFollowersIDs(
-          -1,
-          User.isSpecifiedBy(obamaId))
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-      ids.hasNext must beTrue
-      ids.hasPrevious must beFalse
-      
-      val secondCursor = twitter1FriendsRole.getFollowersIDs(
-          ids.nextCursor,
-          User.isSpecifiedBy(obamaId))
-      secondCursor.hasNext must beTrue
-      secondCursor.hasPrevious must beTrue
+
+    "call twitter4j getFollowersIDs method by cursor and screen name" in {
+      twitter.getFollowersIDs(6L, User.isSpecifiedBy(FakeValuesUsedByMock.userName)).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFollowersIDs(FakeValuesUsedByMock.userName, 6L)
     }
-    
-    "get followers ID array specified by cursor" in {
-      val ids = twitter2FriendsRole.getFollowersIDs(-1)
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      atLeastOnce(ids.ids) { (_:Long) must equalTo(id1.id)}
+
+    "call twitter4j getFollowersIDs method by cursor and user id" in {
+      twitter.getFollowersIDs(8L, User.isSpecifiedBy(7L)).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getFollowersIDs(7L, 8L)
     }
   }
   
-  
   "destroyFriendship" should {
-    "destroy specified user was destroyed by id" in {
-      val user = twitter2FriendsRole.destroyFriendship(
-          User.isSpecifiedBy(id1.id))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-      
-      // Test code in Twitter4J, check TwitterException(status code = 403).
-      // Checking ratelimitstatus?
+    "call twitter4j destroyFriendship method by screen name" in {
+      twitter.destroyFriendship(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).destroyFriendship(FakeValuesUsedByMock.userName)
     }
-    
-    "destroy specified user was destroyed by screen name" in {
-      val user = twitter2FriendsRole.destroyFriendship(User.isSpecifiedBy(id1.screenName))
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+
+    "call twitter4j destroyFriendship method by user id" in {
+      twitter.destroyFriendship(User.isSpecifiedBy(9L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).destroyFriendship(9L)
     }
     
     "throw exception with no target user specific information" in {
-      twitter2FriendsRole.destroyFriendship(null) must
+      twitter.destroyFriendship(null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "createFriendship" should {
-    "create specified user's friendship" in {
-      val user = twitter2FriendsRole.createFriendship(
-          User.isSpecifiedBy(id1.screenName), follow = true)
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
-      user.screenName must equalTo(id1.screenName)
+    "call twitter4j createFriendship method by screen name without follow flag" in {
+      twitter.createFriendship(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createFriendship(FakeValuesUsedByMock.userName)
     }
-    
-    "throw exception create friendship with myself" in {
-      twitter2FriendsRole.createFriendship(
-          User.isSpecifiedBy(id2.id)) must
-      throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(403)}
+
+    "call twitter4j createFriendship method by user id without follow flag" in {
+      twitter.createFriendship(User.isSpecifiedBy(10L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createFriendship(10L)
     }
-    
-    "throw exception create friendship with not-exists usre" in {
-      twitter2FriendsRole.createFriendship(
-          User.isSpecifiedBy("dosentexists--")) must
-      throwA[TwitterException].like {case te: TwitterException => te.getStatusCode() must equalTo(404)}
+
+    "call twitter4j createFriendship method by screen name and follow flag" in {
+      twitter.createFriendship(User.isSpecifiedBy(FakeValuesUsedByMock.userName), false).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createFriendship(FakeValuesUsedByMock.userName, false)
+    }
+
+    "call twitter4j createFriendship method by user id and follow flag" in {
+      twitter.createFriendship(User.isSpecifiedBy(11L), true).screenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).createFriendship(11L, true)
     }
     
     "throw exception when specificUser is set null" in {
-      twitter2FriendsRole.createFriendship(null, null) must
+      twitter.createFriendship(null, null) must
       throwA[IllegalArgumentException]
     }
   }
   
   "showFriendship" should {
-    "get friendship status between user one way follow" in {
-      val rel = twitter1FriendsRole.showFriendship(
-          User.isSpecifiedBy(id1.screenName),
-          User.isSpecifiedBy(followsOneWay))
-      rawJSON(rel.tw4jObj) must not equalTo(null)
-      rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
-      rel.isSourceFollowedByTarget must beTrue
-      rel.isSourceFollowingTarget must beFalse
-      rel.isTargetFollowingSource must beTrue
-      rel.isTargetFollowedBySource must beFalse
-      
-      val rel2 = twitter1FriendsRole.showFriendship(
-          User.isSpecifiedBy(bestFriend1.id),
-          User.isSpecifiedBy(bestFriend2.id))
-      rawJSON(rel.tw4jObj) must equalTo(null)
+    "call twitter4j showFriendship method by screen name" in {
+      twitter.showFriendship(
+        User.isSpecifiedBy(FakeValuesUsedByMock.userName),
+        User.isSpecifiedBy(FakeValuesUsedByMock.friendName)).targetUserScreenName must equalTo(FakeValuesUsedByMock.friendName)
+      there was one(mockedTwitter4j).showFriendship(FakeValuesUsedByMock.userName, FakeValuesUsedByMock.friendName)
     }
-    
-    "get friendship status between user best friends" in {
-      val rel = twitter1FriendsRole.showFriendship(
-          User.isSpecifiedBy(bestFriend1.id),
-          User.isSpecifiedBy(bestFriend2.id))
-      rawJSON(rel.tw4jObj) must not equalTo(null)
-      rel.tw4jObj must equalTo(DataObjectFactory.createRelationship(rawJSON(rel.tw4jObj)))
-      rel.isSourceFollowedByTarget must beTrue
-      rel.isSourceFollowingTarget must beTrue
-      rel.isTargetFollowedBySource must beTrue
-      rel.isTargetFollowingSource must beTrue
+
+    "call twitter4j showFriendship method by user id" in {
+      twitter.showFriendship(
+        User.isSpecifiedBy(12L),
+        User.isSpecifiedBy(13L)
+      ).sourceUserScreenName must equalTo(FakeValuesUsedByMock.userName)
+      there was one(mockedTwitter4j).showFriendship(12L, 13L)
     }
     
     "throw exception with no source user specific information" in {
-      twitter1FriendsRole.showFriendship(null, User.isSpecifiedBy(bestFriend2.id)) must
+      twitter.showFriendship(null, User.isSpecifiedBy(14L)) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception with no target user specific information" in {
-      twitter1FriendsRole.showFriendship(User.isSpecifiedBy(bestFriend1.id), null) must
+      twitter.showFriendship(User.isSpecifiedBy(15L), null) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception with no parameter" in {
-      twitter1FriendsRole.showFriendship(null, null) must
+      twitter.showFriendship(null, null) must
       throwA[IllegalArgumentException]
     }
     
     "throw exception different user specific information between source and target" in {
-      twitter1FriendsRole.showFriendship(
-          User.isSpecifiedBy(bestFriend1.screenName),
-          User.isSpecifiedBy(bestFriend2.id)) must
+      twitter.showFriendship(
+          User.isSpecifiedBy(FakeValuesUsedByMock.userName),
+          User.isSpecifiedBy(16L)) must
       throwA[IllegalArgumentException]
     }
   }
   
   "lookupFriendships" should {
-    "get friendship status list with specified users by screen name" in {
-      val friendshipList = twitter1FriendsRole.lookupFriendships(
-          Users.areSpecifiedBy(Array("barakobama", id2.screenName, id3.screenName)))
-      friendshipList.size must equalTo(3)
-      friendshipList(0).getScreenName() must equalTo("barakobama")
-      friendshipList(0).isFollowedBy() must beFalse
-      friendshipList(0).isFollowing() must beFalse
-      friendshipList(2).getScreenName() must equalTo(id3.screenName)
-      friendshipList(2).isFollowedBy() must beTrue
-      friendshipList(2).isFollowing() must beTrue
+    "call twitter4j lookupFriendships method by screen names list" in {
+      twitter.lookupFriendships(Users.areSpecifiedBy(Array("user1", "user2"))).size must equalTo(1)
+      there was one(mockedTwitter4j).lookupFriendships(Array("user1", "user2"))
     }
-    
-    "get friendship status list with specified users by id" in {
-      val friendshipList = twitter1FriendsRole.lookupFriendships(
-          Users.areSpecifiedBy(Array(id2.id, id3.id)))
-      friendshipList.size must equalTo(2)
+
+    "call twitter4j lookupFriendships method by user id" in {
+      twitter.lookupFriendships(Users.areSpecifiedBy(Array(17L, 18L, 19L))).size must equalTo(1)
+      there was one(mockedTwitter4j).lookupFriendships(Array(17L, 18L, 19L))
+    }
+
+    "throw exception when specificUsers are set null" in {
+      twitter.lookupFriendships(null) must
+      throwA[IllegalArgumentException]
     }
   }
   
   "updateFriendship" should {
-    "update friendship to specified user by screen name" in {
-      val relationship = twitter1FriendsRole.updateFriendship(
-          User.isSpecifiedBy(id3.screenName),
-          true,
-          true)
-      relationship.targetUserScreenName must equalTo(id3.screenName)
+    "call twitter4j updateFriendship method by screen name" in {
+      twitter.updateFriendship(
+        User.isSpecifiedBy(FakeValuesUsedByMock.friendName),
+        true,
+        true).targetUserScreenName must equalTo(FakeValuesUsedByMock.friendName)
+      there was one(mockedTwitter4j).updateFriendship(FakeValuesUsedByMock.friendName, true, true)
     }
-    
-    "update friendship to specified user by id" in {
-      val relationship = twitter1FriendsRole.updateFriendship(
-          User.isSpecifiedBy(id3.id),
-          false,
-          false)
-      relationship.targetUserScreenName must equalTo(id3.screenName)
-      relationship.isSourceNotificationsEnabled must beFalse
-      relationship.isSourceWantRetweets must beFalse
+
+    "call twitter4j updateFriendship method by user id" in {
+      twitter.updateFriendship(User.isSpecifiedBy(20L), false, false).targetUserScreenName must equalTo(FakeValuesUsedByMock.friendName)
+      there was one(mockedTwitter4j).updateFriendship(20L, false, false)
     }
     
     "throw exception when user specific information is null" in {
-      twitter1FriendsRole.updateFriendship(null, true, true) must
+      twitter.updateFriendship(null, true, true) must
       throwA[IllegalArgumentException]
     }
   }
   
   "getIncomingFriendships" should {
-    "get incoming friendship" in {
-      val ids = twitter3FriendsRole.getIncomingFriendships(-1)
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-      ids.length must be_>=(0)
+    "call twitter4j getIncomingFriendships method" in {
+      twitter.getIncomingFriendships(21L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getIncomingFriendships(21L)
     }
   }
   
   "getOutcomingFriendships" should {
-    "get outcoming friendship" in {
-      val ids = twitter2FriendsRole.getOutgoingFriendships(-1)
-      rawJSON(ids.tw4jObj) must not equalTo(null)
-      ids.tw4jObj must equalTo(DataObjectFactory.createIDs(rawJSON(ids.tw4jObj)))
-      ids.length must be_>=(0)
+    "call twitter4j getOutcomingFriendships method" in {
+      twitter.getOutgoingFriendships(22L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      there was one(mockedTwitter4j).getOutgoingFriendships(22L)
     }
   }
   
   "getFriendsList" should {
-    "get friend list by screen name" in {
-      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
-      t4jFriends.size must be_>=(0)
+    "call twitter4j getFriendsList method by screen name" in {
+      twitter.getFriendsList(User.isSpecifiedBy(FakeValuesUsedByMock.userName), 23L).size must equalTo(50)
+      there was one(mockedTwitter4j).getFriendsList(FakeValuesUsedByMock.userName, 23L)
     }
-    
-    "get friend list by user id" in {
-      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
-      t4jFriends.size must be_>=(0)
+
+    "call twitter4j getFriendsList method by user id" in {
+      twitter.getFriendsList(User.isSpecifiedBy(24L), 25L).size must equalTo(50)
+      there was one(mockedTwitter4j).getFriendsList(24L, 25L)
     }
-    
-    "get equal friend list regardless of specified information" in {
-      val t4jFriends = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy("t4j_news"), -1L)
-      val t4jFriends2 = twitter1FriendsRole.getFriendsList(User.isSpecifiedBy(72297675L), -1L)
-      
-      t4jFriends.tw4jObj must equalTo(t4jFriends2.tw4jObj)
+
+    "throw exception when user specific information is null" in {
+      twitter.getFriendsList(null, 26L) must
+      throwA[IllegalArgumentException]
     }
   }
   
   "getFollowersList" should {
-    "get followers list by screen name" in {
-      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
-      t4jFollowers.size must be_>=(0)
+    "call twitter4j getFollowersList method by screen name" in {
+      twitter.getFollowersList(User.isSpecifiedBy(FakeValuesUsedByMock.userName), 27L).size must equalTo(50)
+      there was one(mockedTwitter4j).getFollowersList(FakeValuesUsedByMock.userName, 27L)
     }
-    
-    "get followers list by user id" in {
-      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
-      t4jFollowers.size must be_>=(0)
+
+    "call twitter4j getFollowersList method by user id" in {
+      twitter.getFollowersList(User.isSpecifiedBy(28L), 29L).size must equalTo(50)
+      there was one(mockedTwitter4j).getFollowersList(28L, 29L)
     }
-    
-    "get equal followers list regardless of specified information" in {
-      val t4jFollowers = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy("t4j_news"), -1L)
-      val t4jFollowers2 = twitter1FriendsRole.getFollowersList(User.isSpecifiedBy(72297675L), -1L)
-      
-      t4jFollowers.tw4jObj must equalTo(t4jFollowers2.tw4jObj)
+
+    "throw exception when user specific information is null" in {
+      twitter.getFollowersList(null, 30L) must
+      throwA[IllegalArgumentException]
     }
   }
 }

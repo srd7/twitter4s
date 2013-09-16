@@ -79,6 +79,7 @@ object FakeValuesUsedByMock {
   }
 
   val userName = "fake_return_user"
+  val friendName = "fake_friend_user"
   def user = new twitter4j.User {
     def getAccessLevel: Int = ???
     def getBiggerProfileImageURL: String = ???
@@ -133,6 +134,22 @@ object FakeValuesUsedByMock {
     def getProfileBannerIPadURL: String = ???
     def getOriginalProfileImageURL: String = ???
     def getBiggerProfileImageURLHttps: String = ???
+  }
+
+  def relationShip  = new twitter4j.Relationship {
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getAccessLevel: Int = 1
+    def getSourceUserId: Long = ???
+    def getTargetUserId: Long = ???
+    def isSourceBlockingTarget: Boolean = ???
+    def getSourceUserScreenName: String = userName
+    def getTargetUserScreenName: String = friendName
+    def isSourceFollowingTarget: Boolean = ???
+    def isTargetFollowingSource: Boolean = ???
+    def isSourceFollowedByTarget: Boolean = ???
+    def isTargetFollowedBySource: Boolean = ???
+    def isSourceNotificationsEnabled: Boolean = ???
+    def isSourceWantRetweets: Boolean = ???
   }
 
   val statusText = "returned by mocking object"
