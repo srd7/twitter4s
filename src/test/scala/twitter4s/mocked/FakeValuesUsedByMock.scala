@@ -3,7 +3,7 @@ package twitter4s.mocked
 import java.util
 import java.util.Date
 import twitter4j._
-import java.net.URL
+import java.net.{URI, URL}
 
 object FakeValuesUsedByMock {
   def responseList[T]:twitter4j.ResponseList[T] = new twitter4j.ResponseList[T] {
@@ -194,5 +194,23 @@ object FakeValuesUsedByMock {
     def getLanguage: String = ???
     def isDiscoverableByEmail: Boolean = ???
     def isAlwaysUseHttps: Boolean = ???
+  }
+
+  val listName = "fake list name"
+  def userList = new twitter4j.UserList {
+    def getAccessLevel: Int = 2
+    def getMemberCount: Int = ???
+    def getSubscriberCount: Int = ???
+    def getName: String = ???
+    def getUser: twitter4j.User = ???
+    def getSlug: String = ???
+    def isPublic: Boolean = ???
+    def getId: Int = ???
+    def getDescription: String = ???
+    def getURI: URI = ???
+    def compareTo(o: twitter4j.UserList): Int = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def isFollowing: Boolean = ???
+    def getFullName: String = listName
   }
 }
