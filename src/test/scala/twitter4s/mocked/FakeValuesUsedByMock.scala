@@ -231,4 +231,24 @@ object FakeValuesUsedByMock {
     def isFollowing: Boolean = ???
     def getFullName: String = listName
   }
+
+  val placeName = "fake place"
+  def place = new twitter4j.Place{
+    def getName: String = ???
+    def getStreetAddress: String = ???
+    def getCountryCode: String = ???
+    def getId: String = ???
+    def getCountry: String = ???
+    def getPlaceType: String = ???
+    def getURL: String = ???
+    def getFullName: String = placeName
+    def getBoundingBoxType: String = ???
+    def getBoundingBoxCoordinates: Array[Array[twitter4j.GeoLocation]] = ???
+    def getGeometryType: String = ???
+    def getGeometryCoordinates: Array[Array[twitter4j.GeoLocation]] = ???
+    def getContainedWithIn: Array[twitter4j.Place] = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getAccessLevel: Int = ???
+    def compareTo(o: twitter4j.Place): Int = ???
+  }
 }

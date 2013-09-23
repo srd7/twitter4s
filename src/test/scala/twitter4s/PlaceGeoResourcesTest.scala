@@ -1,97 +1,92 @@
 package twitter4s
-import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import Twitter4sTestHelper._
-import twitter4j.json.DataObjectFactory
-import twitter4j.TwitterException
-import java.util.Date
 import twitter4s.api.impl.PlaceGeoResourcesImpl
+import twitter4s.mocked.FakeValuesUsedByMock
+import java.util
 
 @RunWith(classOf[JUnitRunner])
-class PlaceGeoResourcesTest extends Specification {
-  
-  val twitterPlaceGeoResourceRole = new Twitter(twitter4jInstance(User1)) with PlaceGeoResourcesImpl
-  
-  private def testPlaces(target: ResponseList[twitter4j.Place]) = {
-    rawJSON(target.tw4jObj) must not equalTo(null)
-    target(0) must equalTo(DataObjectFactory.createPlace(rawJSON(target(0))))
-    target.size must be_>(0)
-  }
+class PlaceGeoResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = PlaceGeoResourcesImpl
+
+  mockedTwitter4j.reverseGeoCode(any[twitter4j.GeoQuery]) returns FakeValuesUsedByMock.responseList[twitter4j.Place]
+  mockedTwitter4j.searchPlaces(any[twitter4j.GeoQuery]) returns FakeValuesUsedByMock.responseList[twitter4j.Place]
+  mockedTwitter4j.getSimilarPlaces(any[twitter4j.GeoLocation], anyString, anyString, anyString) returns (new twitter4j.SimilarPlaces {
+    def getAccessLevel: Int = ???
+    def removeAll(c: util.Collection[_]): Boolean = ???
+    def subList(fromIndex: Int, toIndex: Int): util.List[twitter4j.Place] = ???
+    def set(index: Int, element: twitter4j.Place): twitter4j.Place = ???
+    def indexOf(o: scala.Any): Int = ???
+    def get(index: Int): twitter4j.Place = ???
+    def retainAll(c: util.Collection[_]): Boolean = ???
+    def lastIndexOf(o: scala.Any): Int = ???
+    def clear() {}
+    def toArray[T](a: Array[T]): Array[T] = ???
+    def toArray: Array[AnyRef] = ???
+    def listIterator(index: Int): util.ListIterator[twitter4j.Place] = ???
+    def listIterator(): util.ListIterator[twitter4j.Place] = ???
+    def size(): Int = ???
+    def getToken: String = "fake token"
+    def remove(index: Int): twitter4j.Place = ???
+    def remove(o: scala.Any): Boolean = ???
+    def contains(o: scala.Any): Boolean = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def iterator(): util.Iterator[twitter4j.Place] = ???
+    def addAll(index: Int, c: util.Collection[_ <: twitter4j.Place]): Boolean = ???
+    def addAll(c: util.Collection[_ <: twitter4j.Place]): Boolean = ???
+    def isEmpty: Boolean = ???
+    def containsAll(c: util.Collection[_]): Boolean = ???
+    def add(index: Int, element: twitter4j.Place) {}
+    def add(e: twitter4j.Place): Boolean = ???
+    def toArray[T](a: Array[T with Object]): Array[T with Object] = ???
+  })
+  mockedTwitter4j.getGeoDetails(anyString) returns FakeValuesUsedByMock.place
+  mockedTwitter4j.createPlace(anyString, anyString, anyString, any[twitter4j.GeoLocation], anyString) returns FakeValuesUsedByMock.place
+
+  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "reverseGeoCode" should {
-    "get no places if location is (0,0)" in {
-      val query = GeoQuery(GeoLocation(0, 0))
-      val places = twitterPlaceGeoResourceRole.reverseGeoCode(query)
-      places.size must equalTo(0)
-    }
-    
-    "get place list if location is exists" in {
-      val query = GeoQuery(GeoLocation(37.78215, -122.40060))
-      testPlaces(twitterPlaceGeoResourceRole.reverseGeoCode(query))
-    }
-    
-    "get place list if location is exists on latitude and longitude" in {
-      val query = GeoQuery(37.78215, -122.40060)
-      testPlaces(twitterPlaceGeoResourceRole.reverseGeoCode(query))
+    "call twitter4j reverseGeoCode method" in {
+      twitter.reverseGeoCode(GeoQuery("tokyo")).size must equalTo(1)
+      there was one(mockedTwitter4j).reverseGeoCode(GeoQuery("tokyo"))
     }
   }
   
   "searchPlaces" should {
-    "get place list with location" in {
-      val query = GeoQuery(GeoLocation(37.78215, -122.40060))
-      testPlaces(twitterPlaceGeoResourceRole.searchPlaces(query))
+    "call twitter4j searchPlaces method" in {
+      twitter.searchPlaces(GeoQuery("okayama")).size must equalTo(1)
+      there was one(mockedTwitter4j).searchPlaces(GeoQuery("okayama"))
     }
   }
   
   "getSimilarPlaces" should {
-    "get similar place list with parameter location" in {
-      val places = twitterPlaceGeoResourceRole.getSimilarPlaces(GeoLocation(37.78215, -122.40060), "SoMa", null, null)
-      rawJSON(places.tw4jObj) must not equalTo(null)
-      places(0) must equalTo(DataObjectFactory.createPlace(rawJSON(places(0))))
-      places.size must be_>(0)
+    "call twitter4j getSimilarPlaces method" in {
+      twitter.getSimilarPlaces(
+        GeoLocation(11.1, 22.2),
+        "location name",
+        "contained within",
+        "street address").token must equalTo("fake token")
+      there was one(mockedTwitter4j).getSimilarPlaces(GeoLocation(11.1, 22.2), "location name", "contained within", "street address")
     }
   }
   
   "getGeoDetails" should {
-    "get detail location information" in {
-      try {
-        val place = twitterPlaceGeoResourceRole.getGeoDetails("5a110d312052166f")
-        rawJSON(place.tw4jObj) must not equalTo(null)
-        place.tw4jObj must equalTo(DataObjectFactory.createPlace(rawJSON(place.tw4jObj)))
-        place.fullName must equalTo("San Francisco, CA")
-        place.containedWithIn(0).fullName must equalTo("California, US")
-      } catch {
-        // is being rate limited
-        case te: TwitterException => te.getStatusCode must equalTo(404)
-      }
+    "call twitter4j getGeoDetails method" in {
+      twitter.getGeoDetails("fake_place_id").fullName must equalTo(FakeValuesUsedByMock.placeName)
+      there was one(mockedTwitter4j).getGeoDetails("fake_place_id")
     }
   }
-  
-  "updateStatus(StatusMethods)" should {
-    "update user status with place information" in {
-      val sanFrancisco = "5a110d312052166f"
-      val latestStatus = StatusUpdate(new Date() + " status with place")
-      val status = twitter3.updateStatus(Status.isSetBy(latestStatus.placeId(sanFrancisco)))
-      rawJSON(status.tw4jObj) must not equalTo(null)
-      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
-      status.place.id must equalTo(sanFrancisco)
-      status.contributors must equalTo(null)
-    }
-    
-    "update user status with geo information" in {
-      val latitude = 12.3456d
-      val longitude = -34.5678d
-      val latestStatus = StatusUpdate(new Date() + " status with geo")
-      
-      val statusWithGeo = twitter3.updateStatus(Status.isSetBy(latestStatus.location(GeoLocation(latitude, longitude))))
-      rawJSON(statusWithGeo.tw4jObj) must not equalTo(null)
-      statusWithGeo.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(statusWithGeo.tw4jObj)))
-      statusWithGeo.user.isGeoEnabled must beTrue
-      statusWithGeo.geoLocation.getLatitude() must equalTo(latitude)
-      statusWithGeo.geoLocation.getLongitude() must equalTo(longitude)
-      twitter1.verifyCredentials.isGeoEnabled must beFalse
+
+  "createPlace" should {
+    "call twitter4j createPlace method" in {
+      twitter.createPlace(
+        "place name",
+        "contained within",
+        "token",
+        GeoLocation(33.3,44.4),
+        "street address").fullName must equalTo(FakeValuesUsedByMock.placeName)
+      there was one(mockedTwitter4j).createPlace("place name", "contained within", "token", GeoLocation(33.3, 44.4), "street address")
     }
   }
 }
