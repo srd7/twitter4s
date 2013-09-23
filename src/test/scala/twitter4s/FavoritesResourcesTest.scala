@@ -2,45 +2,61 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import Twitter4sTestHelper._
-import twitter4j.json.DataObjectFactory
-import twitter4j.TwitterException
-import twitter4s._
-import twitter4s.api.impl.TimelinesResourcesImpl
 import twitter4s.api.impl.FavoritesResourcesImpl
+import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
-class FavoritesResourcesTest extends Specification {
-  
-  val twitter1TimelineRole = new Twitter(twitter4jInstance(User1)) with TimelinesResourcesImpl
-  val twitter2FavoriteRole = new Twitter(twitter4jInstance(User2)) with FavoritesResourcesImpl
+class FavoritesResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = FavoritesResourcesImpl
+
+  mockedTwitter4j.createFavorite(anyLong) returns FakeValuesUsedByMock.status
+  mockedTwitter4j.getFavorites(anyString) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
+  mockedTwitter4j.getFavorites(anyString, any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
+  mockedTwitter4j.getFavorites(anyLong) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
+  mockedTwitter4j.getFavorites(anyLong, any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
+  mockedTwitter4j.getFavorites(any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
+  mockedTwitter4j.destroyFavorite(anyLong) returns FakeValuesUsedByMock.status
+
+  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "createFavorite" should {
-    "mark a tweet as favorite" in {
-      // get anyone's tweet from timeline
-      // and test getHomeTimeline API method
-      val anyonesStatus: Status = twitter1TimelineRole.getHomeTimeline()(0)
-      rawJSON(anyonesStatus.tw4jObj) must not equalTo(null)
-      anyonesStatus.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(anyonesStatus.tw4jObj)))
-      
-      // mark favorite and destroy
-      val status = twitter2FavoriteRole.createFavorite(anyonesStatus.id)
-      rawJSON(status.tw4jObj) must not equalTo(null)
-      status.tw4jObj must equalTo(DataObjectFactory.createStatus(rawJSON(status.tw4jObj)))
-      
-      twitter2FavoriteRole.getFavorites().size must be_>(0)
-      twitter2FavoriteRole.getFavorites(User.isSpecifiedBy(id1.screenName)).size must be_>(0)
-      twitter2FavoriteRole.getFavorites(User.isSpecifiedBy(id1.screenName), Paging(1)).size must be_>(0) 
-      twitter2FavoriteRole.getFavorites(User.isSpecifiedBy(id1.id)).size must be_>(0)
-      twitter2FavoriteRole.getFavorites(User.isSpecifiedBy(id1.id), Paging(1)).size must be_>(0)
-      try {
-        twitter2FavoriteRole.destroyFavorite(anyonesStatus.id)
-      } catch {
-        case te: TwitterException =>
-          // sometimes destroying favorite fails with 404
-          te.getStatusCode() must equalTo(404)
-      }
-      true
+    "call twitter4j createFavorite method" in {
+      twitter.createFavorite(1L).text must equalTo(FakeValuesUsedByMock.statusText)
+      there was one(mockedTwitter4j).createFavorite(1L)
+    }
+  }
+
+  "getFavorites" should {
+    "call twitter4j getFavorites method by screen name without paging" in {
+      twitter.getFavorites(User.isSpecifiedBy(FakeValuesUsedByMock.userName)).size must equalTo(1)
+      there was one(mockedTwitter4j).getFavorites(FakeValuesUsedByMock.userName)
+    }
+
+    "call twitter4j getFavorites method by screen name and paging" in {
+      twitter.getFavorites(User.isSpecifiedBy(FakeValuesUsedByMock.userName), Paging(2)).size must equalTo(1)
+      there was one(mockedTwitter4j).getFavorites(FakeValuesUsedByMock.userName, Paging(2))
+    }
+
+    "call twitter4j getFavorites method by user id without paging" in {
+      twitter.getFavorites(User.isSpecifiedBy(3L)).size must equalTo(1)
+      there was one(mockedTwitter4j).getFavorites(3L)
+    }
+
+    "call twitter4j getFavorites method by user id and paging" in {
+      twitter.getFavorites(User.isSpecifiedBy(4L), Paging(5)).size must equalTo(1)
+      there was one(mockedTwitter4j).getFavorites(4L, Paging(5))
+    }
+
+    "call twitter4j getFavorites method by paging only" in {
+      twitter.getFavorites(paging= Paging(6)).size must equalTo(1)
+      there was one(mockedTwitter4j).getFavorites(Paging(6))
+    }
+  }
+
+  "destroyFavorites" should {
+    "call twitter4j destroyFavorites method" in {
+      twitter.destroyFavorite(7L).text must equalTo(FakeValuesUsedByMock.statusText)
+      there was one(mockedTwitter4j).destroyFavorite(7L)
     }
   }
 }
