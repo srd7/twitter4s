@@ -251,4 +251,16 @@ object FakeValuesUsedByMock {
     def getAccessLevel: Int = ???
     def compareTo(o: twitter4j.Place): Int = ???
   }
+
+  val searchQueryString = "fake search query"
+  def savedSearch = new twitter4j.SavedSearch {
+    def getPosition: Int = ???
+    def getAccessLevel: Int = ???
+    def getName: String = ???
+    def getCreatedAt: Date = ???
+    def getQuery: String = searchQueryString
+    def getId: Int = ???
+    def compareTo(o: twitter4j.SavedSearch): Int = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+  }
 }
