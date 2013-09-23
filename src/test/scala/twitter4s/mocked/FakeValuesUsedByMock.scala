@@ -182,6 +182,24 @@ object FakeValuesUsedByMock {
     def isRetweetedByMe: Boolean = ???
   }
 
+  def directMessage = new twitter4j.DirectMessage(){
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getAccessLevel: Int = ???
+    def getUserMentionEntities: Array[twitter4j.UserMentionEntity] = ???
+    def getURLEntities: Array[twitter4j.URLEntity] = ???
+    def getHashtagEntities: Array[twitter4j.HashtagEntity] = ???
+    def getMediaEntities: Array[twitter4j.MediaEntity] = ???
+    def getId: Long = ???
+    def getText: String = "fake direct message text"
+    def getSenderId: Long = ???
+    def getRecipientId: Long = ???
+    def getCreatedAt: Date = ???
+    def getSenderScreenName: String = userName
+    def getRecipientScreenName: String = friendName
+    def getSender: twitter4j.User = ???
+    def getRecipient: twitter4j.User = ???
+  }
+
   def accountSettings = new twitter4j.AccountSettings {
     def getRateLimitStatus: twitter4j.RateLimitStatus = ???
     def getAccessLevel: Int = 2
