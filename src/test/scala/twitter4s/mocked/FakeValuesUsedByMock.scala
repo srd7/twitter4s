@@ -263,4 +263,14 @@ object FakeValuesUsedByMock {
     def compareTo(o: twitter4j.SavedSearch): Int = ???
     def getRateLimitStatus: twitter4j.RateLimitStatus = ???
   }
+
+  def trends = new twitter4j.Trends{
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getAccessLevel: Int = 1
+    def getTrends: Array[twitter4j.Trend] = ???
+    def getLocation: twitter4j.Location = ???
+    def getAsOf: Date = ???
+    def getTrendAt: Date = ???
+    def compareTo(o: twitter4j.Trends): Int = ???
+  }
 }

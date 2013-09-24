@@ -1,77 +1,58 @@
 package twitter4s
 
-import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper._
-import twitter4j.json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
-import twitter4s.conf.PropertyConfiguration
 import twitter4s.api.impl.TrendsResourcesImpl
+import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
-class TrendsResourcesTest extends Specification {
+class TrendsResourcesTest extends Specification with TwitterResourcesTestBase {
+  type TargetResourcesType = TrendsResourcesImpl
+
+  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
+
+  mockedTwitter4j.getAvailableTrends returns FakeValuesUsedByMock.responseList[twitter4j.Location]
+  mockedTwitter4j.getAvailableTrends(any[twitter4j.GeoLocation]) returns FakeValuesUsedByMock.responseList[twitter4j.Location]
+  mockedTwitter4j.getLocationTrends(anyInt) returns FakeValuesUsedByMock.trends
+  mockedTwitter4j.getPlaceTrends(anyInt) returns FakeValuesUsedByMock.trends
+  mockedTwitter4j.getClosestTrends(any[twitter4j.GeoLocation]) returns FakeValuesUsedByMock.responseList[twitter4j.Location]
+
   val geoLocation = GeoLocation(0, 0)
   
   val twitterTrendsResourceRole1 = new Twitter(twitter4jInstance(User2)) with TrendsResourcesImpl
   
   "getAvailableTrends" should {
-    "get trends without localtion parameter" in {
-      val locations = twitterTrendsResourceRole1.getAvailableTrends()
-      
-      rawJSON(locations.tw4jObj) mustNotEqual(null)
-      locations(0) must equalTo(DataObjectFactory.createLocation(rawJSON(locations(0))))
-      locations.size must be_>(0)
+    "call twitter4j getAvailableTrends without location" in {
+      twitter.getAvailableTrends().size must equalTo(1)
+      there was one(mockedTwitter4j).getAvailableTrends
     }
-    
-    "get trends with location parameter" in {
-      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
-      
-      rawJSON(locations.tw4jObj) mustNotEqual(null)
-      locations.size must be_>(0)
+
+    "call twitter4j getAvailableTrends by location" in {
+      twitter.getAvailableTrends(GeoLocation(11.1, 22.2)).size must equalTo(1)
+      there was one(mockedTwitter4j).getAvailableTrends(GeoLocation(11.1, 22.2))
     }
   }
   
   "getLocationTrends" should {
-    "get locations trends" in {
-      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
-      val woeid = locations(0).getWoeid()
-      val trends = twitter1.getLocationTrends(woeid)
-      
-      trends.tw4jObj must equalTo(DataObjectFactory.createTrends(rawJSON(trends.tw4jObj)))
-      rawJSON(locations.tw4jObj) mustEqual(null)
-      rawJSON(trends.tw4jObj) mustNotEqual(null)
-      locations(0) mustEqual(trends.location)
-      trends.length must be_>(0)
-    }
-    
-    "throw exception if locations trends not exists" in {
-      twitterTrendsResourceRole1.getLocationTrends(2345889/*woeid of Tokyo*/) must 
-      throwA[Exception]
-    }
-  }
-  
-  "property tw4jObj of Trends class" should {
-    "is instance of twitter4j.Trends" in {
-      val locations = twitterTrendsResourceRole1.getAvailableTrends(geoLocation)
-      val woeid = locations(0).getWoeid()
-      val trends = twitter1.getLocationTrends(woeid).tw4jObj
-      
-      trends must beAnInstanceOf[twitter4j.Trends]
+    "call twitter4j getLocationTrends method" in {
+      twitter.getLocationTrends(3).accessLevel must equalTo(TwitterResponse.READ)
+      there was one(mockedTwitter4j).getLocationTrends(3)
     }
   }
   
   "getPlaceTrends" should {
-    "get trends with place id" in {
-      val trends = twitterTrendsResourceRole1.getPlaceTrends(1)
-      trends.location.getName mustEqual("世界中")
-    } 
+    "call twitter4j getPlaceTrends method" in {
+      twitter.getPlaceTrends(4).accessLevel must equalTo(TwitterResponse.READ)
+      there was one(mockedTwitter4j).getPlaceTrends(4)
+    }
   }
   
   "getClosestTrends" should {
-    "get location trends with geo location" in {
-      val locations = twitterTrendsResourceRole1.getClosestTrends(GeoLocation(35.677248D, 139.72911D))
-      locations(0).getName mustEqual("東京")
+    "call twitter4j getClosestTrends method" in {
+      twitter.getClosestTrends(GeoLocation(55.5,66.6)).size must equalTo(1)
+      there was one(mockedTwitter4j).getClosestTrends(GeoLocation(55.5,66.6))
     }
   }
 }
