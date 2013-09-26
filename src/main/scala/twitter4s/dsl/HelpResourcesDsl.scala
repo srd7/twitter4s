@@ -32,6 +32,12 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
   type ResourcesType = HelpResourcesImpl
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
 
+  object LanguagesContext extends ContextExecutor
+
+  def get = new ContextBundler {
+    def languages = LanguagesContext
+  }
+
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration
   def getLanguages: ResponseList[Language] = resources.getLanguages
