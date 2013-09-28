@@ -13,22 +13,19 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
 
   "get" should {
     "with Language context" in {
-      "returns ResourceContextBuilder with Languages context" in {
+      "returns ResourceContextBuilder" in {
         get(Languages) must haveClass[ResourceContextBuilder]
+      }
+
+      "have get operation" in {
+        get(Languages).op must equalTo(Get)
+        get(Languages).op must haveSuperclass[Operation]
       }
     }
   }
 
-  // get languages
-  // get termsOfService
-  // get.context{condition}
-  // conditionにどう制約をかけるか
-  // 引数(制約)はどう決まるか => メソッド(GET,SHOW,UPDATE,DESTROY) + リソースコンテキスト => 引数リストと戻り値が決まる
-  // メソッド(リソースコンテキスト) => 引数リストと戻り値の型をコンテキストにバインドして返してやる
-  // ただ、これだと.でつないでいかないと
-
-  // getResource(languages[ResourceContext]) {[ResourceBinder]
-  //   user isSpecifiedBy ""
-  // get(language[ResourcesContext]):ResourceBinder[ResourceContext] user_id "": ResourceBinder[ResourceContext]
-  // user_is "" <- implicit, 対応するResourcesContextのオブジェクト？コンパイルエラーで対応できるようにはしたい
+//  get(languages) where {
+//    User isSpecifiedBy "hogehoge" and
+//      Paging 5
+//  }
 }

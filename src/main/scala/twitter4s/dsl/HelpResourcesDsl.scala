@@ -32,7 +32,7 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
 
   object Languages
 
-  def get(context: Any) = new ResourceContextBuilder
+  def get(context: Any) = new ResourceContextBuilder(Get)
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration
