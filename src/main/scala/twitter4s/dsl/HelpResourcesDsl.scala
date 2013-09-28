@@ -18,8 +18,6 @@ package twitter4s.dsl
 
 import twitter4s.{ResponseList, TwitterAPIConfiguration, Twitter}
 import twitter4s.api.impl.HelpResourcesImpl
-import twitter4s.auth.ConsumerKey
-import twitter4j.auth.AccessToken
 import twitter4s.api.HelpResources
 import twitter4j.RateLimitStatus
 import twitter4j.api.HelpResources.Language
@@ -32,11 +30,9 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
   type ResourcesType = HelpResourcesImpl
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
 
-  object LanguagesContext extends ContextExecutor
+  object Languages
 
-  def get = new ContextBundler {
-    def languages = LanguagesContext
-  }
+  def get(context: Any) = new ResourceContextBuilder
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration
