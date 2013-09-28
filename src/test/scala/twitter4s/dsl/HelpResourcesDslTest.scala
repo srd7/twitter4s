@@ -1,6 +1,7 @@
 package twitter4s.dsl
 
 import org.specs2.mutable._
+import twitter4s.TwitterAPIConfiguration
 
 class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with HelpResourcesDsl {
   "attach" should {
@@ -12,14 +13,49 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
   }
 
   "get" should {
+    "have get operation" in {
+      get(Languages).op must equalTo(Get)
+    }
+
     "with Language context" in {
       "returns ResourceContextBuilder" in {
-        get(Languages) must haveClass[ResourceContextBuilder]
+        get(Languages) must haveClass[ResourceContextBuilder[ParameterNothing.type, String]]
       }
 
-      "have get operation" in {
-        get(Languages).op must equalTo(Get)
-        get(Languages).op must haveSuperclass[Operation]
+      "have languages context" in {
+        get(Languages).context must equalTo(Languages)
+      }
+
+      "have conditions is ParameterNothing" in {
+        get(Languages).conditions must equalTo(ParameterNothing)
+      }
+    }
+
+    "with APIConfiguration Context" in {
+      "returns ResourceContextBuilder" in {
+        get(APIConfiguration) must haveClass[ResourceContextBuilder[ParameterNothing.type, TwitterAPIConfiguration]]
+      }
+
+      "have APIConfiguration context" in {
+        get(APIConfiguration).context must equalTo(APIConfiguration)
+      }
+
+      "have condition is ParameterNothing" in {
+        get(APIConfiguration).conditions must equalTo(ParameterNothing)
+      }
+    }
+
+    "with TermsOfService Context" in {
+      "returns ResourceContextBuilder" in {
+        get(TermsOfService) must haveClass[ResourceContextBuilder[ParameterNothing.type, String]]
+      }
+
+      "have TermsOfService Context" in {
+        get(TermsOfService).context must equalTo(TermsOfService)
+      }
+
+      "have condition is ParameterNothing" in {
+        get(TermsOfService).conditions must equalTo(ParameterNothing)
       }
     }
   }

@@ -30,9 +30,28 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
   type ResourcesType = HelpResourcesImpl
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
 
-  object Languages
+  object APIConfiguration extends ResourceContext {
+    type GetParameterType = ParameterNothing.type
+    type GetReturnType = TwitterAPIConfiguration
 
-  def get(context: Any) = new ResourceContextBuilder(Get)
+    def getDefaultParameters = ParameterNothing
+  }
+
+  object Languages extends ResourceContext {
+    type GetParameterType = ParameterNothing.type
+    type GetReturnType = String
+
+    def getDefaultParameters = ParameterNothing
+  }
+
+  object TermsOfService extends ResourceContext {
+    type GetParameterType = ParameterNothing.type
+    type GetReturnType = String
+
+    def getDefaultParameters = ParameterNothing
+  }
+
+  def get(context: ResourceContext) = new ResourceContextBuilder[context.GetParameterType, context.GetReturnType](context, Get, context.getDefaultParameters)
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration
