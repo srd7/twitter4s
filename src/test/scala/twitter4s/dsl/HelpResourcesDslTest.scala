@@ -11,7 +11,7 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
 
   twitter4jResources.getLanguages returns FakeValuesUsedByMock.responseList[twitter4j.api.HelpResources.Language]
   twitter4jResources.getAPIConfiguration returns FakeValuesUsedByMock.apiConfiguration
-
+  twitter4jResources.getTermsOfService returns "fake terms of service"
 
 
   "attach" should {
@@ -32,8 +32,8 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
         get(Languages).conditions must equalTo(ParameterNothing)
       }
 
-      "call getLanguage method when do execute" in {
-        get(Languages).execute.size must equalTo(1)
+      "call getLanguage method when do execute by implicit type conversion" in {
+        (get(Languages) accessLevel) must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
         there was one(twitter4jResources).getLanguages
       }
     }
@@ -47,8 +47,8 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
         get(APIConfiguration).conditions must equalTo(ParameterNothing)
       }
 
-      "call getAPIConfiguration method when do execute" in {
-        get(APIConfiguration).execute.accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      "call getAPIConfiguration method when do execute by implicit type conversion" in {
+        (get(APIConfiguration) accessLevel) must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
         there was one(twitter4jResources).getAPIConfiguration
       }
     }
@@ -60,6 +60,12 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
 
       "have condition is ParameterNothing" in {
         get(TermsOfService).conditions must equalTo(ParameterNothing)
+      }
+
+      "call getTermsOfService method when do execute by implicit type conversion" in {
+        val termsOfService: String = get(TermsOfService)
+        termsOfService must equalTo("fake terms of service")
+        there was one(twitter4jResources).getTermsOfService
       }
     }
   }

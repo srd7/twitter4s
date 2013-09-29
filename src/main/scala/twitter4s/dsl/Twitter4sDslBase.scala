@@ -48,6 +48,8 @@ trait Twitter4sDslBase {
   // call Twitter API DSL methods
   def get(context: ResourceContext) = new ResourceContextBuilder(context.getDefaultParameters, context.getFunc)
 
+  implicit def doContextBuilderExecute[P, R](contextBuilder: ResourceContextBuilder[P, R]) = contextBuilder.execute
+
 
   // authorization DSL methods
   def authorizationURL(callbackUrl: String = null)(implicit consumerKey: ConsumerKey): (String, RequestToken) = {
