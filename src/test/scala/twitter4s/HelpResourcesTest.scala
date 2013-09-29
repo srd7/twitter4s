@@ -14,17 +14,7 @@ class HelpResourcesTest extends Specification with TwitterResourcesTestBase {
   type TargetResourcesType = HelpResourcesImpl
 
   mockedTwitter4j.getLanguages returns FakeValuesUsedByMock.responseList[Language]
-  mockedTwitter4j.getAPIConfiguration returns (new twitter4j.TwitterAPIConfiguration {
-    def getAccessLevel: Int = 3 // Read Write DM
-    def getMaxMediaPerUpload: Int = ???
-    def getPhotoSizeLimit: Int = ???
-    def getShortURLLengthHttps: Int = ???
-    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
-    def getNonUsernamePaths: Array[String] = ???
-    def getShortURLLength: Int = ???
-    def getPhotoSizes: util.Map[Integer, Size] = ???
-    def getCharactersReservedPerMedia: Int = ???
-  })
+  mockedTwitter4j.getAPIConfiguration returns FakeValuesUsedByMock.apiConfiguration
   mockedTwitter4j.getTermsOfService returns "call getTermsOfService of mock"
   mockedTwitter4j.getPrivacyPolicy returns "call getPrivacyPolicy of mock"
 

@@ -3,8 +3,9 @@ package twitter4s.dsl
 /**
  * @author mao.instantlife at gmail.com
  */
-class ResourceContextBuilder[ParameterType, ReturnType](val context: ResourceContext, var conditions: ParameterType, val f: (ParameterType) => ReturnType) {
+class ResourceContextBuilder[ParameterType, ReturnType](var conditions: ParameterType, val f: (ParameterType) => ReturnType) {
 
+  def execute: ReturnType = f(conditions)
 }
 
 trait ResourceContext {
@@ -15,9 +16,6 @@ trait ResourceContext {
 
   val getFunc: (GetParameterType) => GetReturnType
 }
-
-sealed trait Operation
-case object Get extends Operation
 
 object ParameterNothing
 

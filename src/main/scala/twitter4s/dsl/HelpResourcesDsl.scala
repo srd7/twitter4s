@@ -57,7 +57,7 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
     val getFunc: (GetParameterType)=> GetReturnType = (param) => resources.getTermsOfService
   }
 
-  def get(context: ResourceContext) = new ResourceContextBuilder(context, context.getDefaultParameters, context.getFunc)
+  def get(context: ResourceContext) = new ResourceContextBuilder(context.getDefaultParameters, context.getFunc)
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration

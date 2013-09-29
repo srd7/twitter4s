@@ -4,6 +4,7 @@ import java.util
 import java.util.Date
 import twitter4j._
 import java.net.{URI, URL}
+import twitter4j.MediaEntity.Size
 
 object FakeValuesUsedByMock {
   def responseList[T]:twitter4j.ResponseList[T] = new twitter4j.ResponseList[T] {
@@ -272,5 +273,17 @@ object FakeValuesUsedByMock {
     def getAsOf: Date = ???
     def getTrendAt: Date = ???
     def compareTo(o: twitter4j.Trends): Int = ???
+  }
+
+  def apiConfiguration = new twitter4j.TwitterAPIConfiguration {
+    def getAccessLevel: Int = 3 // Read Write DM
+    def getMaxMediaPerUpload: Int = ???
+    def getPhotoSizeLimit: Int = ???
+    def getShortURLLengthHttps: Int = ???
+    def getRateLimitStatus: twitter4j.RateLimitStatus = ???
+    def getNonUsernamePaths: Array[String] = ???
+    def getShortURLLength: Int = ???
+    def getPhotoSizes: util.Map[Integer, Size] = ???
+    def getCharactersReservedPerMedia: Int = ???
   }
 }
