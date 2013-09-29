@@ -45,6 +45,11 @@ trait Twitter4sDslBase {
 
   def resources = twitter4sResources
 
+  // call Twitter API DSL methods
+  def get(context: ResourceContext) = new ResourceContextBuilder(context.getDefaultParameters, context.getFunc)
+
+
+  // authorization DSL methods
   def authorizationURL(callbackUrl: String = null)(implicit consumerKey: ConsumerKey): (String, RequestToken) = {
     val requestToken = Option(callbackUrl) match {
       case Some(callbackUrl) => twitterForAuth.getOAuthRequestToken(callbackURL = callbackUrl)

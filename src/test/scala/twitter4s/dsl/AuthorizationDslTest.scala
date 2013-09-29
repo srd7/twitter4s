@@ -6,19 +6,10 @@ import twitter4s.auth.ConsumerKey
 import twitter4s.Twitter
 import twitter4s.api.impl.HelpResourcesImpl
 
-class AuthorizationAndAttachResourcesTest extends Specification with Twitter4sDslBase with Twitter4sDslTestBase {
+class AuthorizationDslTest extends Specification with Twitter4sDslBase with Twitter4sDslTestBase {
   // mixin for test
   type ResourcesType = HelpResourcesImpl
   override lazy val twitter4sResources = new Twitter(twitter4jResources) with ResourcesType
-
-  "attach" should {
-    "create twitter4j resources with inplicit consumerKey object" in {
-      implicit val impConsumerKey = ConsumerKey("implicitConsKey", "implicitConsSec")
-
-      attach(testAccessToken)
-      resources.twitter4jObj must equalTo(Twitter.buildTwitter4jInstance(impConsumerKey, testAccessToken))
-    }
-  }
 
   "authorizationURL" should {
     val authUrl = "http://api.twitter.com/oauth/authorize?oauth_token="

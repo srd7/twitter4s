@@ -1,24 +1,14 @@
 package twitter4s.dsl
 
 import org.specs2.mutable._
-import twitter4s.{TwitterResponse, Twitter, ResponseList, TwitterAPIConfiguration}
+import twitter4s.{TwitterResponse, ResponseList, TwitterAPIConfiguration}
 import twitter4j.api.HelpResources.Language
 import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
-import twitter4s.api.HelpResources
-import twitter4s.api.impl.HelpResourcesImpl
-import java.util
-import twitter4j.MediaEntity.Size
 
 class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with HelpResourcesDsl with Mockito {
   twitter4jResources = mock[twitter4j.Twitter]
 
-  var callForSetOAuthConsumer: String = _
-  twitter4jResources.setOAuthConsumer(testConsumerKey.consumerKey, testConsumerKey.consumerSecret) answers
-    { _ => callForSetOAuthConsumer = "call for set auth consumer"}
-  var callForSetOAuthAccessToken: String = _
-  twitter4jResources.setOAuthAccessToken(testAccessToken) answers
-    { _ => callForSetOAuthAccessToken = "call for set access token"}
   twitter4jResources.getLanguages returns FakeValuesUsedByMock.responseList[twitter4j.api.HelpResources.Language]
   twitter4jResources.getAPIConfiguration returns FakeValuesUsedByMock.apiConfiguration
 
@@ -29,13 +19,6 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
       attach(testAccessToken)(testConsumerKey)
 
       resources must haveInterface[ResourcesType]
-
-      // bellow specs to base trait test
-      callForSetOAuthConsumer must equalTo("call for set auth consumer")
-      there was one(twitter4jResources).setOAuthConsumer(testConsumerKey.consumerKey, testConsumerKey.consumerSecret)
-
-      callForSetOAuthAccessToken must equalTo("call for set access token")
-      there was one(twitter4jResources).setOAuthAccessToken(testAccessToken)
     }
   }
 
