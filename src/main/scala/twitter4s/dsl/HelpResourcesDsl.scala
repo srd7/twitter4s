@@ -35,13 +35,17 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
     type GetReturnType = TwitterAPIConfiguration
 
     def getDefaultParameters = ParameterNothing
+
+    val getFunc: (GetParameterType) => GetReturnType = (param) => resources.getAPIConfiguration
   }
 
   object Languages extends ResourceContext {
     type GetParameterType = ParameterNothing.type
-    type GetReturnType = String
+    type GetReturnType = ResponseList[Language]
 
     def getDefaultParameters = ParameterNothing
+
+    val getFunc: (GetParameterType)=> GetReturnType = (param) => resources.getLanguages
   }
 
   object TermsOfService extends ResourceContext {
@@ -49,9 +53,11 @@ trait HelpResourcesDsl extends Twitter4sDslBase with HelpResources {
     type GetReturnType = String
 
     def getDefaultParameters = ParameterNothing
+
+    val getFunc: (GetParameterType)=> GetReturnType = (param) => resources.getTermsOfService
   }
 
-  def get(context: ResourceContext) = new ResourceContextBuilder[context.GetParameterType, context.GetReturnType](context, Get, context.getDefaultParameters)
+  def get(context: ResourceContext) = new ResourceContextBuilder(context, context.getDefaultParameters, context.getFunc)
 
   // bellow methods implements are a cliche.
   def getAPIConfiguration: TwitterAPIConfiguration = resources.getAPIConfiguration

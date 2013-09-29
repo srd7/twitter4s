@@ -1,7 +1,8 @@
 package twitter4s.dsl
 
 import org.specs2.mutable._
-import twitter4s.TwitterAPIConfiguration
+import twitter4s.{ResponseList, TwitterAPIConfiguration}
+import twitter4j.api.HelpResources.Language
 
 class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with HelpResourcesDsl {
   "attach" should {
@@ -13,13 +14,9 @@ class HelpResourcesDslTest extends Specification with Twitter4sDslTestBase with 
   }
 
   "get" should {
-    "have get operation" in {
-      get(Languages).op must equalTo(Get)
-    }
-
     "with Language context" in {
       "returns ResourceContextBuilder" in {
-        get(Languages) must haveClass[ResourceContextBuilder[ParameterNothing.type, String]]
+        get(Languages) must haveClass[ResourceContextBuilder[ParameterNothing.type, ResponseList[Language]]]
       }
 
       "have languages context" in {
