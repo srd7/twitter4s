@@ -10,6 +10,8 @@ import twitter4s.Twitter
 import twitter4s.ResponseList
 import twitter4s.User
 
+// TODO import整理
+// TODO ヘッダコメント追加
 trait ListsResourcesImpl extends ListsResources {
   self: Twitter => 
     

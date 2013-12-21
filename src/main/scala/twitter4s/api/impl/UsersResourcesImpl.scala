@@ -24,6 +24,7 @@ import scala.Some
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
+// TODO import整理
 trait UsersResourcesImpl extends UsersResources {
   self: Twitter =>
   

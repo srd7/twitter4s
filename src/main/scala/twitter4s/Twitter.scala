@@ -24,6 +24,10 @@ import auth.ConsumerKey
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO Twitter4J 3.0.5対応
+// TODO sbt 13対応
+// TODO JUnit 4.11へ
+// TODO Specs2 2.3.6
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   
   /* TwitterBase method */
@@ -123,6 +127,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO コメント修正
 object Twitter {
   /**
    * Create Twitter4S object from twitter4j factory.

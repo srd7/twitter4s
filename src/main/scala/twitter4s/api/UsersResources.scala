@@ -21,6 +21,8 @@ import twitter4j.Category
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO import 整理
+// TODO コメント間違い修正
 trait UsersResources {
     /**
    * Returns an HTTP 200 OK response code and a representation of the requesting user if authentication was successful; returns a 401 status code and an error message if not. Use this method to test if supplied user credentials are valid.

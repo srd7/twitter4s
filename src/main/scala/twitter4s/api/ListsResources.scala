@@ -25,6 +25,7 @@ import twitter4s.Users
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO コメント間違い修正
 trait ListsResources {
   /**
    * Creates a new list for the authenticated user. Accounts are limited to 20 lists.

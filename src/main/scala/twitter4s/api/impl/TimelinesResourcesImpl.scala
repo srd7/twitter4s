@@ -25,6 +25,7 @@ import scala.util.Either
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
+// TODO import整理
 trait TimelinesResourcesImpl extends TimelinesResources {
   self: Twitter =>
   

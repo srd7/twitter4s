@@ -23,6 +23,7 @@ import twitter4s.Twitter
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
+// TODO import整理
 trait SearchResourcesImpl extends SearchResources {
   self: Twitter =>
     

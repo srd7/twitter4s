@@ -23,6 +23,7 @@ import twitter4s.api.PlaceGeoResources
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
+// TODO import整理
 trait PlaceGeoResourcesImpl extends PlaceGeoResources {
   self: Twitter =>
   

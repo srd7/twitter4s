@@ -25,6 +25,8 @@ import twitter4s.PagableResponseList
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO import整理
+// TODO コメント間違い修正
 trait FriendsFollowersResources {
   /**
    * Returns an array of numeric IDs for every user the authenticating user is following.

@@ -8,6 +8,7 @@ import twitter4s.Twitter
 import twitter4s.User
 import twitter4s.DirectMessage
 
+// TODO import整理
 trait DirectMessagesResourcesImpl extends DirectMessagesResources {
   self: Twitter =>
     

@@ -28,6 +28,7 @@ import twitter4s.User
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
+// TODO import整理
 trait FavoritesResourcesImpl extends FavoritesResources {
   self: Twitter =>
     
