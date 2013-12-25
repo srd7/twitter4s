@@ -17,25 +17,42 @@ class Twitter4SDslTest extends Specification with Mockito {
   // with(AccessToken)(implicit twitter: => Twitter)
   // with(ConsumerKey, AccessToken)(implicit twitter: => Twitter)
 
-  "TweetStringContext.update" should {
-    "call twitter updateStatus method" in {
-      // oauth.kei
-      val consumerKey = ConsumerKey("6xw9EYTQlQ9fD3BWhZNA", "enP6NYIgLzuYJyOcTZTCrXheatYT08xr5ZyoolXS0Ø")
-      // id1
-      val accessToken = AccessToken("101515535-lVwBwVaxtg7QmRyw60HXnSfvmTYT4tIN7DTcVuUv", "0ualIiBHewgDoQtVbtCCPpGhjTXqjwllZaQM0gEVrc8")
+  import Twitter4sDsl._
 
-      val mockedTwitter4j = mock[twitter4j.Twitter]
+  "TwitterString" should {
+    "make tweet context without completement" in {
+      val tweetContext = tweet"hoge"
 
-      mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
+      tweetContext.tweet must equalTo("hoge")
+    }
 
-      implicit val targetTwitter = Twitter(consumerKey, accessToken)
+    "make tweet context with completement" in {
+      val username = "my name"
+      val tweetContext = tweet"hello ${username}"
 
-
-      tweet"hoge" update
-
-      there was one(mockedTwitter4j).updateStatus("hoge")
+      tweetContext.tweet must equalTo("hello my name")
     }
   }
+
+//  "TweetStringContext.update" should {
+//    "call twitter updateStatus method" in {
+//      // oauth.kei
+//      val consumerKey = ConsumerKey("6xw9EYTQlQ9fD3BWhZNA", "enP6NYIgLzuYJyOcTZTCrXheatYT08xr5ZyoolXS0Ø")
+//      // id1
+//      val accessToken = AccessToken("101515535-lVwBwVaxtg7QmRyw60HXnSfvmTYT4tIN7DTcVuUv", "0ualIiBHewgDoQtVbtCCPpGhjTXqjwllZaQM0gEVrc8")
+//
+//      val mockedTwitter4j = mock[twitter4j.Twitter]
+//
+//      mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
+//
+//      implicit val targetTwitter = Twitter(consumerKey, accessToken)
+//
+//
+//      tweet"hoge" update
+//
+//      there was one(mockedTwitter4j).updateStatus("hoge")
+//    }
+//  }
 
 //  "withToken method" should {
 //    "bind token and create twitter4s instance" in {
