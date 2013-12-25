@@ -7,10 +7,7 @@ import twitter4s.Twitter
  */
 object Twitter4sDsl {
   implicit class TweetString(val sc: StringContext) extends AnyVal {
-    def tweet(args: Any*) = {
-      val string = sc.s(args: _*)
-      TweetContext(string)
-    }
+    def tweet(args: Any*) = TweetContext(sc.s(args: _*))
   }
 
   case class TweetContext(tweet: String) {
