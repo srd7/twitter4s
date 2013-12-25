@@ -1,5 +1,7 @@
 package twitter4s.dsl
 
+import twitter4s.Twitter
+
 /**
  * @author mao.instantlife at gmail.com
  */
@@ -15,5 +17,9 @@ object Twitter4sDsl {
     }
   }
 
-  case class TweetContext(tweet: String)
+  case class TweetContext(tweet: String) {
+    def update(implicit twitter: Twitter) = {
+      twitter.twitter4jObj.updateStatus(tweet)
+    }
+  }
 }
