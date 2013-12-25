@@ -8,10 +8,6 @@ import twitter4s.Twitter
 object Twitter4sDsl {
   implicit class TweetString(val sc: StringContext) extends AnyVal {
     def tweet(args: Any*) = {
-      sc.checkLengths(args)
-
-      println((sc.parts.length != args.length + 1))
-
       val string = sc.s(args: _*)
       TweetContext(string)
     }
@@ -22,4 +18,10 @@ object Twitter4sDsl {
       twitter.twitter4jObj.updateStatus(tweet)
     }
   }
+
+  implicit class UserString(val sc: StringContext) extends AnyVal {
+    def user(args: Any*) = UserContext(sc.s(args: _*))
+  }
+
+  case class UserContext(name: String)
 }

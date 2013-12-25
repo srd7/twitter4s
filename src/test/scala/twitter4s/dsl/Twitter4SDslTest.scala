@@ -17,7 +17,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
 
-  "TwitterString" should {
+  "TwitterStringContext" should {
     "make tweet context" in {
       val username = "my name"
       tweet"hello ${username}".tweet must equalTo("hello my name")
@@ -32,8 +32,17 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
+  "UserContext" should {
+    "make user context" in {
+      val testUserName = "user_name1"
+      user"$testUserName".name must equalTo(testUserName)
+    }
+  }
+
+  // add (users) to list"" -> add いらないかも
+  // user"screen name" to list"list name" -> twitter.createUserListMember
+  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
   // send Message"hoge" to user"fuga" from user"foo"
-  // add (users) to list""
   // user"hoge" follows user"fuga" -> twitter.createFriendship(user"fuga", false)
   // user"hoge" follows user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
 
