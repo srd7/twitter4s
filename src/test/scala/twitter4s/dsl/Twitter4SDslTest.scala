@@ -12,20 +12,13 @@ import twitter4s.mocked.FakeValuesUsedByMock
 import twitter4s.api.impl.TweetsResourcesImpl
 
 class Twitter4SDslTest extends Specification with Mockito {
-  // with(AccessToken)(implicit twitter: => Twitter)
-  // with(ConsumerKey, AccessToken)(implicit twitter: => Twitter)
-
   import Twitter4sDsl._
 
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
 
   "TwitterString" should {
-    "make tweet context without completement" in {
-      tweet"hoge".tweet must equalTo("hoge")
-    }
-
-    "make tweet context with completement" in {
+    "make tweet context" in {
       val username = "my name"
       tweet"hello ${username}".tweet must equalTo("hello my name")
     }
@@ -38,6 +31,11 @@ class Twitter4SDslTest extends Specification with Mockito {
       there was one(mockedTwitter4j).updateStatus("hello world implicit")
     }
   }
+
+  // send Message"hoge" to user"fuga" from user"foo"
+  // add (users) to list""
+  // user"hoge" follows user"fuga" -> twitter.createFriendship(user"fuga", false)
+  // user"hoge" follows user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
 
 //  "withToken method" should {
 //    "bind token and create twitter4s instance" in {
@@ -58,8 +56,6 @@ class Twitter4SDslTest extends Specification with Mockito {
 
   // removeTweet(no) -> ラップするかどうか
   // retweet(no) -> ラップするかどうか
-  // user"hoge" follows user"fuga" -> twitter.createFriendship(user"fuga", false)
-  // user"hoge" follows user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
   // relation between user"hoge" and user"fuga" -> twitter.showFriendship -> to wrap
   // relation isFriends?
   // relation isFollowers?
@@ -67,7 +63,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   // relation isBlocked?
   // user"hoge" lookup (friend"fuga") -> twitter.lookupFriends(list)
   // TimelinesResourcesのメソッドやSearchResourcesのメソッドはそのまま使えれば良い -> implicitで渡す
-  // send Message"hoge" to user"fuga" from user"foo"
-  // add (users) to list""
   // with(user"")でコンテキストバインディングしたい
+  // with(AccessToken)(implicit twitter: => Twitter)
+  // with(ConsumerKey, AccessToken)(implicit twitter: => Twitter)
 }
