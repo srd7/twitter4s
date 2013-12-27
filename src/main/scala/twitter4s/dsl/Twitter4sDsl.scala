@@ -21,4 +21,8 @@ object Twitter4sDsl {
   }
 
   case class UserContext(name: String)
+
+  case class UserAdder(userContext: UserContext)
+
+  def add(user: UserContext) = UserAdder(user)
 }
