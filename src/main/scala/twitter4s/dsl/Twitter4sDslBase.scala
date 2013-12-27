@@ -21,7 +21,6 @@ import twitter4j.auth.{RequestToken, AccessToken}
 import twitter4s.Twitter
 import twitter4j.TwitterFactory
 import twitter4s.api.impl.UsersResourcesImpl
-import twitter4s.dsl.storeexecutor.{DefaultAccessTokenStoreExecutor, AccessTokenStoreExecutor}
 
 /**
  * @author mao.instantlife at gmail.com
@@ -36,7 +35,7 @@ trait Twitter4sDslBase {
   // if your application is needed another storer,
   // create storer object mixined AccessTokenStorer trait
   // and override this storeExecutor.
-  protected val storeExecutor: AccessTokenStoreExecutor = DefaultAccessTokenStoreExecutor
+//  protected val storeExecutor: AccessTokenStoreExecutor = DefaultAccessTokenStoreExecutor
 
   def attach(accessToken: AccessToken)(implicit consumerKey: ConsumerKey) {
     resources.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
@@ -44,11 +43,11 @@ trait Twitter4sDslBase {
   }
 
   def resources = twitter4sResources
-
-  // call Twitter API DSL methods
-  def get(context: ResourceContext) = new ResourceContextBuilder(context.getDefaultParameters, context.getFunc)
-
-  implicit def doContextBuilderExecute[P, R](contextBuilder: ResourceContextBuilder[P, R]) = contextBuilder.execute
+//
+//  // call Twitter API DSL methods
+//  def get(context: ResourceContext) = new ResourceContextBuilder(context.getDefaultParameters, context.getFunc)
+//
+//  implicit def doContextBuilderExecute[P, R](contextBuilder: ResourceContextBuilder[P, R]) = contextBuilder.execute
 
 
   // authorization DSL methods
@@ -77,10 +76,10 @@ trait Twitter4sDslBase {
     twitter
   }
 
-  implicit class RequestTokenStoreExecutor(userTokenArgs: Pair[Long, AccessToken]) {
-    val tokenStoreExecutor = storeExecutor
-    def andThenStore = {
-      tokenStoreExecutor.store(userTokenArgs)
-    }
-  }
+//  implicit class RequestTokenStoreExecutor(userTokenArgs: Pair[Long, AccessToken]) {
+//    val tokenStoreExecutor = storeExecutor
+//    def andThenStore = {
+//      tokenStoreExecutor.store(userTokenArgs)
+//    }
+//  }
 }
