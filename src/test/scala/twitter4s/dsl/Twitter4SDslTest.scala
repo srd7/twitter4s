@@ -5,11 +5,9 @@ package twitter4s.dsl
  */
 
 import org.specs2.mutable._
-import twitter4s.auth.{AccessToken, ConsumerKey}
 import twitter4s.Twitter
 import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
-import twitter4s.api.impl.TweetsResourcesImpl
 
 class Twitter4SDslTest extends Specification with Mockito {
   import Twitter4sDsl._
@@ -17,6 +15,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
+  mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
 
   "TwitterStringContext" should {
     "make tweet context" in {
@@ -38,6 +37,15 @@ class Twitter4SDslTest extends Specification with Mockito {
       val testUserName = "user_name1"
       user"$testUserName".name must equalTo(testUserName)
     }
+
+    "get user with user context" in {
+      implicit val twitter = new Twitter(mockedTwitter4j)
+
+      val testUser = "showTestUser"
+      get(user"${testUser}")
+
+      there was one(mockedTwitter4j).showUser(testUser)
+    }
   }
 
   "add user context string method" should {
@@ -45,6 +53,12 @@ class Twitter4SDslTest extends Specification with Mockito {
       (add(user"with_adder_user")).userContext must equalTo(user"with_adder_user")
     }
   }
+//
+//  "UserAdder" should {
+//    "to(ListContext) method executes twitter4j.createUserListMember" in {
+//
+//    }
+//  }
 
   // add (users) to list"" -> add いらないかも
   // user"screen name" to list"list name" -> twitter.createUserListMember(listid, userid)

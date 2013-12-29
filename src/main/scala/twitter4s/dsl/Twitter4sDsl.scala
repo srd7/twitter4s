@@ -25,4 +25,6 @@ object Twitter4sDsl {
   case class UserAdder(userContext: UserContext)
 
   def add(user: UserContext) = UserAdder(user)
+
+  def get(user: UserContext)(implicit twitter:Twitter): twitter4s.User = twitter.twitter4jObj.showUser(user.name)
 }
