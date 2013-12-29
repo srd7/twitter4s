@@ -6,8 +6,12 @@ import twitter4s.Twitter
  * @author mao.instantlife at gmail.com
  */
 object Twitter4sDsl {
-  implicit class TweetString(val sc: StringContext) extends AnyVal {
+  implicit class TwitterDSLString(val sc: StringContext) extends AnyVal {
     def tweet(args: Any*) = TweetContext(sc.s(args: _*))
+
+    def user(args: Any*) = UserContext(sc.s(args: _*))
+
+    def list(args: Any*) = ListContext(sc.s(args: _*))
   }
 
   case class TweetContext(tweet: String) {
@@ -16,15 +20,7 @@ object Twitter4sDsl {
     }
   }
 
-  implicit class UserString(val sc: StringContext) extends AnyVal {
-    def user(args: Any*) = UserContext(sc.s(args: _*))
-  }
-
   case class UserContext(name: String)
-
-  implicit class ListNameString(val sc: StringContext) extends AnyVal {
-    def list(args: Any*) = ListContext(sc.s(args: _*))
-  }
 
   case class ListContext(name: String)
 
