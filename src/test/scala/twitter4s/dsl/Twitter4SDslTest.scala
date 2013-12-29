@@ -48,6 +48,13 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
+  "ListContext" should {
+    "make list context" in {
+      val testListName = "user_list_name1"
+      list"$testListName".name must equalTo(testListName)
+    }
+  }
+
   "add user context string method" should {
     "returns Tuple UserAdder" in {
       (add(user"with_adder_user")).userContext must equalTo(user"with_adder_user")

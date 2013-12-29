@@ -22,6 +22,12 @@ object Twitter4sDsl {
 
   case class UserContext(name: String)
 
+  implicit class ListNameString(val sc: StringContext) extends AnyVal {
+    def list(args: Any*) = ListContext(sc.s(args: _*))
+  }
+
+  case class ListContext(name: String)
+
   case class UserAdder(userContext: UserContext)
 
   def add(user: UserContext) = UserAdder(user)
