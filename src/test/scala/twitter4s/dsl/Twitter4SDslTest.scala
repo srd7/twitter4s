@@ -19,47 +19,43 @@ class Twitter4SDslTest extends Specification with Mockito {
   mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.getId returns(1L)
 
+  val testUserName = "test_user_name"
+  implicit val twitter = new Twitter(mockedTwitter4j)
+
   "TwitterStringContext" should {
     "make tweet context" in {
-      val username = "my name"
-      tweet"hello ${username}".tweet must equalTo("hello my name")
+      tweet"hello ${testUserName}".tweet must equalTo(s"hello ${testUserName}")
     }
 
     "update method execute Twitter4j.updateStatus" in {
-      implicit val twitter = new Twitter(mockedTwitter4j)
+      val tweetString = "test tweet with implicit twitter class"
 
-      tweet"hello world implicit" update
+      tweet"$tweetString" update
 
-      there was one(mockedTwitter4j).updateStatus("hello world implicit")
+      there was one(mockedTwitter4j).updateStatus(tweetString)
     }
   }
 
   "UserContext" should {
     "make user context" in {
-      val testUserName = "user_name1"
       user"$testUserName".name must equalTo(testUserName)
     }
 
     "get user with user context" in {
-      implicit val twitter = new Twitter(mockedTwitter4j)
+      get(user"${testUserName}")
 
-      val testUser = "showTestUser"
-      get(user"${testUser}")
-
-      there was one(mockedTwitter4j).showUser(testUser)
+      there was one(mockedTwitter4j).showUser(testUserName)
     }
   }
 
   "ListContext" should {
+    val testListName = "test_user_list_name"
+
     "make list context" in {
-      val testListName = "user_list_name1"
       list"$testListName".name must equalTo(testListName)
     }
 
     "get list with list context" in {
-      implicit val twitter = new Twitter(mockedTwitter4j)
-
-      val testListName = "showTestUserList"
       get(list"${testListName}")
 
       there was one(mockedTwitter4j).getId
