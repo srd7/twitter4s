@@ -23,24 +23,16 @@ class Twitter4SDslTest extends Specification with Mockito {
   implicit val twitter = new Twitter(mockedTwitter4j)
 
   "TwitterStringContext" should {
-    "make tweet context" in {
-      tweet"hello ${testUserName}".tweet must equalTo(s"hello ${testUserName}")
-    }
-
     "update method execute Twitter4j.updateStatus" in {
       val tweetString = "test tweet with implicit twitter class"
 
-      tweet"$tweetString" update
+      tweet"$tweetString with $testUserName" update
 
-      there was one(mockedTwitter4j).updateStatus(tweetString)
+      there was one(mockedTwitter4j).updateStatus(s"$tweetString with $testUserName")
     }
   }
 
   "UserContext" should {
-    "make user context" in {
-      user"$testUserName".name must equalTo(testUserName)
-    }
-
     "get user with user context" in {
       get(user"${testUserName}")
 
@@ -49,13 +41,9 @@ class Twitter4SDslTest extends Specification with Mockito {
   }
 
   "ListContext" should {
-    val testListName = "test_user_list_name"
-
-    "make list context" in {
-      list"$testListName".name must equalTo(testListName)
-    }
-
     "get list with list context" in {
+      val testListName = "test_user_list_name"
+
       get(list"${testListName}")
 
       there was one(mockedTwitter4j).getId
@@ -78,9 +66,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   // add (users) to list"" -> add いらないかも
   // user"screen name" to list"list name" -> twitter.createUserListMember(listid, userid)
   // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
-  // user"" -> twitter.showMember
-  // list"" -> twitter.showUserList
-  // send Message"hoge" to user"fuga" from user"foo"
+  // send Message"hoge" to user"fuga" -> fromは自分なのでいらない
   // user"hoge" follows user"fuga" -> twitter.createFriendship(user"fuga", false)
   // user"hoge" follows user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
 
