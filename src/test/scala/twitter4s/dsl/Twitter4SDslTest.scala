@@ -16,6 +16,8 @@ class Twitter4SDslTest extends Specification with Mockito {
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
+  mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
+  mockedTwitter4j.getId returns(1L)
 
   "TwitterStringContext" should {
     "make tweet context" in {
@@ -52,6 +54,16 @@ class Twitter4SDslTest extends Specification with Mockito {
     "make list context" in {
       val testListName = "user_list_name1"
       list"$testListName".name must equalTo(testListName)
+    }
+
+    "get list with list context" in {
+      implicit val twitter = new Twitter(mockedTwitter4j)
+
+      val testListName = "showTestUserList"
+      get(list"${testListName}")
+
+      there was one(mockedTwitter4j).getId
+      there was one(mockedTwitter4j).showUserList(1L, testListName)
     }
   }
 

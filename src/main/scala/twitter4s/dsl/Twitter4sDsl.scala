@@ -1,6 +1,6 @@
 package twitter4s.dsl
 
-import twitter4s.Twitter
+import twitter4s.{UserList, Twitter}
 
 /**
  * @author mao.instantlife at gmail.com
@@ -28,5 +28,17 @@ object Twitter4sDsl {
 
   def add(user: UserContext) = UserAdder(user)
 
-  def get(user: UserContext)(implicit twitter:Twitter): twitter4s.User = twitter.twitter4jObj.showUser(user.name)
+  trait ContextGetter[ContextType, ReturnType] {
+    def get(self: ContextType)(implicit twitter:Twitter): ReturnType
+  }
+
+  implicit val userContextGetter = new ContextGetter[UserContext, twitter4s.User] {
+    def get(self: UserContext)(implicit twitter:Twitter) = twitter.twitter4jObj.showUser(self.name)
+  }
+
+  implicit val listContextGetter = new ContextGetter[ListContext, twitter4s.UserList] {
+    def get(self: ListContext)(implicit twitter: Twitter) = twitter.twitter4jObj.showUserList(twitter.id, self.name)
+  }
+
+  def get[C, R](self: C)(implicit twitter:Twitter, getter: ContextGetter[C, R]):R = getter.get(self)
 }
