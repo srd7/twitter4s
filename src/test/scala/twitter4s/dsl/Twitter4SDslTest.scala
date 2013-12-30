@@ -10,7 +10,7 @@ import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
 
 class Twitter4SDslTest extends Specification with Mockito {
-  import Twitter4sDsl._
+  import dsl._
 
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)

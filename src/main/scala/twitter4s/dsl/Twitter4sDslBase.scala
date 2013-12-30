@@ -25,6 +25,7 @@ import twitter4s.api.impl.UsersResourcesImpl
 /**
  * @author mao.instantlife at gmail.com
  */
+// TODO 不要になったら消す
 trait Twitter4sDslBase {
   type ResourcesType
 
