@@ -18,6 +18,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.getId returns(1L)
+  mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
 
   val testUserName = "test_user_name"
   implicit val twitter = new Twitter(mockedTwitter4j)
@@ -52,18 +53,21 @@ class Twitter4SDslTest extends Specification with Mockito {
   }
 
   "add user context string method" should {
-    "returns Tuple UserAdder" in {
-      (add(user"with_adder_user")).userContext must equalTo(user"with_adder_user")
+    "returns UserAdder instance" in {
+      val userContext = user"${testUserName}"
+      (add(userContext)).userContext must equalTo(userContext)
     }
   }
-//
-//  "UserAdder" should {
-//    "to(ListContext) method executes twitter4j.createUserListMember" in {
-//
-//    }
-//  }
 
-  // add (users) to list"" -> add いらないかも
+  "UserAdder" should {
+    "to(ListContext) method executes twitter4j.createUserListMember" in {
+      (add(user"testUserName") to list"testListName").id must equalTo(FakeValuesUsedByMock.userList.getId)
+
+      there was one(mockedTwitter4j).createUserListMember(
+        FakeValuesUsedByMock.userList.getId, FakeValuesUsedByMock.user.getId)
+    }
+  }
+
   // user"screen name" to list"list name" -> twitter.createUserListMember(listid, userid)
   // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
   // send Message"hoge" to user"fuga" -> fromは自分なのでいらない

@@ -24,8 +24,6 @@ package object dsl {
 
   case class ListContext(name: String)
 
-  case class UserAdder(userContext: UserContext)
-
   def add(user: UserContext) = UserAdder(user)
 
   // context getter binding
@@ -43,4 +41,9 @@ package object dsl {
    * @return Context resources from API
    */
   def get[C, R](self: C)(implicit twitter:Twitter, getter: ContextGetter[C, R]):R = getter.get(self)
+
+  case class UserAdder(userContext: UserContext) {
+    def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
+      twitter.twitter4jObj.createUserListMember(get(listContext).id, get(userContext).id)
+  }
 }

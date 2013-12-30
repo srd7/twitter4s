@@ -106,7 +106,7 @@ object FakeValuesUsedByMock {
     def getDescriptionURLEntities: Array[URLEntity] = ???
     def getURL: String = ???
     def getLang: String = ???
-    def getId: Long = ???
+    def getId: Long = 200
     def getProfileImageURLHttps: String = ???
     def getStatus: twitter4j.Status = ???
     def getMiniProfileImageURL: String = ???
@@ -224,7 +224,7 @@ object FakeValuesUsedByMock {
     def getUser: twitter4j.User = ???
     def getSlug: String = ???
     def isPublic: Boolean = ???
-    def getId: Int = ???
+    def getId: Int = 100
     def getDescription: String = ???
     def getURI: URI = ???
     def compareTo(o: twitter4j.UserList): Int = ???
