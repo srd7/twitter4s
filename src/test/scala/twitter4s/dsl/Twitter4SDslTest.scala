@@ -18,6 +18,7 @@ class Twitter4SDslTest extends Specification with Mockito {
   mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUser(anyLong) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
+  mockedTwitter4j.showUserList(anyInt) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.getId returns(1L)
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
 
@@ -47,23 +48,23 @@ class Twitter4SDslTest extends Specification with Mockito {
 
       there was one(mockedTwitter4j).showUser(testUserId)
     }
-
-    "get user with user's id context, id prefix is upper case" in {
-      val testUserId = 222L
-      get(user"ID:${testUserId}")
-
-      there was one(mockedTwitter4j).showUser(testUserId)
-    }
   }
 
   "ListContext" should {
-    "get list with list context" in {
+    "get list with list's name context" in {
       val testListName = "test_user_list_name"
 
       get(list"${testListName}")
 
       there was one(mockedTwitter4j).getId
       there was one(mockedTwitter4j).showUserList(1L, testListName)
+    }
+
+    "get list with list's id context" in {
+      val testListId = 333
+      get(list"id:$testListId")
+
+      there was one(mockedTwitter4j).showUserList(testListId)
     }
   }
 

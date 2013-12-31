@@ -33,5 +33,8 @@ object UserContextGetter extends ContextGetter[UserContext, twitter4s.User] {
 }
 
 object ListContextGetter extends ContextGetter[ListContext, twitter4s.UserList] {
-  def get(self: ListContext)(implicit twitter: Twitter) = twitter.twitter4jObj.showUserList(twitter.id, self.name)
+  def get(self: ListContext)(implicit twitter: Twitter) = self.list match {
+    case Right(listId) => twitter.twitter4jObj.showUserList(listId)
+    case Left(listSlug) => twitter.twitter4jObj.showUserList(twitter.id, listSlug)
+  }
 }

@@ -1,21 +1,27 @@
 package twitter4s.dsl
 
-import twitter4s.{User, Twitter}
+import twitter4s.{UserList, User, Twitter}
 
 /**
  * @author mao.instantlife at gmail.com
  */
 package object dsl {
+  val idPrefix = "id:"
+
   implicit class TwitterDSLString(val sc: StringContext) extends AnyVal {
     def tweet(args: Any*) = TweetContext(sc.s(args: _*))
 
     def user(args: Any*) = UserContext(
       sc.s(args: _*) match {
-        case str if str.toLowerCase.startsWith("id:") => User.isSpecifiedBy(str.drop("id:".length).toLong)
+        case str if str.toLowerCase.startsWith(idPrefix) => User.isSpecifiedBy(str.drop(idPrefix.length).toLong)
         case str => User.isSpecifiedBy(str)
       })
 
-    def list(args: Any*) = ListContext(sc.s(args: _*))
+    def list(args: Any*) = ListContext(
+      sc.s(args: _*) match {
+        case str if str.toLowerCase.startsWith(idPrefix) => Right(str.drop(idPrefix.length).toInt)
+        case str => Left(str)
+      })
   }
 
   case class TweetContext(tweet: String) {
@@ -24,9 +30,9 @@ package object dsl {
     }
   }
 
-  case class UserContext(user: twitter4s.User.SpecificInfo)
+  case class UserContext(user: User.SpecificInfo)
 
-  case class ListContext(name: String)
+  case class ListContext(list: Either[String, Int])
 
   def add(user: UserContext) = UserAdder(user)
 
