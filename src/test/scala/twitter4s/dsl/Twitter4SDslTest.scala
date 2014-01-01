@@ -10,7 +10,6 @@ import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
 
 class Twitter4SDslTest extends Specification with Mockito {
-  import dsl._
 
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
@@ -84,11 +83,19 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-  // user"screen name" to list"list name" -> twitter.createUserListMember(listid, userid)
-  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
+  "MessageContext" should {
+    "get message context" in {
+      val testMessage = "test direct message"
+
+      (message"$testMessage with $testUserName").message must equalTo(s"$testMessage with $testUserName")
+    }
+  }
+
   // send Message"hoge" to user"fuga" -> fromは自分なのでいらない
-  // user"hoge" follows user"fuga" -> twitter.createFriendship(user"fuga", false)
-  // user"hoge" follows user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
+
+  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
+  // follow user"fuga" -> twitter.createFriendship(user"fuga", false)
+  // follow user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
 
 //  "withToken method" should {
 //    "bind token and create twitter4s instance" in {

@@ -1,12 +1,12 @@
-package twitter4s.dsl
-
-import twitter4s.{UserList, User, Twitter}
+package twitter4s
 
 /**
  * @author mao.instantlife at gmail.com
  */
 package object dsl {
   val idPrefix = "id:"
+
+  implicit def twitter4SToTwitter4J(twitter: twitter4s.Twitter): twitter4j.Twitter = twitter.twitter4jObj
 
   implicit class TwitterDSLString(val sc: StringContext) extends AnyVal {
     def tweet(args: Any*) = TweetContext(sc.s(args: _*))
@@ -22,6 +22,8 @@ package object dsl {
         case str if str.toLowerCase.startsWith(idPrefix) => Right(str.drop(idPrefix.length).toInt)
         case str => Left(str)
       })
+
+    def message(args: Any*) = MessageContext(sc.s(args: _*))
   }
 
   case class TweetContext(tweet: String) {
@@ -33,6 +35,8 @@ package object dsl {
   case class UserContext(user: User.SpecificInfo)
 
   case class ListContext(list: Either[String, Int])
+
+  case class MessageContext(message: String)
 
   def add(user: UserContext) = UserAdder(user)
 
@@ -54,6 +58,6 @@ package object dsl {
 
   case class UserAdder(userContext: UserContext) {
     def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
-      twitter.twitter4jObj.createUserListMember(get(listContext).id, get(userContext).id)
+      twitter.createUserListMember(get(listContext).id, get(userContext).id)
   }
 }

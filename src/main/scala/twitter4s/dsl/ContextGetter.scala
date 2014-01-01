@@ -16,7 +16,6 @@ package twitter4s.dsl
  * limitations under the License.
  */
 import twitter4s.Twitter
-import twitter4s.dsl.dsl.{ListContext, UserContext}
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -27,14 +26,14 @@ trait ContextGetter[ContextType, ReturnType] {
 
 object UserContextGetter extends ContextGetter[UserContext, twitter4s.User] {
   def get(self: UserContext)(implicit twitter:Twitter) = self.user match {
-    case Right(userId) => twitter.twitter4jObj.showUser(userId)
-    case Left(screenName) => twitter.twitter4jObj.showUser(screenName)
+    case Right(userId) => twitter.showUser(userId)
+    case Left(screenName) => twitter.showUser(screenName)
   }
 }
 
 object ListContextGetter extends ContextGetter[ListContext, twitter4s.UserList] {
   def get(self: ListContext)(implicit twitter: Twitter) = self.list match {
-    case Right(listId) => twitter.twitter4jObj.showUserList(listId)
-    case Left(listSlug) => twitter.twitter4jObj.showUserList(twitter.id, listSlug)
+    case Right(listId) => twitter.showUserList(listId)
+    case Left(listSlug) => twitter.showUserList(twitter.id, listSlug)
   }
 }
