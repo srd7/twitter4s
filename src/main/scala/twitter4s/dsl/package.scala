@@ -60,4 +60,13 @@ package object dsl {
     def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
       twitter.createUserListMember(get(listContext).id, get(userContext).id)
   }
+
+  def send(messageContext: MessageContext) = MessageSender(messageContext)
+
+  case class MessageSender(messageContext: MessageContext) {
+    def to(userContext: UserContext)(implicit twitter: Twitter): twitter4s.DirectMessage = userContext.user match {
+      case Right(userId) => twitter.sendDirectMessage(userId, messageContext.message)
+      case Left(screenName) => twitter.sendDirectMessage(screenName, messageContext.message)
+    }
+  }
 }

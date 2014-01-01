@@ -21,8 +21,10 @@ class Twitter4SDslTest extends Specification with Mockito {
   mockedTwitter4j.getId returns(1L)
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
 
-  val testUserName = "test_user_name"
   implicit val twitter = new Twitter(mockedTwitter4j)
+
+  val testUserName = "test_user_name"
+  val testMessage = "test direct message"
 
   "TwitterStringContext" should {
     "update method execute Twitter4j.updateStatus" in {
@@ -85,9 +87,26 @@ class Twitter4SDslTest extends Specification with Mockito {
 
   "MessageContext" should {
     "get message context" in {
-      val testMessage = "test direct message"
-
       (message"$testMessage with $testUserName").message must equalTo(s"$testMessage with $testUserName")
+    }
+
+    "create MessageSender with send method" in {
+      send(message"$testMessage with send method").messageContext must equalTo(message"$testMessage with send method")
+    }
+  }
+
+  "MessageSender" should {
+    "to(UserContext specifiedBy screen name) method executes twitter4j.sendDirectMessage" in {
+      send(message"$testMessage on execute to method") to user"$testUserName"
+
+      there was one(mockedTwitter4j).sendDirectMessage(testUserName, s"$testMessage on execute to method")
+    }
+
+    "to(UserContext specifiedBy user id) method executes twitter4j.sendDirectMessage" in {
+      val testUserId = 444L
+      send(message"$testMessage on execute to method") to user"id:$testUserId"
+
+      there was one(mockedTwitter4j).sendDirectMessage(testUserId, s"$testMessage on execute to method")
     }
   }
 
