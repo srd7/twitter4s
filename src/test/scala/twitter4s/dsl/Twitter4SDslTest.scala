@@ -12,14 +12,12 @@ import twitter4s.mocked.FakeValuesUsedByMock
 class Twitter4SDslTest extends Specification with Mockito {
 
   val mockedTwitter4j = mock[twitter4j.Twitter]
-  mockedTwitter4j.updateStatus(anyString) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUser(anyLong) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.showUserList(anyInt) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.getId returns(1L)
-  mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
 
   implicit val twitter = new Twitter(mockedTwitter4j)
 
