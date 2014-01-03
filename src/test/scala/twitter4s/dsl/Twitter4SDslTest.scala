@@ -108,8 +108,6 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-  // send Message"hoge" to user"fuga" -> fromは自分なのでいらない
-
   // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
   // follow user"fuga" -> twitter.createFriendship(user"fuga", false)
   // follow user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)

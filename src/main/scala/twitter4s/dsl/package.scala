@@ -26,18 +26,6 @@ package object dsl {
     def message(args: Any*) = MessageContext(sc.s(args: _*))
   }
 
-  case class TweetContext(tweet: String) {
-    def update(implicit twitter: Twitter) = {
-      twitter.twitter4jObj.updateStatus(tweet)
-    }
-  }
-
-  case class UserContext(user: User.SpecificInfo)
-
-  case class ListContext(list: Either[String, Int])
-
-  case class MessageContext(message: String)
-
   def add(user: UserContext) = UserAdder(user)
 
   // context getter binding
