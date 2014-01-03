@@ -108,10 +108,23 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
-  // follow user"fuga" -> twitter.createFriendship(user"fuga", false)
-  // follow user"fuga" with NoticeOnFollow -> twitter.createFriendship(user"fuga", true)
+  "follow user string context method" should {
+    "execute twitter4j.createFriendship with screen name" in {
+      follow(user"$testUserName")
 
+      there was one(mockedTwitter4j).createFriendship(testUserName)
+    }
+
+    "execute twitter4j.createFriendship with user id" in {
+      val testUserId = 555L
+      follow(user"id:$testUserId")
+
+      there was one(mockedTwitter4j).createFriendship(testUserId)
+    }
+  }
+
+
+  // with(AccessToken)(implicit twitter: => Twitter)
 //  "withToken method" should {
 //    "bind token and create twitter4s instance" in {
 //      // oauth.kei
@@ -129,16 +142,6 @@ class Twitter4SDslTest extends Specification with Mockito {
 //    }
 //  }
 
-  // removeTweet(no) -> ラップするかどうか
-  // retweet(no) -> ラップするかどうか
-  // relation between user"hoge" and user"fuga" -> twitter.showFriendship -> to wrap
-  // relation isFriends?
-  // relation isFollowers?
-  // relation areFollowEachOther?
-  // relation isBlocked?
   // user"hoge" lookup (friend"fuga") -> twitter.lookupFriends(list)
-  // TimelinesResourcesのメソッドやSearchResourcesのメソッドはそのまま使えれば良い -> implicitで渡す
-  // with(user"")でコンテキストバインディングしたい
-  // with(AccessToken)(implicit twitter: => Twitter)
-  // with(ConsumerKey, AccessToken)(implicit twitter: => Twitter)
+  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
 }
