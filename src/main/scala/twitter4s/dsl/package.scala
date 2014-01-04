@@ -1,4 +1,5 @@
 package twitter4s
+
 /*
  * Copyright (C) 2013 Shinsuke Abe
  *
@@ -14,6 +15,9 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import twitter4j.auth.AccessToken
+import twitter4s.auth.ConsumerKey
 
 /**
  * @author mao.instantlife at gmail.com
@@ -44,6 +48,10 @@ package object dsl {
   // context getter binding
   implicit val userContextGetter = UserContextGetter
   implicit val listContextGetter = ListContextGetter
+
+  def withToken(accessToken: AccessToken)(dslScript: Twitter => Unit)(implicit consumerKey: ConsumerKey) {
+    dslScript(Twitter(consumerKey, accessToken))
+  }
 
   /**
    * Add user for any resource.

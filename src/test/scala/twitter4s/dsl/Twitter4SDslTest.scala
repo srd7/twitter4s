@@ -123,25 +123,6 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-
-  // with(AccessToken)(implicit twitter: => Twitter)
-//  "withToken method" should {
-//    "bind token and create twitter4s instance" in {
-//      // oauth.kei
-//      val consumerKey = ConsumerKey("6xw9EYTQlQ9fD3BWhZNA", "enP6NYIgLzuYJyOcTZTCrXheatYT08xr5ZyoolXS0Ø")
-//      // id1
-//      val accessToken = AccessToken("101515535-lVwBwVaxtg7QmRyw60HXnSfvmTYT4tIN7DTcVuUv", "0ualIiBHewgDoQtVbtCCPpGhjTXqjwllZaQM0gEVrc8")
-//
-//      var actualTwitter: Twitter = null
-//
-//      withToken(consumerKey, accessToken) { twitter =>
-//        actualTwitter = twitter
-//      }
-//
-//      actualTwitter must equalTo(Twitter(consumerKey, accessToken))
-//    }
-//  }
-
   // user"hoge" lookup (friend"fuga") -> twitter.lookupFriends(list)
   // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
 }
