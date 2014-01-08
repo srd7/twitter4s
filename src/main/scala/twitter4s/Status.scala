@@ -63,7 +63,6 @@ trait Status extends TwitterResponse with EntitySupport {
   
   def isPossiblySensitive: Boolean
 
-  // TODO 追加
   /**
    * returns the iso language code set by the Twitter API (best-effort).
    *
