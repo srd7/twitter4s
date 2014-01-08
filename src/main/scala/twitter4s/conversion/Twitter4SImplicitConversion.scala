@@ -30,9 +30,6 @@ trait Twitter4SImplicitConversion {
   // Relationship
   implicit def RelationshipWrapperJ2S(tw4jRelationship: twitter4j.Relationship) = twitter4s.internal.json.RelationshipImpl(tw4jRelationship)
   
-  // RelatedResults
-  implicit def RelatedResultsWrapperJ2S(tw4jRelatedResults: twitter4j.RelatedResults) = twitter4s.internal.json.RelatedResultsImpl(tw4jRelatedResults)
-  
   // SavedSearch
   implicit def SavedSearchWrapperJ2S(tw4jSavedSearch: twitter4j.SavedSearch) = twitter4s.internal.json.SavedSearchImpl(tw4jSavedSearch)
   
