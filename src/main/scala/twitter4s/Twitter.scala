@@ -197,13 +197,12 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO コメント修正
 object Twitter {
   /**
    * Create Twitter4S object from twitter4j factory.
    * 
    * @param conf (optional) Configuration object or configuration strings for create factory.
-   * @param accessToken (optional) AccessToken or Authorization object for create twitter4j object.
+   * @param auth (optional) AccessToken or Authorization object for create twitter4j object.
    * @return twitter4s.Twitter
    * @since Twitter4S 1.0.0
    */
