@@ -54,4 +54,10 @@ case class RelationshipImpl(twt4jRelationship: twitter4j.Relationship) extends R
    */
   def isSourceWantRetweets = twt4jRelationship.isSourceWantRetweets()
 
+  /**
+   * checks if source user can send dm to target user
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def canSourceDm: Boolean = twt4jRelationship.canSourceDm
 }
