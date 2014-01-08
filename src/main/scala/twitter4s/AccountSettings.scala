@@ -91,12 +91,10 @@ trait AccountSettings extends TwitterResponse {
    */
   def isAlwaysUseHttps: Boolean
 
-  // TODO 追加
-//  /**
-//   * Returns the user's screen name
-//   *
-//   * @return the user's screen name
-//   * @since Twitter4J 3.0.5
-//   */
-//  String getScreenName();
+  /**
+   * user's screen name
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def screenName: String
 }

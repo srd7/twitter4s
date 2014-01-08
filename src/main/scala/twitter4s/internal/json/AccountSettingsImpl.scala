@@ -46,4 +46,11 @@ case class AccountSettingsImpl(twt4jAccountSettings: twitter4j.AccountSettings) 
   def accessLevel = AccessLevel(twt4jAccountSettings.getAccessLevel())
   
   def tw4jObj = twt4jAccountSettings
+
+  /**
+   * user's screen name
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def screenName: String = twt4jAccountSettings.getScreenName
 }
