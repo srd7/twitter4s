@@ -1,4 +1,5 @@
 package twitter4s
+
 /*
  * Copyright (C) 2012 Shinsuke Abe
  *
@@ -14,13 +15,27 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-//import twitter4j.Annotations
+
+import java.util.Date
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO Twtを統合する
-trait Status extends TwitterResponse with Twt with EntitySupport {
+trait Status extends TwitterResponse with EntitySupport {
+  def createdAt: Date
+
+  def id: Long
+
+  def text: String
+
+  def source: String
+
+  def inReplyToStatusId: Long
+
+  def place: Place
+
+  def geoLocation: twitter4j.GeoLocation
+
   def isTruncated: Boolean
   
   def inReplyToUserId: Long
@@ -49,27 +64,26 @@ trait Status extends TwitterResponse with Twt with EntitySupport {
   def isPossiblySensitive: Boolean
 
   // TODO 追加
-//  /**
-//   * Returns the iso language code set by the Twitter API (best-effort).
-//   *
-//   * @return two-letter iso language code
-//   */
-//  def isoLanguageCode: String
-//  /**
-//   * Test if the status is retweeted
-//   *
-//   * @return true if retweeted
-//   * @since Twitter4J 3.0.4
-//   */
-//  boolean isRetweeted();
-//
-//  /**
-//   * Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
-//   *
-//   * @return the favorite count
-//   * @since Twitter4J 3.0.4
-//   */
-//  int getFavoriteCount();
+  /**
+   * returns the iso language code set by the Twitter API (best-effort).
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def isoLanguageCode: String
+
+  /**
+   * Test if the status is retweeted
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def isRetweeted: Boolean
+
+  /**
+   * Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def favoriteCount: Int
 }
 
 /**

@@ -16,6 +16,7 @@ package twitter4s.internal.json
  */
 import twitter4s._
 import java.util.Date
+import twitter4j.SymbolEntity
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -78,4 +79,32 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def currentUserRetweetId = twt4jStatus.getCurrentUserRetweetId()
 
   def isPossiblySensitive = twt4jStatus.isPossiblySensitive()
+
+  /**
+   * returns the iso language code set by the Twitter API (best-effort).
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def isoLanguageCode: String = twt4jStatus.getIsoLanguageCode
+
+  /**
+   * Test if the status is retweeted
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def isRetweeted: Boolean = twt4jStatus.isRetweeted
+
+  /**
+   * Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def favoriteCount: Int = twt4jStatus.getFavoriteCount
+
+  /**
+   * symbol entities list
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def symbolEntities: Array[SymbolEntity] = twt4jStatus.getSymbolEntities
 }
