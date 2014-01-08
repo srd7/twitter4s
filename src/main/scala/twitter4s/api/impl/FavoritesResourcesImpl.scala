@@ -17,9 +17,7 @@ package twitter4s.api.impl
  */
 import twitter4s.ResponseList
 import twitter4s.api.FavoritesResources
-import scala.util.Either
 import twitter4s.Twitter
-import twitter4s.Page
 import twitter4s.Status
 import twitter4j.Paging
 import twitter4s.User
@@ -28,7 +26,6 @@ import twitter4s.User
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait FavoritesResourcesImpl extends FavoritesResources {
   self: Twitter =>
     

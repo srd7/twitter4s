@@ -16,7 +16,6 @@ package twitter4s.api.impl
  */
 import twitter4s.IDs
 import twitter4s.api.FriendsFollowersResources
-import scala.util.Either
 import twitter4s.Twitter
 import twitter4s.Users
 import twitter4s.Relationship
@@ -29,7 +28,6 @@ import twitter4s.PagableResponseList
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   self: Twitter =>
     
