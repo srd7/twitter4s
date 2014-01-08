@@ -43,19 +43,10 @@ trait Relationship extends TwitterResponse {
    */
   def isSourceWantRetweets: Boolean
 
-  // TODO 追加
-//  /**
-//   * Checks if source user can send dm to target user
-//   *
-//   * @return true if source user can send dm to target user
-//   * @since Twitter4J 3.0.5
-//   */
-//  boolean canSourceDm();
-//  /**
-//   * Checks if the retweets from the target user enabled
-//   *
-//   * @return true if the retweets from the target user enabled
-//   * @since Twitter4J 3.0.3
-//   */
-//  boolean isSourceWantRetweets();
+  /**
+   * checks if source user can send dm to target user
+   *
+   * @since Twitter4S 2.1.0
+   */
+  def canSourceDm: Boolean
 }
