@@ -19,6 +19,7 @@ package twitter4s
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO Twtを統合する
 trait Status extends TwitterResponse with Twt with EntitySupport {
   def isTruncated: Boolean
   
@@ -46,8 +47,29 @@ trait Status extends TwitterResponse with Twt with EntitySupport {
   def currentUserRetweetId: Long
   
   def isPossiblySensitive: Boolean
-  
+
+  // TODO 追加
+//  /**
+//   * Returns the iso language code set by the Twitter API (best-effort).
+//   *
+//   * @return two-letter iso language code
+//   */
 //  def isoLanguageCode: String
+//  /**
+//   * Test if the status is retweeted
+//   *
+//   * @return true if retweeted
+//   * @since Twitter4J 3.0.4
+//   */
+//  boolean isRetweeted();
+//
+//  /**
+//   * Indicates approximately how many times this Tweet has been "favorited" by Twitter users.
+//   *
+//   * @return the favorite count
+//   * @since Twitter4J 3.0.4
+//   */
+//  int getFavoriteCount();
 }
 
 /**

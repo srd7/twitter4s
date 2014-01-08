@@ -20,6 +20,7 @@ import java.util.Date
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait Twt {
+  // TODO Statusに統合して削除
   def createdAt: Date
   
   def id: Long

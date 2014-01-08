@@ -17,6 +17,7 @@ package twitter4s
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
+// TODO 削除
 trait RelatedResults extends TwitterResponse {
   def tweetsFromUser: ResponseList[twitter4j.Status]
   

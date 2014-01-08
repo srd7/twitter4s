@@ -25,7 +25,6 @@ import twitter4s.Users
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO コメント間違い修正
 trait ListsResources {
   /**
    * Creates a new list for the authenticated user. Accounts are limited to 20 lists.
@@ -47,7 +46,7 @@ trait ListsResources {
    * <br />This method calls twitter4j.Twitter.updateUserList.
    * <br />updateUserList calls http://api.twitter.com/1.1/lists/update.json
    *
-   * @param listOwnerSpecificUser (required) the user specific information(screen name or ID) of the list owner
+   * @param listSpecificInfo (required) the user list specific information(list id or [screen name or ID] and list slug)
    * @param newListName What you'd like to change the list's name to.
    * @param isPublicList Whether your list is public or private. Optional. Values can be public or private. Lists are public by default if no mode is specified.
    * @param newDescription What you'd like to change the list description to.
@@ -79,7 +78,7 @@ trait ListsResources {
    * <br />This method calls twitter4j.Twitter.showUserList.
    * <br />showUserList calls http://api.twitter.com/1.1/lists/show.json
    *
-   * @param listOwnerSpecificUser (required) the user specific information(screen name or ID) of the list owner
+   * @param listSpecificInfo (required) the user list specific information(list id or [screen name or ID] and list slug)
    * @return the specified list
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/lists/show">https://dev.twitter.com/docs/api/1/get/lists/show | Twitter Developers</a>
@@ -92,7 +91,7 @@ trait ListsResources {
    * <br />This method calls twitter4j.Twitter.destroyUserList.
    * <br />destroyUserList calls http://api.twitter.com/1.1/lists/destroy.json
    *
-   * @param listOwnerSpecificUser (required) the user specific information(screen name or ID) of the list owner
+   * @param listSpecificInfo (required) the user list specific information(list id or [screen name or ID] and list slug)
    * @return the deleted list
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/post/lists/destroy">POST lists/destroy | Twitter Developers</a>
@@ -139,8 +138,8 @@ trait ListsResources {
    * <br />This method calls twitter4j.Twitter.getUserListSubscriptions.
    * <br />getUserListSubscriptions calls http://api.twitter.com/1.1/lists/subscriptions.json
    *
-   * @param listOwnerScreenName The screen name of the list owner
    * @param cursor Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
+   * @param listMemberScreenName The screen name of the list member
    * @return the list of lists
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/lists/subscriptions">GET lists/subscriptions | Twitter Developers</a>

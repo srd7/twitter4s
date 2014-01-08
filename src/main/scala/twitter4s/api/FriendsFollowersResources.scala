@@ -25,8 +25,6 @@ import twitter4s.PagableResponseList
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO import整理
-// TODO コメント間違い修正
 trait FriendsFollowersResources {
   /**
    * Returns an array of numeric IDs for every user the authenticating user is following.
@@ -201,7 +199,7 @@ trait FriendsFollowersResources {
    * <br />This method calls http://api.twitter.com/1.1/friends/list.json
    * <br />This method calls twitter4j.Twitter.getFollowersList
    *
-   * @param specifidUser The ID or screen name of the user for whom to return results for.
+   * @param specificUser The ID or screen name of the user for whom to return results for.
    * @param cursor Causes the results to be broken into pages of no more than 20 records at a time.
    * @return list of followers
    * @throws TwitterException when Twitter service or network is unavailable

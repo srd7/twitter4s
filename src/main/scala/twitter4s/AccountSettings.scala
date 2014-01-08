@@ -90,4 +90,13 @@ trait AccountSettings extends TwitterResponse {
    * is user access always use https set.
    */
   def isAlwaysUseHttps: Boolean
+
+  // TODO 追加
+//  /**
+//   * Returns the user's screen name
+//   *
+//   * @return the user's screen name
+//   * @since Twitter4J 3.0.5
+//   */
+//  String getScreenName();
 }

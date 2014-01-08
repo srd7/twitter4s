@@ -91,6 +91,33 @@ trait TweetsResources {
    * @since Twitter4S 1.0.0
    */
   def getRetweets(statusId: Long): ResponseList[twitter4j.Status]
-  
+
+  /*
+   * Returns information allowing the creation of an embedded representation of a Tweet on third party sites. See the <a href="http://oembed.com/">oEmbed</a> specification for information about the response format.
+   * While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's <a href="https://dev.twitter.com/terms/display-requirements">Display Requirements</a>. Do not rely on any class or id parameters to stay constant in the returned markup.
+   * <br>This method calls http://api.twitter.com/1.1/statuses/oembed.json
+   * @param req request
+   * @return information allowing the creation of an embedded representation of a Tweet on third party sites
+   * @throws TwitterException when Twitter service or network is unavailable
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/oembed">GET statuses/oembed | Twitter Developers</a>
+   * @since Twitter4J 3.0.2
+   */
 //  def getOEmbed(req: OEmbedRequest): OEmbed // TODO 3.0.4対応
+  // TODO 3.0.5対応
+  /*
+   * Returns a collection of up to {@code count} user IDs belonging to users
+   * who have retweeted the tweet specified by the id parameter.
+   * <br>This method calls https://api.twitter.com/1.1/get/statuses/retweeters/ids
+   *
+   * @param statusId The numerical ID of the tweet you want the retweeters of.
+   * @param count The maximum number of retweeter IDs to retrieve. Must be
+   *              between 1 and 200, inclusive.
+   * @param cursor The cursor of the page to fetch. Use -1 to start.
+   * @return the retweets of a given tweet
+   * @throws TwitterException when Twitter service or network is unavailable
+   * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids">Tweets Resources › statuses/retweeters/ids</a>
+   * @since Twitter4J 3.0.5
+   */
+  // IDs getRetweeterIds(long statusId, long cursor) throws TwitterException;
+  // IDs getRetweeterIds(long statusId, int count, long cursor) throws TwitterException;
 }

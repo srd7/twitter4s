@@ -32,5 +32,6 @@ trait EntitySupport {
   def mediaEntities: Array[MediaEntity]
   
   // TODO Twitter4j 3.0.4対応時
+  // TODO SymbolEntity実装
 //  def symbolEntities: Array[SymbolEntity]
 }

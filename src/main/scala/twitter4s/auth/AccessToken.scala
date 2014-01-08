@@ -29,4 +29,6 @@ object AccessToken {
   def apply(token: String, tokenSecret: String) = {
     new twitter4j.auth.AccessToken(token, tokenSecret)
   }
+
+  // TODO token,tokenSecret,userIdのパターン追加
 }

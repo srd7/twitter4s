@@ -15,14 +15,10 @@ package twitter4s.api
  * limitations under the License.
  */
 import twitter4s._
-import twitter4j.Query
-import twitter4j.Category
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO import 整理
-// TODO コメント間違い修正
 trait UsersResources {
     /**
    * Returns an HTTP 200 OK response code and a representation of the requesting user if authentication was successful; returns a 401 status code and an error message if not. Use this method to test if supplied user credentials are valid.
@@ -190,7 +186,7 @@ trait UsersResources {
    * <br />This method calls twitter4j.Twitter.getBlocksList() or getBlocksList(page)
    * <br />getBlockingUsers calls http://api.twitter.com/1.1/blocks/blocking.json
    *
-   * @param page (optional) the number of page
+   * @param cursor (optional) the number of page
    * @return a list of user objects that the authenticating user
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/blocks/blocking">GET blocks/blocking | Twitter Developers</a>

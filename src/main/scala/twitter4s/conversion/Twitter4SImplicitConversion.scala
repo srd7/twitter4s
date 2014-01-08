@@ -7,6 +7,7 @@ import twitter4s.Trends
 import twitter4s.SimilarPlaces
 
 // TODO ヘッダコメント追加
+// TODO コンパイルエラー対処
 trait Twitter4SImplicitConversion {
   // AccountTotals
   implicit def AccountTotalsWrapperJ2S(tw4jAccountTotals: twitter4j.AccountTotals) = twitter4s.internal.json.AccountTotalsImpl(tw4jAccountTotals)

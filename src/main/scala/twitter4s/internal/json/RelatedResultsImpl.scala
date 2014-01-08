@@ -17,6 +17,7 @@ package twitter4s.internal.json
 import twitter4s.RelatedResults
 import twitter4s.AccessLevel
 
+// TODO コンパイルエラー対処 -> 未使用につき削除
 case class RelatedResultsImpl(twt4jRelatedResults: twitter4j.RelatedResults) extends RelatedResults {
   type Tw4jResponse = twitter4j.RelatedResults
 
