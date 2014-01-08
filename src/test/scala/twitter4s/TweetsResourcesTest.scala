@@ -67,30 +67,6 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
     }
   }
 
-  "getOEmbed" should { // TODO 3.0.4対応時に
-//    "get embedded representation" in {
-//      val oembed = twitter2StatusRole.getOEmbed(OEmbedRequest(240192632003911681L, "http://d.hatena.ne.jp/mao_instantlife/"))
-//
-//      rawJSON(oembed.tw4jObj) must not equalTo(null)
-//    }
-  }
-
-  "Status#symbolEntities" should {
-//    "get symbol from status" in { // TODO 3.0.4対応時
-//      val status = twitter2StatusRole.showStatus(332341548203261953L)
-//
-//      status.symbolEntities.size must 4
-//      getSymbolString(status, 0) must equalTo("$APPL")
-//      getSymbolString(status, 1) must equalTo("$C")
-//      getSymbolString(status, 2) must equalTo("$LNKD")
-//      getSymbolString(status, 3) must equalTo("$FB")
-//    }
-
-//    def getSymbolString(status: Status, index: Int): String = {
-//      status.text.substring(status.symbolEntities(index).getStart(), status.symbolEntities(index).getEnd())
-//    }
-  }
-
   "Status#urlEntities" should {
     "get url entities from status" in {
       val status = twitter2StatusRole.showStatus(268294645526708226L)
@@ -161,8 +137,4 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
     size.getWidth() must equalTo(width)
     size.getHeight() must equalTo(height)
   }
-//  TODO 3.0.4対応
-//  def getEntityString(status: Status, entity: TweetEntity) = {
-//    status.text.substring(entity.getStart(), entity.getEnd())
-//  }
 }
