@@ -15,7 +15,6 @@ package twitter4s.api.impl
  * limitations under the License.
  */
 import twitter4s.QueryResult
-import twitter4j.Query
 import twitter4s.api.SearchResources
 import twitter4s.Twitter
 
@@ -23,7 +22,6 @@ import twitter4s.Twitter
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait SearchResourcesImpl extends SearchResources {
   self: Twitter =>
     

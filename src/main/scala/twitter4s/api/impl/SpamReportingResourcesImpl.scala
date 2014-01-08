@@ -16,14 +16,12 @@ package twitter4s.api.impl
  */
 import twitter4s.User
 import twitter4s.api.SpamReportingResources
-import scala.util.Either
 import twitter4s.Twitter
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait SpamReportingResourcesImpl extends SpamReportingResources {
   self: Twitter =>
   

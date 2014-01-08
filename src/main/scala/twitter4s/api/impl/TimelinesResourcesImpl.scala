@@ -17,15 +17,12 @@ package twitter4s.api.impl
  */
 import twitter4s._
 import twitter4s.ResponseList
-import twitter4j.Paging
 import twitter4s.api.TimelinesResources
-import scala.util.Either
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait TimelinesResourcesImpl extends TimelinesResources {
   self: Twitter =>
   

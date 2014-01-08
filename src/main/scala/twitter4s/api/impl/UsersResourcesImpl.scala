@@ -16,15 +16,12 @@ package twitter4s.api.impl
  */
 import twitter4s._
 import twitter4s.api.UsersResources
-import scala.util.Either
-import twitter4j.Category
 import scala.Some
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait UsersResourcesImpl extends UsersResources {
   self: Twitter =>
   

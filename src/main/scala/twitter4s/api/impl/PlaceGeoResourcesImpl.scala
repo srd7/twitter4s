@@ -16,14 +16,12 @@ package twitter4s.api.impl
  */
 import twitter4s._
 import twitter4s.ResponseList
-import twitter4j.GeoQuery
 import twitter4s.api.PlaceGeoResources
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  * @since Twitter4S 2.0.0
  */
-// TODO import整理
 trait PlaceGeoResourcesImpl extends PlaceGeoResources {
   self: Twitter =>
   
