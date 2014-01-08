@@ -25,7 +25,6 @@ import auth.ConsumerKey
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 // TODO Twitter4J 3.0.5対応
-// TODO JUnit 4.11へ
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
 
   // TODO 追加 Twitter4Jではreturn thisしてる -> DSLにも有効活用可能か
