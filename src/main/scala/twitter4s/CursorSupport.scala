@@ -18,8 +18,7 @@ package twitter4s
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait CursorSupport {
-  // TODO -1Lにする
-  def START = 1L
+  def START = -1L
   
   /**
    * return response has previous cursor.
