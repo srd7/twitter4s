@@ -195,10 +195,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
     /**
      * @since Twitter4S 2.1.0
      */
-    def help: HelpResources = this match {
-      case resource: HelpResourcesImpl => resource
-      case _ => new Twitter(twitter4jObj) with HelpResourcesImpl
-    }
+    def help = HelpResourcesBinder(this)
 }
 
 /**
