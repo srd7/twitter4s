@@ -22,32 +22,28 @@ class HelpResourcesTest extends Specification with TwitterResourcesTestBase {
   
   "getLanguage" should {
     "get Language settings from twitter" in {
-      val languages = twitter.getLanguages
-      
-      languages.size must equalTo(1)
+      twitter.help.getLanguages.size must equalTo(1)
       there was one(mockedTwitter4j).getLanguages
     }
   }
   
   "getAPIConfiguration" should {
     "get API configuration from twitter" in {
-      val conf = twitter.getAPIConfiguration
-
-      conf.accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      twitter.help.getAPIConfiguration.accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
       there was one(mockedTwitter4j).getAPIConfiguration
     }
   }
   
   "getTermsOfService" should {
     "get value from twitter" in {
-      twitter.getTermsOfService must equalTo("call getTermsOfService of mock")
+      twitter.help.getTermsOfService must equalTo("call getTermsOfService of mock")
       there was one(mockedTwitter4j).getTermsOfService
     }
   }
   
   "getPrivacyPolicy" should {
     "get value from twitter" in {
-      twitter.getPrivacyPolicy must equalTo("call getPrivacyPolicy of mock")
+      twitter.help.getPrivacyPolicy must equalTo("call getPrivacyPolicy of mock")
       there was one(mockedTwitter4j).getPrivacyPolicy
     }
   }
