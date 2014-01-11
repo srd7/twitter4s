@@ -55,7 +55,7 @@ class Twitter4SDslTest extends Specification with Mockito {
 
       get(list"${testListName}")
 
-      there was one(mockedTwitter4j).getId
+      there was atLeastOne(mockedTwitter4j).getId
       there was one(mockedTwitter4j).showUserList(1L, testListName)
     }
 

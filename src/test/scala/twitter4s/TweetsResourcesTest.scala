@@ -19,6 +19,9 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
   mockedTwitter4j.destroyStatus(anyLong) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.retweetStatus(anyLong) returns(FakeValuesUsedByMock.status)
   mockedTwitter4j.getRetweets(anyLong) returns(FakeValuesUsedByMock.responseList[twitter4j.Status])
+  mockedTwitter4j.getOEmbed(any[twitter4j.OEmbedRequest]) returns(FakeValuesUsedByMock.oembed)
+  mockedTwitter4j.getRetweeterIds(anyLong, anyLong) returns(FakeValuesUsedByMock.ids)
+  mockedTwitter4j.getRetweeterIds(anyLong, anyInt, anyLong) returns(FakeValuesUsedByMock.ids)
 
   override val twitter = new Twitter(mockedTwitter4j) with TweetsResourcesImpl
 
@@ -64,6 +67,25 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
     "call twitter4j getRetweets method" in {
       twitter.getRetweets(18594701627L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
       there was one(mockedTwitter4j).getRetweets(18594701627L)
+    }
+  }
+
+  "getOEmbed" should {
+    "call twitter4j getOEmbed method" in {
+      twitter.getOEmbed(OEmbedRequest(18594701629L, "https://www.test.url")).url must equalTo(FakeValuesUsedByMock.statusUrl)
+      there was one(mockedTwitter4j).getOEmbed(OEmbedRequest(18594701629L, "https://www.test.url"))
+    }
+  }
+
+  "getRetweeterIds" should {
+    "call twitter4j getRetweeterIds by status id and cursor" in {
+      twitter.getRetweeterIds(18594701630L, 18594701631L).hasPrevious must beTrue
+      there was one(mockedTwitter4j).getRetweeterIds(18594701630L, 18594701631L)
+    }
+
+    "call twitter4j getRetweeterIds by status id and count and cursor" in {
+      twitter.getRetweeterIds(18594701632L, 18594701633L, 3).hasPrevious must beTrue
+      there was one(mockedTwitter4j).getRetweeterIds(18594701632L, 3, 18594701633L)
     }
   }
 

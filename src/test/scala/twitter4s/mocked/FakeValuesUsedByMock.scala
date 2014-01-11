@@ -151,6 +151,7 @@ object FakeValuesUsedByMock {
     def isTargetFollowedBySource: Boolean = ???
     def isSourceNotificationsEnabled: Boolean = ???
     def isSourceWantRetweets: Boolean = ???
+    def canSourceDm: Boolean = ???
   }
 
   val statusText = "returned by mocking object"
@@ -170,7 +171,7 @@ object FakeValuesUsedByMock {
     def getId: Long = ???
     def getCurrentUserRetweetId: Long = ???
     def isPossiblySensitive: Boolean = ???
-    def getRetweetCount: Long = ???
+    def getRetweetCount: Int = ???
     def compareTo(o: twitter4j.Status): Int = ???
     def getMediaEntities: Array[MediaEntity] = ???
     def getRateLimitStatus: twitter4j.RateLimitStatus = ???
@@ -181,6 +182,10 @@ object FakeValuesUsedByMock {
     def getInReplyToStatusId: Long = ???
     def getUserMentionEntities: Array[UserMentionEntity] = ???
     def isRetweetedByMe: Boolean = ???
+    def isRetweeted: Boolean = ???
+    def getFavoriteCount: Int = ???
+    def getIsoLanguageCode: String = ???
+    def getSymbolEntities: Array[SymbolEntity] = ???
   }
 
   def directMessage = new twitter4j.DirectMessage(){
@@ -199,6 +204,7 @@ object FakeValuesUsedByMock {
     def getRecipientScreenName: String = friendName
     def getSender: twitter4j.User = ???
     def getRecipient: twitter4j.User = ???
+    def getSymbolEntities: Array[SymbolEntity] = ???
   }
 
   def accountSettings = new twitter4j.AccountSettings {
@@ -213,6 +219,7 @@ object FakeValuesUsedByMock {
     def getLanguage: String = ???
     def isDiscoverableByEmail: Boolean = ???
     def isAlwaysUseHttps: Boolean = ???
+    def getScreenName: String = ???
   }
 
   val listName = "fake list name"
@@ -285,5 +292,18 @@ object FakeValuesUsedByMock {
     def getShortURLLength: Int = ???
     def getPhotoSizes: util.Map[Integer, Size] = ???
     def getCharactersReservedPerMedia: Int = ???
+  }
+
+  val statusUrl = "https://www.test.url"
+  def oembed = new twitter4j.OEmbed {
+    def getAccessLevel: Int = ???
+    def getAuthorName: String = ???
+    def getCacheAge: Long = ???
+    def getWidth: Int = ???
+    def getURL: String = statusUrl
+    def getAuthorURL: String = ???
+    def getHtml: String = ???
+    def getVersion: String = ???
+    def getRateLimitStatus: RateLimitStatus = ???
   }
 }

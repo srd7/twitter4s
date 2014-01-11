@@ -71,6 +71,7 @@ class TwitterTest extends Specification {
     }
   }
 
+  // TODO mock化
   "getRateLimitStatus" should {
     "get rate limit status" in {
       val rateLimitStatus = twitter1.getRateLimitStatus()

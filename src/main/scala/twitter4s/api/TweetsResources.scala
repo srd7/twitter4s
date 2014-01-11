@@ -14,12 +14,8 @@ package twitter4s.api
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.Status
-import twitter4j.StatusUpdate
-import twitter4s.ResponseList
-import twitter4j.User
-import twitter4j.Paging
-import twitter4s.IDs
+import twitter4s.{IDs, Status, ResponseList, OEmbed}
+import twitter4j.OEmbedRequest
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -92,7 +88,7 @@ trait TweetsResources {
    */
   def getRetweets(statusId: Long): ResponseList[twitter4j.Status]
 
-  /*
+  /**
    * Returns information allowing the creation of an embedded representation of a Tweet on third party sites. See the <a href="http://oembed.com/">oEmbed</a> specification for information about the response format.
    * While this endpoint allows a bit of customization for the final appearance of the embedded Tweet, be aware that the appearance of the rendered Tweet may change over time to be consistent with Twitter's <a href="https://dev.twitter.com/terms/display-requirements">Display Requirements</a>. Do not rely on any class or id parameters to stay constant in the returned markup.
    * <br>This method calls http://api.twitter.com/1.1/statuses/oembed.json
@@ -100,24 +96,23 @@ trait TweetsResources {
    * @return information allowing the creation of an embedded representation of a Tweet on third party sites
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/oembed">GET statuses/oembed | Twitter Developers</a>
-   * @since Twitter4J 3.0.2
+   * @since Twitter4S 2.1.0
    */
-//  def getOEmbed(req: OEmbedRequest): OEmbed // TODO 3.0.4対応
-  // TODO 3.0.5対応
-  /*
+  def getOEmbed(req: OEmbedRequest): OEmbed
+
+  /**
    * Returns a collection of up to {@code count} user IDs belonging to users
    * who have retweeted the tweet specified by the id parameter.
    * <br>This method calls https://api.twitter.com/1.1/get/statuses/retweeters/ids
    *
    * @param statusId The numerical ID of the tweet you want the retweeters of.
-   * @param count The maximum number of retweeter IDs to retrieve. Must be
-   *              between 1 and 200, inclusive.
    * @param cursor The cursor of the page to fetch. Use -1 to start.
+   * @param count (Optional)The maximum number of retweeter IDs to retrieve. Must be
+   *              between 1 and 200, inclusive.
    * @return the retweets of a given tweet
    * @throws TwitterException when Twitter service or network is unavailable
    * @see <a href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweeters/ids">Tweets Resources › statuses/retweeters/ids</a>
-   * @since Twitter4J 3.0.5
+   * @since Twitter4S 2.1.0
    */
-  // IDs getRetweeterIds(long statusId, long cursor) throws TwitterException;
-  // IDs getRetweeterIds(long statusId, int count, long cursor) throws TwitterException;
+  def getRetweeterIds(statusId: Long, cursor: Long, count: java.lang.Integer = null): IDs
 }

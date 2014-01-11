@@ -52,6 +52,7 @@ trait TwitterResponse {
 
 abstract sealed class AccessLevel(val level: Int)
 
+// TODO アクセスレベルが-1で返ってくる場合の対処(実際にあり得る)(HttpResponseがnullの時に発生する)
 object AccessLevel {
   def apply(level: Int) = {
     if (level == TwitterResponse.NONE.level) TwitterResponse.NONE

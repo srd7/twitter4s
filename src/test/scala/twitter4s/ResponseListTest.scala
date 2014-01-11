@@ -1,6 +1,5 @@
 package twitter4s
 
-import twitter4s._
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper._
@@ -23,6 +22,7 @@ class ResponseListTest extends Specification {
     
     "has accessLevel" in {
       val responseList = twitter1.getAvailableTrends()
+      // TODO accessLevelは-1で返ってくることもあるので、対処する(HttpResponseがnullの時に発生する)
       responseList.accessLevel must equalTo(twitter4j.TwitterResponse.READ_WRITE)
     }
     

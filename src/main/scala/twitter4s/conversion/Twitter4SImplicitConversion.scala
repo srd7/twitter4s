@@ -80,4 +80,7 @@ trait Twitter4SImplicitConversion {
   // PagableResponseList
   implicit def pagableResponseListWrapperS2Buffer[T](tw4sPList: PagableResponseList[T]) = tw4sPList.listAsScala
   implicit def pagableResponseListWrapperJ2S[T <: twitter4j.TwitterResponse](tw4jPList: twitter4j.PagableResponseList[T]) = twitter4s.internal.json.PagableResponseListImpl(tw4jPList)
+
+  // OEmved
+  implicit def oEmbedWarpperJ2S[T](tw4jOEmbed: twitter4j.OEmbed) = twitter4s.internal.json.OEmbedImpl(tw4jOEmbed)
 }

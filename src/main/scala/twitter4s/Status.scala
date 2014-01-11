@@ -52,7 +52,7 @@ trait Status extends TwitterResponse with EntitySupport {
   
   def contributors: Array[Long]
   
-  def retweetCount: Long
+  def retweetCount: Int
   
   def isRetweetedByMe: Boolean
 

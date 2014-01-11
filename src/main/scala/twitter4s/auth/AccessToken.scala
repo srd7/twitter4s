@@ -26,9 +26,8 @@ object AccessToken {
    * @return twitter4j.auth.AccessToken instance
    * @since Twitter4S 1.0.0
    */
-  def apply(token: String, tokenSecret: String) = {
-    new twitter4j.auth.AccessToken(token, tokenSecret)
+  def apply(token: String, tokenSecret: String, userId: java.lang.Long = null) = Option(userId) match {
+    case None => new twitter4j.auth.AccessToken(token, tokenSecret)
+    case Some(userId) => new twitter4j.auth.AccessToken(token, tokenSecret, userId)
   }
-
-  // TODO token,tokenSecret,userIdのパターン追加
 }

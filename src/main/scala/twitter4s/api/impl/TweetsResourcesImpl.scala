@@ -15,10 +15,9 @@ package twitter4s.api.impl
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.Status
+import twitter4s.{OEmbed, Status, Twitter, ResponseList, IDs}
 import twitter4s.api.TweetsResources
-import twitter4s.Twitter
-import twitter4s.ResponseList
+import twitter4j.OEmbedRequest
 
 /**
  * @author mao.instantlife at gmail.com
@@ -64,5 +63,20 @@ trait TweetsResourcesImpl extends TweetsResources {
    */
   def getRetweets(statusId: Long): ResponseList[twitter4j.Status] = {
     twitter4jObj.getRetweets(statusId)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  def getOEmbed(req: OEmbedRequest): OEmbed = {
+    twitter4jObj.getOEmbed(req)
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  def getRetweeterIds(statusId: Long, cursor: Long, count: java.lang.Integer = null): IDs = Option(count) match {
+    case Some(count) => twitter4jObj.getRetweeterIds(statusId, count, cursor)
+    case None => twitter4jObj.getRetweeterIds(statusId, cursor)
   }
 }
