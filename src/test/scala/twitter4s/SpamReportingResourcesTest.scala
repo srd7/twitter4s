@@ -14,17 +14,17 @@ class SpamReportingResourcesTest extends Specification with TwitterResourcesTest
 
   "reportSpam" should {
     "call twitter4j reportSpam method by screen name" in {
-      twitter.reportSpam(User.isSpecifiedBy(FakeValuesUsedByMock.friendName)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      twitter.spamReporting.reportSpam(User.isSpecifiedBy(FakeValuesUsedByMock.friendName)).screenName must equalTo(FakeValuesUsedByMock.userName)
       there was one(mockedTwitter4j).reportSpam(FakeValuesUsedByMock.friendName)
     }
 
     "call twitter4j reportSpam method by user id" in {
-      twitter.reportSpam(User.isSpecifiedBy(1L)).screenName must equalTo(FakeValuesUsedByMock.userName)
+      twitter.spamReporting.reportSpam(User.isSpecifiedBy(1L)).screenName must equalTo(FakeValuesUsedByMock.userName)
       there was one(mockedTwitter4j).reportSpam(1L)
     }
 
     "throw exception if user setting info is null" in {
-      twitter.reportSpam(null) must
+      twitter.spamReporting.reportSpam(null) must
       throwA[IllegalArgumentException]
     }
   }

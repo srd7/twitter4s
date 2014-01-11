@@ -21,6 +21,7 @@ import twitter4j.RateLimitStatusListener
 import twitter4j.TwitterFactory
 import auth.ConsumerKey
 import twitter4s.api.HelpResources
+import twitter4s.api.SpamReportingResources
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -183,11 +184,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   */
   //  TrendsResources trends();
   //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  SpamReportingResource spamReporting();
-  //
+    /**
+     * @since Twitter4S 2.1.0
+     */
+    def spamReporting: SpamReportingResources = this match {
+      case resource: SpamReportingResourcesImpl => resource
+      case _ => new Twitter(twitter4jObj) with SpamReportingResourcesImpl
+    }
+
     /**
      * @since Twitter4S 2.1.0
      */
