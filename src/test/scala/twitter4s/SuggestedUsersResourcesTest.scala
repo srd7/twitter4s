@@ -19,21 +19,21 @@ class SuggestedUsersResourcesTest extends Specification with TwitterResourcesTes
   
   "getSuggestedUserCategories" should {
     "call twitter4j getSuggestedUserCategories method" in {
-      twitter.getSuggestedUserCategories.size must equalTo(1)
+      twitter.suggestedUsers.getSuggestedUserCategories.size must equalTo(1)
       there was one(mockedTwitter4j).getSuggestedUserCategories
     }
   }
   
   "getUserSuggestions" should {
     "call twitter4j getUserSuggestions method" in {
-      twitter.getUserSuggestions("category slug").size must equalTo(1)
+      twitter.suggestedUsers.getUserSuggestions("category slug").size must equalTo(1)
       there was one(mockedTwitter4j).getUserSuggestions("category slug")
     }
   }
   
   "getMemberSuggestions" should {
     "call twitter4j getMemberSuggestions method" in {
-      twitter.getMemberSuggestions("category slug").size must equalTo(1)
+      twitter.suggestedUsers.getMemberSuggestions("category slug").size must equalTo(1)
       there was one(mockedTwitter4j).getMemberSuggestions("category slug")
     }
   }
