@@ -150,14 +150,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   * @since Twitter4J 3.0.4
   //   */
   //  FriendsFollowersResources friendsFollowers();
-  //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  UsersResources users();
 
     /**
-     * @since Twitter4J 3.0.4
+     * @since Twitter4S 2.1.0
+     */
+    def users = UsersResourcesBinder(this)
+
+    /**
+     * @since Twitter4S 2.1.0
      */
     def suggestedUsers = SuggestedUsersResourcesBinder(this)
 
