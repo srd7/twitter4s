@@ -123,78 +123,75 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
     twitter4jObj.setOAuthAccessToken(accessToken)
   }
 
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def timelines = TimelinesResourcesBinder(this)
 
-  // TODO 追加 Twitter4Jではreturn thisしてる -> DSLにも有効活用可能か
-  // TODO 各リソースのmixinはTwitterBaseに戻さないと行けなくなるかも、だけど。。。
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  TimelinesResources timelines();
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def tweets = TweetsResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def tweets = TweetsResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def search = SearchResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def search = SearchResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def directMessages = DirectMessagesResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def directMessages = DirectMessagesResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def friendsFollowers = FriendsFollowersResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def friendsFollowers = FriendsFollowersResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def users = UsersResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def users = UsersResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def suggestedUsers = SuggestedUsersResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def suggestedUsers = SuggestedUsersResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def favorites = FavoritesResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def favorites = FavoritesResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def list = ListsResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def list = ListsResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def savedSearches = SavedSearchesResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def savedSearches = SavedSearchesResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def placesGeo = PlacesGeoResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def placesGeo = PlacesGeoResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def trends = TrendsResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def trends = TrendsResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def spamReporting = SpamReportingResourcesBinder(this)
 
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def spamReporting = SpamReportingResourcesBinder(this)
-
-    /**
-     * @since Twitter4S 2.1.0
-     */
-    def help = HelpResourcesBinder(this)
+  /**
+   * @since Twitter4S 2.1.0
+   */
+  def help = HelpResourcesBinder(this)
 }
 
 /**

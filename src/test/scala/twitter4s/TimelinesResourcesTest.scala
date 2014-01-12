@@ -36,44 +36,44 @@ class TimelinesResourcesTest extends Specification with TwitterResourcesTestBase
   
   "getHomeTimeline" should {
     "get authenticated user's home timeline" in {
-      assertReturnedFakeResponseExactly(twitter.getHomeTimeline())
+      assertReturnedFakeResponseExactly(twitter.timelines.getHomeTimeline())
       there was one(mockedTwitter4j).getHomeTimeline
     }
     
     "get authenticated user's home timeline with page" in {
-      assertReturnedFakeResponseExactly(twitter.getHomeTimeline(Paging(1)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getHomeTimeline(Paging(1)))
       there was one(mockedTwitter4j).getHomeTimeline(Paging(1))
     }
   }
   
   "getUserTimeline" should {
     "get user timeline no parameters" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline())
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline())
       there was one(mockedTwitter4j).getUserTimeline
     }
     
     "get user timeline with screen name" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline(User.isSpecifiedBy("1000")))
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline(User.isSpecifiedBy("1000")))
       there was one(mockedTwitter4j).getUserTimeline("1000")
     }
 
     "get user timeline with screen name and page number" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline(User.isSpecifiedBy("1001"), Paging(1)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline(User.isSpecifiedBy("1001"), Paging(1)))
       there was one(mockedTwitter4j).getUserTimeline("1001", Paging(1))
     }
     
     "get user timeline with user id" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline(User.isSpecifiedBy(1000)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline(User.isSpecifiedBy(1000)))
       there was one(mockedTwitter4j).getUserTimeline(1000)
     }
 
     "get user timeline with user id and specified sinceid" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline(User.isSpecifiedBy(1001), Paging(sinceId = 999383469L)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline(User.isSpecifiedBy(1001), Paging(sinceId = 999383469L)))
       there was one(mockedTwitter4j).getUserTimeline(1001, Paging(sinceId = 999383469L))
     }
     
     "get authed user's timeline specified page count" in {
-      assertReturnedFakeResponseExactly(twitter.getUserTimeline(paging = Paging(1).count(30)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getUserTimeline(paging = Paging(1).count(30)))
       there was one(mockedTwitter4j).getUserTimeline(Paging(1).count(30))
     }
   }
@@ -83,36 +83,36 @@ class TimelinesResourcesTest extends Specification with TwitterResourcesTestBase
     // The following specs are work now.
 
     "get mentions timeline without pages" in {
-      assertReturnedFakeResponseExactly(twitter.getMentions())
+      assertReturnedFakeResponseExactly(twitter.timelines.getMentions())
       there was one(mockedTwitter4j).getMentions
     }
 
     "get mentions timeline with page" in {
-      assertReturnedFakeResponseExactly(twitter.getMentions(Paging(1)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getMentions(Paging(1)))
       there was one(mockedTwitter4j).getMentions(Paging(1))
     }
   }
   
   "getMentionsTimeline" should {
     "get specified user's mention list without parameters" in {
-      assertReturnedFakeResponseExactly(twitter.getMentionsTimeline())
+      assertReturnedFakeResponseExactly(twitter.timelines.getMentionsTimeline())
       there was one(mockedTwitter4j).getMentionsTimeline
     }
     
     "get specified user's mention list with page parameter" in {
-      assertReturnedFakeResponseExactly(twitter.getMentionsTimeline(Paging(1)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getMentionsTimeline(Paging(1)))
       there was one(mockedTwitter4j).getMentionsTimeline(Paging(1))
     }
   }
   
   "getRetweetsOfMe" should {
     "get retweets statuses of user without parameters" in {
-      assertReturnedFakeResponseExactly(twitter.getRetweetsOfMe())
+      assertReturnedFakeResponseExactly(twitter.timelines.getRetweetsOfMe())
       there was one(mockedTwitter4j).getRetweetsOfMe
     }
 
     "get retweets statuses of user with page parameter" in {
-      assertReturnedFakeResponseExactly(twitter.getRetweetsOfMe(Paging(9)))
+      assertReturnedFakeResponseExactly(twitter.timelines.getRetweetsOfMe(Paging(9)))
       there was one(mockedTwitter4j).getRetweetsOfMe(Paging(9))
     }
   }
