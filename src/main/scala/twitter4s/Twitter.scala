@@ -166,13 +166,13 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   */
   //  FavoritesResources favorites();
   //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  ListsResources list();
-  //
     /**
-     * @since Twitter4J 3.0.4
+     * @since Twitter4S 2.1.0
+     */
+    def list = ListsResourcesBinder(this)
+
+    /**
+     * @since Twitter4S 2.1.0
      */
     def savedSearches = SavedSearchesBinder(this)
 
