@@ -89,6 +89,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   /**
    * {@inheritDoc}
    */
+  // TODO でフォルトパターンの例外スロー
   def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken = {
     (Option(callbackURL), Option(xAuthAccessType)) match {
       case (None, None) => twitter4jObj.getOAuthRequestToken()
@@ -100,6 +101,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   /**
    * {@inheritDoc}
    */
+  // TODO デフォルトパターンの例外スロー
   def getOAuthAccessToken(
       oauthVerifier: String = null,
       requestToken: RequestToken = null,
@@ -179,18 +181,15 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   */
   //  PlacesGeoResources placesGeo();
   //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  TrendsResources trends();
-  //
+    /**
+     * @since Twitter4J 3.0.4
+     */
+    def trends = TrendsResourcesBinder(this)
+
     /**
      * @since Twitter4S 2.1.0
      */
-    def spamReporting: SpamReportingResources = this match {
-      case resource: SpamReportingResourcesImpl => resource
-      case _ => new Twitter(twitter4jObj) with SpamReportingResourcesImpl
-    }
+    def spamReporting = SpamReportingResourcesBinder(this)
 
     /**
      * @since Twitter4S 2.1.0

@@ -25,33 +25,33 @@ class TrendsResourcesTest extends Specification with TwitterResourcesTestBase {
   
   "getAvailableTrends" should {
     "call twitter4j getAvailableTrends without location" in {
-      twitter.getAvailableTrends().size must equalTo(1)
+      twitter.trends.getAvailableTrends().size must equalTo(1)
       there was one(mockedTwitter4j).getAvailableTrends
     }
 
     "call twitter4j getAvailableTrends by location" in {
-      twitter.getAvailableTrends(GeoLocation(11.1, 22.2)).size must equalTo(1)
+      twitter.trends.getAvailableTrends(GeoLocation(11.1, 22.2)).size must equalTo(1)
       there was one(mockedTwitter4j).getAvailableTrends(GeoLocation(11.1, 22.2))
     }
   }
   
   "getLocationTrends" should {
     "call twitter4j getLocationTrends method" in {
-      twitter.getLocationTrends(3).accessLevel must equalTo(TwitterResponse.READ)
+      twitter.trends.getLocationTrends(3).accessLevel must equalTo(TwitterResponse.READ)
       there was one(mockedTwitter4j).getLocationTrends(3)
     }
   }
   
   "getPlaceTrends" should {
     "call twitter4j getPlaceTrends method" in {
-      twitter.getPlaceTrends(4).accessLevel must equalTo(TwitterResponse.READ)
+      twitter.trends.getPlaceTrends(4).accessLevel must equalTo(TwitterResponse.READ)
       there was one(mockedTwitter4j).getPlaceTrends(4)
     }
   }
   
   "getClosestTrends" should {
     "call twitter4j getClosestTrends method" in {
-      twitter.getClosestTrends(GeoLocation(55.5,66.6)).size must equalTo(1)
+      twitter.trends.getClosestTrends(GeoLocation(55.5,66.6)).size must equalTo(1)
       there was one(mockedTwitter4j).getClosestTrends(GeoLocation(55.5,66.6))
     }
   }

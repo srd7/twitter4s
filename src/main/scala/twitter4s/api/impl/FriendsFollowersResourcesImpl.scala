@@ -92,6 +92,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   /**
    * {@inheritDoc}
    */
+  // TODO デフォルトパターンの例外スロー
   def showFriendship(
       sourceSpecificUser: User.SpecificInfo,
       targetSpecificUser: User.SpecificInfo): Relationship = {

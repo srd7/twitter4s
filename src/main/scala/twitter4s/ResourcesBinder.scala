@@ -15,22 +15,29 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.api.impl.HelpResourcesImpl
-import twitter4s.api.HelpResources
+import twitter4s.api.impl.{TrendsResourcesImpl, SpamReportingResourcesImpl, HelpResourcesImpl}
+import twitter4s.api.{TrendsResources, SpamReportingResources, HelpResources}
 
 /**
  * @author mao.instantlife at gmail.com
  */
-// TODO warining...
-trait ResourcesBinder[ApiResourcesInterface, ApiResourcesInterfaceImpl <: ApiResourcesInterface] {
+trait ResourcesBinder[ApiResourcesInterface] {
   def apply(self: Twitter): ApiResourcesInterface = self match {
     case resource: ApiResourcesInterface => resource
     case _ => bind(self)
   }
 
-  def bind(self: Twitter): ApiResourcesInterfaceImpl
+  def bind(self: Twitter): ApiResourcesInterface
 }
 
-object HelpResourcesBinder extends ResourcesBinder[HelpResources, HelpResourcesImpl]{
-  def bind(self: Twitter): HelpResourcesImpl = new Twitter(self.twitter4jObj) with HelpResourcesImpl
+object TrendsResourcesBinder extends ResourcesBinder[TrendsResources]{
+  def bind(self: Twitter): TrendsResources = new Twitter(self.twitter4jObj) with TrendsResourcesImpl
+}
+
+object SpamReportingResourcesBinder extends ResourcesBinder[SpamReportingResources]{
+  def bind(self: Twitter): SpamReportingResources = new Twitter(self.twitter4jObj) with SpamReportingResourcesImpl
+}
+
+object HelpResourcesBinder extends ResourcesBinder[HelpResources]{
+  def bind(self: Twitter): HelpResources = new Twitter(self.twitter4jObj) with HelpResourcesImpl
 }
