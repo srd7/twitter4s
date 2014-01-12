@@ -33,7 +33,7 @@ class SearchResourcesTest extends Specification with TwitterResourcesTestBase {
   
   "search" should {
     "call twitter4j search method" in {
-    twitter.search(Query("search query")).query must equalTo("returned search query")
+    twitter.search.search(Query("search query")).query must equalTo("returned search query")
       there was one(mockedTwitter4j).search(Query("search query"))
     }
   }

@@ -135,11 +135,11 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   * @since Twitter4J 3.0.4
   //   */
   //  TweetsResources tweets();
-  //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  SearchResource search();
+
+    /**
+     * @since Twitter4J 3.0.4
+     */
+    def search = SearchResourcesBinder(this)
 
     /**
      * @since Twitter4S 2.1.0
