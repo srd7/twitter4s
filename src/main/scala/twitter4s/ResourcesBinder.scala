@@ -15,8 +15,8 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.api.impl.{PlaceGeoResourcesImpl, TrendsResourcesImpl, SpamReportingResourcesImpl, HelpResourcesImpl}
-import twitter4s.api.{PlaceGeoResources, TrendsResources, SpamReportingResources, HelpResources}
+import twitter4s.api.impl._
+import twitter4s.api._
 
 /**
  * @author mao.instantlife at gmail.com
@@ -28,6 +28,10 @@ trait ResourcesBinder[ApiResourcesInterface] {
   }
 
   def bind(self: Twitter): ApiResourcesInterface
+}
+
+object SavedSearchesBinder extends ResourcesBinder[SavedSearchesResources]{
+  def bind(self: Twitter): SavedSearchesResources = new Twitter(self.twitter4jObj) with SavedSearchesResourcesImpl
 }
 
 object PlacesGeoResourcesBinder extends ResourcesBinder[PlaceGeoResources]{

@@ -21,28 +21,28 @@ class SavedSearchesResourcesTest extends Specification with TwitterResourcesTest
 
   "getSavedSearches" should {
     "call twitter4j getSavedSearches method" in {
-      twitter.getSavedSearches.size must equalTo(1)
+      twitter.savedSearches.getSavedSearches.size must equalTo(1)
       there was one(mockedTwitter4j).getSavedSearches
     }
   }
   
   "createSavedSearch" should {
     "call twitter4j createSavedSearch method" in {
-      twitter.createSavedSearch("search string").query must equalTo(FakeValuesUsedByMock.searchQueryString)
+      twitter.savedSearches.createSavedSearch("search string").query must equalTo(FakeValuesUsedByMock.searchQueryString)
       there was one(mockedTwitter4j).createSavedSearch("search string")
     }
   }
 
   "showSavedSearch" should {
     "call twitter4j showSavedSearch method" in {
-      twitter.showSavedSearch(1).query must equalTo(FakeValuesUsedByMock.searchQueryString)
+      twitter.savedSearches.showSavedSearch(1).query must equalTo(FakeValuesUsedByMock.searchQueryString)
       there was one(mockedTwitter4j).showSavedSearch(1)
     }
   }
 
   "destroySavedSearch" should {
     "call twitter4j destroySavedSearch method" in {
-      twitter.destroySavedSearch(2).query must equalTo(FakeValuesUsedByMock.searchQueryString)
+      twitter.savedSearches.destroySavedSearch(2).query must equalTo(FakeValuesUsedByMock.searchQueryString)
       there was one(mockedTwitter4j).destroySavedSearch(2)
     }
   }

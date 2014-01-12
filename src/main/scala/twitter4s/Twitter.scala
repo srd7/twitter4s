@@ -171,10 +171,10 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   //   */
   //  ListsResources list();
   //
-  //  /**
-  //   * @since Twitter4J 3.0.4
-  //   */
-  //  SavedSearchesResources savedSearches();
+    /**
+     * @since Twitter4J 3.0.4
+     */
+    def savedSearches = SavedSearchesBinder(this)
 
     /**
      * @since Twitter4S 2.1.0
@@ -225,7 +225,8 @@ object Twitter {
   def apply(consumerKey: ConsumerKey, accessToken: AccessToken) = {
     buildTwitter4sObject(buildTwitter4jInstance(consumerKey, accessToken))
   }
-  
+
+  // TODO 不要になる
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
     new Twitter(twitter4jObj) with HelpResourcesImpl
                               with TrendsResourcesImpl
@@ -278,6 +279,7 @@ object Twitter {
     }
   }
 
+  // TODO 利用箇所の確認
   /**
    * Create Twitter4J instance
    *
