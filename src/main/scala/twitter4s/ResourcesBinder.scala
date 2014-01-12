@@ -30,6 +30,10 @@ trait ResourcesBinder[ApiResourcesInterface] {
   def bind(self: Twitter): ApiResourcesInterface
 }
 
+object TweetsResourcesBinder extends ResourcesBinder[TweetsResources]{
+  def bind(self: Twitter): TweetsResources = new Twitter(self.twitter4jObj) with TweetsResourcesImpl
+}
+
 object SearchResourcesBinder extends ResourcesBinder[SearchResources]{
   def bind(self: Twitter): SearchResources = new Twitter(self.twitter4jObj) with SearchResourcesImpl
 }

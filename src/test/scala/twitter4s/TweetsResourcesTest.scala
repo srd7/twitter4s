@@ -27,71 +27,71 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
 
   "showStatus" should {
     "call twitter4j showStatus method" in {
-      twitter.showStatus(1000).text must equalTo(FakeValuesUsedByMock.statusText)
+      twitter.tweets.showStatus(1000).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).showStatus(1000)
     }
   }
 
   "updateStatus" should {
     "call twitter4j updateStatus by status string method" in {
-      twitter.updateStatus(Status.isWrittenBy("call by string")).text must equalTo(FakeValuesUsedByMock.statusText)
+      twitter.tweets.updateStatus(Status.isWrittenBy("call by string")).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).updateStatus("call by string")
     }
 
     "call twitter4j updateStatus by status object method" in {
       val setStatus = StatusUpdate("call by status object")
-      twitter.updateStatus(Status.isSetBy(setStatus)).text must equalTo(FakeValuesUsedByMock.statusText)
+      twitter.tweets.updateStatus(Status.isSetBy(setStatus)).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).updateStatus(setStatus)
     }
 
     "throw IllegalArgumentException when status set null" in {
-      twitter.updateStatus(null) must throwA[IllegalArgumentException]
+      twitter.tweets.updateStatus(null) must throwA[IllegalArgumentException]
     }
   }
 
   "destroyStatus" should {
     "call twitter4j destroyStatus method" in {
-      twitter.destroyStatus(18594701629L).text must equalTo(FakeValuesUsedByMock.statusText)
+      twitter.tweets.destroyStatus(18594701629L).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).destroyStatus(18594701629L)
     }
   }
 
   "retweetStatus" should {
     "call twitter4j retweetStatus method" in {
-      twitter.retweetStatus(18594701628L).text must equalTo(FakeValuesUsedByMock.statusText)
+      twitter.tweets.retweetStatus(18594701628L).text must equalTo(FakeValuesUsedByMock.statusText)
       there was one(mockedTwitter4j).retweetStatus(18594701628L)
     }
   }
 
   "getRetweets" should {
     "call twitter4j getRetweets method" in {
-      twitter.getRetweets(18594701627L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
+      twitter.tweets.getRetweets(18594701627L).accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)
       there was one(mockedTwitter4j).getRetweets(18594701627L)
     }
   }
 
   "getOEmbed" should {
     "call twitter4j getOEmbed method" in {
-      twitter.getOEmbed(OEmbedRequest(18594701629L, "https://www.test.url")).url must equalTo(FakeValuesUsedByMock.statusUrl)
+      twitter.tweets.getOEmbed(OEmbedRequest(18594701629L, "https://www.test.url")).url must equalTo(FakeValuesUsedByMock.statusUrl)
       there was one(mockedTwitter4j).getOEmbed(OEmbedRequest(18594701629L, "https://www.test.url"))
     }
   }
 
   "getRetweeterIds" should {
     "call twitter4j getRetweeterIds by status id and cursor" in {
-      twitter.getRetweeterIds(18594701630L, 18594701631L).hasPrevious must beTrue
+      twitter.tweets.getRetweeterIds(18594701630L, 18594701631L).hasPrevious must beTrue
       there was one(mockedTwitter4j).getRetweeterIds(18594701630L, 18594701631L)
     }
 
     "call twitter4j getRetweeterIds by status id and count and cursor" in {
-      twitter.getRetweeterIds(18594701632L, 18594701633L, 3).hasPrevious must beTrue
+      twitter.tweets.getRetweeterIds(18594701632L, 18594701633L, 3).hasPrevious must beTrue
       there was one(mockedTwitter4j).getRetweeterIds(18594701632L, 3, 18594701633L)
     }
   }
 
   "Status#urlEntities" should {
     "get url entities from status" in {
-      val status = twitter2StatusRole.showStatus(268294645526708226L)
+      val status = twitter2StatusRole.tweets.showStatus(268294645526708226L)
 
       status.urlEntities.length must equalTo(1)
       status.urlEntities(0).getURL() must equalTo("http://t.co/HwbSpYFr")
@@ -107,7 +107,7 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
 
   "Status#userMentionEntities" should {
     "get user mention status from status" in {
-      val status = twitter2StatusRole.showStatus(268294645526708226L)
+      val status = twitter2StatusRole.tweets.showStatus(268294645526708226L)
 
       status.userMentionEntities.length must equalTo(2)
       status.userMentionEntities(1).getId() must equalTo(72297675)
@@ -119,7 +119,7 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
 
   "Status#hastagEntities" should {
     "get hashtag from status" in {
-      val status = twitter2StatusRole.showStatus(268294645526708226L)
+      val status = twitter2StatusRole.tweets.showStatus(268294645526708226L)
 
       status.hashtagEntities.length must equalTo(1)
       status.hashtagEntities(0).getText() must equalTo("test")
@@ -130,7 +130,7 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
 
   "Status#mediaEntities" should {
     "get media from status" in {
-      val status = twitter2StatusRole.showStatus(76360760606986241L)
+      val status = twitter2StatusRole.tweets.showStatus(76360760606986241L)
 
       status.mediaEntities.length must equalTo(1)
 
