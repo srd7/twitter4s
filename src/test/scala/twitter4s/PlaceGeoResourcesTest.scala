@@ -48,21 +48,21 @@ class PlaceGeoResourcesTest extends Specification with TwitterResourcesTestBase 
   
   "reverseGeoCode" should {
     "call twitter4j reverseGeoCode method" in {
-      twitter.reverseGeoCode(GeoQuery("tokyo")).size must equalTo(1)
+      twitter.placesGeo.reverseGeoCode(GeoQuery("tokyo")).size must equalTo(1)
       there was one(mockedTwitter4j).reverseGeoCode(GeoQuery("tokyo"))
     }
   }
   
   "searchPlaces" should {
     "call twitter4j searchPlaces method" in {
-      twitter.searchPlaces(GeoQuery("okayama")).size must equalTo(1)
+      twitter.placesGeo.searchPlaces(GeoQuery("okayama")).size must equalTo(1)
       there was one(mockedTwitter4j).searchPlaces(GeoQuery("okayama"))
     }
   }
   
   "getSimilarPlaces" should {
     "call twitter4j getSimilarPlaces method" in {
-      twitter.getSimilarPlaces(
+      twitter.placesGeo.getSimilarPlaces(
         GeoLocation(11.1, 22.2),
         "location name",
         "contained within",
@@ -73,14 +73,14 @@ class PlaceGeoResourcesTest extends Specification with TwitterResourcesTestBase 
   
   "getGeoDetails" should {
     "call twitter4j getGeoDetails method" in {
-      twitter.getGeoDetails("fake_place_id").fullName must equalTo(FakeValuesUsedByMock.placeName)
+      twitter.placesGeo.getGeoDetails("fake_place_id").fullName must equalTo(FakeValuesUsedByMock.placeName)
       there was one(mockedTwitter4j).getGeoDetails("fake_place_id")
     }
   }
 
   "createPlace" should {
     "call twitter4j createPlace method" in {
-      twitter.createPlace(
+      twitter.placesGeo.createPlace(
         "place name",
         "contained within",
         "token",
