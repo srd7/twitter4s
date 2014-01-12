@@ -22,59 +22,59 @@ class DirectMessagesResourcesTest extends Specification with TwitterResourcesTes
   
   "sendDirectMessage" should {
     "call twitter4j sendDirectMessage method by screen name" in {
-      twitter.sendDirectMessage(
+      twitter.directMessages.sendDirectMessage(
         User.isSpecifiedBy(FakeValuesUsedByMock.friendName),
         "direct message to friend").senderScreenName must equalTo(FakeValuesUsedByMock.userName)
       there was one(mockedTwitter4j).sendDirectMessage(FakeValuesUsedByMock.friendName, "direct message to friend")
     }
 
     "call twitter4j sendDirectMessage method by user id" in {
-      twitter.sendDirectMessage(
+      twitter.directMessages.sendDirectMessage(
         User.isSpecifiedBy(1L),
         "direct message to friend").senderScreenName must equalTo(FakeValuesUsedByMock.userName)
       there was one(mockedTwitter4j).sendDirectMessage(1L, "direct message to friend")
     }
     
     "throw exception both of parameter screenName and userId are not set" in {
-      twitter.sendDirectMessage(null, text = "unsuccess send") must
+      twitter.directMessages.sendDirectMessage(null, text = "unsuccess send") must
       throwA[IllegalArgumentException]
     }
   }
   
   "getDirectMessages" should {
     "call twitter4j getDirectMessages method without paging" in {
-      twitter.getDirectMessages().size must equalTo(1)
+      twitter.directMessages.getDirectMessages().size must equalTo(1)
       there was one(mockedTwitter4j).getDirectMessages
     }
 
     "call twitter4j getDirectMessages method by paging" in {
-      twitter.getDirectMessages(Paging(2)).size must equalTo(1)
+      twitter.directMessages.getDirectMessages(Paging(2)).size must equalTo(1)
       there was one(mockedTwitter4j).getDirectMessages(Paging(2))
     }
   }
   
   "showDirectMessages" should {
     "call twitter4j showDirectMessages" in {
-      twitter.showDirectMessage(3L).recipientScreenName must equalTo(FakeValuesUsedByMock.friendName)
+      twitter.directMessages.showDirectMessage(3L).recipientScreenName must equalTo(FakeValuesUsedByMock.friendName)
       there was one(mockedTwitter4j).showDirectMessage(3L)
     }
   }
 
   "getSentDirectMessages" should {
     "call twitter4j getSentDirectMessages method without paging" in {
-      twitter.getSentDirectMessages().size must equalTo(1)
+      twitter.directMessages.getSentDirectMessages().size must equalTo(1)
       there was one(mockedTwitter4j).getSentDirectMessages
     }
 
     "call twitter4j getSentDirectMessage method by paging" in {
-      twitter.getSentDirectMessages(Paging(4)).size must equalTo(1)
+      twitter.directMessages.getSentDirectMessages(Paging(4)).size must equalTo(1)
       there was one(mockedTwitter4j).getSentDirectMessages(Paging(4))
     }
   }
 
   "destroyDirectMessage" should {
     "call twitter4j destroyDirectMessage" in {
-      twitter.destroyDirectMessage(5L).senderScreenName must equalTo(FakeValuesUsedByMock.userName)
+      twitter.directMessages.destroyDirectMessage(5L).senderScreenName must equalTo(FakeValuesUsedByMock.userName)
       there was one(mockedTwitter4j).destroyDirectMessage(5L)
     }
   }
