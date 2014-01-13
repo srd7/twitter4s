@@ -36,6 +36,7 @@ object Paging {
       case (Some(page), None, Some(sinceId), None) => new twitter4j.Paging(page, sinceId)
       case (Some(page), Some(count), Some(sinceId), None) => new twitter4j.Paging(page, count, sinceId)
       case (Some(page), Some(count), Some(sinceId), Some(maxId)) => new twitter4j.Paging(page, count, sinceId, maxId)
+      case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
 }

@@ -92,7 +92,6 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   /**
    * {@inheritDoc}
    */
-  // TODO デフォルトパターンの例外スロー
   def showFriendship(
       sourceSpecificUser: User.SpecificInfo,
       targetSpecificUser: User.SpecificInfo): Relationship = {
@@ -103,6 +102,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
     (sourceSpecificUser, targetSpecificUser) match {
       case (Right(sourceId), Right(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
       case (Left(sourceScreenName), Left(targetScreenName)) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
+      case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
 

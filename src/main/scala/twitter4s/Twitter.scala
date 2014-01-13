@@ -88,19 +88,18 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   /**
    * {@inheritDoc}
    */
-  // TODO でフォルトパターンの例外スロー
   def getOAuthRequestToken(callbackURL: String = null, xAuthAccessType: String = null): RequestToken = {
     (Option(callbackURL), Option(xAuthAccessType)) match {
       case (None, None) => twitter4jObj.getOAuthRequestToken()
       case (Some(callbackURL), None) => twitter4jObj.getOAuthRequestToken(callbackURL)
       case (Some(callbackURL), Some(xAuthAccessType)) => twitter4jObj.getOAuthRequestToken(callbackURL, xAuthAccessType)
+      case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
   
   /**
    * {@inheritDoc}
    */
-  // TODO デフォルトパターンの例外スロー
   def getOAuthAccessToken(
       oauthVerifier: String = null,
       requestToken: RequestToken = null,
@@ -112,6 +111,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
       case (Some(oauthVerifier), Some(requestToken), None, None) => twitter4jObj.getOAuthAccessToken(requestToken, oauthVerifier)
       case (None, Some(requestToken), None, None) => twitter4jObj.getOAuthAccessToken(requestToken)
       case (None, None, Some(screenName), Some(password)) => twitter4jObj.getOAuthAccessToken(screenName, password)
+      case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
   
