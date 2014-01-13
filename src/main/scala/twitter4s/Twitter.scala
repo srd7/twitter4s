@@ -26,7 +26,6 @@ import twitter4s.api.SpamReportingResources
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
-// TODO Twitter4J 3.0.5対応
 case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   /* TwitterBase method */
   /**

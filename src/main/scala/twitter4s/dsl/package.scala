@@ -23,6 +23,7 @@ import twitter4s.auth.ConsumerKey
  * @author mao.instantlife at gmail.com
  */
 package object dsl {
+  // TODO twitterAPIメソッド呼び出しをTwitter4Sに統一
   val idPrefix = "id:"
 
   implicit def twitter4SToTwitter4J(twitter: twitter4s.Twitter): twitter4j.Twitter = twitter.twitter4jObj
