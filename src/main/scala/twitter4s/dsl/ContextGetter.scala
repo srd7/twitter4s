@@ -25,15 +25,9 @@ trait ContextGetter[ContextType, ReturnType] {
 }
 
 object UserContextGetter extends ContextGetter[UserContext, twitter4s.User] {
-  def get(self: UserContext)(implicit twitter:Twitter) = self.user match {
-    case Right(userId) => twitter.showUser(userId)
-    case Left(screenName) => twitter.showUser(screenName)
-  }
+  def get(self: UserContext)(implicit twitter:Twitter) = twitter.users.showUser(self.user)
 }
 
 object ListContextGetter extends ContextGetter[ListContext, twitter4s.UserList] {
-  def get(self: ListContext)(implicit twitter: Twitter) = self.list match {
-    case Right(listId) => twitter.showUserList(listId)
-    case Left(listSlug) => twitter.showUserList(twitter.id, listSlug)
-  }
+  def get(self: ListContext)(implicit twitter: Twitter) = twitter.list.showUserList(self.specifiedInfo)
 }

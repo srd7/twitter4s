@@ -23,10 +23,7 @@ import twitter4s.auth.ConsumerKey
  * @author mao.instantlife at gmail.com
  */
 package object dsl {
-  // TODO twitterAPIメソッド呼び出しをTwitter4Sに統一
   val idPrefix = "id:"
-
-  implicit def twitter4SToTwitter4J(twitter: twitter4s.Twitter): twitter4j.Twitter = twitter.twitter4jObj
 
   implicit class TwitterDSLString(val sc: StringContext) extends AnyVal {
     def tweet(args: Any*) = TweetContext(sc.s(args: _*))
@@ -82,20 +79,17 @@ package object dsl {
    */
   def send(messageContext: MessageContext) = MessageSender(messageContext)
 
-  def follow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User = userContext.user match {
-    case Right(userId) => twitter.createFriendship(userId)
-    case Left(screenName) => twitter.createFriendship(screenName)
-  }
+  def follow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User =
+    twitter.friendsFollowers.createFriendship(userContext.user)
 
   case class UserAdder(userContext: UserContext) {
     def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
-      twitter.createUserListMember(get(listContext).id, get(userContext).id)
+      twitter.list.createUserListMember(
+        UserList.isSpecifiedBy(get(listContext).id), get(userContext).id)
   }
 
   case class MessageSender(messageContext: MessageContext) {
-    def to(userContext: UserContext)(implicit twitter: Twitter): twitter4s.DirectMessage = userContext.user match {
-      case Right(userId) => twitter.sendDirectMessage(userId, messageContext.message)
-      case Left(screenName) => twitter.sendDirectMessage(screenName, messageContext.message)
-    }
+    def to(userContext: UserContext)(implicit twitter: Twitter): twitter4s.DirectMessage =
+      twitter.directMessages.sendDirectMessage(userContext.user, messageContext.message)
   }
 }

@@ -15,7 +15,7 @@ package twitter4s.dsl
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4s.{User, Twitter}
+import twitter4s.{UserList, User, Twitter}
 
 /**
  * @author mao.instantlife at gmail.com
@@ -41,7 +41,12 @@ case class UserContext(user: User.SpecificInfo)
  * string context to specific to user list
  * @param list user list specific information(list slug or list id)
  */
-case class ListContext(list: Either[String, Int])
+case class ListContext(list: Either[String, Int]) {
+  def specifiedInfo(implicit twitter: Twitter) = list match {
+    case Left(listSlug) => UserList.isSpecifiedBy(User.isSpecifiedBy(twitter.id), listSlug)
+    case Right(listId) => UserList.isSpecifiedBy(listId)
+  }
+}
 
 /**
  * string context to specific to direct message
