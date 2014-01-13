@@ -1,14 +1,13 @@
 package twitter4s
 
 import conf.PropertyConfiguration
-import conf.ConfigurationBuilder
 import java.util.Properties
 import twitter4j.json.DataObjectFactory
-import java.io.File
+import java.io.{FileInputStream, File}
 
 object Twitter4sTestHelper {
   val prop = new Properties()
-  val is = Twitter4sTestHelper.getClass().getResourceAsStream("test.properties")
+  val is = new FileInputStream(new File("src/test/scala/twitter4s/test.properties"))
   
   prop.load(is)
   is.close()
