@@ -12,8 +12,8 @@ import java.util
  */
 @RunWith(classOf[JUnitRunner])
 class SearchResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = SearchResourcesImpl
 
+  // mocking method
   mockedTwitter4j.search(any[Query]) returns (new twitter4j.QueryResult {
     def getRateLimitStatus: twitter4j.RateLimitStatus = ???
     def getAccessLevel: Int = ???
@@ -28,8 +28,6 @@ class SearchResourcesTest extends Specification with TwitterResourcesTestBase {
     def nextQuery(): Query = ???
     def hasNext: Boolean = ???
   })
-
-  override val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "search" should {
     "call twitter4j search method" in {

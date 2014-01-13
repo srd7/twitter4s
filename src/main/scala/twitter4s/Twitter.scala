@@ -222,7 +222,6 @@ object Twitter {
     buildTwitter4sObject(buildTwitter4jInstance(consumerKey, accessToken))
   }
 
-  // TODO 不要になる
   private def buildTwitter4sObject(twitter4jObj: twitter4j.Twitter) = {
     new Twitter(twitter4jObj) with HelpResourcesImpl
                               with TrendsResourcesImpl
@@ -275,7 +274,6 @@ object Twitter {
     }
   }
 
-  // TODO 利用箇所の確認
   /**
    * Create Twitter4J instance
    *
@@ -284,7 +282,7 @@ object Twitter {
    * @return twitter4j.Twitter
    * @since Twitter4S 2.1.0
    */
-  def buildTwitter4jInstance(consumerKey: ConsumerKey, accessToken: AccessToken) = {
+  private def buildTwitter4jInstance(consumerKey: ConsumerKey, accessToken: AccessToken) = {
     val twitter4jObj = getTwitter4jInstance(
       getTwitterFactory4j(None),
       None)

@@ -8,9 +8,7 @@ import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class ListsResourcesTest extends Specification with TwitterResourcesTestBase {
-
-  type TargetResourcesType = ListsResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.getUserLists(anyString) returns FakeValuesUsedByMock.responseList[twitter4j.UserList]
   mockedTwitter4j.getUserLists(anyLong) returns FakeValuesUsedByMock.responseList[twitter4j.UserList]
   mockedTwitter4j.showUserList(anyInt) returns FakeValuesUsedByMock.userList
@@ -66,8 +64,6 @@ class ListsResourcesTest extends Specification with TwitterResourcesTestBase {
   mockedTwitter4j.showUserListSubscription(anyInt, anyLong) returns FakeValuesUsedByMock.user
   mockedTwitter4j.showUserListSubscription(anyString, anyString, anyLong) returns FakeValuesUsedByMock.user
   mockedTwitter4j.showUserListSubscription(anyLong, anyString, anyLong) returns FakeValuesUsedByMock.user
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "getUserLists" should {
     "call twitter4j getUserLists method by screen name" in {
@@ -147,7 +143,7 @@ class ListsResourcesTest extends Specification with TwitterResourcesTestBase {
     }
     
     "throw exception user specific parameter is null" in {
-      twitter.getUserListStatuses(UserList.isSpecifiedBy(null, "test"), Paging()) must
+      twitter.list.getUserListStatuses(UserList.isSpecifiedBy(null, "test"), Paging()) must
       throwA[IllegalArgumentException]
     }
   }

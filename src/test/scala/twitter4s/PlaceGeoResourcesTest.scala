@@ -2,14 +2,12 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.api.impl.PlaceGeoResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 import java.util
 
 @RunWith(classOf[JUnitRunner])
 class PlaceGeoResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = PlaceGeoResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.reverseGeoCode(any[twitter4j.GeoQuery]) returns FakeValuesUsedByMock.responseList[twitter4j.Place]
   mockedTwitter4j.searchPlaces(any[twitter4j.GeoQuery]) returns FakeValuesUsedByMock.responseList[twitter4j.Place]
   mockedTwitter4j.getSimilarPlaces(any[twitter4j.GeoLocation], anyString, anyString, anyString) returns (new twitter4j.SimilarPlaces {
@@ -43,8 +41,6 @@ class PlaceGeoResourcesTest extends Specification with TwitterResourcesTestBase 
   })
   mockedTwitter4j.getGeoDetails(anyString) returns FakeValuesUsedByMock.place
   mockedTwitter4j.createPlace(anyString, anyString, anyString, any[twitter4j.GeoLocation], anyString) returns FakeValuesUsedByMock.place
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "reverseGeoCode" should {
     "call twitter4j reverseGeoCode method" in {

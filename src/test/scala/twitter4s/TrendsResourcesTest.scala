@@ -9,10 +9,7 @@ import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class TrendsResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = TrendsResourcesImpl
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
-
+  // mocking methods
   mockedTwitter4j.getAvailableTrends returns FakeValuesUsedByMock.responseList[twitter4j.Location]
   mockedTwitter4j.getAvailableTrends(any[twitter4j.GeoLocation]) returns FakeValuesUsedByMock.responseList[twitter4j.Location]
   mockedTwitter4j.getLocationTrends(anyInt) returns FakeValuesUsedByMock.trends

@@ -9,8 +9,7 @@ import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class FriendsFollowersResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = FriendsFollowersResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.getFriendsIDs(anyLong) returns FakeValuesUsedByMock.ids
   mockedTwitter4j.getFriendsIDs(anyString, anyLong) returns FakeValuesUsedByMock.ids
   mockedTwitter4j.getFriendsIDs(anyLong, anyLong) returns FakeValuesUsedByMock.ids
@@ -35,8 +34,6 @@ class FriendsFollowersResourcesTest extends Specification with TwitterResourcesT
   mockedTwitter4j.getFriendsList(anyLong, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
   mockedTwitter4j.getFollowersList(anyString, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
   mockedTwitter4j.getFollowersList(anyLong, anyLong) returns FakeValuesUsedByMock.pagableResponseList[twitter4j.User]
-
-  override val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
 
   "getFriendsIDs" should {
     "call twitter4j getFriendsIDs method by cursor only" in {

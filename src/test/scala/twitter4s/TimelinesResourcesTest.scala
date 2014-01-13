@@ -2,14 +2,10 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import Twitter4sTestHelper._
-import twitter4j.json.DataObjectFactory
-import twitter4s.api.impl.TimelinesResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class TimelinesResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = TimelinesResourcesImpl
   val fakeResponseList = FakeValuesUsedByMock.responseList[twitter4j.Status]
 
   mockedTwitter4j.getHomeTimeline returns fakeResponseList
@@ -26,8 +22,6 @@ class TimelinesResourcesTest extends Specification with TwitterResourcesTestBase
   mockedTwitter4j.getMentionsTimeline(Paging(1)) returns fakeResponseList
   mockedTwitter4j.getRetweetsOfMe returns fakeResponseList
   mockedTwitter4j.getRetweetsOfMe(Paging(9)) returns fakeResponseList
-
-  override val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
 
   def assertReturnedFakeResponseExactly(statuses: ResponseList[twitter4j.Status]) = {
     statuses.accessLevel must equalTo(TwitterResponse.READ_WRITE_DIRECTMESSAGES)

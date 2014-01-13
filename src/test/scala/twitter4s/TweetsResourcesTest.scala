@@ -9,8 +9,6 @@ import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = TweetsResourcesImpl
-  
   val twitter2StatusRole = new Twitter(twitter4jInstance(User2)) with TweetsResourcesImpl
 
   mockedTwitter4j.showStatus(anyLong) returns(FakeValuesUsedByMock.status)
@@ -22,8 +20,6 @@ class TweetsResourcesTest extends Specification with TwitterResourcesTestBase {
   mockedTwitter4j.getOEmbed(any[twitter4j.OEmbedRequest]) returns(FakeValuesUsedByMock.oembed)
   mockedTwitter4j.getRetweeterIds(anyLong, anyLong) returns(FakeValuesUsedByMock.ids)
   mockedTwitter4j.getRetweeterIds(anyLong, anyInt, anyLong) returns(FakeValuesUsedByMock.ids)
-
-  override val twitter = new Twitter(mockedTwitter4j) with TweetsResourcesImpl
 
   "showStatus" should {
     "call twitter4j showStatus method" in {

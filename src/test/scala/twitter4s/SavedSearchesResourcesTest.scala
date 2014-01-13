@@ -9,15 +9,11 @@ import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class SavedSearchesResourcesTest extends Specification with TwitterResourcesTestBase {
-
-  type TargetResourcesType = SavedSearchesResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.getSavedSearches returns FakeValuesUsedByMock.responseList[twitter4j.SavedSearch]
   mockedTwitter4j.createSavedSearch(anyString) returns FakeValuesUsedByMock.savedSearch
   mockedTwitter4j.showSavedSearch(anyInt) returns FakeValuesUsedByMock.savedSearch
   mockedTwitter4j.destroySavedSearch(anyInt) returns FakeValuesUsedByMock.savedSearch
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
 
   "getSavedSearches" should {
     "call twitter4j getSavedSearches method" in {

@@ -5,16 +5,14 @@ import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
 import Twitter4sTestHelper._
 import java.io.{File, FileInputStream}
-import twitter4s.api.impl.UsersResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = UsersResourcesImpl
-
   val fakeUsersScreenNameArray = Array("fake_user1", "fake_user2")
   val fakeUsersIdArray = Array(1L, 2L)
 
+  // mocking methods
   mockedTwitter4j.showUser(anyString) returns FakeValuesUsedByMock.user
   mockedTwitter4j.showUser(anyLong) returns FakeValuesUsedByMock.user
   mockedTwitter4j.lookupUsers(any[Array[String]]) returns FakeValuesUsedByMock.responseList[twitter4j.User]
@@ -47,9 +45,6 @@ class UsersResourcesTest extends Specification with TwitterResourcesTestBase {
   mockedTwitter4j.updateProfileBanner(any[FileInputStream]) answers{_ => mockCallStatusUpdateProfileBannerStream = "called updateProfileBanner by image stream"}
   var mockCallStatusUpdateProfileBannerFile: String = _
   mockedTwitter4j.updateProfileBanner(any[File]) answers{_ => mockCallStatusUpdateProfileBannerFile = "called updateProfileBanner by image file"}
-
-
-  override val twitter = new Twitter(mockedTwitter4j) with UsersResourcesImpl
 
   "showUser" should {
     "call twitter4j showUser method by screen name" in {

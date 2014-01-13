@@ -2,25 +2,19 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import Twitter4sTestHelper.prop
-import Twitter4sTestHelper.rawJSON
 import Twitter4sTestHelper.rwPrivateMessage
 import Twitter4sTestHelper.twitter1
 import auth.ConsumerKey
 import twitter4j.auth.AccessToken
-import twitter4j.json.DataObjectFactory
 import org.specs2.runner.JUnitRunner
-import org.specs2.mock.Mockito
 import twitter4s.mocked.FakeValuesUsedByMock
+import twitter4s.Twitter4sTestHelper._
 
 @RunWith(classOf[JUnitRunner])
-class TwitterTest extends Specification with Mockito {
-  // TODO TwitterResourcesTestBaseに集約(TargetResourcesTypeの削除が終わったら)
-  val mockedTwitter4j = mock[twitter4j.Twitter]
-
+class TwitterTest extends Specification with TwitterResourcesTestBase {
+  // mocking methods
   mockedTwitter4j.getScreenName returns(FakeValuesUsedByMock.userName)
   mockedTwitter4j.getId returns(10L)
-
-  val twitter = new Twitter(mockedTwitter4j)
 
   "getAccessLevel" should {
     "application has read and write access level is READ_WRITE" in {
@@ -53,9 +47,7 @@ class TwitterTest extends Specification with Mockito {
     "create object with consumerKey and consumerSecret" in {
       val twitterObj = Twitter(consumerKey, accessToken)
       // execute authorized api.
-      val user = twitterObj.verifyCredentials
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+      twitterObj.verifyCredentials.screenName must equalTo(id1.screenName)
     }
     
     "create object without settings and after set oauth information" in {
@@ -63,9 +55,7 @@ class TwitterTest extends Specification with Mockito {
       twitterObj.setOAuthConsumer(prop.getProperty("oauth.consumerKey"), prop.getProperty("oauth.consumerSecret"))
       twitterObj.setOAuthAccessToken(accessToken)
       // execute authorized api.
-      val user = twitterObj.verifyCredentials
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+      twitterObj.verifyCredentials.screenName must equalTo(id1.screenName)
     }
     
     "create object without settings and after set oauth information used by ConsumerKey class" in {
@@ -73,9 +63,7 @@ class TwitterTest extends Specification with Mockito {
       twitterObj.setOAuthConsumer(consumerKey)
       twitterObj.setOAuthAccessToken(accessToken)
       // execute authorized api.
-      val user = twitterObj.verifyCredentials
-      rawJSON(user.tw4jObj) must not equalTo(null)
-      user.tw4jObj must equalTo(DataObjectFactory.createUser(rawJSON(user.tw4jObj)))
+      twitterObj.verifyCredentials.screenName must equalTo(id1.screenName)
     }
   }
   

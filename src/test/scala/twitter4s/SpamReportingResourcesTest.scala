@@ -1,16 +1,12 @@
 package twitter4s
 
 import org.specs2.mutable._
-import twitter4s.api.impl.SpamReportingResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 
 class SpamReportingResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = SpamReportingResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.reportSpam(anyString) returns FakeValuesUsedByMock.user
   mockedTwitter4j.reportSpam(anyLong) returns FakeValuesUsedByMock.user
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
 
   "reportSpam" should {
     "call twitter4j reportSpam method by screen name" in {

@@ -2,13 +2,11 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.api.impl.DirectMessagesResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class DirectMessagesResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = DirectMessagesResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.sendDirectMessage(anyString, anyString) returns FakeValuesUsedByMock.directMessage
   mockedTwitter4j.sendDirectMessage(anyLong, anyString) returns FakeValuesUsedByMock.directMessage
   mockedTwitter4j.getDirectMessages returns FakeValuesUsedByMock.responseList[twitter4j.DirectMessage]
@@ -17,8 +15,6 @@ class DirectMessagesResourcesTest extends Specification with TwitterResourcesTes
   mockedTwitter4j.getSentDirectMessages returns FakeValuesUsedByMock.responseList[twitter4j.DirectMessage]
   mockedTwitter4j.getSentDirectMessages(any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.DirectMessage]
   mockedTwitter4j.destroyDirectMessage(anyLong) returns FakeValuesUsedByMock.directMessage
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "sendDirectMessage" should {
     "call twitter4j sendDirectMessage method by screen name" in {

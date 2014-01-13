@@ -2,13 +2,11 @@ package twitter4s
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
-import twitter4s.api.impl.FavoritesResourcesImpl
 import twitter4s.mocked.FakeValuesUsedByMock
 
 @RunWith(classOf[JUnitRunner])
 class FavoritesResourcesTest extends Specification with TwitterResourcesTestBase {
-  type TargetResourcesType = FavoritesResourcesImpl
-
+  // mocking methods
   mockedTwitter4j.createFavorite(anyLong) returns FakeValuesUsedByMock.status
   mockedTwitter4j.getFavorites(anyString) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
   mockedTwitter4j.getFavorites(anyString, any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
@@ -16,8 +14,6 @@ class FavoritesResourcesTest extends Specification with TwitterResourcesTestBase
   mockedTwitter4j.getFavorites(anyLong, any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
   mockedTwitter4j.getFavorites(any[twitter4j.Paging]) returns FakeValuesUsedByMock.responseList[twitter4j.Status]
   mockedTwitter4j.destroyFavorite(anyLong) returns FakeValuesUsedByMock.status
-
-  val twitter = new Twitter(mockedTwitter4j) with TargetResourcesType
   
   "createFavorite" should {
     "call twitter4j createFavorite method" in {
