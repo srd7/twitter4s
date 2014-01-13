@@ -14,7 +14,6 @@ package twitter4s
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import twitter4j.TwitterException
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
