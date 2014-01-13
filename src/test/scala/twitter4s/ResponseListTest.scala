@@ -22,8 +22,7 @@ class ResponseListTest extends Specification {
     
     "has accessLevel" in {
       val responseList = twitter1.getAvailableTrends()
-      // TODO accessLevelは-1で返ってくることもあるので、対処する(HttpResponseがnullの時に発生する)
-      responseList.accessLevel must equalTo(twitter4j.TwitterResponse.READ_WRITE)
+      responseList.accessLevel must equalTo(TwitterResponse.NULL_HTTP_RESPONSE)
     }
     
     "has tw4jObj is instance of twitter4j.ResponseList" in {
