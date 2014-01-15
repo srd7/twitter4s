@@ -84,6 +84,33 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
+  "remove user string context method" should {
+    "returns UserRemover instance" in {
+      val userContext = user"${testUserName}"
+      ((remove(userContext))).userContext must equalTo(userContext)
+    }
+  }
+
+  "UserRemover" should {
+    "from(ListContext specifiedBy list id) method executes twitter4j.destroyUserListMember" in {
+      val listName = "testListName"
+      val testUserId = 666L
+      remove(user"id:${testUserId}") from list"${listName}"
+
+      there was one(mockedTwitter4j).showUser(testUserId)
+      there was one(mockedTwitter4j).destroyUserListMember(1L, listName, FakeValuesUsedByMock.user.getId)
+    }
+
+    "from(ListContext specifiedBy list slug) method executes twitter4j.destroyUserListMember" in {
+      val listId = 777
+      val testUserId = 888L
+      remove(user"id:${testUserId}") from list"id:${listId}"
+
+      there was one(mockedTwitter4j).showUser(testUserId)
+      there was one(mockedTwitter4j).destroyUserListMember(listId, FakeValuesUsedByMock.user.getId)
+    }
+  }
+
   "MessageContext" should {
     "get message context" in {
       (message"$testMessage with $testUserName").message must equalTo(s"$testMessage with $testUserName")
@@ -124,30 +151,18 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-  "remove user string context method" should {
-    "returns UserRemover instance" in {
-      val userContext = user"${testUserName}"
-      ((remove(userContext))).userContext must equalTo(userContext)
-    }
-  }
+  "unfollow user string context method" should {
+    "execute twitter4j.destroyFriendship with screen name" in {
+      unfollow(user"$testUserName")
 
-  "UserRemover" should {
-    "from(ListContext specifiedBy list id) method executes twitter4j.destroyUserListMember" in {
-      val listName = "testListName"
-      val testUserId = 666L
-      remove(user"id:${testUserId}") from list"${listName}"
-
-      there was one(mockedTwitter4j).showUser(testUserId)
-      there was one(mockedTwitter4j).destroyUserListMember(1L, listName, FakeValuesUsedByMock.user.getId)
+      there was one(mockedTwitter4j).destroyFriendship(testUserName)
     }
 
-    "from(ListContext specifiedBy list slug) method executes twitter4j.destroyUserListMember" in {
-      val listId = 777
-      val testUserId = 888L
-      remove(user"id:${testUserId}") from list"id:${listId}"
+    "execute twitter4j.destroyFriendship with user id" in {
+      val testUserId = 999L
+      unfollow(user"id:$testUserId")
 
-      there was one(mockedTwitter4j).showUser(testUserId)
-      there was one(mockedTwitter4j).destroyUserListMember(listId, FakeValuesUsedByMock.user.getId)
+      there was one(mockedTwitter4j).destroyFriendship(testUserId)
     }
   }
 

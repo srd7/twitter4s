@@ -105,6 +105,16 @@ package object dsl {
   def follow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User =
     twitter.friendsFollowers.createFriendship(userContext.user)
 
+  /**
+   * Un follow any user.
+   *
+   * @param userContext user string context
+   * @param twitter Twtter4S instance
+   * @return User instance
+   */
+  def unfollow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User =
+    twitter.friendsFollowers.destroyFriendship(userContext.user)
+
   // TODO to another source file(below case classes)
   case class UserAdder(userContext: UserContext) {
     def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
