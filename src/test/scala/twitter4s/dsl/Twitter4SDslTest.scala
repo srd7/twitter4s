@@ -13,6 +13,7 @@ class Twitter4SDslTest extends Specification with Mockito {
 
   val mockedTwitter4j = mock[twitter4j.Twitter]
   mockedTwitter4j.createUserListMember(anyInt, anyLong) returns(FakeValuesUsedByMock.userList)
+  mockedTwitter4j.createUserListMember(anyLong, anyString, anyLong) returns(FakeValuesUsedByMock.userList)
   mockedTwitter4j.showUser(anyString) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUser(anyLong) returns(FakeValuesUsedByMock.user)
   mockedTwitter4j.showUserList(anyLong, anyString) returns(FakeValuesUsedByMock.userList)
@@ -79,7 +80,7 @@ class Twitter4SDslTest extends Specification with Mockito {
       (add(user"testUserName") to list"testListName").id must equalTo(FakeValuesUsedByMock.userList.getId)
 
       there was one(mockedTwitter4j).createUserListMember(
-        FakeValuesUsedByMock.userList.getId, FakeValuesUsedByMock.user.getId)
+        1L, "testListName", FakeValuesUsedByMock.user.getId)
     }
   }
 
@@ -123,6 +124,39 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
-  // user"hoge" lookup (friend"fuga") -> twitter.lookupFriends(list)
-  // users"screen name1, screen name2" to list"list name" -> twitter.createUserListMembers
+  "remove user string context method" should {
+    "returns UserRemover instance" in {
+      val userContext = user"${testUserName}"
+      ((remove(userContext))).userContext must equalTo(userContext)
+    }
+  }
+
+  "UserRemover" should {
+    "from(ListContext specifiedBy list id) method executes twitter4j.destroyUserListMember" in {
+      val listName = "testListName"
+      val testUserId = 666L
+      remove(user"id:${testUserId}") from list"${listName}"
+
+      there was one(mockedTwitter4j).showUser(testUserId)
+      there was one(mockedTwitter4j).destroyUserListMember(1L, listName, FakeValuesUsedByMock.user.getId)
+    }
+
+    "from(ListContext specifiedBy list slug) method executes twitter4j.destroyUserListMember" in {
+      val listId = 777
+      val testUserId = 888L
+      remove(user"id:${testUserId}") from list"id:${listId}"
+
+      there was one(mockedTwitter4j).showUser(testUserId)
+      there was one(mockedTwitter4j).destroyUserListMember(listId, FakeValuesUsedByMock.user.getId)
+    }
+  }
+
+  // list of DSL candidates
+  // unfollow(user"user")
+  // block(user"user")
+  // lookup(user"hoge", user"fuga") -> twitter.lookupFriends(list)
+  // add(user"screen name1", user"screen name2") to list"list name" -> twitter.createUserListMembers
+  // Status.favos
+  // Status.retweet
+  // searchQuery"query".save
 }

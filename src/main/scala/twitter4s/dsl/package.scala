@@ -47,6 +47,14 @@ package object dsl {
   implicit val userContextGetter = UserContextGetter
   implicit val listContextGetter = ListContextGetter
 
+  /**
+   * Binding access token and execute DSL script.
+   *
+   * @param accessToken access token for binding on DSL script.
+   * @param dslScript executing DSL script
+   * @param consumerKey comsumer key
+   * @return Unit
+   */
   def withToken(accessToken: AccessToken)(dslScript: Twitter => Unit)(implicit consumerKey: ConsumerKey) {
     dslScript(Twitter(consumerKey, accessToken))
   }
@@ -58,6 +66,14 @@ package object dsl {
    * @return UserAdder instance
    */
   def add(user: UserContext) = UserAdder(user)
+
+  /**
+   * Remove user from any resource.
+   *
+   * @param user user string context
+   * @return UserRemover instance
+   */
+  def remove(user: UserContext) = UserRemover(user)
 
   /**
    * Get resource with specified context string from Twitter API.
@@ -79,13 +95,25 @@ package object dsl {
    */
   def send(messageContext: MessageContext) = MessageSender(messageContext)
 
+  /**
+   * Follow any user.
+   *
+   * @param userContext user string context
+   * @param twitter Twitter4S instance
+   * @return User instance
+   */
   def follow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User =
     twitter.friendsFollowers.createFriendship(userContext.user)
 
+  // TODO to another source file(below case classes)
   case class UserAdder(userContext: UserContext) {
     def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
-      twitter.list.createUserListMember(
-        UserList.isSpecifiedBy(get(listContext).id), get(userContext).id)
+      twitter.list.createUserListMember(listContext.specifiedInfo, get(userContext).id)
+  }
+
+  case class UserRemover(userContext: UserContext) {
+    def from(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
+      twitter.list.destroyUserListMember(listContext.specifiedInfo, get(userContext).id)
   }
 
   case class MessageSender(messageContext: MessageContext) {
