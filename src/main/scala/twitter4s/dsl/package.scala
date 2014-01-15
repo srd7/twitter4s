@@ -115,19 +115,13 @@ package object dsl {
   def unfollow(userContext: UserContext)(implicit twitter: Twitter): twitter4s.User =
     twitter.friendsFollowers.destroyFriendship(userContext.user)
 
-  // TODO to another source file(below case classes)
-  case class UserAdder(userContext: UserContext) {
-    def to(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
-      twitter.list.createUserListMember(listContext.specifiedInfo, get(userContext).id)
-  }
-
-  case class UserRemover(userContext: UserContext) {
-    def from(listContext: ListContext)(implicit twitter: Twitter): twitter4s.UserList =
-      twitter.list.destroyUserListMember(listContext.specifiedInfo, get(userContext).id)
-  }
-
-  case class MessageSender(messageContext: MessageContext) {
-    def to(userContext: UserContext)(implicit twitter: Twitter): twitter4s.DirectMessage =
-      twitter.directMessages.sendDirectMessage(userContext.user, messageContext.message)
-  }
+  /**
+   * Block any user.
+   *
+   * @param userContext user string context
+   * @param twitter Twitter4S instance
+   * @return User instance
+   */
+  def block(userContext: UserContext)(implicit twitter:Twitter): twitter4s.User =
+    twitter.users.createBlock(userContext.user)
 }

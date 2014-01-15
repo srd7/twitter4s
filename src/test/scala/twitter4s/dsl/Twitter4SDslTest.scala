@@ -166,9 +166,22 @@ class Twitter4SDslTest extends Specification with Mockito {
     }
   }
 
+  "block user string context method" should {
+    "execute twitter4j.createBlock with screen name" in {
+      block(user"$testUserName")
+
+      there was one(mockedTwitter4j).createBlock(testUserName)
+    }
+
+    "execute twitter4j.createBlock with user id" in {
+      val testUserId = 111L
+      block(user"id:$testUserId")
+
+      there was one(mockedTwitter4j).createBlock(testUserId)
+    }
+  }
+
   // list of DSL candidates
-  // unfollow(user"user")
-  // block(user"user")
   // lookup(user"hoge", user"fuga") -> twitter.lookupFriends(list)
   // add(user"screen name1", user"screen name2") to list"list name" -> twitter.createUserListMembers
   // Status.favos
