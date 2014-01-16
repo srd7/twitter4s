@@ -17,12 +17,15 @@ package twitter4s
  */
 import twitter4s.api.impl._
 import twitter4s.api._
+import scala.reflect.ClassTag
 
 /**
  * @author mao.instantlife at gmail.com
  */
 trait ResourcesBinder[ApiResourcesInterface] {
-  def apply(self: Twitter): ApiResourcesInterface = bind(self)
+  def apply(self: Twitter)(implicit ct: ClassTag[ApiResourcesInterface]): ApiResourcesInterface =
+    if (ct.runtimeClass.isInstance(self)) self.asInstanceOf[ApiResourcesInterface]
+    else bind(self)
 
   val bind: (Twitter) => ApiResourcesInterface
 }
