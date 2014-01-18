@@ -16,11 +16,11 @@ resolvers += "twitter4j.org Repository" at "http://twitter4j.org/maven2"
 
 resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
+licenses += ("Apache", url("http://www.apache.org/licenses/LICENSE-2.0"))
+
 bintrayPublishSettings
 
 bintray.Keys.whoami := "shinsuke-abe"
-
-licenses += ("Apache", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 releaseSettings
 
