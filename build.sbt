@@ -2,7 +2,7 @@ name := "twitter4s"
 
 scalaVersion := "2.10.3"
 
-organization := "com.github.Shinsuke-Abe"
+organization := "com.github.shinsuke-abe"
 
 libraryDependencies ++= Seq(
 	"org.twitter4j" % "twitter4j-core" % "3.0.5",
@@ -15,6 +15,8 @@ parallelExecution in Test := false
 resolvers += "twitter4j.org Repository" at "http://twitter4j.org/maven2"
 
 resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
+
+seq(bintrayResolverSettings:_*)
 
 licenses += ("Apache", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
