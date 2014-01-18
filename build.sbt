@@ -18,15 +18,7 @@ resolvers += "twitter4j.org Repository" at "http://twitter4j.org/maven2"
 
 resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
-seq(bintrayResolverSettings:_*)
-
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
-
-bintrayPublishSettings
-
-bintray.Keys.whoami := "shinsuke-abe"
-
-releaseSettings
 
 
 
