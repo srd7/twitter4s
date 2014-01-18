@@ -1,7 +1,7 @@
 resolvers += Resolver.url(
   "bintray-sbt-plugin-releases",
-  url("http://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
-    Resolver.ivyStylePatterns)
+  url("http://dl.bintray.com/content/sbt/sbt-plugin-releases")
+)(Resolver.ivyStylePatterns)
 
 addSbtPlugin("com.github.gseitz" % "sbt-release" % "0.8")
 

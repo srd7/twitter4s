@@ -1,10 +1,8 @@
-sbtPlugin := true
-
 name := "twitter4s"
 
 scalaVersion := "2.10.3"
 
-organization := "com.github.shinsuke-abe"
+organization := "com.github.Shinsuke-Abe"
 
 libraryDependencies ++= Seq(
 	"org.twitter4j" % "twitter4j-core" % "3.0.5",
@@ -18,8 +16,6 @@ resolvers += "twitter4j.org Repository" at "http://twitter4j.org/maven2"
 
 resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
+seq(bintrayResolverSettings:_*)
+
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
-
-
-
-
