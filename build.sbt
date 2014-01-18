@@ -1,3 +1,5 @@
+sbtPlugin := true
+
 name := "twitter4s"
 
 scalaVersion := "2.10.3"
@@ -18,7 +20,7 @@ resolvers += "snapshots" at "http://oss.sonatype.org/content/repositories/snapsh
 
 seq(bintrayResolverSettings:_*)
 
-licenses += ("Apache", url("http://www.apache.org/licenses/LICENSE-2.0"))
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 bintrayPublishSettings
 
