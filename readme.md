@@ -1,11 +1,11 @@
 # Twitter4S
 
-[Twitter4J](https://github.com/yusuke/twitter4j)のScalaラッパです。<br/>
-Twitter4Jの基本的な機能をScalaである程度書きやすいようにラップしています。<br/>
+This is a Scala wrapper of [Twitter4J](https://github.com/yusuke/twitter4j). <br/>
+It provides easy way to use basic functions of Twitter4J in Scala.<br/>
 
-## インストール
+## Install
 
-build.sbtに以下の依存性を追加して下さい。
+Add the following dependencies to build.sbt.
 
 ```
 resolvers += "bintray" at "http://dl.bintray.com/shinsuke-abe/maven"
@@ -13,40 +13,40 @@ resolvers += "bintray" at "http://dl.bintray.com/shinsuke-abe/maven"
 libraryDependencies += "com.github.Shinsuke-Abe" %% "twitter4s" % "2.1.0"
 ```
 
-## ビルド環境について
+## About Build environment
 
-Twitter4Sは以下の環境で構築されています。
+Twitter4S is built in following environments.
 
 * Scala 2.10.3
 * sbt 0.13.1
 * Twitter4J 3.0.5
 
-注：2014/01/18時点で最新の安定版のライブラリを元に構築しています。
+Note: Built on latest stable library at January 18,2014.
 
-## 他のライブラリとの依存関係
+## Dependencies with other libraries
 
-Twitter4J以外の依存関係はありません。
+Twitter4S has no dependencies without Twitter4J.
 
-## 使い方
+## How to use
 
-Twitter4Sは、Twitter4J準拠の書き方とDSL(Twitter4S独自機能)を使う書き方の2種類の利用方法があります。<br/>
-DSLはまだ全機能をカバーできている訳ではありません。利用頻度が高いと思われる機能を中心に実装しています。
+Twitter4S, there are available two ways of writing that use the DSL (Twitter4S unique features) and compliant Twitter4J way.<br/>
+DSL is not implemented all of Twiiter4J functions yet. Twitter4S implements frequency used functions only. 
 
-### Twitter4J準拠
+### Compliant Twitter4J way
 
 ```
-import twitter4s._ // packageオブジェクトがimportされていないと暗黙の型変換がされないので、importは必ず。
+import twitter4s._ // You must import for implicit type converion.
 
 val twitter = Twitter()
 twitter.setOAuthConsumer(ConsumerKey("consumerKey", "consumerSecret"))
 twitter.setOAuthAccessToken(AccessToken("accessToken", "tokenSecret"))
 
-twitter.各APIメソッド(Twitter4Jとおおよそ1対1でAPIがひもづくようにしています)
+twitter.(API Methods...) (It have one-to-one correspondence between Twitter4S and Twitter4J.)
 ```
 
 ### DSL
 
-DSLはStringContextと各種メソッドを提供しています。<br/>
+DSL provides StringContext and some methods.<br/>
 
 ```
 import twitter4s.dsl._
@@ -58,46 +58,46 @@ withToken(AccessToken("accessToken", "tokenSecret") { implicit twitter =>
 }
 ```
 
-withTokenの引数で指定したAccessTokenで認証したユーザを主語とする操作を行うと考えて下さい。<br/>
+Please notice that operate for user authorized by AccessToken with withToken argument.<br/>
 
-#### DSLが提供するStringContext
+#### StringContext provided by DSL
 
-現時点で実装しているStringContextは以下の通りです。
-
-```
-user"スクリーン名"
-user"id:ユーザID"
-
-list"リストSlug"
-list"id:リストID"
-
-tweet"つぶやき"
-
-message"DMの内容"
-```
-
-#### DSLが提供する機能
+StringContext that implementation is as follows.
 
 ```
-// ツイートに関する機能
-tweet"テスト" update // 「テスト」とツイートします
+user"screen name"
+user"id:user id"
 
-// ユーザに関する機能
-get(user"ユーザA") // ユーザAの情報を取得します
-follow(user"ユーザA") // ユーザAをフォローします
-unfollow(user"ユーザA") // ユーザAのフォローをやめます
-block(user"ユーザA") // ユーザAをブロックします
+list"List Slug"
+list"id:List ID"
 
-// リストに関する機能
-get(list"リストA") // リストAの情報を取得します
-add(user"ユーザA") to list"リストA" // リストAにユーザAを追加します
-remove(user"ユーザA") from list"リストA" // リストAからユーザAを削除します
+tweet"Tweet"
 
-// DMに関する機能
-send(message"テスト") to user"ユーザA" // ユーザAに「テスト」という内容でDirectMessageを送信します
+message"Content of DM"
 ```
 
-#### DSLの機能追加について
+#### Ability to provide DSL
 
-今後のバージョンでも機能追加していきます。<br/>
-欲しいDSLの構文があれば、Issueを追加するなりTwitter(@mao_instantlife)でコンタクトを取るなりしていただければ検討します。
+```
+// method for Tweet.
+tweet"test" update // tweet 'test'
+
+// methods for User.
+get(user"USER-A") // Get infomation of USER-A
+follow(user"USER-A") // Follow USER-A
+unfollow(user"USER-A") // Unfollow USER-A
+block(user"USER-A") // Block USER-A
+
+// methods for List.
+get(list"LIST-A") // Get infomation of USER-A
+add(user"USER-A") to list"LIST-A" // Add USER-A to LIST-A
+remove(user"USER-A") from list"LIST-A" // Remove USER-A from LIST-A
+
+// methods for DM.
+send(message"TEST") to user"USER-A" // Send DirectMessage 'test' to USER-A.
+```
+
+#### About function addition for DSL
+
+New functions will be added for new version.<br/>
+If you want any other DSL, add issue or send mention to @mao_instantlife on Twitter please.
