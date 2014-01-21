@@ -1,3 +1,5 @@
+[Japanese](https://github.com/Shinsuke-Abe/twitter4s/blob/master/readme.ja.md)
+
 # Twitter4S
 
 This is a Scala wrapper of [Twitter4J](https://github.com/yusuke/twitter4j). <br/>
