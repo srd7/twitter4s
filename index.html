@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Twitter4S by Shinsuke-Abe</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Twitter4S</h1>
+        <h2>A Scala wrapper for Twitter4J</h2>
+        <a href="https://github.com/Shinsuke-Abe/twitter4s" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><a href="https://github.com/Shinsuke-Abe/twitter4s/blob/master/readme.ja.md">Japanese</a></p>
+
+<p>This is a Scala wrapper of <a href="https://github.com/yusuke/twitter4j">Twitter4J</a>. <br>
+It provides easy way to use basic functions of Twitter4J in Scala.<br></p>
+
+<h2>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Add the following dependencies to build.sbt.</p>
+
+<pre><code>resolvers += "bintray" at "http://dl.bintray.com/shinsuke-abe/maven"
+
+libraryDependencies += "com.github.Shinsuke-Abe" %% "twitter4s" % "2.1.0"
+</code></pre>
+
+<h2>
+<a name="about-build-environment" class="anchor" href="#about-build-environment"><span class="octicon octicon-link"></span></a>About Build environment</h2>
+
+<p>Twitter4S is built in following environments.</p>
+
+<ul>
+<li>Scala 2.10.3</li>
+<li>sbt 0.13.1</li>
+<li>Twitter4J 3.0.5</li>
+</ul><p>Note: Built on latest stable library at January 18,2014.</p>
+
+<h2>
+<a name="dependencies-with-other-libraries" class="anchor" href="#dependencies-with-other-libraries"><span class="octicon octicon-link"></span></a>Dependencies with other libraries</h2>
+
+<p>Twitter4S has no dependencies without Twitter4J.</p>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<p>Twitter4S, there are available two ways of writing that use the DSL (Twitter4S unique features) and compliant Twitter4J way.<br>
+DSL is not implemented all of Twiiter4J functions yet. Twitter4S implements frequency used functions only. </p>
+
+<h3>
+<a name="compliant-twitter4j-way" class="anchor" href="#compliant-twitter4j-way"><span class="octicon octicon-link"></span></a>Compliant Twitter4J way</h3>
+
+<pre><code>import twitter4s._ // You must import for implicit type converion.
+
+val twitter = Twitter()
+twitter.setOAuthConsumer(ConsumerKey("consumerKey", "consumerSecret"))
+twitter.setOAuthAccessToken(AccessToken("accessToken", "tokenSecret"))
+
+twitter.(API Methods...) (It have one-to-one correspondence between Twitter4S and Twitter4J.)
+</code></pre>
+
+<h3>
+<a name="dsl" class="anchor" href="#dsl"><span class="octicon octicon-link"></span></a>DSL</h3>
+
+<p>DSL provides StringContext and some methods.<br></p>
+
+<pre><code>import twitter4s.dsl._
+
+implicit val consumerKey = ConsumerKey("consumerKey", "consumerSecret")
+
+withToken(AccessToken("accessToken", "tokenSecret") { implicit twitter =&gt;
+  tweet"test tweet" udpate
+}
+</code></pre>
+
+<p>Please notice that operate for user authorized by AccessToken with withToken argument.<br></p>
+
+<h4>
+<a name="stringcontext-provided-by-dsl" class="anchor" href="#stringcontext-provided-by-dsl"><span class="octicon octicon-link"></span></a>StringContext provided by DSL</h4>
+
+<p>StringContext that implementation is as follows.</p>
+
+<pre><code>user"screen name"
+user"id:user id"
+
+list"List Slug"
+list"id:List ID"
+
+tweet"Tweet"
+
+message"Content of DM"
+</code></pre>
+
+<h4>
+<a name="ability-to-provide-dsl" class="anchor" href="#ability-to-provide-dsl"><span class="octicon octicon-link"></span></a>Ability to provide DSL</h4>
+
+<pre><code>// method for Tweet.
+tweet"test" update // tweet 'test'
+
+// methods for User.
+get(user"USER-A") // Get infomation of USER-A
+follow(user"USER-A") // Follow USER-A
+unfollow(user"USER-A") // Unfollow USER-A
+block(user"USER-A") // Block USER-A
+
+// methods for List.
+get(list"LIST-A") // Get infomation of USER-A
+add(user"USER-A") to list"LIST-A" // Add USER-A to LIST-A
+remove(user"USER-A") from list"LIST-A" // Remove USER-A from LIST-A
+
+// methods for DM.
+send(message"TEST") to user"USER-A" // Send DirectMessage 'test' to USER-A.
+</code></pre>
+
+<h4>
+<a name="about-function-addition-for-dsl" class="anchor" href="#about-function-addition-for-dsl"><span class="octicon octicon-link"></span></a>About function addition for DSL</h4>
+
+<p>New functions will be added for new version.<br>
+If you want any other DSL, add issue or send mention to @mao_instantlife on Twitter please.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/Shinsuke-Abe/twitter4s/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/Shinsuke-Abe/twitter4s/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/Shinsuke-Abe/twitter4s"></a> is maintained by <a href="https://github.com/Shinsuke-Abe">Shinsuke-Abe</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
