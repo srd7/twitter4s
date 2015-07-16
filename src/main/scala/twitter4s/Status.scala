@@ -37,38 +37,38 @@ trait Status extends TwitterResponse with EntitySupport {
   def geoLocation: twitter4j.GeoLocation
 
   def isTruncated: Boolean
-  
+
   def inReplyToUserId: Long
-  
+
   def inReplyToScreenName: String
-  
+
   def isFavorited: Boolean
-  
+
   def user: User
-  
+
   def isRetweet: Boolean
-  
+
   def retweetedStatus: Status
-  
+
   def contributors: Array[Long]
-  
+
   def retweetCount: Int
-  
+
   def isRetweetedByMe: Boolean
 
   /**
    * @since Twitter4S 2.0.0
    */
   def currentUserRetweetId: Long
-  
+
   def isPossiblySensitive: Boolean
 
   /**
-   * returns the iso language code set by the Twitter API (best-effort).
+   * Returns the lang of the status text if available.
    *
    * @since Twitter4S 2.1.0
    */
-  def isoLanguageCode: String
+  def lang: String
 
   /**
    * Test if the status is retweeted
@@ -90,16 +90,16 @@ trait Status extends TwitterResponse with EntitySupport {
  */
 object Status {
   type StatusSpecific = Either[String, twitter4j.StatusUpdate]
-  
+
   def isWrittenBy(text: String) = {
     require(text != null)
-    
+
     Left(text)
   }
-  
+
   def isSetBy(latestStatus: twitter4j.StatusUpdate) = {
     require(latestStatus != null)
-    
+
     Right(latestStatus)
   }
 }

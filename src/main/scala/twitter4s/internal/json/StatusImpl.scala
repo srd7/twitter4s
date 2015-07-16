@@ -22,7 +22,7 @@ import twitter4j.SymbolEntity
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
-  
+
   type Tw4jResponse = twitter4j.Status
 
   def isTruncated = twt4jStatus.isTruncated()
@@ -44,7 +44,7 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def retweetCount = twt4jStatus.getRetweetCount()
 
   def isRetweetedByMe = twt4jStatus.isRetweetedByMe()
-  
+
   def userMentionEntities = twt4jStatus.getUserMentionEntities()
 
   def urlEntities = twt4jStatus.getURLEntities()
@@ -72,7 +72,7 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def accessLevel = AccessLevel(twt4jStatus.getAccessLevel())
 
   def tw4jObj = twt4jStatus
-  
+
   /**
    * @since Twitter4S 2.0.0
    */
@@ -81,11 +81,9 @@ case class StatusImpl(twt4jStatus: twitter4j.Status) extends Status {
   def isPossiblySensitive = twt4jStatus.isPossiblySensitive()
 
   /**
-   * returns the iso language code set by the Twitter API (best-effort).
-   *
-   * @since Twitter4S 2.1.0
+   * {@inheritDoc}
    */
-  def isoLanguageCode: String = twt4jStatus.getIsoLanguageCode
+  def lang: String = twt4jStatus.getLang
 
   /**
    * Test if the status is retweeted

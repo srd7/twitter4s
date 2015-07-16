@@ -11,7 +11,7 @@ scalacOptions ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % "3.0.5",
+  "org.twitter4j" % "twitter4j-core" % "3.0.6",
   "org.specs2" %% "specs2" % "2.3.7" % "test",
   "org.mockito" % "mockito-core" % "1.9.5" % "test"
 )
