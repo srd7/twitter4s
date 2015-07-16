@@ -27,8 +27,8 @@ import twitter4s.User
  * @author mao.instantlife at gmail.com
  */
 trait ListsResourcesImpl extends ListsResources {
-  self: Twitter => 
-    
+  self: Twitter =>
+
   /**
    * {@inheritDoc}
    */
@@ -41,12 +41,12 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def updateUserList(listSpecificInfo: UserList.SpecificInfo, newListName: String, isPublicList: Boolean, newDescription: String): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.updateUserList(listId, newListName, isPublicList, newDescription)
       case Right((listOwnerUser, slug)) =>
         require(listOwnerUser != null)
-        
+
         listOwnerUser match {
           case Left(screenName) => twitter4jObj.updateUserList(screenName, slug, newListName, isPublicList, newDescription)
           case Right(userId) => twitter4jObj.updateUserList(userId, slug, newListName, isPublicList, newDescription)
@@ -59,7 +59,7 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def getUserLists(listOwnerSpecificUser: User.SpecificInfo): ResponseList[twitter4j.UserList] = {
     require(listOwnerSpecificUser != null)
-    
+
     listOwnerSpecificUser match {
       case Right(listOwnerUserId) => twitter4jObj.getUserLists(listOwnerUserId)
       case Left(listOwnerScreenName) => twitter4jObj.getUserLists(listOwnerScreenName)
@@ -71,12 +71,12 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def showUserList(listSpecificInfo: UserList.SpecificInfo): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.showUserList(listId)
       case Right((listOwnerUser, slug)) =>
         require(listOwnerUser != null)
-        
+
         listOwnerUser match {
 	      case Left(screenName) => twitter4jObj.showUserList(screenName, slug)
 	      case Right(userId) => twitter4jObj.showUserList(userId, slug)
@@ -89,19 +89,19 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def destroyUserList(listSpecificInfo: UserList.SpecificInfo): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.destroyUserList(listId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.destroyUserList(screenName, slug)
           case Right(userId) => twitter4jObj.destroyUserList(userId, slug)
         }
       }
     }
-    
+
   }
 
   /**
@@ -109,12 +109,12 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def getUserListStatuses(listSpecificInfo: UserList.SpecificInfo, paging: twitter4j.Paging): ResponseList[twitter4j.Status] = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.getUserListStatuses(listId, paging)
       case Right((listOwnerUser, slug)) =>
         require(listOwnerUser != null)
-        
+
         listOwnerUser match {
           case Left(screenName) => twitter4jObj.getUserListStatuses(screenName, slug, paging)
           case Right(userId) => twitter4jObj.getUserListStatuses(userId, slug, paging)
@@ -146,18 +146,18 @@ trait ListsResourcesImpl extends ListsResources {
   def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[twitter4j.UserList] = {
     twitter4jObj.getUserListSubscriptions(listMemberScreenName, cursor)
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def getUserListMembers(listSpecificInfo: UserList.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.getUserListMembers(listId, cursor)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.getUserListMembers(screenName, slug, cursor)
           case Right(userId) => twitter4jObj.getUserListMembers(userId, slug, cursor)
@@ -165,25 +165,18 @@ trait ListsResourcesImpl extends ListsResources {
       }
     }
   }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def addUserListMember(listId: Int, userId: Long): UserList = {
-    twitter4jObj.addUserListMember(listId, userId)
-  }
-  
+
   /**
    * {@inheritDoc}
    */
   def createUserListMember(listSpecificInfo: UserList.SpecificInfo, userId: Long): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.createUserListMember(listId, userId)
       case Right((specificUser, slug)) => {
         require(specificUser != null)
-        
+
         specificUser match {
           case Left(screenName) => twitter4jObj.createUserListMember(screenName, slug, userId)
           case Right(specificUserId) => twitter4jObj.createUserListMember(specificUserId, slug, userId)
@@ -191,27 +184,13 @@ trait ListsResourcesImpl extends ListsResources {
       }
     }
   }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def addUserListMembers(
-      listId: Int,
-      specificUsers: Users.SpecificInfo): UserList = {
-    require(specificUsers != null)
-    
-    specificUsers match {
-      case Right(userIds) => twitter4jObj.addUserListMembers(listId, userIds)
-      case Left(screenNames) => twitter4jObj.addUserListMembers(listId, screenNames)
-    }
-  }
-  
+
   /**
    * {@inheitDoc}
    */
   def createUserListMembers(listSpecificInfo: UserList.SpecificInfo, specificUsers: Users.SpecificInfo): UserList = {
     require(listSpecificInfo != null && specificUsers != null)
-    
+
     listSpecificInfo match {
       case Left(listId) =>
         specificUsers match {
@@ -220,7 +199,7 @@ trait ListsResourcesImpl extends ListsResources {
         }
       case Right((specificUser, slug)) =>
         require(specificUser != null)
-        
+
         specificUser match {
           case Left(screenName) =>
             specificUsers match {
@@ -239,21 +218,14 @@ trait ListsResourcesImpl extends ListsResources {
   /**
    * {@inheritDoc}
    */
-  def deleteUserListMember(listId: Int, userId: Long): UserList = {
-    twitter4jObj.deleteUserListMember(listId, userId)
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
   def destroyUserListMember(listSpecificInfo: UserList.SpecificInfo, userId: Long): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.destroyUserListMember(listId, userId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.destroyUserListMember(screenName, slug, userId)
           case Right(ownerUserId) => twitter4jObj.destroyUserListMember(ownerUserId, slug, userId)
@@ -261,18 +233,18 @@ trait ListsResourcesImpl extends ListsResources {
       }
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def showUserListMembership(listSpecificInfo: UserList.SpecificInfo, userId: Long): User = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.showUserListMembership(listId, userId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.showUserListMembership(screenName, slug, userId)
           case Right(ownerUserId) => twitter4jObj.showUserListMembership(ownerUserId, slug, userId)
@@ -280,25 +252,25 @@ trait ListsResourcesImpl extends ListsResources {
       }
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def getUserListSubscribers(listSpecificInfo: UserList.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.getUserListSubscribers(listId, cursor)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.getUserListSubscribers(screenName, slug, cursor)
           case Right(userId) => twitter4jObj.getUserListSubscribers(userId, slug, cursor)
         }
       }
     }
-    
+
   }
 
   /**
@@ -306,12 +278,12 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def createUserListSubscription(listSpecificInfo: UserList.SpecificInfo): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.createUserListSubscription(listId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.createUserListSubscription(screenName, slug)
           case Right(userId) => twitter4jObj.createUserListSubscription(userId, slug)
@@ -325,19 +297,19 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def destroyUserListSubscription(listSpecificInfo: UserList.SpecificInfo): UserList = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.destroyUserListSubscription(listId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.destroyUserListSubscription(screenName, slug)
           case Right(userId) => twitter4jObj.destroyUserListSubscription(userId, slug)
         }
       }
     }
-    
+
   }
 
   /**
@@ -345,18 +317,18 @@ trait ListsResourcesImpl extends ListsResources {
    */
   def showUserListSubscription(listSpecificInfo: UserList.SpecificInfo, userId: Long): User = {
     require(listSpecificInfo != null)
-    
+
     listSpecificInfo match {
       case Left(listId) => twitter4jObj.showUserListSubscription(listId, userId)
       case Right((userSpecificInfo, slug)) => {
         require(userSpecificInfo != null)
-        
+
         userSpecificInfo match {
           case Left(screenName) => twitter4jObj.showUserListSubscription(screenName, slug, userId)
           case Right(ownerUserId) => twitter4jObj.showUserListSubscription(ownerUserId, slug, userId)
         }
       }
     }
-    
+
   }
 }

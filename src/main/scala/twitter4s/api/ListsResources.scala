@@ -118,7 +118,7 @@ trait ListsResources {
    * <br />This method calls twitter4j.Twitter.getUserListMemberships.
    * <br />getUserListMemberships calls http://api.twitter.com/1.1/lists/memberships.json
    * <br />Note: Parameter listMemberId is taken priority over listMemberScreenName.
-   * 
+   *
    * @param listMemberSpecificUser (optional) the user specific information (screen name or ID) of the list member
    * @param cursor (required) Breaks the results into pages. A single page contains 20 lists. Provide a value of -1 to begin paging. Provide values as returned to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
    * @param filterToOwnedLists (optional) Whether to return just lists the authenticating user owns, and the user represented by listMemberScreenName is a member of.
@@ -146,7 +146,7 @@ trait ListsResources {
    * @since Twitter4S 1.0.0
    */
   def getUserListSubscriptions(cursor: Long, listMemberScreenName: String): PagableResponseList[twitter4j.UserList]
-  
+
   /**
    * Returns the members of the specified list.
    * <br />This method calls twitter4j.Twitter.getUserListMembers.
@@ -162,11 +162,6 @@ trait ListsResources {
   def getUserListMembers(listSpecificInfo: UserList.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User]
 
   /**
-   * @deprecated use {@list #createUserListMember(UserList.SpecificInfo, Long)} instead
-   */
-  def addUserListMember(listId: Int, userId: Long): UserList
-  
-  /**
    * Adds a member to a list. The authenticated user must own the list to be able to add members to it. Lists are limited to having 500 members.
    * <br />This method calls twitter4j.Twitter.addUserListMember
    * <br />This method calls http://api.twitter.com/1.1/lists/members/create.json
@@ -180,14 +175,6 @@ trait ListsResources {
    */
   def createUserListMember(listSpecificInfo: UserList.SpecificInfo, userId: Long): UserList
 
-  
-  /**
-   * @deprecated use {@link #createUserListMembers(UserList.SpecificInfo, Users.SpecificInfo)} instead
-   */
-  def addUserListMembers(
-      listId: Int,
-      specificUsers: Users.SpecificInfo): UserList
-  
   /**
    * Adds multiple members to a list, by specifying a comma-separated list of member ids or screen names. The authenticated user must own the list to be able to add members to it. Lists are limited to having 500 members, and you are limited to adding up to 100 members to a list at a time with this method.
    * <br />This method calls twitter4j.Twitter.addUserListMembers.
@@ -203,11 +190,6 @@ trait ListsResources {
    */
   def createUserListMembers(listSpecificInfo: UserList.SpecificInfo, specificUsers: Users.SpecificInfo): UserList
 
-  /**
-   * @deprecated use {@link #destroyUserListMember(UserList.SpecificInfo, Long)} instead
-   */
-  def deleteUserListMember(listId: Int, userId: Long): UserList
-  
   /**
    * Removes the specified member from the list. The authenticated user must be the list's owner to remove members from the list.
    * <br />This method calls twitter4j.Twitter.destroyUserListMember.
@@ -236,7 +218,7 @@ trait ListsResources {
    * @since Twitter4S 1.0.0
    */
   def showUserListMembership(listSpecificInfo: UserList.SpecificInfo, userId: Long): User
-  
+
   /**
    * Returns the subscribers of the specified list.
    * <br />This method calls twitter4j.Twitter.getUserListSubscribers.

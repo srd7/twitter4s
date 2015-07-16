@@ -26,31 +26,21 @@ import twitter4j.Location
  */
 trait TrendsResourcesImpl extends TrendsResources {
   self: Twitter =>
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getAvailableTrends(location: twitter4j.GeoLocation = null): ResponseList[Location] = {
-    Option(location) match {
-      case Some(location) => twitter4jObj.getAvailableTrends(location)
-      case None => twitter4jObj.getAvailableTrends()
-    }
-  }
 
   /**
    * {@inheritDoc}
    */
-  def getLocationTrends(woeid: Int): Trends = {
-    twitter4jObj.getLocationTrends(woeid)
+  def getAvailableTrends(): ResponseList[Location] = {
+    twitter4jObj.getAvailableTrends()
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def getPlaceTrends(woeid: Int): Trends = {
     twitter4jObj.getPlaceTrends(woeid)
   }
-  
+
   /**
    * {@inheritDoc}
    */

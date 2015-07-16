@@ -25,7 +25,7 @@ import twitter4s.api.TimelinesResources
  */
 trait TimelinesResourcesImpl extends TimelinesResources {
   self: Twitter =>
-  
+
   /**
    * {@inheritDoc}
    */
@@ -35,7 +35,7 @@ trait TimelinesResourcesImpl extends TimelinesResources {
       case None => twitter4jObj.getHomeTimeline()
     }
   }
-  
+
   /**
    * {@inheritedDoc}
    */
@@ -55,17 +55,7 @@ trait TimelinesResourcesImpl extends TimelinesResources {
       }
     }
   }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def getMentions(paging: twitter4j.Paging = null): ResponseList[twitter4j.Status] = {
-    Option(paging) match {
-      case None => twitter4jObj.getMentions()
-      case Some(paging) => twitter4jObj.getMentions(paging)
-    }
-  }
-  
+
   /**
    * {@inheritDoc}
    */

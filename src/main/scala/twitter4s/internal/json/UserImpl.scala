@@ -9,7 +9,7 @@ import twitter4s._
  */
 case class UserImpl(twt4jUser: twitter4j.User) extends User {
   type Tw4jResponse = twitter4j.User
-  
+
   def id = twt4jUser.getId()
 
   def name = twt4jUser.getName()
@@ -23,31 +23,29 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
   def isContributorsEnabled = twt4jUser.isContributorsEnabled()
 
   def profileImageURL = twt4jUser.getProfileImageURL()
-  
+
   def biggerProfileImageURL = twt4jUser.getBiggerProfileImageURL()
-  
+
   def miniProfileImageURL = twt4jUser.getMiniProfileImageURL()
-  
+
   def originalProfileImageURL = twt4jUser.getOriginalProfileImageURL()
-  
-  def profileImageURLHttps = twt4jUser.getProfileImageURLHttps()
-  
+
   def biggerProfileImageURLHttps = twt4jUser.getBiggerProfileImageURLHttps()
-  
+
   def miniProfileImageURLHttps = twt4jUser.getMiniProfileImageURLHttps()
-  
+
   def originalProdileImageURLHttps = twt4jUser.getOriginalProfileImageURLHttps()
-  
+
   def profileBannerURL = twt4jUser.getProfileBannerURL()
-  
+
   def profileBannerRetinaURL = twt4jUser.getProfileBannerRetinaURL()
-  
+
   def profileBannerIPadURL = twt4jUser.getProfileBannerIPadURL()
-  
+
   def profileBannerIPadRetinaURL = twt4jUser.getProfileBannerIPadRetinaURL()
-  
+
   def profileBannerMobileURL = twt4jUser.getProfileBannerMobileURL()
-  
+
   def profileBannerMobileRetinaURL = twt4jUser.getProfileBannerMobileRetinaURL()
 
   def url = twt4jUser.getURL()
@@ -82,8 +80,6 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
 
   def timeZone = twt4jUser.getTimeZone()
 
-  def profileBackgroundImageUrl = twt4jUser.getProfileBackgroundImageUrl()
-
   def profileBackgroundImageUrlHttps = twt4jUser.getProfileBackgroundImageUrlHttps()
 
   def isProfileBackgroundTiled = twt4jUser.isProfileBackgroundTiled()
@@ -101,14 +97,14 @@ case class UserImpl(twt4jUser: twitter4j.User) extends User {
   def listedCount = twt4jUser.getListedCount()
 
   def isFollowRequestSent = twt4jUser.isFollowRequestSent()
-  
+
   def descriptionURLEntities = twt4jUser.getDescriptionURLEntities()
-  
+
   def urlEntity = twt4jUser.getURLEntity()
-  
+
   def rateLimitStatus = RateLimitStatusImpl(twt4jUser.getRateLimitStatus())
-  
+
   def accessLevel = AccessLevel(twt4jUser.getAccessLevel())
-  
+
   def tw4jObj = twt4jUser
 }

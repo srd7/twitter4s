@@ -19,14 +19,12 @@ import java.util.Date
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait RateLimitStatus {
-  
+
   /**
    * @since Twitter4S 2.0.0
    */
   def remaining: Int
-  
-  def remainingHits: Int
-  
+
   /**
    * @since Twitter4S 2.0.0
    */
@@ -35,6 +33,6 @@ trait RateLimitStatus {
   def resetTimeInSeconds: Int
 
   def secondsUntilReset: Int
-  
+
   def tw4jObj: twitter4j.RateLimitStatus
 }

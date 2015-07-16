@@ -9,7 +9,7 @@ import twitter4j.URLEntity
 trait User extends TwitterResponse {
   /**
    * get user id from twitter response.
-   * 
+   *
    * @return user id.
    * @since Twitter4S 1.0.0
    */
@@ -17,7 +17,7 @@ trait User extends TwitterResponse {
 
   /**
    * get user name from twitter response.
-   * 
+   *
    * @return user name
    * @since Twitter4S 1.0.0
    */
@@ -25,7 +25,7 @@ trait User extends TwitterResponse {
 
   /**
    * get screen name from twitter response.
-   * 
+   *
    * @return screen name
    * @since Twitter4S 1.0.0
    */
@@ -33,7 +33,7 @@ trait User extends TwitterResponse {
 
   /**
    * get user location from twitter response.
-   * 
+   *
    * @return user location
    * @since Twitter4S 1.0.0
    */
@@ -41,7 +41,7 @@ trait User extends TwitterResponse {
 
   /**
    * get user description from twitter response.
-   * 
+   *
    * @return user description
    * @since Twitter4S 1.0.0
    */
@@ -57,12 +57,6 @@ trait User extends TwitterResponse {
   def miniProfileImageURL: String
   def originalProfileImageURL: String
 
-  /**
-   * Returns the profile image url of the user, served over SSL
-   * 
-   * @deprecated use {@link #profileImageURL} instead
-   */
-  def profileImageURLHttps: String
   def biggerProfileImageURLHttps: String
   def miniProfileImageURLHttps: String
   def originalProdileImageURLHttps: String
@@ -102,11 +96,6 @@ trait User extends TwitterResponse {
 
   def timeZone: String
 
-  /**
-   * @deprecated use {@link #profileImageURL} instead
-   */
-  def profileBackgroundImageUrl: String
-
   def profileBackgroundImageUrlHttps: String
 
   /**
@@ -118,7 +107,7 @@ trait User extends TwitterResponse {
   def profileBannerIPadRetinaURL: String
   def profileBannerMobileURL: String
   def profileBannerMobileRetinaURL: String
-  
+
   def isProfileBackgroundTiled: Boolean
 
   def lang: String
@@ -134,34 +123,34 @@ trait User extends TwitterResponse {
   def listedCount: Int
 
   def isFollowRequestSent: Boolean
-  
+
   /**
    * @since Twitter4S 2.0.0
    */
   def descriptionURLEntities: Array[URLEntity]
-  
+
   def urlEntity: URLEntity
 }
 
 object User {
   // type alias
   type SpecificInfo = Either[String, Long]
-  
+
   /**
    * generate information that user specified by screen name.
-   * 
+   *
    * @param screenName user specific data.
    * @return Left(screenName) is specified information.
    */
   def isSpecifiedBy(screenName: String): SpecificInfo = {
     require(screenName != null)
-    
+
     Left(screenName)
   }
-  
+
   /**
    * generate information that user specified by user id.
-   * 
+   *
    * @param id user specific data.
    * @return Right(id) is specified information.
    */
@@ -176,16 +165,16 @@ object User {
 object Users {
   // type alias
   type SpecificInfo = Either[Array[String], Array[Long]]
-  
+
   def areSpecifiedBy(screenNames: Array[String]): SpecificInfo = {
     require(screenNames != null && !screenNames.isEmpty)
-    
+
     Left(screenNames)
   }
-  
+
   def areSpecifiedBy(ids: Array[Long]): SpecificInfo = {
     require(ids != null && !ids.isEmpty)
-    
+
     Right(ids)
   }
 }

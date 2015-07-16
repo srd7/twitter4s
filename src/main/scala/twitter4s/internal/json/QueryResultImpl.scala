@@ -23,22 +23,20 @@ import scala.collection.JavaConverters._
  */
 case class QueryResultImpl(tw4jQueryResult: twitter4j.QueryResult) extends QueryResult {
   def sinceId = tw4jQueryResult.getSinceId()
-  
+
   def maxId = tw4jQueryResult.getMaxId()
-  
-  def refreshUrl = tw4jQueryResult.getRefreshUrl()
-  
+
   def refreshURL = tw4jQueryResult.getRefreshURL()
-  
+
   def count = tw4jQueryResult.getCount()
-  
+
   def completedIn = tw4jQueryResult.getCompletedIn()
-  
+
   def query = tw4jQueryResult.getQuery()
-  
+
   def tweets = tw4jQueryResult.getTweets().asScala
-  
+
   def nextQuery = tw4jQueryResult.nextQuery()
-  
+
   def hasNext = tw4jQueryResult.hasNext()
 }

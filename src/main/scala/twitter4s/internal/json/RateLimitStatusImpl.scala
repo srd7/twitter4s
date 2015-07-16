@@ -21,14 +21,12 @@ import twitter4s.RateLimitStatus
  */
 case class RateLimitStatusImpl(twt4jRateLimitStatus: twitter4j.RateLimitStatus) extends RateLimitStatus {
   def remaining = twt4jRateLimitStatus.getRemaining()
-  
-  def remainingHits = twt4jRateLimitStatus.getRemainingHits()
-  
+
   def limit = twt4jRateLimitStatus.getLimit()
 
   def resetTimeInSeconds = twt4jRateLimitStatus.getResetTimeInSeconds()
 
   def secondsUntilReset = twt4jRateLimitStatus.getSecondsUntilReset()
-  
+
   def tw4jObj = twt4jRateLimitStatus
 }
