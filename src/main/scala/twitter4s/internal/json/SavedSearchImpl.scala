@@ -34,11 +34,11 @@ case class SavedSearchImpl(twt4jSavedSearch: twitter4j.SavedSearch) extends Save
 
   def id = twt4jSavedSearch.getId()
 
-  def compare(that: SavedSearch) = this.id - that.id
-  
+  def compare(that: SavedSearch) = (this.id - that.id).toInt
+
   def rateLimitStatus = RateLimitStatusImpl(twt4jSavedSearch.getRateLimitStatus())
-  
+
   def accessLevel = AccessLevel(twt4jSavedSearch.getAccessLevel())
-  
+
   def tw4jObj = twt4jSavedSearch
 }

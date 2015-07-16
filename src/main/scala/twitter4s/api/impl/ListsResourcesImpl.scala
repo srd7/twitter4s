@@ -194,8 +194,8 @@ trait ListsResourcesImpl extends ListsResources {
     listSpecificInfo match {
       case Left(listId) =>
         specificUsers match {
-          case Left(screenNames) => twitter4jObj.createUserListMembers(listId, screenNames)
-          case Right(userIds) => twitter4jObj.createUserListMembers(listId, userIds)
+          case Left(screenNames) => twitter4jObj.createUserListMembers(listId, screenNames: _*)
+          case Right(userIds) => twitter4jObj.createUserListMembers(listId, userIds: _*)
         }
       case Right((specificUser, slug)) =>
         require(specificUser != null)
@@ -203,13 +203,13 @@ trait ListsResourcesImpl extends ListsResources {
         specificUser match {
           case Left(screenName) =>
             specificUsers match {
-              case Left(screenNames) => twitter4jObj.createUserListMembers(screenName, slug, screenNames)
-              case Right(userIds) => twitter4jObj.createUserListMembers(screenName, slug, userIds)
+              case Left(screenNames) => twitter4jObj.createUserListMembers(screenName, slug, screenNames: _*)
+              case Right(userIds) => twitter4jObj.createUserListMembers(screenName, slug, userIds: _*)
             }
           case Right(userId) =>
             specificUsers match {
-              case Left(screenNames) => twitter4jObj.createUserListMembers(userId, slug, screenNames)
-              case Right(userIds) => twitter4jObj.createUserListMembers(userId, slug, userIds)
+              case Left(screenNames) => twitter4jObj.createUserListMembers(userId, slug, screenNames: _*)
+              case Right(userIds) => twitter4jObj.createUserListMembers(userId, slug, userIds: _*)
             }
         }
     }

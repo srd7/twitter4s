@@ -30,7 +30,7 @@ import twitter4s.PagableResponseList
  */
 trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
   self: Twitter =>
-    
+
   /**
    * {@inheritDoc}
    */
@@ -56,7 +56,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
       case None => twitter4jObj.getFollowersIDs(cursor)
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -64,7 +64,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
       specificUser: User.SpecificInfo,
       follow: java.lang.Boolean = null): User = {
     require(specificUser != null)
-    
+
     Option(follow) match {
       case None => specificUser match {
         case Right(userId) => twitter4jObj.createFriendship(userId)
@@ -82,7 +82,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
    */
   def destroyFriendship(specificUser: User.SpecificInfo): User = {
     require(specificUser != null)
-    
+
     specificUser match {
       case Right(userId) => twitter4jObj.destroyFriendship(userId)
       case Left(screenName) => twitter4jObj.destroyFriendship(screenName)
@@ -98,7 +98,7 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
     require(sourceSpecificUser != null && targetSpecificUser != null)
     require((sourceSpecificUser.isRight && targetSpecificUser.isRight) ||
         (sourceSpecificUser.isLeft && targetSpecificUser.isLeft))
-    
+
     (sourceSpecificUser, targetSpecificUser) match {
       case (Right(sourceId), Right(targetId)) => twitter4jObj.showFriendship(sourceId, targetId)
       case (Left(sourceScreenName), Left(targetScreenName)) => twitter4jObj.showFriendship(sourceScreenName, targetScreenName)
@@ -125,10 +125,10 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
    */
   def lookupFriendships(specificUsers: Users.SpecificInfo): ResponseList[Friendship] = {
     require(specificUsers != null)
-    
+
     specificUsers match {
-      case Right(ids) => twitter4jObj.lookupFriendships(ids)
-      case Left(screenNames) => twitter4jObj.lookupFriendships(screenNames)
+      case Right(ids) => twitter4jObj.lookupFriendships(ids: _*)
+      case Left(screenNames) => twitter4jObj.lookupFriendships(screenNames: _*)
     }
   }
 
@@ -140,31 +140,31 @@ trait FriendsFollowersResourcesImpl extends FriendsFollowersResources {
       enableDeviceNotification: Boolean,
       retweets: Boolean): Relationship = {
     require(specificUser != null)
-    
+
     specificUser match {
       case Right(userId) => twitter4jObj.updateFriendship(userId, enableDeviceNotification, retweets)
       case Left(screenName) => twitter4jObj.updateFriendship(screenName, enableDeviceNotification, retweets)
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def getFriendsList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
     require(specificUser != null)
-    
+
     specificUser match {
       case Left(screenName) => twitter4jObj.getFriendsList(screenName, cursor)
       case Right(userId) => twitter4jObj.getFriendsList(userId, cursor)
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def getFollowersList(specificUser: User.SpecificInfo, cursor: Long): PagableResponseList[twitter4j.User] = {
     require(specificUser != null)
-    
+
     specificUser match {
       case Left(screenName) => twitter4jObj.getFollowersList(screenName, cursor)
       case Right(userId) => twitter4jObj.getFollowersList(userId, cursor)

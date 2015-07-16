@@ -21,12 +21,12 @@ import java.util.Date
 trait SavedSearch extends TwitterResponse with Ordered[SavedSearch] {
 
   def createdAt: Date
-  
+
   def query: String
-  
+
   def position: Int
-  
+
   def name: String
-  
-  def id: Int
+
+  def id: Long
 }
