@@ -4,10 +4,16 @@ scalaVersion := "2.10.3"
 
 organization := "com.github.Shinsuke-Abe"
 
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-feature",
+  "-unchecked"
+)
+
 libraryDependencies ++= Seq(
-	"org.twitter4j" % "twitter4j-core" % "3.0.5",
-	"org.specs2" %% "specs2" % "2.3.7" % "test",
-	"org.mockito" % "mockito-core" % "1.9.5" % "test"
+  "org.twitter4j" % "twitter4j-core" % "3.0.5",
+  "org.specs2" %% "specs2" % "2.3.7" % "test",
+  "org.mockito" % "mockito-core" % "1.9.5" % "test"
 )
 
 parallelExecution in Test := false
