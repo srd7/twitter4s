@@ -26,53 +26,46 @@ trait TwitterBase extends AnyRef with OAuthSupport {
   /**
    * Get screenName from twitter object.
    * <br/>This method calls twitter4j.Twitter.getScreenName.
-   * 
+   *
    * @return screen name
    * @since Twitter4S 1.0.0
    */
   def screenName: String
-  
+
   /**
    * Get user id from twitter object.
    * <br/>This method calls twitter4j.getId.
-   * 
+   *
    * @return user id
    * @since Twitter4S 1.0.0
    */
   def id: Long
-  
+
   /**
    * Add rate limit status listener to twitter object.
    * <br/>This method calls twitter4j.addRateLimitStatusListener(listener)
-   * 
+   *
    * @param listener (required) twitter4j.RateLimitStatusListener object for add.
    * @since Twitter4S 1.0.0
    */
   def addRateLimitStatusListener(listener: RateLimitStatusListener): Unit
-  
+
   /**
    * Get authorization object from twitter object.
    * <br/>This method calls twitter4j.getAuthorization.
-   * 
+   *
    * @return authorization object
    * @since Twitter4S 1.0.0
    */
   def authorization: twitter4j.auth.Authorization
-  
+
   /**
    * Get configuration object from twitter object.
    * <br/>This method calls twitter4j.getConfiguration.
-   * 
+   *
    * @return configuration object
    * @since Twitter4S 1.0.0
    */
   def configuration: twitter4j.conf.Configuration
-  
-  /**
-   * Shotdown twitter object.
-   * <br/>This method calls twitter4j.shotdown.
-   * 
-   * @since Twitter4S 1.0.0
-   */
-  def shotdown: Unit
+
 }

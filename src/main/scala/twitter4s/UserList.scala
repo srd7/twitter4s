@@ -20,7 +20,7 @@ import java.net.URI
  * @author Shinsuke Abe - mao.instantlife at gmail.com
  */
 trait UserList extends TwitterResponse with Ordered[UserList] {
-  def id: Int
+  def id: Long
 
   def name: String
 
@@ -46,11 +46,11 @@ trait UserList extends TwitterResponse with Ordered[UserList] {
 object UserList {
   // type alias
   type SpecificInfo = Either[Int, (User.SpecificInfo, String)]
-  
+
   def isSpecifiedBy(listId: Int) = {
     Left(listId)
   }
-  
+
   def isSpecifiedBy(listOwnerUser: User.SpecificInfo, slug: String) = {
     Right(listOwnerUser, slug)
   }

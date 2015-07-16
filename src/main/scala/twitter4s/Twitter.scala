@@ -34,42 +34,35 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   def screenName: String = {
     twitter4jObj.getScreenName()
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def id: Long = {
     twitter4jObj.getId()
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def addRateLimitStatusListener(listener: RateLimitStatusListener) {
     twitter4jObj.addRateLimitStatusListener(listener)
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def authorization: twitter4j.auth.Authorization = {
     twitter4jObj.getAuthorization()
   }
-  
+
   /**
    * {@inheritDoc}
    */
   def configuration: twitter4j.conf.Configuration = {
     twitter4jObj.getConfiguration()
   }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def shotdown {
-    twitter4jObj.shutdown()
-  }
-  
+
   /* OAuthSupport */
   /**
    * {@inheritDoc}
@@ -77,14 +70,14 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
   def setOAuthConsumer(consumerKey: String, consumerSecret: String) {
     twitter4jObj.setOAuthConsumer(consumerKey, consumerSecret)
   }
-  
+
   /**
    * {@ineritDoc}
    */
   def setOAuthConsumer(consumerKey: ConsumerKey) {
     twitter4jObj.setOAuthConsumer(consumerKey.consumerKey, consumerKey.consumerSecret)
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -96,7 +89,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
       case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -114,7 +107,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
       case _ => throw new IllegalArgumentException("No such parameter pattern in twitter4j")
     }
   }
-  
+
   /**
    * {@inheritDoc}
    */
@@ -199,7 +192,7 @@ case class Twitter(twitter4jObj: twitter4j.Twitter) extends TwitterBase {
 object Twitter {
   /**
    * Create Twitter4S object from twitter4j factory.
-   * 
+   *
    * @param conf (optional) Configuration object or configuration strings for create factory.
    * @param auth (optional) AccessToken or Authorization object for create twitter4j object.
    * @return twitter4s.Twitter
@@ -209,10 +202,10 @@ object Twitter {
     val factory4j = getTwitterFactory4j(Option(conf))
     buildTwitter4sObject(getTwitter4jInstance(factory4j, Option(auth)))
   }
-  
+
   /**
    * Create Twitter4S object from twitter4j factory.
-   * 
+   *
    * @param consumerKey(required) Consumer key object for create factory.
    * @param accessToken(required) Access token object for create twitter4j object.
    * @return twitter4s.Twitter
@@ -238,10 +231,10 @@ object Twitter {
                               with ListsResourcesImpl
                               with SpamReportingResourcesImpl
   }
-  
+
   /**
    * Create TwitterFactory object from configurations.
-   * 
+   *
    * @param conf (optional) Configuration object or configuration strings.
    * @return twitter4j.TwitterFactory
    * @since Twitter4S 1.0.0
@@ -255,10 +248,10 @@ object Twitter {
       }
     }
   }
-  
+
   /**
    * Create Twitter4J object from factory.
-   * 
+   *
    * @param factory4j (required) TwitterFactory is created by configuration.
    * @param auth (optinal) Authorization or AccessToken object.
    * @return twitter4j.Twitter

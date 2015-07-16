@@ -24,7 +24,7 @@ import twitter4s.AccessLevel
 case class UserListImpl(twt4jUserList: twitter4j.UserList) extends UserList {
   type Tw4jResponse = twitter4j.UserList
 
-  def compare(that: UserList) = this.id - that.id
+  def compare(that: UserList) = (this.id - that.id).toInt
 
   def id = twt4jUserList.getId()
 
@@ -49,8 +49,8 @@ case class UserListImpl(twt4jUserList: twitter4j.UserList) extends UserList {
   def isFollowing = twt4jUserList.isFollowing()
 
   def rateLimitStatus = RateLimitStatusImpl(twt4jUserList.getRateLimitStatus())
-  
+
   def accessLevel = AccessLevel(twt4jUserList.getAccessLevel())
-  
+
   def tw4jObj = twt4jUserList
 }
