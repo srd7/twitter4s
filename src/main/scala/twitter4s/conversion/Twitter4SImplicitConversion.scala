@@ -19,7 +19,6 @@ import twitter4s.IDs
 import twitter4s.PagableResponseList
 import twitter4s.ResponseList
 import twitter4s.Trends
-import twitter4s.SimilarPlaces
 
 // Declare implicit conversion
 import scala.language.implicitConversions
@@ -67,10 +66,6 @@ trait Twitter4SImplicitConversion {
   // IDs
   implicit def idsWrapperS2Array(tw4sIDs: IDs) = tw4sIDs.ids
   implicit def idsWrapperJ2S(tw4jIDs: twitter4j.IDs) = twitter4s.internal.json.IDsImpl(tw4jIDs)
-
-  // SimilarPlaces
-  implicit def similarPlacesWrapperS2Buffer(tw4sSimilarPlaces: SimilarPlaces) = tw4sSimilarPlaces.listAsScala
-  implicit def similarPlacesWrapperS2J(tw4jSimilarPlaces: twitter4j.SimilarPlaces) = twitter4s.internal.json.SimilarPlacesImpl(tw4jSimilarPlaces)
 
   // Trends
   implicit def trendsWrapperS2Array(tw4sTrends: Trends) = tw4sTrends.trends

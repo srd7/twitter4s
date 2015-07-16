@@ -18,7 +18,6 @@ import twitter4j.GeoQuery
 import twitter4s.ResponseList
 import twitter4s.Place
 import twitter4j.GeoLocation
-import twitter4s.SimilarPlaces
 
 /**
  * @author Shinsuke Abe - mao.instantlife at gmail.com
@@ -38,7 +37,7 @@ trait PlaceGeoResources {
    * @since Twitter4S 1.0.0
    */
   def searchPlaces(query: GeoQuery): ResponseList[twitter4j.Place]
-  
+
   /**
    * Locates places near the given coordinates which are similar in name.
    * <br />Conceptually you would use this method to get a list of known places to choose from first. Then, if the desired place doesn't exist, make a request to post/geo/place to create a new one.
@@ -54,8 +53,8 @@ trait PlaceGeoResources {
    * @throws TwitterException when Twitter service or network is unavailable
    * @since Twitter4S 1.0.0
    */
-  def getSimilarPlaces(location: GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces
-  
+  def getSimilarPlaces(location: GeoLocation, name: String, containedWithin: String, streetAddress: String): ResponseList[twitter4j.Place]
+
   /**
    * Search for places (cities and neighborhoods) that can be attached to a statuses/update. Given a latitude and a longitude, return a list of all the valid places that can be used as a place_id when updating a status. Conceptually, a query can be made from the user's location, retrieve a list of places, have the user validate the location he or she is at, and then send the ID of this location up with a call to statuses/update.<br />
    * There are multiple granularities of places that can be returned -- "neighborhoods", "cities", etc. At this time, only United States data is available through this method.<br />
@@ -70,7 +69,7 @@ trait PlaceGeoResources {
    * @since Twitter4S 1.0.0
    */
   def reverseGeoCode(query: GeoQuery): ResponseList[twitter4j.Place]
-  
+
   /**
    * Find out more details of a place that was returned from the {@link twitter4j.api.GeoMethods#reverseGeoCode(twitter4j.GeoQuery)} method.
    * <br />This method calls twitter4j.Twitter.getGeoDetails(id)
@@ -83,21 +82,4 @@ trait PlaceGeoResources {
    * @since Twitter4S 1.0.0
    */
   def getGeoDetails(id: String): Place
-  
-  /**
-   * Creates a new place at the given latitude and longitude.
-   * <br />This method calls twitter4j.Twitter.createPlace.
-   * <br />createPlace calls http://api.twitter.com/1.1/geo/place.json
-   *
-   * @param name The name a place is known as.
-   * @param containedWithin The place_id within which the new place can be found. Try and be as close as possible with the containing place. For example, for a room in a building, set the contained_within as the building place_id.
-   * @param token The token found in the response from geo/similar_places.
-   * @param location The latitude and longitude the place is located at.
-   * @param streetAddress optional: This parameter searches for places which have this given street address. There are other well-known, and application specific attributes available. Custom attributes are also permitted. Learn more about Place Attributes.
-   * @return the created place
-   * @throws TwitterException when Twitter service or network is unavailable
-   * @see <a href="https://dev.twitter.com/docs/api/1.1/post/geo/place">POST geo/place | Twitter Developers</a>
-   * @since Twitter4S 1.0.0
-   */
-  def createPlace(name: String, containedWithin: String, token: String, location: GeoLocation, streetAddress: String): Place
 }

@@ -24,7 +24,7 @@ import twitter4s.api.PlaceGeoResources
  */
 trait PlaceGeoResourcesImpl extends PlaceGeoResources {
   self: Twitter =>
-  
+
   /**
    * {@inheritDoc}
    */
@@ -35,7 +35,7 @@ trait PlaceGeoResourcesImpl extends PlaceGeoResources {
   /**
    * {@inhritDoc}
    */
-  def getSimilarPlaces(location: twitter4j.GeoLocation, name: String, containedWithin: String, streetAddress: String): SimilarPlaces = {
+  def getSimilarPlaces(location: twitter4j.GeoLocation, name: String, containedWithin: String, streetAddress: String): ResponseList[twitter4j.Place] = {
     twitter4jObj.getSimilarPlaces(location, name, containedWithin, streetAddress)
   }
 
@@ -51,12 +51,5 @@ trait PlaceGeoResourcesImpl extends PlaceGeoResources {
    */
   def getGeoDetails(id: String): Place = {
     twitter4jObj.getGeoDetails(id)
-  }
-  
-  /**
-   * {@inheritDoc}
-   */
-  def createPlace(name: String, containedWithin: String, token: String, location: twitter4j.GeoLocation, streetAddress: String): Place = {
-    twitter4jObj.createPlace(name, containedWithin, token, location, streetAddress)
   }
 }
